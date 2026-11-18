@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neuro — App de Estudio</title>
+<style>
+/* ---------------------------------------------------------------- paleta ---
+   Cálida, de papel: crema, oro y verde. El modo oscuro no es el mismo tono
+   apagado, es una versión cálida también (marrones, no grises azulados). */
+:root{
+  --sidebar:#17181c; --sidebar-2:#20211f; --side-ink:#e9e7e2; --side-muted:#8d9099;
+  --gold:#c9a86a; --gold-soft:#e4d4ae;
+  --bg:#efe9df; --card:#fffdf9; --paper:#fbf8f2; --line:#e7e0d2;
+  --ink:#2a2723; --muted:#8a8378;
+  --accent:#2f6b5e; --accent-soft:#dfece8; --danger:#b4453b; --hl:#ffe6a0;
+  --note:#ffe9a8; --note-line:#e8cf7f;
+  --shadow:0 1px 3px rgba(40,33,20,.06),0 8px 24px rgba(40,33,20,.07);
+}
+html[data-theme="oscuro"]{
+  --sidebar:#121110; --sidebar-2:#1b1917; --side-ink:#eae3d8; --side-muted:#8c837a;
+  --gold:#d9bb7d; --gold-soft:#7a6743;
+  --bg:#1a1714; --card:#232019; --paper:#26221b; --line:#38312a;
+  --ink:#ece5da; --muted:#9c9287;
+  --accent:#5fa896; --accent-soft:#23342f; --danger:#d4736a; --hl:#5c4d24;
+  --note:#5f5124; --note-line:#7d6a30;
+  --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme:dark){
+  html[data-theme="auto"]{
+    --sidebar:#121110; --sidebar-2:#1b1917; --side-ink:#eae3d8; --side-muted:#8c837a;
+    --gold:#d9bb7d; --gold-soft:#7a6743;
+    --bg:#1a1714; --card:#232019; --paper:#26221b; --line:#38312a;
+    --ink:#ece5da; --muted:#9c9287;
+    --accent:#5fa896; --accent-soft:#23342f; --danger:#d4736a; --hl:#5c4d24;
+    --note:#5f5124; --note-line:#7d6a30;
+    --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);overflow:hidden;
+  font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--card);
+  border-radius:9px;padding:7px 13px;transition:.12s}
+button:hover{border-color:var(--accent)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#241d0e;font-weight:600}
+.btn.gold:hover{filter:brightness(1.06)}
+.btn.solid{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.btn.ghost{background:transparent}
+.muted{color:var(--muted)}
+
+/* 100dvh, no 100vh: con la barra de descargas de Chrome abajo, 100vh se sale
+   de la ventana y la fila inferior de la barra lateral queda tapada. */
+.app{display:grid;grid-template-columns:270px minmax(0,1fr) 340px;
+  height:100dvh;max-height:100dvh;overflow:hidden}
+.app.no-rail{grid-template-columns:270px minmax(0,1fr)}
+/* Los hijos de un grid traen min-width:auto: un contenido ancho (una imagen de
+   página, una pregunta larga sin espacios) empujaría y comprimiría al vecino.
+   min-width:0 obliga a que desborde DENTRO de su columna. */
+.app > *{min-width:0;min-height:0;overflow:hidden}
+.sidebar{width:270px;flex:none;z-index:5}
+
+/* --------------------------------------------------------------- sidebar */
+.sidebar{background:var(--sidebar);color:var(--side-ink);display:flex;
+  flex-direction:column;overflow:hidden}
+.brand{display:flex;align-items:center;gap:11px;padding:16px 16px 12px}
+.logo{width:34px;height:34px;border-radius:9px;background:var(--gold);color:#241d0e;
+  display:grid;place-items:center;font-weight:700;font-size:17px}
+.brand .name{font-weight:640;line-height:1.2}
+.brand small{display:block;color:var(--side-muted);font-weight:400;font-size:11.5px}
+.nav{display:flex;flex-direction:column;gap:2px;padding:6px 10px}
+.navbtn{border:0;background:transparent;color:var(--side-muted);text-align:left;
+  padding:8px 11px;border-radius:8px;font-weight:520;display:flex;align-items:center;gap:9px}
+.navbtn:hover{background:var(--sidebar-2);color:var(--side-ink)}
+.navbtn.active{background:var(--sidebar-2);color:var(--gold)}
+.count-pill{margin-left:auto;background:var(--gold);color:#241d0e;font-size:11px;
+  font-weight:700;border-radius:20px;padding:1px 7px;min-width:20px;text-align:center}
+.side-h{padding:14px 16px 6px;font-size:11px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--side-muted);display:flex;align-items:center}
+.side-h button{margin-left:auto;border:0;background:transparent;color:var(--side-muted);
+  padding:0 4px;font-size:16px;line-height:1}
+.side-h button:hover{color:var(--gold)}
+.side-scroll{flex:1;overflow-y:auto;padding:0 10px 10px}
+.folder{margin-bottom:2px}
+.folder-row{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;
+  cursor:pointer;color:var(--side-ink);font-size:14px}
+.folder-row:hover{background:var(--sidebar-2)}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.folder-row .n{margin-left:auto;color:var(--side-muted);font-size:12px}
+.folder-row .gear{opacity:0;color:var(--side-muted);font-size:13px}
+.folder-row:hover .gear{opacity:1}
+.topic-row{display:flex;align-items:center;gap:8px;padding:5px 10px 5px 26px;
+  border-radius:7px;cursor:pointer;color:var(--side-muted);font-size:13px}
+.topic-row:hover{background:var(--sidebar-2);color:var(--side-ink)}
+.topic-row.on{color:var(--gold)}
+.topic-row .due{margin-left:auto;font-size:11px;color:var(--danger);font-weight:700}
+.side-foot{border-top:1px solid rgba(255,255,255,.07);padding:11px 14px;display:flex;
+  align-items:center;gap:10px;font-size:13px;color:var(--side-muted)}
+.side-foot .seg{margin-left:auto;display:flex;background:var(--sidebar-2);border-radius:7px}
+.side-foot .seg button{border:0;background:transparent;color:var(--side-muted);
+  padding:4px 8px;font-size:13px;border-radius:7px}
+.side-foot .seg button.on{background:var(--gold);color:#241d0e}
+.streak{display:flex;align-items:center;gap:8px;padding:9px 16px;font-size:13.5px}
+.streak b{color:var(--side-ink)}
+
+/* ---------------------------------------------------------------- centro */
+.center{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
+.topbar{display:flex;align-items:center;gap:14px;padding:15px 24px;
+  border-bottom:1px solid var(--line);background:var(--card)}
+.topbar h1{margin:0;font-size:19px;letter-spacing:-.02em}
+.topbar .sub{color:var(--muted);font-size:12.5px;margin-top:1px}
+.topbar .grow{flex:1;min-width:0}
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:22px 24px 60px}
+.view{display:none} .view.on{display:block}
+/* Una pregunta larga sin espacios (un fármaco, una URL) no debe ensanchar la
+   columna: se parte. */
+.qcard,.tcard,.notecard,.fichas,.sticky{overflow-wrap:anywhere}
+img{max-width:100%}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:13px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:15px;
+  box-shadow:var(--shadow);cursor:pointer;text-align:left;transition:.14s}
+.tcard:hover{transform:translateY(-2px);border-color:var(--accent)}
+.tcard h3{margin:0 0 9px;font-size:14.5px;font-weight:620;line-height:1.35}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px}
+.chip{font-size:11px;font-weight:650;border-radius:6px;padding:2px 7px;
+  background:var(--bg);color:var(--muted)}
+.chip.due{background:#fbe3e1;color:#a33c34} .chip.new{background:var(--accent-soft);color:var(--accent)}
+html[data-theme="oscuro"] .chip.due{background:#3d2320;color:#e08a80}
+.mats{display:flex;gap:5px;font-size:10.5px;color:var(--muted)}
+.mat{border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.mat.miss{opacity:.3;text-decoration:line-through}
+.sec-h{display:flex;align-items:center;gap:10px;margin:26px 0 12px}
+.sec-h:first-child{margin-top:0}
+.sec-h h2{margin:0;font-size:14px;letter-spacing:.02em;font-weight:640}
+.sec-h .line{flex:1;height:1px;background:var(--line)}
+
+/* --------------------------------------------------- resumen + post-its */
+.pages{max-width:900px;margin:0 auto}
+.page{position:relative;margin-bottom:18px;box-shadow:var(--shadow);border-radius:8px;
+  overflow:hidden;background:var(--paper);border:1px solid var(--line)}
+.page img{display:block;width:100%}
+.page.placing{cursor:crosshair}
+.page.placing::after{content:"";position:absolute;inset:0;
+  box-shadow:inset 0 0 0 2px var(--accent);pointer-events:none}
+.sticky{position:absolute;width:172px;background:var(--note);
+  border:1px solid var(--note-line);border-radius:7px;padding:8px 9px;font-size:12.5px;
+  line-height:1.4;box-shadow:0 3px 10px rgba(40,33,20,.18);cursor:grab;
+  transform:translate(-8px,-8px)}
+.sticky:active{cursor:grabbing}
+.sticky textarea{width:100%;border:0;background:transparent;resize:none;outline:0;
+  font-size:12.5px;line-height:1.4;min-height:44px;font-family:inherit}
+.sticky .x{position:absolute;top:2px;right:5px;border:0;background:transparent;
+  color:#7a6a3a;padding:0;font-size:14px;line-height:1;opacity:.5}
+.sticky .x:hover{opacity:1;color:var(--danger)}
+html[data-theme="oscuro"] .sticky .x{color:#c9b98a}
+
+/* --------------------------------------------------------------- repaso */
+.study{max-width:640px;margin:14px auto 0}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow);padding:34px 30px;min-height:220px;display:flex;
+  flex-direction:column;justify-content:center;text-align:center;font-size:18.5px;line-height:1.6}
+.qcard .front{font-weight:560}
+.qcard hr{border:0;border-top:1px solid var(--line);margin:20px 0;width:100%}
+.qcard b{color:var(--accent)}
+.crumb{display:flex;justify-content:space-between;color:var(--muted);
+  font-size:12.5px;margin-bottom:11px}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:15px}
+.grades button{display:flex;flex-direction:column;gap:1px;padding:11px 5px;font-weight:600}
+.grades .iv{font-size:11px;font-weight:500;opacity:.7}
+.g1{color:var(--danger);border-color:var(--danger)} .g2{color:#b07d2e;border-color:#b07d2e}
+.g3{color:var(--accent);border-color:var(--accent)} .g4{color:#4a7fb5;border-color:#4a7fb5}
+.hint{text-align:center;color:var(--muted);font-size:12px;margin-top:14px}
+kbd{background:var(--card);border:1px solid var(--line);border-bottom-width:2px;
+  border-radius:5px;padding:1px 6px;font-size:11.5px}
+
+/* ------------------------------------------------------------ rail derecho */
+.rail{background:var(--card);border-left:1px solid var(--line);display:flex;
+  flex-direction:column;overflow:hidden}
+.railtabs{display:flex;border-bottom:1px solid var(--line);flex:none}
+.railtabs button{flex:1;border:0;background:transparent;border-radius:0;padding:12px 4px;
+  color:var(--muted);font-size:12.5px;font-weight:560;border-bottom:2px solid transparent}
+.railtabs button.on{color:var(--accent);border-bottom-color:var(--accent)}
+.railbody{flex:1;overflow-y:auto;padding:14px}
+.notecard{background:var(--note);border:1px solid var(--note-line);border-radius:9px;
+  padding:10px 11px;margin-bottom:9px;font-size:13px;line-height:1.45;position:relative}
+.notecard .meta{font-size:10.5px;color:#8a7642;margin-bottom:4px;font-weight:600}
+html[data-theme="oscuro"] .notecard .meta{color:#c4b183}
+.notecard textarea{width:100%;border:0;background:transparent;resize:vertical;outline:0;
+  font-size:13px;line-height:1.45;min-height:52px;font-family:inherit}
+.notecard .x{position:absolute;top:3px;right:6px;border:0;background:transparent;
+  padding:0;font-size:14px;opacity:.45;color:inherit}
+.notecard .x:hover{opacity:1;color:var(--danger)}
+.fichas .f{border-bottom:1px solid var(--line);padding:10px 2px;font-size:13px}
+.fichas .f:last-child{border:0}
+.fichas .q{font-weight:560} .fichas .a{color:var(--muted);font-size:12.3px;margin-top:3px}
+.railpdf{padding:0}
+.railpdf img{width:100%;display:block;border-bottom:1px solid var(--line)}
+
+.empty{color:var(--muted);text-align:center;padding:44px 18px;background:var(--card);
+  border:1px dashed var(--line);border-radius:13px;font-size:13.5px}
+.rowbtns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:13px;
+  padding:19px;box-shadow:var(--shadow);margin-bottom:15px;max-width:620px}
+.panel h3{margin:0 0 3px;font-size:15px}
+.panel p{margin:0 0 15px;color:var(--muted);font-size:13.3px}
+.field{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.field label{width:190px;font-size:14px}
+input[type=number],input[type=text],select{padding:7px 10px;border:1px solid var(--line);
+  border-radius:8px;background:var(--bg);width:140px}
+input[type=text]{width:100%;max-width:400px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);
+  color:var(--bg);padding:11px 20px;border-radius:10px;font-size:14px;opacity:0;
+  transition:.25s;pointer-events:none;z-index:80}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">N</div>
+      <div class="name">Neuro<small>Estudio de Mariela</small></div>
+    </div>
+
+    <nav class="nav">
+      <button class="navbtn active" data-sec="inicio">📚 <span>Temas</span></button>
+      <button class="navbtn" data-sec="repaso">🎴 <span>Repaso</span>
+        <span class="count-pill" id="dueBadge" style="display:none">0</span></button>
+      <button class="navbtn" data-sec="ajustes">⚙️ <span>Ajustes</span></button>
+    </nav>
+
+    <div class="side-h">Carpetas <button id="addFolder" title="Nueva carpeta">＋</button></div>
+    <div class="side-scroll" id="tree"></div>
+
+    <div style="padding:0 12px 10px">
+      <input type="file" id="fileInput" accept=".pdf,.apkg" style="display:none">
+      <button class="btn gold" style="width:100%" id="uploadBtn">＋ Cargar archivo</button>
+      <div class="muted" style="font-size:11px;margin-top:7px;color:var(--side-muted)">
+        PDF y archivos de fichas. Las presentaciones se consultan desde su carpeta.
+      </div>
+    </div>
+
+    <div class="streak">
+      <span id="flame" style="font-size:17px;filter:grayscale(1);opacity:.5">🔥</span>
+      <b id="streakNum">0</b><span style="color:var(--side-muted)">días seguidos</span>
+    </div>
+
+    <div class="side-foot">
+      <span>Sesión local</span>
+      <div class="seg" id="themeSeg">
+        <button data-theme="auto" title="Automático">◐</button>
+        <button data-theme="claro" title="Claro">☀</button>
+        <button data-theme="oscuro" title="Oscuro">☾</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="center">
+    <div class="topbar">
+      <div class="grow">
+        <h1 id="ttl">Temas</h1>
+        <div class="sub" id="sub">—</div>
+      </div>
+      <div id="topActions" class="rowbtns" style="margin:0"></div>
+    </div>
+    <div class="content">
+      <section class="view on" id="v-inicio"></section>
+      <section class="view" id="v-tema"></section>
+      <section class="view" id="v-repaso">
+        <div class="study">
+          <div class="crumb"><span id="sTopic">—</span><span id="sLeft"></span></div>
+          <div class="qcard" id="qcard"><div class="front">Cargando…</div></div>
+          <div id="sControls"></div>
+          <div class="hint"><kbd>espacio</kbd> mostrar · <kbd>1</kbd> otra vez ·
+            <kbd>2</kbd> difícil · <kbd>3</kbd> bien · <kbd>4</kbd> fácil</div>
+        </div>
+      </section>
+      <section class="view" id="v-ajustes"></section>
+    </div>
+  </div>
+
+  <aside class="rail" id="rail">
+    <div class="railtabs" id="railtabs"></div>
+    <div class="railbody" id="railbody"></div>
+  </aside>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+async function api(url, opts){
+  const r = await fetch(url, opts);
+  if(!r.ok) throw new Error((await r.json().catch(()=>({}))).detail || r.statusText);
+  return r.json();
+}
+const post = (u,b) => api(u,{method:'POST',headers:{'Content-Type':'application/json'},
+  body:JSON.stringify(b||{})});
+const del  = u => api(u,{method:'DELETE'});
+let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on');
+  clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('on'),2600); }
+
+const S = {folders:[], topics:[], stats:{}, settings:{}, pdf_ok:true,
+           sec:'inicio', topic:null, railTab:'postit', placing:false,
+           queue:[], card:null, revealed:false};
+
+/* ------------------------------------------------------------------ tema */
+async function boot(){
+  const d = await api('/api/bootstrap');
+  Object.assign(S, d);
+  applyTheme(S.settings.theme || 'auto');
+  paintTree(); paintStats(); go(S.sec);
+}
+
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  $$('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.theme === t));
+}
+$$('#themeSeg button').forEach(b => b.onclick = async () => {
+  applyTheme(b.dataset.theme);
+  S.settings = await post('/api/settings', {theme: b.dataset.theme});
+});
+
+function paintStats(){
+  const s = S.stats, due = (s.vencidas||0) + (s.aprendiendo||0);
+  const badge = $('#dueBadge');
+  badge.textContent = due; badge.style.display = due ? '' : 'none';
+  $('#streakNum').textContent = s.racha || 0;
+  $('#flame').style.filter = s.racha ? 'none' : 'grayscale(1)';
+  $('#flame').style.opacity = s.racha ? 1 : .5;
+}
+
+/* --------------------------------------------------------------- sidebar */
+function paintTree(){
+  const sinCarpeta = S.topics.filter(t => !t.folder_id);
+  const bloques = S.folders.map(f => ({f, ts: S.topics.filter(t => t.folder_id === f.id)}));
+  if (sinCarpeta.length) bloques.push({f:{id:0,name:'Sin carpeta',color:'#8a8378'}, ts:sinCarpeta});
+
+  $('#tree').innerHTML = bloques.map(({f,ts}) => `
+    <div class="folder">
+      <div class="folder-row" data-folder="${f.id}">
+        <span class="dot" style="background:${esc(f.color)}"></span>
+        <span>${esc(f.name)}</span>
+        ${f.id ? `<span class="gear" data-edit="${f.id}">⋯</span>` : ''}
+        <span class="n">${ts.length}</span>
+      </div>
+      ${ts.map(t => `
+        <div class="topic-row ${S.topic===t.id?'on':''}" data-topic="${t.id}">
+          <span>${esc(t.title)}</span>
+          ${t.vencidas ? `<span class="due">${t.vencidas}</span>` : ''}
+        </div>`).join('')}
+    </div>`).join('');
+
+  $$('[data-topic]').forEach(el => el.onclick = () => openTopic(+el.dataset.topic));
+  $$('[data-folder]').forEach(el => el.onclick = e => {
+    if (e.target.dataset.edit) return;
+    S.folderView = +el.dataset.folder || null;
+    go('inicio');
+  });
+  $$('[data-edit]').forEach(el => el.onclick = async e => {
+    e.stopPropagation();
+    const f = S.folders.find(x => x.id === +el.dataset.edit);
+    const name = prompt('Nombre de la carpeta (vacío para borrarla):', f.name);
+    if (name === null) return;
+    if (!name.trim()){
+      const r = await del('/api/folders/' + f.id);
+      S.folders = r.folders; S.topics = r.topics; paintTree(); toast('Carpeta borrada');
+    } else {
+      const r = await post('/api/folders/' + f.id, {name: name.trim()});
+      S.folders = r.folders; paintTree();
+    }
+  });
+}
+
+$('#addFolder').onclick = async () => {
+  const name = prompt('Nombre de la carpeta nueva:');
+  if (!name || !name.trim()) return;
+  const r = await post('/api/folders', {name: name.trim()});
+  S.folders = r.folders; paintTree(); toast('Carpeta creada');
+};
+
+$$('.navbtn').forEach(b => b.onclick = () => go(b.dataset.sec));
+
+/* ---------------------------------------------------------------- rutas */
+function go(sec, opts){
+  S.sec = sec;
+  $$('.navbtn').forEach(b => b.classList.toggle('active', b.dataset.sec === sec));
+  $$('.view').forEach(v => v.classList.toggle('on', v.id === 'v-' + sec));
+  if (sec === 'inicio')  renderInicio();
+  if (sec === 'repaso')  startStudy(opts || {});
+  if (sec === 'ajustes') renderAjustes();
+}
+
+/* --------------------------------------------------------------- inicio */
+function renderInicio(){
+  S.topic = null;
+  const fv = S.folderView ? S.folders.find(f => f.id === S.folderView) : null;
+  const ambito = fv ? {folder_id: fv.id, name: fv.name}
+                    : {name: 'Todos los temas'};
+  const temas = fv ? S.topics.filter(t => t.folder_id === fv.id) : S.topics;
+  const fichas = temas.reduce((a,t) => a + t.total, 0);
+  const hoy    = temas.reduce((a,t) => a + t.vencidas + t.nuevas, 0);
+
+  $('#ttl').textContent = fv ? fv.name : 'Temas';
+  $('#sub').textContent = `${temas.length} temas · ${fichas} fichas · ${hoy} para hoy`;
+  $('#topActions').innerHTML = `
+    <button class="btn solid" id="goStudy">Repasar${fv ? ' la carpeta' : ' todo'} (${hoy})</button>
+    <button class="btn" id="goFree" title="No altera la programación">🔁 Repaso libre</button>
+    ${fv ? `<button class="btn ghost" id="allTopics">Ver todo</button>`
+         : `<button class="btn ghost" id="rescan">Re-escanear</button>`}`;
+  $('#goStudy').onclick = () => go('repaso', ambito);
+  $('#goFree').onclick  = () => go('repaso', {...ambito, mode:'libre'});
+  if (fv) $('#allTopics').onclick = () => { S.folderView = null; go('inicio'); };
+  else $('#rescan').onclick = async () => {
+    toast('Escaneando…');
+    const r = await post('/api/ingest');
+    await boot(); toast(`${r.temas} temas · ${r.tarjetas_nuevas} fichas nuevas`);
+  };
+
+  if (fv){
+    $('#v-inicio').innerHTML = temas.length
+      ? `<div class="grid">${temas.map(cardHtml).join('')}</div>`
+      : `<div class="empty">Esta carpeta todavía no tiene temas.</div>`;
+  } else {
+    const sinCarpeta = S.topics.filter(t => !t.folder_id);
+    const bloques = S.folders.map(f => ({f, ts: S.topics.filter(t => t.folder_id === f.id)}))
+                             .filter(b => b.ts.length);
+    if (sinCarpeta.length) bloques.push({f:{name:'Sin carpeta'}, ts:sinCarpeta});
+    $('#v-inicio').innerHTML = bloques.length ? bloques.map(({f,ts}) => `
+      <div class="sec-h"><h2>${esc(f.name)}</h2><span class="line"></span>
+        <span class="muted" style="font-size:12px">${ts.reduce((a,t)=>a+t.total,0)} fichas</span></div>
+      <div class="grid">${ts.map(cardHtml).join('')}</div>`).join('')
+      : `<div class="empty">No hay temas todavía. Carga un archivo de fichas
+         o pulsa «Re-escanear».</div>`;
+  }
+  $$('[data-open]').forEach(el => el.onclick = () => openTopic(+el.dataset.open));
+  setRail(null);
+}
+
+function cardHtml(t){
+  const mats = [['presentacion','presentación'],['resumen','resumen'],['anki','fichas']];
+  return `<button class="tcard" data-open="${t.id}">
+    <h3>${esc(t.title)}</h3>
+    <div class="chips">
+      <span class="chip ${t.vencidas?'due':''}">${t.vencidas} pendientes</span>
+      <span class="chip ${t.nuevas?'new':''}">${t.nuevas} nuevas</span>
+      <span class="chip">${t.total} fichas</span>
+    </div>
+    <div class="mats">${mats.map(([k,l]) =>
+      `<span class="mat ${t.assets[k]?'':'miss'}">${l}</span>`).join('')}</div>
+  </button>`;
+}
+
+/* ----------------------------------------------------------------- tema */
+async function openTopic(id){
+  const t = await api('/api/topics/' + id);
+  S.topic = id; S.topicData = t; S.placing = false;
+  paintTree();
+  $$('.navbtn').forEach(b => b.classList.remove('active'));
+  $$('.view').forEach(v => v.classList.toggle('on', v.id === 'v-tema'));
+  S.sec = 'tema';
+
+  const resumen = (t.assets.resumen || [])[0];
+  const pres    = (t.assets.presentacion || [])[0];
+  $('#ttl').textContent = t.title;
+  $('#sub').textContent = `${t.cards.length} fichas · ${t.pages || 0} págs. de resumen`;
+  $('#topActions').innerHTML =
+    `<button class="btn solid" id="tStudy">Repasar</button>
+     <button class="btn" id="tFree" title="No altera la programación">🔁 Libre</button>
+     ${resumen && S.pdf_ok ? `<button class="btn" id="tPin">📌 Pegar post-it</button>` : ''}
+     ${pres ? `<button class="btn ghost" id="tPres">Abrir presentación</button>` : ''}`;
+  $('#tStudy').onclick = () => go('repaso', {topic_id:id, name:t.title});
+  $('#tFree').onclick  = () => go('repaso', {topic_id:id, name:t.title, mode:'libre'});
+  if (pres) $('#tPres').onclick = async () => {
+    try { await post(`/api/assets/${pres.id}/open`); toast('Abriendo…'); }
+    catch(e){ toast(e.message); }
+  };
+  if (resumen && S.pdf_ok) $('#tPin').onclick = () => {
+    S.placing = !S.placing;
+    $('#tPin').classList.toggle('btn', true);
+    $('#tPin').textContent = S.placing ? '✕ Cancelar' : '📌 Pegar post-it';
+    $$('.page').forEach(p => p.classList.toggle('placing', S.placing));
+    if (S.placing) toast('Haz clic donde quieras pegar la nota');
+  };
+
+  renderPages();
+  setRail('tema');
+}
+
+function renderPages(){
+  const t = S.topicData, resumen = (t.assets.resumen || [])[0];
+  if (!resumen){
+    $('#v-tema').innerHTML = `<div class="empty">Este tema no tiene resumen en PDF.<br>
+      Cárgalo con «＋ Cargar archivo».</div>`;
+    return;
+  }
+  if (!S.pdf_ok){
+    $('#v-tema').innerHTML = `<div class="pages">
+      <div class="empty" style="margin-bottom:14px">Para pegar post-it sobre el resumen
+        falta poppler: <code>brew install poppler</code>. Mientras, el PDF se ve así:</div>
+      <iframe src="/api/assets/${resumen.id}/file" style="width:100%;height:78vh;
+        border:1px solid var(--line);border-radius:10px"></iframe></div>`;
+    return;
+  }
+  const n = t.pages || 1;
+  $('#v-tema').innerHTML = `<div class="pages">${
+    Array.from({length:n}, (_,i) => `
+      <div class="page ${S.placing?'placing':''}" data-page="${i+1}">
+        <img src="/api/assets/${resumen.id}/page/${i+1}" alt="Página ${i+1}" loading="lazy">
+      </div>`).join('')}</div>`;
+  $$('.page').forEach(p => {
+    p.onclick = e => onPageClick(e, p, resumen.id);
+    paintStickies(p, resumen.id);
+  });
+}
+
+function paintStickies(pageEl, assetId){
+  const page = +pageEl.dataset.page;
+  pageEl.querySelectorAll('.sticky').forEach(el => el.remove());
+  S.topicData.notes.filter(nt => nt.kind === 'sticky' && nt.page === page)
+    .forEach(nt => pageEl.appendChild(stickyEl(nt, pageEl)));
+}
+
+function stickyEl(nt, pageEl){
+  const el = document.createElement('div');
+  el.className = 'sticky';
+  el.style.left = (nt.x * 100) + '%';
+  el.style.top  = (nt.y * 100) + '%';
+  el.innerHTML = `<button class="x" title="Borrar">×</button>
+    <textarea placeholder="Escribe aquí…">${esc(nt.text)}</textarea>`;
+  el.onclick = e => e.stopPropagation();      // no dispara la colocación de otra nota
+
+  const ta = el.querySelector('textarea');
+  let save;
+  ta.oninput = () => { clearTimeout(save);
+    save = setTimeout(() => post('/api/notes/' + nt.id, {text: ta.value})
+      .then(() => { nt.text = ta.value; }), 600); };
+
+  el.querySelector('.x').onclick = async e => {
+    e.stopPropagation();
+    await del('/api/notes/' + nt.id);
+    S.topicData.notes = S.topicData.notes.filter(x => x.id !== nt.id);
+    el.remove(); renderRail(); toast('Nota borrada');
+  };
+
+  // Arrastrar: la posición se guarda en porcentaje, así que la nota se queda
+  // en su sitio aunque cambie el tamaño de la ventana o la escala del PDF.
+  el.onpointerdown = e => {
+    if (e.target.tagName === 'TEXTAREA' || e.target.classList.contains('x')) return;
+    e.preventDefault();
+    const rect = pageEl.getBoundingClientRect();
+    const move = ev => {
+      nt.x = Math.min(Math.max((ev.clientX - rect.left) / rect.width, 0), 1);
+      nt.y = Math.min(Math.max((ev.clientY - rect.top) / rect.height, 0), 1);
+      el.style.left = (nt.x*100) + '%'; el.style.top = (nt.y*100) + '%';
+    };
+    const up = () => {
+      document.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerup', up);
+      post('/api/notes/' + nt.id, {x: nt.x, y: nt.y});
+    };
+    document.addEventListener('pointermove', move);
+    document.addEventListener('pointerup', up);
+  };
+  return el;
+}
+
+async function onPageClick(e, pageEl, assetId){
+  if (!S.placing) return;
+  const rect = pageEl.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width;
+  const y = (e.clientY - rect.top)  / rect.height;
+  const r = await post(`/api/topics/${S.topic}/notes`,
+    {kind:'sticky', asset_id:assetId, page:+pageEl.dataset.page, x, y, text:''});
+  S.topicData.notes = r.notes;
+  S.placing = false;
+  $('#tPin').textContent = '📌 Pegar post-it';
+  $$('.page').forEach(p => p.classList.remove('placing'));
+  paintStickies(pageEl, assetId); renderRail();
+  pageEl.querySelector('.sticky:last-child textarea')?.focus();
+}
+
+/* ----------------------------------------------------------------- rail */
+function setRail(mode){
+  S.railMode = mode;
+  $('#app').classList.toggle('no-rail', !mode);
+  if (!mode) return;
+  S.railTab = mode === 'tema' ? 'postit' : 'resumen';
+  renderRail();
+}
+
+function renderRail(){
+  if (S.railMode === 'tema'){
+    const tabs = [['postit','📌 Post-its'],['general','📝 Notas'],['fichas','🎴 Fichas']];
+    $('#railtabs').innerHTML = tabs.map(([k,l]) =>
+      `<button class="${S.railTab===k?'on':''}" data-tab="${k}">${l}</button>`).join('');
+    $$('#railtabs button').forEach(b => b.onclick = () => { S.railTab=b.dataset.tab; renderRail(); });
+    $('#railbody').className = 'railbody';
+    $('#railbody').innerHTML = railTemaBody();
+    wireRailNotes();
+  } else if (S.railMode === 'repaso'){
+    $('#railtabs').innerHTML = `<button class="on">📄 Resumen del tema</button>`;
+    $('#railbody').className = 'railbody railpdf';
+    $('#railbody').innerHTML = railResumen();
+  }
+}
+
+function railTemaBody(){
+  const t = S.topicData;
+  if (S.railTab === 'fichas'){
+    return `<div class="fichas">${t.cards.map(c =>
+      `<div class="f"><div class="q">${c.front}</div><div class="a">${c.back}</div></div>`
+    ).join('') || '<div class="empty">Sin fichas todavía.</div>'}</div>`;
+  }
+  const kind = S.railTab === 'postit' ? 'sticky' : 'general';
+  const notes = t.notes.filter(n => n.kind === kind);
+  const add = kind === 'general'
+    ? `<button class="btn" style="width:100%;margin-bottom:11px" id="addGeneral">＋ Nota nueva</button>`
+    : `<div class="muted" style="font-size:12px;margin-bottom:11px">
+         Pulsa «📌 Pegar post-it» y haz clic sobre el resumen.</div>`;
+  return add + (notes.map(n => `
+    <div class="notecard" data-note="${n.id}">
+      <button class="x">×</button>
+      ${kind==='sticky' ? `<div class="meta">Página ${n.page}</div>` : ''}
+      <textarea placeholder="Escribe aquí…">${esc(n.text)}</textarea>
+    </div>`).join('') || `<div class="empty">Sin notas todavía.</div>`);
+}
+
+function wireRailNotes(){
+  const ga = $('#addGeneral');
+  if (ga) ga.onclick = async () => {
+    const r = await post(`/api/topics/${S.topic}/notes`, {kind:'general', text:''});
+    S.topicData.notes = r.notes; renderRail();
+    $('#railbody textarea')?.focus();
+  };
+  $$('#railbody [data-note]').forEach(el => {
+    const id = +el.dataset.note, ta = el.querySelector('textarea');
+    let save;
+    ta.oninput = () => { clearTimeout(save);
+      save = setTimeout(() => post('/api/notes/' + id, {text: ta.value}).then(() => {
+        const n = S.topicData.notes.find(x => x.id === id); if (n) n.text = ta.value;
+        if (S.railTab === 'postit') $$('.page').forEach(p =>
+          paintStickies(p, (S.topicData.assets.resumen||[])[0]?.id));
+      }), 600); };
+    el.querySelector('.x').onclick = async () => {
+      await del('/api/notes/' + id);
+      S.topicData.notes = S.topicData.notes.filter(x => x.id !== id);
+      renderRail();
+      $$('.page').forEach(p => paintStickies(p, (S.topicData.assets.resumen||[])[0]?.id));
+    };
+  });
+}
+
+function railResumen(){
+  const t = S.topics.find(x => x.id === S.studyTopic);
+  const res = t && t.assets.resumen ? t.assets.resumen[0] : null;
+  if (!res) return `<div class="empty" style="margin:14px">Este repaso mezcla varios temas,
+    o el tema no tiene resumen.</div>`;
+  if (!S.pdf_ok) return `<iframe src="/api/assets/${res.id}/file"
+    style="width:100%;height:100%;border:0"></iframe>`;
+  const n = S.studyPages || 1;
+  return Array.from({length:n}, (_,i) =>
+    `<img src="/api/assets/${res.id}/page/${i+1}" loading="lazy" alt="Página ${i+1}">`).join('');
+}
+
+/* --------------------------------------------------------------- repaso */
+async function startStudy(opts){
+  S.studyOpts  = opts;
+  S.studyTopic = opts.topic_id || null;
+  S.mode = opts.mode || 'normal';
+
+  const qs = new URLSearchParams();
+  if (opts.topic_id)  qs.set('topic_id', opts.topic_id);
+  if (opts.folder_id) qs.set('folder_id', opts.folder_id);
+  if (S.mode !== 'normal') qs.set('mode', S.mode);
+  const d = await api('/api/queue' + (qs.toString() ? '?' + qs : ''));
+  S.queue = d.cards; S.stats = d.stats; S.scope = d.scope; paintStats();
+
+  const name = opts.name || 'Todos los temas';
+  const libre = S.mode === 'libre';
+  $('#ttl').textContent = libre ? 'Repaso libre' : 'Repaso';
+  $('#sub').textContent = libre
+    ? `${name} · no altera la programación`
+    : `${name} · ${d.scope.total} fichas en total`;
+  $('#topActions').innerHTML = libre
+    ? `<button class="btn ghost" id="toNormal">Volver al repaso normal</button>`
+    : `<button class="btn" id="toFree" title="No altera la programación">🔁 Repaso libre</button>`;
+  const swap = m => go('repaso', {...S.studyOpts, mode:m});
+  if (libre) $('#toNormal').onclick = () => swap('normal');
+  else       $('#toFree').onclick   = () => swap('libre');
+  $('#sTopic').textContent = libre ? name + ' · libre' : name;
+
+  if (opts.topic_id){
+    const t = await api('/api/topics/' + opts.topic_id);
+    S.studyPages = t.pages;
+    setRail('repaso');
+  } else setRail(null);
+
+  nextCard();
+}
+
+function nextCard(){
+  S.card = S.queue.shift() || null; S.revealed = false;
+  $('#sLeft').textContent = S.card ? `${S.queue.length + 1} en la cola` : '';
+  renderCard();
+}
+
+function renderCard(){
+  if (!S.card){
+    const n = (S.scope && S.scope.total) || 0;
+    $('#qcard').innerHTML = S.mode === 'libre'
+      ? `<div class="front">Fin de la vuelta.<br>
+          <span style="font-size:14.5px;color:var(--muted)">Nada de esto cambió
+          tus fechas de repaso.</span></div>`
+      : `<div class="front">Por hoy has terminado.<br>
+          <span style="font-size:14.5px;color:var(--muted)">Puedes volver a pasar
+          las fichas cuantas veces quieras: el repaso libre no adelanta ninguna
+          fecha ni gasta el cupo de mañana.</span></div>`;
+    $('#sControls').innerHTML = `<div class="grades" style="grid-template-columns:1fr 1fr">
+      <button class="g3" id="again">🔁 Repasar de nuevo${n ? ` (${n})` : ''}</button>
+      <button id="toTopics">Volver a los temas</button></div>`;
+    $('#again').onclick = () => go('repaso', {...S.studyOpts, mode:'libre'});
+    $('#toTopics').onclick = () => go('inicio');
+    return;
+  }
+  $('#qcard').innerHTML = S.revealed
+    ? `<div class="front">${S.card.front}</div><hr><div>${S.card.back}</div>`
+    : `<div class="front">${S.card.front}</div>`;
+  if (S.revealed){
+    const iv = S.card.intervals || {};
+    const fmt = d => d===0 ? 'hoy' : d<30 ? d+' d' : d<365 ? Math.round(d/30)+' mes'
+                    : (d/365).toFixed(1)+' a';
+    // En repaso libre no se muestran intervalos: no se programa nada.
+    const b = (g,l,d) => `<button class="g${g}" data-g="${g}"><span>${l}</span>
+      ${S.mode === 'libre' ? '' : `<span class="iv">${fmt(d)}</span>`}</button>`;
+    $('#sControls').innerHTML = `<div class="grades">${b(1,'Otra vez',iv.again)}
+      ${b(2,'Difícil',iv.hard)}${b(3,'Bien',iv.good)}${b(4,'Fácil',iv.easy)}</div>`;
+    $$('.grades button').forEach(x => x.onclick = () => grade(+x.dataset.g));
+  } else {
+    $('#sControls').innerHTML =
+      `<button class="btn solid" style="width:100%;margin-top:15px;padding:13px"
+        id="rev">Mostrar respuesta</button>`;
+    $('#rev').onclick = () => { S.revealed = true; renderCard(); };
+  }
+}
+
+async function grade(rating){
+  if (!S.card) return;
+  const card = S.card;
+  const r = await post(`/api/cards/${card.id}/grade`, {rating, mode: S.mode});
+  S.stats = r.stats; paintStats();
+  // 'Otra vez' vuelve al final de la cola: se repasa otra vez en esta sesión.
+  if (rating === 1) S.queue.push(Object.assign({}, card, r.result || {}));
+  nextCard();
+}
+
+document.addEventListener('keydown', e => {
+  if (S.sec !== 'repaso' || ['INPUT','TEXTAREA'].includes(e.target.tagName)) return;
+  if ((e.key === ' ' || e.key === 'Enter') && !S.revealed && S.card){
+    e.preventDefault(); S.revealed = true; renderCard();
+  } else if (S.revealed && ['1','2','3','4'].includes(e.key)) grade(+e.key);
+});
+
+/* -------------------------------------------------------------- cargar */
+$('#uploadBtn').onclick = () => $('#fileInput').click();
+$('#fileInput').onchange = async e => {
+  const file = e.target.files[0]; if (!file) return;
+  e.target.value = '';
+  const esPdf = file.name.toLowerCase().endsWith('.pdf');
+  let url = '/api/upload';
+  if (esPdf){
+    const destino = S.topic || prompt('¿A qué tema pertenece este PDF?\n\n' +
+      S.topics.map(t => `${t.id} — ${t.title}`).join('\n') + '\n\nEscribe el número:');
+    if (!destino) return;
+    url += '?topic_id=' + parseInt(destino, 10);
+  }
+  const fd = new FormData(); fd.append('file', file);
+  toast('Cargando…');
+  try {
+    const r = await api(url, {method:'POST', body: fd});
+    await boot();
+    toast(r.fichas_nuevas !== undefined
+      ? `${r.titulo}: ${r.fichas_nuevas} fichas nuevas, ${r.fichas_actualizadas} actualizadas`
+      : `${r.archivo} cargado`);
+  } catch(err){ toast(err.message); }
+};
+
+/* -------------------------------------------------------------- ajustes */
+function renderAjustes(){
+  S.topic = null; paintTree(); setRail(null);
+  const s = S.settings;
+  $('#ttl').textContent = 'Ajustes';
+  $('#sub').textContent = 'Ritmo de estudio y material';
+  $('#topActions').innerHTML = '';
+  $('#v-ajustes').innerHTML = `
+    <div class="panel">
+      <h3>Ritmo diario</h3>
+      <p>El límite de fichas nuevas es el freno importante: si entran más de las que
+         se pueden repasar, el atraso crece solo.</p>
+      <div class="field"><label>Fichas nuevas al día</label>
+        <input type="number" id="s-new" min="0" max="200" value="${s.new_limit}"></div>
+      <div class="field"><label>Repasos máximos al día</label>
+        <input type="number" id="s-rev" min="0" max="2000" value="${s.review_limit}"></div>
+      <div class="field"><label>Retención objetivo</label>
+        <input type="number" id="s-ret" min="0.70" max="0.97" step="0.01" value="${s.retention}"></div>
+      <button class="btn solid" id="saveS">Guardar</button>
+    </div>
+    <div class="panel">
+      <h3>Material</h3>
+      <p>Carpeta que se escanea para armar los temas. Las presentaciones se
+         consultan desde ahí; no se copian.</p>
+      <div class="field"><input type="text" id="s-dir" value="${esc(s.content_dir)}"></div>
+      <button class="btn" id="reS">Re-escanear</button>
+    </div>`;
+  $('#saveS').onclick = async () => {
+    S.settings = await post('/api/settings', {new_limit:+$('#s-new').value,
+      review_limit:+$('#s-rev').value, retention:+$('#s-ret').value});
+    toast('Guardado');
+  };
+  $('#reS').onclick = async () => {
+    try { const r = await post('/api/ingest', {content_dir: $('#s-dir').value});
+          await boot(); go('ajustes'); toast(`${r.temas} temas · ${r.materiales} materiales`); }
+    catch(e){ toast(e.message); }
+  };
+}
+
+boot();
+</script>
+</body>
+</html>

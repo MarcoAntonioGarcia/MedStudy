@@ -1,0 +1,422 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Control Glucémico en el Paciente Hospitalizado",
+  "autor": "Gloria Estefanía Ramírez Sánchez",
+  "fuentes": "ADA Standards of Care 2025 · Pasquel et al., Lancet Diabetes Endocrinol 2021 · Dhatariya & Umpierrez, Endotext 2024 · NICE-SUGAR, N Engl J Med 2009 · Lina-Surg, Ann Med 2019 · J Diabetes Investig 2020",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/CONTROL DE GLUCOSA EN PACIENTES HOSPITALIZADOS.pptx",
+  "resumen_html": [
+    "<h2>Contexto</h2>",
+    "<ul>",
+    "<li>En el hospitalizado, la <b>hiperglucemia, la hipoglucemia y la variabilidad de la glucosa</b> se asocian a <b>mayor morbilidad y mortalidad</b>. El manejo se facilita <b>identificando y tratando la hiperglucemia antes de los procedimientos electivos</b>.</li>",
+    "<li><b>Epidemiología:</b> en 2024 los CDC informaron <b>38.1 millones de adultos estadounidenses con diabetes</b> (<b>14.7%</b> de la población adulta). Las personas con diabetes tienen un <b>35% más de probabilidad de ser derivadas a cirugía electiva</b> y entre <b>3 y 4 veces más de ser hospitalizadas</b>. En 2020 hubo más de <b>7.86 millones de altas hospitalarias</b> de adultos con diabetes. En el mundo afecta a más de <b>537 millones</b>, con proyección de casi <b>800 millones (10.9%) para 2045</b>.</li>",
+    "<li><b>Prevalencia de hiperglucemia</b> en pacientes hospitalizados no críticos: <b>22 al 46%</b>.</li>",
+    "</ul>",
+    "<h3>Puntos importantes al ingreso</h3>",
+    "<ul>",
+    "<li><b>Solicitar HbA1c</b> a toda persona con diabetes o hiperglucemia (glucosa aleatoria <b>&gt;140 mg/dL</b>) <b>si no hay un resultado de los 3 meses previos</b>.</li>",
+    "<li>La evaluación inicial debe <b>indicar el tipo de diabetes</b>: tipo 1, tipo 2, gestacional, pancreatogénica, <b>hiperglucemia por estrés</b>, relacionada con medicamentos o con la nutrición (enteral o parenteral).</li>",
+    "<li>El tratamiento hospitalario y la planificación del alta son <b>más efectivos cuando se considera la glucemia previa al ingreso</b>.</li>",
+    "<li>La <b>educación sobre autocontrol</b> debe incluir dosificación y administración de medicamentos, control de la glucosa, y <b>reconocimiento y tratamiento de la hipoglucemia</b>.</li>",
+    "</ul>",
+    "<h2>Fisiopatología</h2>",
+    "<ul>",
+    "<li>La glucosa plasmática se mantiene entre <b>70 y 100 mg/dL</b> por un equilibrio entre la <b>producción hepática y renal</b> y la <b>utilización en tejidos periféricos</b>. Importa especialmente para la <b>función cardiovascular y del sistema nervioso central</b>, porque el <b>cerebro no puede sintetizar ni almacenar glucosa</b>.</li>",
+    "<li>La producción se hace por <b>gluconeogénesis</b> o <b>glucogenólisis</b>, <b>principalmente en el hígado</b> y en menor medida en los riñones. El exceso de glucosa <b>se polimeriza en glucógeno</b>, almacenado sobre todo en <b>hígado y músculo</b>.</li>",
+    "<li><b>La hiperglucemia se desarrolla por tres procesos:</b> <b>1) aumento de la gluconeogénesis</b>, <b>2) glucogenólisis acelerada</b> y <b>3) alteración de la utilización de glucosa por los tejidos periféricos</b>.</li>",
+    "</ul>",
+    "<h2>Definiciones</h2>",
+    "<div class='cols'><div>",
+    "<h3>Criterios diagnósticos de diabetes</h3>",
+    "<ul>",
+    "<li><b>HbA1c ≥6.5%</b> (≥48 mmol/mol).</li>",
+    "<li><b>Glucemia en ayunas ≥126 mg/dL</b> — ayuno definido como <b>ausencia de ingesta calórica durante al menos 8 horas</b>.</li>",
+    "<li><b>Glucosa a las 2 horas ≥200 mg/dL</b> en la curva de tolerancia oral, con carga de <b>75 g de glucosa anhidra</b>.</li>",
+    "<li><b>Glucemia aleatoria ≥200 mg/dL</b> en una persona con <b>síntomas clásicos de hiperglucemia o crisis hiperglucémica</b>.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Hiperglucemia hospitalaria</h3>",
+    "<ul>",
+    "<li><b>Glucosa &gt;140 mg/dL</b>. Una <b>HbA1c al ingreso ≥6.5%</b> sugiere que <b>la diabetes precedió a la hospitalización</b>.</li>",
+    "</ul>",
+    "<h3>Hipoglucemia</h3>",
+    "<ul>",
+    "<li><b>Nivel 1:</b> glucosa de <b>54–69 mg/dL</b>.</li>",
+    "<li><b>Nivel 2:</b> glucosa <b>&lt;54 mg/dL</b>, típicamente el umbral de los <b>síntomas neuroglucopénicos</b>.</li>",
+    "<li><b>Nivel 3:</b> evento clínico con <b>alteración del funcionamiento mental y/o físico que requiere asistencia de otra persona</b> para la recuperación.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h3>Hiperglucemia por estrés</h3>",
+    "<ul>",
+    "<li>Cualquier glucosa <b>&gt;140 mg/dL en pacientes sin antecedente previo de diabetes</b>. Generalmente <b>se resuelve al ceder la enfermedad aguda o el estrés quirúrgico</b>, pero <b>hasta el 60%</b> desarrolla <b>diabetes confirmada a los 6–12 meses del alta</b>.</li>",
+    "<li>A toda persona sin diabetes que se presente con enfermedad aguda debe hacérsele <b>glucosa capilar y cetonas en sangre u orina</b>. La <b>HbA1c</b> está indicada para <b>diferenciar la hiperglucemia inducida por estrés de una diabetes no diagnosticada</b>.</li>",
+    "</ul>",
+    "<h2>Objetivos glucémicos</h2>",
+    "<table><tr><th></th><th>Paciente no crítico</th><th>Paciente de UCI</th></tr>",
+    "<tr><td><b>Umbral para iniciar o intensificar</b></td><td colspan='2'><b>≥180 mg/dL</b>, confirmado <b>en dos ocasiones en 24 horas</b></td></tr>",
+    "<tr><td><b>Objetivo una vez iniciada la terapia</b></td><td><b>140–180 mg/dL</b></td><td><b>110–180 mg/dL</b>, si se alcanza <b>sin hipoglucemia significativa</b></td></tr>",
+    "</table>",
+    "<ul>",
+    "<li>Una glucosa <b>en ayunas &lt;100 mg/dL</b> es <b>predictora de hipoglucemia en las próximas 24 horas</b>.</li>",
+    "<li>Cifras de hasta <b>250 mg/dL</b> pueden ser aceptables en poblaciones seleccionadas: <b>enfermos terminales con corta esperanza de vida</b>, <b>insuficiencia renal avanzada o en diálisis</b>, <b>alto riesgo de hipoglucemia</b> o <b>excursiones glucémicas lábiles</b>.</li>",
+    "</ul>",
+    "<h3>Ensayo NICE-SUGAR</h3>",
+    "<ul>",
+    "<li><b>Objetivo:</b> comprobar si el <b>control intensivo de la glucosa reduce la mortalidad a 90 días</b>. Seguimiento de <b>diciembre de 2004 a noviembre de 2008</b>, con <b>6104 pacientes aleatorizados</b>: <b>3054 a control intensivo</b> y <b>3050 a control convencional</b>.</li>",
+    "<li><b>Resultado principal:</b> murieron <b>829 (27.5%) con control intensivo</b> frente a <b>751 (24.9%) con control convencional</b> — <b>OR 1.14 (IC 1.02–1.28; p = 0.02)</b>. La supervivencia a 90 días fue <b>mayor con el control convencional</b>.</li>",
+    "<li><b>Hipoglucemia grave</b> (≤40 mg/dL): <b>206 de 3016 (6.8%) con control intensivo</b> frente a <b>15 de 3014 (0.5%)</b> con convencional (p &lt;0.001).</li>",
+    "<li>El efecto <b>no difirió</b> entre pacientes quirúrgicos y médicos (OR 1.31 y 1.07; p = 0.10), ni hubo diferencias en <b>días de UCI, de hospital, de ventilación mecánica ni de terapia de reemplazo renal</b>.</li>",
+    "</ul>",
+    "<h2>Tratamiento</h2>",
+    "<p><b>Factores predictivos para alcanzar los objetivos:</b> el <b>uso y las dosis previas de insulina o terapia no insulínica en el hogar</b>, el <b>nivel esperado de resistencia a la insulina</b>, la <b>HbA1c previa</b>, los <b>niveles actuales de glucosa</b>, la <b>ingesta oral</b> y la <b>duración de la diabetes</b>.</p>",
+    "<div class='cols'><div>",
+    "<h3>Esquemas de insulina</h3>",
+    "<ul>",
+    "<li><b>Basal-bolo:</b> insulina basal más <b>tres inyecciones de insulina de acción rápida al día</b>.</li>",
+    "<li><b>Basal-plus:</b> insulina basal y <b>adición gradual de una a tres inyecciones</b> de acción rápida antes de las comidas.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Según la ingesta oral (no crítico)</h3>",
+    "<ul>",
+    "<li><b>Ingesta oral escasa o nula:</b> <b>insulina basal</b> + <b>bolo de corrección</b>.</li>",
+    "<li><b>Ingesta oral adecuada:</b> <b>basal + prandial + corrección</b>.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h3>Dosificación</h3>",
+    "<table><tr><th>Situación</th><th>Pauta</th></tr>",
+    "<tr><td><b>Hiperglucemia en el no crítico</b> (con o sin DM2 conocida)</td><td>Dosis diaria total de <b>0.3–0.5 U/kg</b>, repartida en <b>insulina basal (1–2 veces al día)</b> y <b>acción rápida dividida tres veces al día antes de las comidas</b>. Las <b>dosis más bajas</b> se reservan para el <b>mayor riesgo de hipoglucemia</b>, como los <b>mayores de 65 años</b> y quienes no tienen experiencia con insulina</td></tr>",
+    "<tr><td><b>DM no tratada previamente con insulina</b></td><td><b>Insulina de corrección</b> (análogo de acción rápida o insulina regular según la glucosa capilar) o <b>terapia programada</b> basal o basal-bolo. El basal-bolo combina una <b>basal de acción intermedia o prolongada</b> con <b>dosis prandiales de acción rápida</b> o <b>dosis de corrección cada 4–6 horas</b>, usando el <b>conteo de carbohidratos</b> para las prandiales</td></tr>",
+    "<tr><td><b>Hiperglucemia leve, ingesta disminuida o cirugía</b></td><td><b>Basal plus:</b> dosis única de <b>insulina basal a 0.1–0.25 U/kg/día</b> más <b>dosis correctivas</b> antes de las comidas o <b>cada 6 h si no hay ingesta oral</b></td></tr>",
+    "<tr><td><b>DM ya tratada con insulina en casa</b></td><td>Si usaba <b>≥0.6 U/kg/día</b>, se recomienda <b>reducir un 20% la dosis diaria total</b> durante el ingreso, para <b>prevenir la hipoglucemia si la ingesta oral es deficiente</b>. Objetivos: <b>&lt;140 mg/dL antes de las comidas</b> y <b>&lt;180 mg/dL aleatoria</b></td></tr>",
+    "<tr><td><b>Hiperglucemia por glucocorticoides y nutrición enteral</b></td><td><b>Insulina NPH</b> o esquemas <b>basal-bolo</b>. La insulina debe <b>coincidir con el modo de entrega de la nutrición</b> (continua, en bolos o cíclica). Por cada <b>reducción de 10 mg de prednisona</b>, la <b>NPH matutina</b> suele bajarse <b>0.1 UI/kg</b> o, de forma estándar, un <b>20% de la dosis total</b></td></tr>",
+    "<tr><td><b>Paciente crítico</b></td><td><b>Infusión continua de insulina intravenosa</b>, con <b>ajustes predefinidos de la velocidad de infusión</b> en función de las fluctuaciones glucémicas y de las velocidades previas y actuales</td></tr>",
+    "</table>",
+    "<h3>Transición de insulina intravenosa a subcutánea</h3>",
+    "<ul><li>Administrar una <b>dosis baja (0.15–0.3 U/kg) de análogo de insulina basal</b> además de la infusión intravenosa, <b>2 horas antes de suspenderla</b>. Reduce la <b>duración de la infusión</b> y la <b>estancia hospitalaria</b>, y <b>previene la hiperglucemia de rebote sin aumentar el riesgo de hipoglucemia</b>, al dar tiempo a que actúe la insulina subcutánea.</li></ul>",
+    "<h2>Terapias no insulínicas</h2>",
+    "<ul>",
+    "<li><b>Inhibidores de DPP-4 (gliptinas)</b> con insulina de corrección, en pacientes seleccionados con <b>DM2 e hiperglucemia leve</b>: <b>HbA1c previa &lt;7.5%</b>, <b>glucosa &lt;180 mg/dL</b> y <b>dosis diaria previa de insulina &lt;0.6 U/kg</b>. Con glucosa al ingreso <b>&lt;180–200 mg/dL</b> el riesgo de hipoglucemia es reducido. Fármacos: <b>sitagliptina, saxagliptina, linagliptina y vildagliptina</b>. <b>La saxagliptina puede empeorar o causar insuficiencia cardiaca</b>: se recomienda <b>interrumpir saxagliptina y alogliptina</b> en quien la desarrolle.</li>",
+    "<li><b>DM2 con insuficiencia cardiaca:</b> <b>inhibidores de SGLT2</b> —<b>dapagliflozina, empagliflozina, canagliflozina</b>— al inicio y al alta, si no hay contraindicaciones y tras la recuperación de la enfermedad aguda.</li>",
+    "</ul>",
+    "<h3>Ensayos de terapia no insulínica</h3>",
+    "<table><tr><th>Estudio</th><th>Diseño</th><th>Resultado</th></tr>",
+    "<tr><td><b>Basal-plus + dulaglutida</b><br>J Diabetes Investig 2020</td><td>Piloto prospectivo, aleatorizado y controlado. <b>54 pacientes</b> no críticos, comparando <b>basal-plus</b> frente a <b>basal-plus + dulaglutida</b> (GLP-1), midiendo la glucosa antes y después de cada comida durante <b>7 días</b></td><td>El <b>rango ideal de glucosa hospitalaria pasó del 44% al 56%</b> (p &lt;0.001); <b>menos glucosas &gt;240 y &lt;70 mg/dL</b> (p &lt;0.001); glucosa media <b>183 → 162 mg/dL</b> (p &lt;0.05); menor <b>desviación estándar</b>, <b>coeficiente de variación</b> y <b>dosis total de insulina regular</b>. <b>Sin efectos secundarios significativos</b></td></tr>",
+    "<tr><td><b>Lina-Surg</b><br>Ann Med 2019</td><td>Pacientes con <b>DM2 sometidos a cirugía no cardiaca</b>, con <b>HbA1c al ingreso &lt;8%</b>, glucosa &lt;240 mg/dL y <b>sin tratamientos inyectables en casa</b>. Regímenes <b>basal-bolo</b> frente a <b>linagliptina-basal</b>, entre enero de 2016 y diciembre de 2017</td><td>Ambos regímenes lograron <b>mejoras similares</b> en la glucosa media diaria <b>después del primer día</b>. La <b>estancia hospitalaria fue similar</b>, de 4 a 10 días (el 98.3% entre 4 y 8 días)</td></tr>",
+    "</table>",
+    "<h2>Nutricion, monitorizacion e hipoglucemia</h2>",
+    "<h3>Nutrición enteral y parenteral</h3>",
+    "<ul>",
+    "<li>Las prescripciones de insulina deben cubrir las necesidades <b>basales, prandiales y de corrección</b>. La mayoría de los adultos con insulina basal <b>continúan su dosis basal</b>, y el componente nutricional se calcula como <b>1 unidad de insulina por cada 10–15 g de carbohidratos</b> de las fórmulas enterales y parenterales.</li>",
+    "<li>Para cubrirlo son razonables la <b>NPH dos o tres veces al día (cada 8 o 12 h)</b> o la <b>insulina regular cada 6 h</b>.</li>",
+    "</ul>",
+    "<h3>Terapia nutricional</h3>",
+    "<ul><li><b>Objetivos:</b> aportar las <b>calorías adecuadas</b> para las demandas metabólicas, <b>optimizar los resultados glucémicos</b>, atender las <b>preferencias alimentarias</b> y <b>facilitar el plan de alta</b>. Se prefieren los <b>planes con carbohidratos controlados</b>, en los que se calcula la cantidad de carbohidratos de cada bandeja, porque <b>facilitan hacer coincidir la insulina prandial con los carbohidratos administrados</b>. Todo debe <b>individualizarse</b>.</li></ul>",
+    "<h3>Monitorización</h3>",
+    "<ul>",
+    "<li><b>Si come:</b> glucosa capilar <b>antes de las comidas</b>. <b>En ayuno:</b> <b>cada 4 a 6 horas</b>.</li>",
+    "<li>Todo resultado que <b>no se correlacione con el estado clínico</b> debe confirmarse <b>repitiendo la prueba</b> y midiendo una <b>muestra de laboratorio</b> si el segundo resultado es similar — sobre todo en la <b>hipoglucemia asintomática</b>.</li>",
+    "</ul>",
+    "<h3>Hipoglucemia</h3>",
+    "<ul>",
+    "<li>Es una <b>consecuencia grave</b> del metabolismo desregulado y del tratamiento, se asocia a <b>mayor mortalidad</b> y a menudo es <b>indicador de enfermedad subyacente</b>. Los planes deben <b>revisarse y modificarse</b> cuando se documente una glucosa <b>&lt;70 mg/dL</b>.</li>",
+    "<li><b>Causas iatrogénicas:</b> <b>reducción repentina de corticosteroides</b> · ingesta oral reducida · vómitos · <b>momento inadecuado de la insulina rápida respecto a las comidas</b> · reducción de la velocidad de infusión de dextrosa · <b>interrupción inesperada de la alimentación enteral o parenteral</b> · controles de glucosa retrasados o no realizados · <b>capacidad alterada del paciente para informar síntomas</b>.</li>",
+    "<li><b>La hipoglucemia predice hipoglucemia:</b> un episodio grave aumenta el riesgo del siguiente por <b>alteración de la contrarregulación</b>. El <b>84%</b> de quienes tuvieron un episodio grave <b>ya habían tenido otro (&lt;70 mg/dL) en el mismo ingreso</b>; el <b>78%</b> tomaba <b>insulina basal</b>, y la incidencia <b>hace pico entre la medianoche y las 6:00 a. m.</b></li>",
+    "</ul>",
+    "<table><tr><th>Nivel 1 y 2 — glucosa &lt;70 pero ≥54 mg/dL</th><th>Nivel 3 — glucosa &lt;54 mg/dL o paciente inconsciente</th></tr>",
+    "<tr><td><b>Regla 15/15</b> si está consciente y tolera vía oral: <b>15 g de carbohidratos simples</b> —glucosa pura, 4 onzas de jugo de fruta o pastillas de glucosa—, <b>esperar 15 minutos</b> y <b>reevaluar la glucemia capilar</b>. <b>Repetir si sigue por debajo de 70 mg/dL</b></td><td><b>Con acceso IV:</b> <b>25 ml de dextrosa al 50%</b> (<b>12.5 g de glucosa</b>) en <b>bolo intravenoso lento</b>.<br><b>Sin acceso IV:</b> <b>1 mg de glucagón</b> intramuscular o subcutáneo; al recuperar la consciencia y poder tragar, <b>carbohidratos orales para evitar la recaída</b></td></tr>",
+    "</table>",
+    "<p>Todo episodio intrahospitalario debe <b>documentarse</b> y el plan revisarse, evaluando la necesidad de <b>ajustar dosis de insulina o tasas de infusión</b>.</p>",
+    "<div class='extra'>NICE-SUGAR es el ensayo que cerró la puerta al control glucémico estricto en UCI, y conviene retener por qué: con el objetivo intensivo hubo <b>más muertes</b> (27.5% frente a 24.9%) y, sobre todo, <b>catorce veces más hipoglucemias graves</b> (6.8% frente a 0.5%). El daño no vino de la hiperglucemia que se evitó, sino de la <b>hipoglucemia que se provocó</b> — por eso el objetivo actual empieza en 140 y no en 110, y por eso el umbral para actuar exige <b>dos determinaciones</b>, no una.</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Qué tres alteraciones glucémicas se asocian a resultados adversos en el hospitalizado?",
+      "r": "La <b>hiperglucemia</b>, la <b>hipoglucemia</b> y la <b>variabilidad de la glucosa</b>, todas con aumento de la <b>morbilidad y la mortalidad</b>."
+    },
+    {
+      "p": "¿Cuántos adultos con diabetes hay en Estados Unidos y qué porcentaje representan?",
+      "r": "<b>38.1 millones</b>, el <b>14.7% de la población adulta</b>, según los CDC en 2024."
+    },
+    {
+      "p": "¿Cuánto más se hospitalizan y operan las personas con diabetes?",
+      "r": "Tienen un <b>35% más de probabilidades de ser derivadas a operaciones electivas</b> y entre <b>3 y 4 veces más de ser hospitalizadas</b>."
+    },
+    {
+      "p": "¿A cuántos adultos afecta la diabetes en el mundo y cuál es la proyección para 2045?",
+      "r": "A más de <b>537 millones</b>, con proyección de casi <b>800 millones</b> —el <b>10.9%</b> de la población adulta— <b>para 2045</b>."
+    },
+    {
+      "p": "¿Cuál es la prevalencia de hiperglucemia en pacientes hospitalizados no críticos?",
+      "r": "Del <b>22 al 46%</b>."
+    },
+    {
+      "p": "¿A quién y cuándo debe solicitarse una HbA1c al ingreso hospitalario?",
+      "r": "A <b>toda persona con diabetes o hiperglucemia</b> —glucosa aleatoria <b>mayor de 140 mg/dL</b>— <b>si no se dispone de un resultado de los 3 meses previos</b>."
+    },
+    {
+      "p": "¿Qué debe indicar la evaluación inicial del paciente hospitalizado con hiperglucemia?",
+      "r": "El <b>tipo de diabetes</b>: tipo 1, tipo 2, gestacional, pancreatogénica, <b>hiperglucemia por estrés</b>, relacionada con medicamentos o relacionada con la nutrición (enteral o parenteral)."
+    },
+    {
+      "p": "¿Qué debe incluir la educación sobre autocontrol antes del alta?",
+      "r": "La <b>dosificación y administración de medicamentos</b>, el <b>control de la glucosa</b> y el <b>reconocimiento y tratamiento de la hipoglucemia</b>."
+    },
+    {
+      "p": "¿Entre qué cifras se mantiene la glucosa plasmática normal y por qué importa?",
+      "r": "Entre <b>70 y 100 mg/dL</b>. Importa especialmente para la <b>función cardiovascular y del sistema nervioso central</b>, porque el <b>cerebro no puede sintetizar ni almacenar glucosa</b>."
+    },
+    {
+      "p": "¿Por qué vías y en qué órganos se produce la glucosa?",
+      "r": "Por <b>gluconeogénesis</b> o <b>glucogenólisis</b>, <b>principalmente en el hígado</b> y en menor medida en los <b>riñones</b>."
+    },
+    {
+      "p": "¿Dónde se almacena el exceso de glucosa y en qué forma?",
+      "r": "Se <b>polimeriza en glucógeno</b>, almacenado principalmente en el <b>hígado y el músculo</b>."
+    },
+    {
+      "p": "¿Por qué tres procesos se desarrolla la hiperglucemia?",
+      "r": "<b>1) Aumento de la gluconeogénesis</b>, <b>2) glucogenólisis acelerada</b> y <b>3) alteración de la utilización de glucosa por los tejidos periféricos</b>."
+    },
+    {
+      "p": "¿Cuáles son los criterios diagnósticos de diabetes por HbA1c y glucemia en ayunas?",
+      "r": "<b>HbA1c ≥6.5%</b> (≥48 mmol/mol) y <b>glucemia en ayunas ≥126 mg/dL</b>, definiendo ayuno como <b>ausencia de ingesta calórica durante al menos 8 horas</b>."
+    },
+    {
+      "p": "¿Cuál es el criterio diagnóstico de diabetes por curva de tolerancia oral?",
+      "r": "Una <b>glucosa a las 2 horas ≥200 mg/dL</b>, con una carga de <b>75 g de glucosa anhidra</b> disuelta en agua, según lo descrito por la OMS."
+    },
+    {
+      "p": "¿Cuándo una glucemia aleatoria es diagnóstica de diabetes?",
+      "r": "Cuando es <b>≥200 mg/dL</b> en una persona con <b>síntomas clásicos de hiperglucemia o crisis hiperglucémica</b>. Aleatoria significa en cualquier momento, sin importar el tiempo desde la última comida."
+    },
+    {
+      "p": "¿Qué cifra define la hiperglucemia en el paciente hospitalizado?",
+      "r": "Una glucosa <b>mayor de 140 mg/dL</b>."
+    },
+    {
+      "p": "¿Qué sugiere una HbA1c al ingreso igual o mayor de 6.5%?",
+      "r": "Que el <b>inicio de la diabetes precedió a la hospitalización</b>."
+    },
+    {
+      "p": "¿Cómo se define la hiperglucemia por estrés o relacionada con el hospital?",
+      "r": "Cualquier concentración de glucosa <b>mayor de 140 mg/dL</b> en <b>pacientes sin antecedentes previos de diabetes</b>."
+    },
+    {
+      "p": "¿Qué evolución tiene la hiperglucemia por estrés tras el alta?",
+      "r": "Generalmente <b>se resuelve al disminuir la enfermedad aguda o el estrés quirúrgico</b>, pero <b>hasta el 60%</b> desarrolla <b>diabetes confirmada a los 6–12 meses del alta</b>."
+    },
+    {
+      "p": "¿Qué determinaciones se hacen a una persona sin diabetes que ingresa con enfermedad aguda?",
+      "r": "Una <b>glucosa capilar</b> y una <b>medición de cetonas en sangre u orina</b>."
+    },
+    {
+      "p": "¿Para qué sirve la HbA1c en una persona con hiperglucemia sin antecedente de diabetes?",
+      "r": "Para <b>diferenciar entre hiperglucemia inducida por estrés y diabetes no diagnosticada previamente</b>."
+    },
+    {
+      "p": "¿Cómo se define la hipoglucemia de nivel 1?",
+      "r": "Una glucosa de <b>54 a 69 mg/dL</b> (3.0–3.8 mmol/L)."
+    },
+    {
+      "p": "¿Cómo se define la hipoglucemia de nivel 2 y qué la caracteriza?",
+      "r": "Una glucosa <b>menor de 54 mg/dL</b>, que es típicamente el <b>umbral de los síntomas neuroglucopénicos</b>."
+    },
+    {
+      "p": "¿Cómo se define la hipoglucemia de nivel 3?",
+      "r": "Un <b>evento clínico</b> con <b>alteración del funcionamiento mental y/o físico</b> que <b>requiere la asistencia de otra persona</b> para la recuperación."
+    },
+    {
+      "p": "¿A partir de qué umbral se inicia o intensifica el tratamiento de la hiperglucemia hospitalaria?",
+      "r": "A partir de <b>180 mg/dL o más</b>, <b>confirmado en dos ocasiones en 24 horas</b>."
+    },
+    {
+      "p": "¿Cuál es el objetivo glucémico una vez iniciada la terapia en el paciente no crítico?",
+      "r": "<b>140 a 180 mg/dL</b> (7.8–10.0 mmol/L)."
+    },
+    {
+      "p": "¿Cuál es el objetivo glucémico en el paciente de UCI?",
+      "r": "<b>110 a 180 mg/dL</b>, siempre que pueda alcanzarse <b>sin hipoglucemia significativa</b>."
+    },
+    {
+      "p": "¿Qué cifra de glucosa en ayunas predice hipoglucemia en las próximas 24 horas?",
+      "r": "Una glucosa en ayunas <b>menor de 100 mg/dL</b>."
+    },
+    {
+      "p": "¿En qué pacientes pueden aceptarse glucemias de hasta 250 mg/dL?",
+      "r": "En <b>individuos terminales con corta esperanza de vida</b>, <b>insuficiencia renal avanzada o en diálisis</b>, <b>alto riesgo de hipoglucemia</b> y <b>excursiones glucémicas lábiles</b>."
+    },
+    {
+      "p": "¿Cuál era la hipótesis del ensayo NICE-SUGAR y cuántos pacientes incluyó?",
+      "r": "Que el <b>control intensivo de la glucosa reduce la mortalidad a los 90 días</b>. Aleatorizó <b>6104 pacientes</b>: 3054 a control intensivo y 3050 a convencional, entre diciembre de 2004 y noviembre de 2008."
+    },
+    {
+      "p": "¿Cuál fue el resultado de mortalidad del ensayo NICE-SUGAR?",
+      "r": "Murieron <b>829 (27.5%) con control intensivo</b> frente a <b>751 (24.9%) con control convencional</b>: <b>OR 1.14</b> (IC 95% 1.02–1.28; <b>p = 0.02</b>). La supervivencia a 90 días fue <b>mayor con el control convencional</b>."
+    },
+    {
+      "p": "¿Cuánta hipoglucemia grave produjo el control intensivo en NICE-SUGAR?",
+      "r": "<b>206 de 3016 pacientes (6.8%)</b> frente a <b>15 de 3014 (0.5%)</b> con el convencional (p &lt;0.001). Hipoglucemia grave se definió como glucosa <b>≤40 mg/dL</b>."
+    },
+    {
+      "p": "¿Difirió el efecto del control intensivo entre pacientes quirúrgicos y médicos en NICE-SUGAR?",
+      "r": "<b>No significativamente</b>: OR de muerte de <b>1.31</b> en quirúrgicos y <b>1.07</b> en médicos (p = 0.10)."
+    },
+    {
+      "p": "¿Hubo diferencias en estancia o soporte entre los grupos de NICE-SUGAR?",
+      "r": "<b>No.</b> No hubo diferencias significativas en la mediana de <b>días en UCI</b>, de <b>hospital</b>, de <b>ventilación mecánica</b> ni de <b>terapia de reemplazo renal</b>."
+    },
+    {
+      "p": "¿Qué factores predicen alcanzar los objetivos glucémicos en el hospital?",
+      "r": "El <b>uso y las dosis previas de insulina o terapia no insulínica en casa</b>, el <b>nivel esperado de resistencia a la insulina</b>, la <b>HbA1c previa</b>, los <b>niveles actuales de glucosa</b>, la <b>ingesta oral</b> y la <b>duración de la diabetes</b>."
+    },
+    {
+      "p": "¿En qué consiste la terapia basal-bolo?",
+      "r": "En <b>insulina basal más tres inyecciones de insulina de acción rápida al día</b>."
+    },
+    {
+      "p": "¿En qué consiste la terapia basal-plus?",
+      "r": "En <b>insulina basal más la adición gradual de una a tres inyecciones de insulina de acción rápida</b> antes de las comidas."
+    },
+    {
+      "p": "En el paciente no crítico con ingesta oral escasa o nula, ¿qué esquema se usa?",
+      "r": "<b>Insulina basal</b> más un <b>bolo de corrección</b>."
+    },
+    {
+      "p": "En el paciente no crítico con ingesta oral adecuada, ¿qué esquema se usa?",
+      "r": "<b>Insulina basal, prandial y de corrección</b>."
+    },
+    {
+      "p": "¿Cuál es la dosis diaria total de insulina en el hospitalizado no crítico con hiperglucemia?",
+      "r": "Entre <b>0.3 y 0.5 U/kg</b>, repartida en <b>insulina basal una o dos veces al día</b> e <b>insulina de acción rápida dividida en tres tomas antes de las comidas</b>."
+    },
+    {
+      "p": "¿A quién se reservan las dosis más bajas de insulina y por qué?",
+      "r": "A los pacientes con <b>mayor riesgo de hipoglucemia</b>, es decir los <b>mayores de 65 años</b> y quienes <b>no tienen experiencia con insulina</b> o venían con dosis bajas."
+    },
+    {
+      "p": "¿Qué opciones hay en un diabético no tratado previamente con insulina?",
+      "r": "<b>Insulina de corrección</b> —análogo de acción rápida o insulina regular según la glucosa capilar— o <b>terapia de insulina programada</b>, basal o basal-bolo."
+    },
+    {
+      "p": "¿Qué combina el esquema basal-bolo?",
+      "r": "Una <b>insulina basal de acción intermedia o prolongada</b> con <b>dosis prandiales de acción rápida</b>, o con <b>dosis de corrección cada 4 a 6 horas</b>, usando el <b>conteo de carbohidratos</b> para calcular las prandiales."
+    },
+    {
+      "p": "¿Cuál es la pauta basal plus y para quién se indica?",
+      "r": "Una <b>dosis única de insulina basal de 0.1 a 0.25 U/kg/día</b> más <b>dosis correctivas</b> antes de las comidas o <b>cada 6 horas si no hay ingesta oral</b>. Se indica en <b>hiperglucemia leve</b>, <b>ingesta oral disminuida</b> y <b>pacientes sometidos a cirugía</b>."
+    },
+    {
+      "p": "En un diabético que ya usaba insulina en casa, ¿cómo se ajusta la dosis al ingresar?",
+      "r": "Si usaba <b>0.6 U/kg/día o más</b>, se recomienda una <b>reducción del 20% de la dosis diaria total</b> durante el ingreso, para <b>prevenir la hipoglucemia</b> si la ingesta oral es deficiente."
+    },
+    {
+      "p": "¿Cuáles son los objetivos de glucosa preprandial y aleatoria en el diabético tratado con insulina?",
+      "r": "<b>Menos de 140 mg/dL antes de las comidas</b> y <b>menos de 180 mg/dL en determinación aleatoria</b>."
+    },
+    {
+      "p": "¿Qué insulina se usa en la hiperglucemia asociada a glucocorticoides y en la nutrición enteral?",
+      "r": "La <b>insulina NPH</b> o los esquemas <b>basal-bolo</b>. La insulina debe <b>coincidir con el modo de entrega de la nutrición</b>: continua, en bolos o cíclica."
+    },
+    {
+      "p": "¿Cómo se ajusta la insulina NPH al reducir la prednisona?",
+      "r": "Por cada <b>reducción de 10 mg de prednisona</b>, la <b>NPH matutina</b> suele disminuirse <b>0.1 UI/kg</b> o, de forma estándar, un <b>20% de la dosis total de insulina</b>."
+    },
+    {
+      "p": "¿Cuál es el tratamiento recomendado en el paciente crítico?",
+      "r": "La <b>infusión continua de insulina intravenosa</b>, con <b>ajustes predefinidos de la velocidad de infusión</b> en función de las fluctuaciones glucémicas y de las velocidades de infusión pasadas y presentes."
+    },
+    {
+      "p": "¿Cómo se hace la transición de insulina intravenosa a subcutánea?",
+      "r": "Administrando una <b>dosis baja de 0.15 a 0.3 U/kg de análogo de insulina basal</b> además de la infusión, <b>2 horas antes de suspenderla</b>."
+    },
+    {
+      "p": "¿Qué se consigue solapando la insulina basal subcutánea antes de retirar la infusión?",
+      "r": "<b>Reducir la duración de la infusión y la estancia hospitalaria</b> y <b>prevenir la hiperglucemia de rebote sin aumentar el riesgo de hipoglucemia</b>, dando tiempo a que actúe la insulina subcutánea."
+    },
+    {
+      "p": "¿En qué pacientes pueden usarse los inhibidores de DPP-4 con insulina de corrección?",
+      "r": "En pacientes seleccionados con <b>diabetes tipo 2 e hiperglucemia leve</b>: <b>HbA1c previa menor de 7.5%</b>, <b>glucosa menor de 180 mg/dL</b> y <b>dosis diaria total previa de insulina menor de 0.6 U/kg</b>."
+    },
+    {
+      "p": "¿Cuáles son las gliptinas mencionadas y cuál es el problema de la saxagliptina?",
+      "r": "<b>Sitagliptina, saxagliptina, linagliptina y vildagliptina</b>. La <b>saxagliptina puede empeorar o causar el desarrollo de insuficiencia cardiaca</b>; se recomienda <b>interrumpir saxagliptina y alogliptina</b> en quien la desarrolle."
+    },
+    {
+      "p": "¿Qué fármacos se recomiendan en la diabetes tipo 2 con insuficiencia cardiaca?",
+      "r": "Los <b>inhibidores del cotransportador sodio-glucosa 2 (SGLT2)</b>: <b>dapagliflozina, empagliflozina y canagliflozina</b>, al inicio y al alta, si no hay contraindicaciones y tras la recuperación de la enfermedad aguda."
+    },
+    {
+      "p": "¿Qué demostró el estudio de basal-plus más dulaglutida en pacientes no críticos?",
+      "r": "Que el <b>rango ideal de glucosa hospitalaria subió del 44% al 56%</b> (p &lt;0.001), con <b>menos glucosas mayores de 240 y menores de 70 mg/dL</b>, glucosa media de <b>183 a 162 mg/dL</b>, y menor <b>desviación estándar, coeficiente de variación y dosis total de insulina regular</b>. <b>Sin efectos secundarios significativos</b>."
+    },
+    {
+      "p": "¿Qué encontró el estudio Lina-Surg?",
+      "r": "Que tanto el régimen de <b>linagliptina-basal</b> como el <b>basal-bolo</b> lograron <b>mejoras similares</b> en la glucosa media diaria <b>después del primer día de terapia</b>, con una <b>estancia hospitalaria similar</b> de 4 a 10 días."
+    },
+    {
+      "p": "¿Qué pacientes se incluyeron en el estudio Lina-Surg?",
+      "r": "Pacientes con <b>diabetes tipo 2 sometidos a cirugía no cardiaca</b>, con <b>HbA1c al ingreso menor de 8%</b>, glucosa menor de 240 mg/dL y <b>sin tratamientos inyectables en el hogar</b>."
+    },
+    {
+      "p": "¿Cómo se calcula la insulina para el componente nutricional de la nutrición enteral o parenteral?",
+      "r": "<b>1 unidad de insulina por cada 10–15 g de carbohidratos</b> de la fórmula. La mayoría de los adultos con insulina basal <b>continúan su dosis basal</b>."
+    },
+    {
+      "p": "¿Qué esquemas cubren razonablemente el componente nutricional de la nutrición enteral?",
+      "r": "<b>Insulina NPH dos o tres veces al día</b> (cada 8 o 12 horas) o <b>insulina regular cada 6 horas</b>."
+    },
+    {
+      "p": "¿Con qué frecuencia se monitoriza la glucosa según el paciente coma o esté en ayuno?",
+      "r": "<b>Si come:</b> glucosa capilar <b>antes de las comidas</b>. <b>En ayuno:</b> <b>cada 4 a 6 horas</b>."
+    },
+    {
+      "p": "¿Qué se hace ante un resultado de glucosa que no se correlaciona con el estado clínico?",
+      "r": "<b>Repetir la prueba</b> y, si el segundo resultado es similar, <b>medir una muestra en el laboratorio clínico</b> — particularmente en la <b>hipoglucemia asintomática</b>."
+    },
+    {
+      "p": "¿Por qué es grave la hipoglucemia en el paciente hospitalizado?",
+      "r": "Porque se asocia a <b>mayor mortalidad</b> y a menudo es un <b>indicador de enfermedad subyacente</b>. Es imperativo minimizarla durante la hospitalización."
+    },
+    {
+      "p": "¿A partir de qué cifra debe revisarse el plan de tratamiento por hipoglucemia?",
+      "r": "Cuando se documente una glucosa <b>menor de 70 mg/dL</b>."
+    },
+    {
+      "p": "¿Cuáles son las causas de hipoglucemia iatrogénica en el hospital?",
+      "r": "<b>Reducción repentina de corticosteroides</b>, <b>ingesta oral reducida</b>, <b>vómitos</b>, <b>momento inadecuado de la insulina rápida respecto a las comidas</b>, <b>reducción de la infusión de dextrosa</b>, <b>interrupción inesperada de la alimentación enteral o parenteral</b>, <b>controles de glucosa retrasados o no realizados</b> y <b>capacidad alterada del paciente para informar síntomas</b>."
+    },
+    {
+      "p": "¿Por qué un episodio de hipoglucemia grave predice el siguiente?",
+      "r": "Por la <b>alteración de la contrarregulación</b>. El <b>84%</b> de quienes tuvieron un episodio grave <b>ya habían tenido otro (&lt;70 mg/dL) durante la misma hospitalización</b>."
+    },
+    {
+      "p": "¿En qué franja horaria hace pico la hipoglucemia hospitalaria y en qué pacientes?",
+      "r": "<b>Entre la medianoche y las 6:00 de la mañana</b>. El <b>78%</b> de los afectados tomaba <b>insulina basal</b>."
+    },
+    {
+      "p": "¿En qué consiste la regla 15/15 y cuándo se aplica?",
+      "r": "En administrar <b>15 g de carbohidratos simples</b> —glucosa pura, 4 onzas de jugo de fruta o pastillas de glucosa—, <b>esperar 15 minutos</b> y <b>reevaluar la glucemia capilar</b>, repitiendo si sigue por debajo de 70 mg/dL. Se aplica en la <b>hipoglucemia de nivel 1 y 2</b> si el paciente <b>está consciente y tolera la vía oral</b>."
+    },
+    {
+      "p": "¿Cómo se trata la hipoglucemia de nivel 3 con acceso intravenoso?",
+      "r": "Con <b>25 ml de dextrosa al 50%</b> —equivalente a <b>12.5 g de glucosa</b>— en <b>bolo intravenoso lento</b>."
+    },
+    {
+      "p": "¿Cómo se trata la hipoglucemia de nivel 3 sin acceso intravenoso?",
+      "r": "Con <b>1 mg de glucagón</b> intramuscular o subcutáneo. Al recuperar la consciencia y poder tragar, se dan <b>carbohidratos orales para evitar la recaída</b>."
+    },
+    {
+      "p": "¿Cuáles son los objetivos de la terapia nutricional en el hospitalizado con diabetes?",
+      "r": "Aportar las <b>calorías adecuadas</b> para las demandas metabólicas, <b>optimizar los resultados glucémicos</b>, atender las <b>preferencias alimentarias personales</b> y <b>facilitar la creación de un plan de alta</b>."
+    },
+    {
+      "p": "¿Por qué se prefieren los planes de alimentación con carbohidratos controlados?",
+      "r": "Porque al <b>calcular la cantidad de carbohidratos de cada bandeja</b>, <b>facilitan hacer coincidir la dosis de insulina prandial con los carbohidratos administrados</b>."
+    }
+  ],
+  "cloze": [
+    "En el paciente hospitalizado se inicia o intensifica el tratamiento a partir de {{c1::180 mg/dL}} confirmado en {{c2::dos}} ocasiones en 24 h, con objetivo de {{c3::140–180 mg/dL}} en el no crítico y {{c4::110–180 mg/dL}} en UCI.",
+    "La hipoglucemia de nivel 1 es de {{c1::54–69 mg/dL}}, la de nivel 2 es menor de {{c2::54 mg/dL}}, y la de nivel 3 requiere {{c3::asistencia de otra persona}}.",
+    "En NICE-SUGAR el control intensivo produjo más mortalidad ({{c1::27.5%}} frente a 24.9%) y catorce veces más hipoglucemia grave ({{c2::6.8%}} frente a {{c3::0.5%}}).",
+    "La dosis diaria total de insulina en el hospitalizado no crítico es de {{c1::0.3–0.5 U/kg}}; en quien ya usaba ≥0.6 U/kg en casa se reduce un {{c2::20%}} al ingresar."
+  ]
+}

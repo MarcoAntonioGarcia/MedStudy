@@ -1,0 +1,299 @@
+{
+  "seccion": "Gastro",
+  "tema": "Síndrome de Intestino Irritable",
+  "autor": "R1 MI Josué Javier Medina Magaña",
+  "fuentes": "UpToDate: Treatment of irritable bowel syndrome in adults · Castañeda-Sepúlveda, Medicina Universitaria 2010 · Drossman, Gastroenterology 2016 · Criterios de Roma V",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Gastro/sindrome de intestino irritable.pdf",
+  "resumen_html": [
+    "<h2>Definición y epidemiología</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>SII:</b> trastorno de la <b>interacción cerebro-intestino</b> con <b>dolor abdominal recurrente</b> y <b>hábito intestinal alterado</b>; se acompaña de distensión, evacuación incompleta, urgencia, pujo y tenesmo.</p>",
+    "</div><div><ul>",
+    "<li>Prevalencia <b>10–15%</b> en Norteamérica y <b>11%</b> mundial.</li>",
+    "<li><b>25% menor</b> en mayores de 50 años.</li>",
+    "<li>Más en <b>mujeres (14%)</b> que en hombres (9%); en ellas predomina el <b>SII-E</b>.</li>",
+    "</ul></div></div>",
+    "<h2>Fisiopatología</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>Cascada celular en 5 pasos:</b> (1) <b>permeabilidad aumentada</b> (pérdida de barrera epitelial) → (2) entrada de antígenos bacterianos y alimentarios → (3) activación de <b>mastocitos</b> y linfocitos B → (4) liberación de <b>histamina, serotonina y proteasas</b> → (5) <b>hipersensibilidad visceral</b>: la histamina sensibiliza <b>TRPV1, TRPV4 y TRPA1</b> y estímulos normales se perciben como dolor (hiperalgesia).</p>",
+    "</div><div><ul>",
+    "<li><b>Motilidad alterada</b> gástrica y colónica.</li>",
+    "<li><b>Eje cerebro-intestino</b> y eje <b>HPA</b>.</li>",
+    "<li><b>Inflamación de bajo grado</b> (mastocitos).</li>",
+    "<li><b>Microbiota:</b> disbiosis, posible sobrecrecimiento bacteriano; flora <b>metanógena</b> asociada a <b>estreñimiento</b>.</li>",
+    "<li><b>Psicológicos:</b> <b>&gt;2/3</b> tienen ansiedad, depresión o hipocondriasis; más antecedentes de abuso.</li>",
+    "</ul></div></div>",
+    "<h2>Clínica y datos de alarma</h2>",
+    "<div class=\"cols\"><div>",
+    "<ul>",
+    "<li><b>Dolor</b> cólico, variable, <b>relacionado con la defecación</b> (mejora o empeora al evacuar), exacerbado por estrés o alimentos; <b>no continuo</b>.</li>",
+    "<li>Distensión y gases frecuentes.</li>",
+    "<li><b>Diarrea:</b> heces sueltas <b>diurnas</b> con urgencia y evacuación incompleta; puede haber <b>moco</b>.</li>",
+    "<li><b>Estreñimiento:</b> heces duras en bolitas, tenesmo; algunos alternan.</li>",
+    "<li><b>No son del SII:</b> diarrea <b>nocturna</b>, sangrado, heces grasas, diarrea de gran volumen.</li>",
+    "<li><b>Comorbilidades:</b> fibromialgia, fatiga crónica, migraña/cefalea tensional, síntomas urinarios, dispareunia.</li>",
+    "</ul></div><div>",
+    "<table><tr><th colspan=\"2\">Alarma → gastroenterología y endoscopia</th></tr>",
+    "<tr><td><b>Fisiológicos</b></td><td>Pérdida de peso inexplicable · <b>anemia ferropénica</b> · sangrado rectal (más que mínimo)</td></tr>",
+    "<tr><td><b>Clínicos y demográficos</b></td><td><b>Diarrea nocturna</b> · progresión rápida · inicio a los <b>≥45 años</b> · antecedente familiar de <b>cáncer colorrectal, EII o celiaquía</b></td></tr>",
+    "</table>",
+    "</div></div>",
+    "<h2>Diagnóstico: criterios de Roma V</h2>",
+    "<div class=\"cols\"><div>",
+    "<p>Diagnóstico <b>clínico</b> con evaluación limitada para excluir enfermedad orgánica.</p>",
+    "<ol><li><b>Obligatorio:</b> dolor o malestar abdominal recurrente <b>≥3 días al mes</b> en los últimos <b>3 meses</b>.</li>",
+    "<li>Más <b>≥2</b> de: relación con la <b>defecación</b>, cambio en la <b>frecuencia</b>, cambio en la <b>forma</b> de las heces.</li></ol>",
+    "<p>El dolor <b>no</b> debe ser continuo ni explicarse solo por la menstruación. <b>Diario de heces de 2 semanas</b> obligatorio para el subtipo.</p>",
+    "<p><b>Otros criterios:</b> <b>Manning</b> (alivio con la defecación, heces más blandas y frecuentes al inicio del dolor, moco, evacuación incompleta) y <b>Kruis</b> (poco usado). Ningún criterio es ideal; Manning y Kruis rinden al menos como Roma I.</p>",
+    "</div><div>",
+    "<table><tr><th>Subtipo</th><th>Definición (Bristol en días anormales)</th></tr>",
+    "<tr><td><b>SII-E</b> (estreñimiento)</td><td>Tipos <b>1 y 2</b></td></tr>",
+    "<tr><td><b>SII-D</b> (diarrea)</td><td>Tipos <b>6 y 7</b></td></tr>",
+    "<tr><td><b>SII-M</b> (mixto)</td><td><b>&gt;25%</b> duras y <b>&gt;25%</b> sueltas</td></tr>",
+    "<tr><td><b>SII-NC</b> (no clasificado)</td><td>Cumple criterios de SII pero no de un subtipo</td></tr>",
+    "</table>",
+    "<p><b>Bristol:</b> 1–2 estreñimiento · 3–4 normal · 5–7 diarrea (7 = acuosa).</p>",
+    "</div></div>",
+    "<h2>Tratamiento de base</h2>",
+    "<div class=\"cols\"><div>",
+    "<ul>",
+    "<li><b>Alianza terapéutica:</b> validar síntomas; el SII <b>no aumenta el riesgo de malignidad</b>.</li>",
+    "<li><b>Actividad física</b> 20–60 min, 3–5 días/semana: mejora <b>43% vs 26%</b>; empeora 8% vs 23%.</li>",
+    "<li><b>Sueño:</b> sus trastornos se correlacionan con el dolor; la <b>melatonina</b> mejora dolor y calidad de vida.</li>",
+    "<li><b>Dieta tradicional (primera línea):</b> porciones, líquidos, <b>psyllium 3–4 g/día</b> (fibra soluble); evitar fibra insoluble (salvado), repollo, brócoli, legumbres, fructosa, sorbitol y lactosa si hay intolerancia.</li>",
+    "</ul></div><div>",
+    "<p><b>Dieta baja en FODMAP</b> (alternativa o refractarios; requiere dietista): mayor reducción de dolor y distensión (<b>RR 1.54</b>). Fructanos y galactooligosacáridos son los principales desencadenantes.</p>",
+    "<table><tr><th>Fase</th><th>Duración</th><th>Qué se hace</th></tr>",
+    "<tr><td>1. Eliminación</td><td><b>4–6 sem</b></td><td>Restricción estricta; si no mejora, FODMAP no es la causa</td></tr>",
+    "<tr><td>2. Reintroducción</td><td><b>6–8 sem</b></td><td>1 alimento nuevo con pausas de <b>3 días</b></td></tr>",
+    "<tr><td>3. Personalización</td><td>Largo plazo</td><td>Solo las restricciones necesarias</td></tr>",
+    "</table>",
+    "<p>Altos en FODMAP: ajo, cebolla, trigo, legumbres, manzana, leche, coliflor, miel, sandía.</p>",
+    "</div></div>",
+    "<h2>Tratamiento farmacológico por subtipo</h2>",
+    "<table><tr><th>Escalón</th><th>SII-E (estreñimiento)</th><th>SII-D (diarrea)</th></tr>",
+    "<tr><td><b>1ª línea</b></td><td><b>PEG 17 g/día</b> (hasta 34 g): mejora consistencia y frecuencia, <b>no el dolor</b>; causa distensión.</td><td><b>Loperamida 2 mg</b> preprandial (hasta <b>16 mg/día</b>): mejora consistencia, <b>no el dolor</b>; no usar si alterna.</td></tr>",
+    "<tr><td><b>2ª línea</b></td><td>Agonistas de guanilato ciclasa: <b>linaclotida 290 μg/día</b> (NNT 8); <b>plecanatida 3 mg/día</b> (reducir si hay diarrea).</td><td><b>Secuestrantes de ácidos biliares</b> (colestiramina, colesevelam): <b>50%</b> del SII-D tiene malabsorción biliar; separar de otros fármacos.</td></tr>",
+    "<tr><td><b>Refractarios / graves</b></td><td><b>Lubiprostona 8 μg c/12 h</b> (aprobada en mujeres; náusea); <b>tenapanor 50 mg c/12 h</b> (inhibidor de NHE3).</td><td><b>Rifaximina 550 mg c/8 h × 14 días</b> (distensión; OR 1.57) · <b>alosetrón</b> 0.5–1 mg c/12 h (anti-5-HT3; <b>colitis isquémica</b>) · <b>eluxadolina</b> 100 mg c/12 h (agonista opioide; <b>contraindicada sin vesícula</b> por pancreatitis).</td></tr>",
+    "</table>",
+    "<p><b>SII-M y SII-NC:</b> evitar fármacos agresivos dirigidos a un solo hábito (pueden provocar el opuesto); pilar principal: medidas universales (estilo de vida, FODMAP, psyllium); tratar dolor y distensión con rifaximina. Descartar <b>estreñimiento con incontinencia por rebosamiento</b>, que se confunde con SII-M.</p>",
+    "<h2>Dolor, distensión y terapias cerebro-intestino</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>Síntomas episódicos (a demanda):</b> antiespasmódicos; <b>hioscina 0.125–0.25 mg SL</b> (anticolinérgica; empeora estreñimiento); <b>aceite de menta entérico</b> 1–2 cápsulas.</p>",
+    "<p><b>Síntomas persistentes:</b> neuromoduladores de mantenimiento; <b>ATC</b> a dosis baja (<b>amitriptilina 10 mg</b> nocturna), analgesia independiente del ánimo y enlentece el tránsito (útil en SII-D); rifaximina en pulsos.</p>",
+    "<p><b>No recomendados:</b> dieta sin gluten (el efecto es por fructanos o nocebo), probióticos (evidencia insuficiente), trasplante fecal, <b>ISRS/IRSN</b>, mesalamina, acupuntura, <b>STW5/Iberogast</b> (hepatotoxicidad), pruebas de alergia por IgG.</p>",
+    "</div><div>",
+    "<p><b>Terapias conductuales</b> (dolor refractario o ansiedad/depresión): <b>TCC</b> (superior al control en metaanálisis), <b>hipnoterapia dirigida al intestino</b> (alivio <b>41% vs 17%</b> a los 3 meses, sostenido al año) y <b>mindfulness (MBSR)</b>.</p>",
+    "<p><b>Mantenimiento:</b> si persisten los síntomas, repetir diario de heces, revisar adherencia y datos de alarma. Tras <b>12 meses de remisión</b>, retirada gradual compartida, empezando por los fármacos de mayor riesgo (p. ej., eluxadolina). Dieta y estilo de vida se mantienen <b>de por vida</b>.</p>",
+    "</div></div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Cómo se define el síndrome de intestino irritable?",
+      "r": "Trastorno de la <b>interacción cerebro-intestino</b> con <b>dolor abdominal recurrente</b> y <b>hábito intestinal alterado</b>."
+    },
+    {
+      "p": "¿Cuál es la prevalencia del SII en Norteamérica y en el mundo?",
+      "r": "<b>10–15%</b> en Norteamérica y <b>11%</b> mundial."
+    },
+    {
+      "p": "¿Cómo cambia la prevalencia del SII después de los 50 años?",
+      "r": "Es <b>25% menor</b>."
+    },
+    {
+      "p": "¿Qué subtipo de SII predomina en mujeres?",
+      "r": "El de <b>predominio de estreñimiento (SII-E)</b>; prevalencia 14% vs 9% en hombres."
+    },
+    {
+      "p": "¿Cuál es el primer paso de la cascada celular del SII?",
+      "r": "<b>Aumento de la permeabilidad</b> por pérdida de la barrera epitelial."
+    },
+    {
+      "p": "¿Qué células inmunitarias liberan mediadores nociceptivos en el SII?",
+      "r": "<b>Mastocitos</b> y linfocitos B."
+    },
+    {
+      "p": "¿Qué mediadores se liberan en la \"tormenta química\" del SII?",
+      "r": "<b>Histamina</b>, <b>serotonina</b> y <b>proteasas</b>."
+    },
+    {
+      "p": "¿Qué canales sensibiliza la histamina para producir hipersensibilidad visceral?",
+      "r": "<b>TRPV1</b>, <b>TRPV4</b> y <b>TRPA1</b> en los nociceptores."
+    },
+    {
+      "p": "¿Qué tipo de flora intestinal se asocia con estreñimiento en el SII?",
+      "r": "La flora <b>productora de metano</b>."
+    },
+    {
+      "p": "¿Qué proporción de pacientes con SII tiene trastornos psicológicos?",
+      "r": "<b>Más de 2/3</b>: ansiedad, depresión o hipocondriasis."
+    },
+    {
+      "p": "¿Cómo se relaciona el dolor del SII con la defecación?",
+      "r": "Puede <b>mejorar o empeorar al evacuar</b>; es cólico y <b>no continuo</b>."
+    },
+    {
+      "p": "¿Cómo es la diarrea típica del SII?",
+      "r": "Heces sueltas <b>diurnas</b> con urgencia, dolor y evacuación incompleta; puede haber <b>moco</b>."
+    },
+    {
+      "p": "¿Qué características de la diarrea no corresponden al SII?",
+      "r": "Diarrea <b>nocturna</b>, <b>sangrado</b>, heces grasas o diarrea de <b>gran volumen</b>."
+    },
+    {
+      "p": "¿Qué comorbilidades extraintestinales se asocian al SII?",
+      "r": "<b>Fibromialgia</b>, fatiga crónica, migraña, síntomas urinarios y <b>dispareunia</b>."
+    },
+    {
+      "p": "¿Qué datos de alarma fisiológicos obligan a descartar enfermedad orgánica en SII?",
+      "r": "Pérdida de peso inexplicable, <b>anemia ferropénica</b> y sangrado rectal más que mínimo."
+    },
+    {
+      "p": "¿A partir de qué edad un inicio de síntomas intestinales es dato de alarma?",
+      "r": "A los <b>≥45 años</b>."
+    },
+    {
+      "p": "¿Qué antecedentes familiares son dato de alarma en el SII?",
+      "r": "<b>Cáncer colorrectal</b>, <b>EII</b> o <b>enfermedad celiaca</b>."
+    },
+    {
+      "p": "¿Qué conducta exige un dato de alarma en sospecha de SII?",
+      "r": "Derivación inmediata a <b>gastroenterología</b> y <b>endoscopia</b>."
+    },
+    {
+      "p": "¿Cuál es el criterio obligatorio de Roma V para SII?",
+      "r": "Dolor o malestar recurrente <b>≥3 días al mes</b> en los últimos <b>3 meses</b>."
+    },
+    {
+      "p": "¿Qué características adicionales exige Roma V y cuántas?",
+      "r": "<b>≥2</b> de: relación con la <b>defecación</b>, cambio de <b>frecuencia</b> o de <b>forma</b> de las heces."
+    },
+    {
+      "p": "¿Qué dos condiciones sobre el dolor excluyen el SII según Roma V?",
+      "r": "Que sea <b>continuo</b> o que se explique solo por la <b>menstruación</b>."
+    },
+    {
+      "p": "¿Qué herramienta es obligatoria para clasificar el subtipo de SII?",
+      "r": "Un <b>diario de heces de 2 semanas</b>."
+    },
+    {
+      "p": "¿Qué tipos de Bristol definen SII-E y SII-D?",
+      "r": "SII-E: tipos <b>1 y 2</b>. SII-D: tipos <b>6 y 7</b>."
+    },
+    {
+      "p": "¿Cómo se define el SII mixto?",
+      "r": "<b>&gt;25%</b> de evacuaciones anormales duras y <b>&gt;25%</b> sueltas."
+    },
+    {
+      "p": "¿Qué criterios diagnósticos distintos de Roma existen para el SII?",
+      "r": "<b>Manning</b> y <b>Kruis</b>; rinden al menos como Roma I."
+    },
+    {
+      "p": "¿Qué mensaje clave de pronóstico se da al paciente con SII?",
+      "r": "El SII <b>no aumenta el riesgo de malignidad</b>."
+    },
+    {
+      "p": "¿Qué beneficio tiene la actividad física en el SII?",
+      "r": "Mejora síntomas en <b>43% vs 26%</b> con 20–60 min, 3–5 días/semana."
+    },
+    {
+      "p": "¿Qué suplemento mejora el dolor y la calidad de vida en el SII?",
+      "r": "La <b>melatonina</b> diaria."
+    },
+    {
+      "p": "¿Qué tipo de fibra se recomienda en el SII y a qué dosis?",
+      "r": "Fibra <b>soluble</b>: <b>psyllium 3–4 g/día</b>; evitar la insoluble (salvado)."
+    },
+    {
+      "p": "¿Por qué el consejo dietético tradicional es la primera línea en SII?",
+      "r": "Es <b>económico y fácil de seguir</b>, con eficacia similar a dietas restrictivas."
+    },
+    {
+      "p": "¿Qué beneficio tiene la dieta baja en FODMAP?",
+      "r": "Mayor reducción de dolor y distensión (<b>RR 1.54</b>); requiere dietista."
+    },
+    {
+      "p": "¿Cuáles son los FODMAP que más desencadenan síntomas?",
+      "r": "Los <b>fructanos</b> y los <b>galactooligosacáridos</b>."
+    },
+    {
+      "p": "¿Qué se concluye si no hay mejoría tras la fase de eliminación FODMAP?",
+      "r": "Que los <b>FODMAP no son la causa</b>."
+    },
+    {
+      "p": "¿Cuál es el tratamiento de primera línea del SII-E y su limitación?",
+      "r": "<b>PEG 17 g/día</b> (hasta 34 g); <b>no mejora el dolor</b> y causa distensión."
+    },
+    {
+      "p": "¿Qué fármacos son segunda línea en SII-E?",
+      "r": "Agonistas de guanilato ciclasa: <b>linaclotida 290 μg/día</b> (NNT 8) y <b>plecanatida 3 mg/día</b>."
+    },
+    {
+      "p": "¿Cuál es el mecanismo del tenapanor?",
+      "r": "<b>Inhibe NHE3</b> y retiene agua intraluminal."
+    },
+    {
+      "p": "¿Qué restricción de aprobación y efecto adverso tiene la lubiprostona?",
+      "r": "Aprobada en <b>mujeres</b>; causa <b>náusea</b> dosis-dependiente."
+    },
+    {
+      "p": "¿Cuál es el tratamiento de primera línea del SII-D y su dosis máxima?",
+      "r": "<b>Loperamida</b> 2 mg preprandial, hasta <b>16 mg/día</b>; no mejora el dolor."
+    },
+    {
+      "p": "¿Por qué se usan secuestrantes de ácidos biliares en SII-D?",
+      "r": "Porque el <b>50%</b> tiene <b>malabsorción de ácidos biliares</b>."
+    },
+    {
+      "p": "¿Qué dosis de rifaximina se usa en el SII-D?",
+      "r": "<b>550 mg c/8 h por 14 días</b>; útil si predomina la distensión."
+    },
+    {
+      "p": "¿Qué riesgo grave tiene el alosetrón?",
+      "r": "<b>Colitis isquémica</b> (antagonista 5-HT3)."
+    },
+    {
+      "p": "¿Cuándo está contraindicada la eluxadolina?",
+      "r": "En pacientes <b>sin vesícula biliar</b>, por riesgo de <b>pancreatitis</b>."
+    },
+    {
+      "p": "¿Por qué se evita la farmacoterapia agresiva en el SII mixto?",
+      "r": "Puede <b>provocar el hábito opuesto</b>."
+    },
+    {
+      "p": "¿Qué diagnóstico se confunde con frecuencia con el SII mixto?",
+      "r": "<b>Estreñimiento con incontinencia por rebosamiento</b>."
+    },
+    {
+      "p": "¿Qué dosis de hioscina se usa en el dolor episódico del SII?",
+      "r": "<b>0.125–0.25 mg sublingual</b>; puede empeorar el estreñimiento."
+    },
+    {
+      "p": "¿Qué efecto adicional de los antidepresivos tricíclicos es útil en SII-D?",
+      "r": "<b>Enlentecen el tránsito</b>; se inicia con amitriptilina <b>10 mg</b> nocturna."
+    },
+    {
+      "p": "¿Qué antidepresivos no se recomiendan para los síntomas globales del SII?",
+      "r": "Los <b>ISRS e IRSN</b>, por falta de evidencia consistente."
+    },
+    {
+      "p": "¿Por qué no se recomienda STW5 (Iberogast) en el SII?",
+      "r": "Por riesgo de <b>hepatotoxicidad</b>."
+    },
+    {
+      "p": "¿Qué eficacia tiene la hipnoterapia dirigida al intestino?",
+      "r": "Alivio adecuado en <b>41% vs 17%</b> a los 3 meses, sostenido al año."
+    },
+    {
+      "p": "¿Cuándo se intenta retirar los fármacos en el SII?",
+      "r": "Tras <b>12 meses de remisión</b>, empezando por los de mayor riesgo (p. ej., eluxadolina)."
+    }
+  ],
+  "cloze": [
+    "FODMAP: eliminación {{c1::4–6 semanas}}, reintroducción {{c2::6–8 semanas}} con pausas de {{c3::3 días}} entre alimentos.",
+    "Escala de Bristol: los tipos {{c1::3 y 4}} son normales y el tipo {{c2::7}} corresponde a heces acuosas sin sólidos.",
+    "Cascada del SII: permeabilidad aumentada → entrada de {{c1::antígenos}} → activación {{c2::inmunitaria}} → tormenta química → {{c3::hipersensibilidad visceral}}.",
+    "Dosis en SII-E refractario: lubiprostona {{c1::8 μg c/12 h}} y tenapanor {{c2::50 mg c/12 h}}.",
+    "Dosis en SII-D grave: alosetrón {{c1::0.5–1 mg c/12 h}} y eluxadolina {{c2::100 mg c/12 h}}."
+  ]
+}

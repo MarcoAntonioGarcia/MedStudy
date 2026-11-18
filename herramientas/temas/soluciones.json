@@ -1,0 +1,315 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Soluciones",
+  "autor": "Dra. Nayely Adriana Rodríguez Moreno y R1 MI Mariela Guadalupe Pérez Guerra",
+  "fuentes": "Terapéutica en Medicina Crítica (UNAM/McGraw-Hill 2020) · Manual de Terapéutica Médica y Procedimientos de Urgencias 7.ª ed. · SMART trial, N Engl J Med 2018 · JAMA Netw Open 2020 · Crit Care 2013 · Crit Care Med 2024 · Chest 2024",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/SOLUCIONES.pptx",
+  "resumen_html": [
+    "<h2>Fisiología</h2>",
+    "<ul>",
+    "<li><b>Compartimentos:</b> el <b>agua corporal total es el 60% del peso</b>, repartida en <b>intracelular (60%)</b> y <b>extracelular (40%)</b>; este último se divide en <b>intersticial (20%)</b> e <b>intravascular (10%)</b>.</li>",
+    "<li><b>Intercambio entre intersticio y vaso:</b> lo determinan las <b>fuerzas de Starling</b> —diferencias entre presión hidrostática y oncótica— y la <b>integridad del glucocálix</b>, la capa de glicoproteínas y proteoglicanos de la porción luminal del endotelio, determinante de la <b>permeabilidad vascular</b>.</li>",
+    "<li><b>Balance:</b> el <b>riñón</b> mantiene el <b>volumen efectivo circulante</b>, la <b>osmolaridad</b> y la <b>homeostasis de electrólitos</b>. La mayoría de las pérdidas de electrólitos ocurren por la <b>orina</b>, con menor contribución de <b>piel y tracto gastrointestinal</b>.</li>",
+    "</ul>",
+    "<h3>Balance de agua en un adulto promedio</h3>",
+    "<table><tr><th colspan=3>Ingresos mínimos</th><th colspan=4>Egresos obligatorios</th></tr>",
+    "<tr><td>Ingesta de agua</td><td>Agua en alimentos</td><td>Oxidación de alimentos</td><td>Orina</td><td>Heces</td><td>Respiración</td><td>Sudoración</td></tr>",
+    "<tr><td><b>500 ml</b></td><td><b>800 ml</b></td><td><b>300 ml</b></td><td><b>500 ml</b></td><td><b>200 ml</b></td><td><b>400 ml</b></td><td><b>500 ml</b></td></tr>",
+    "<tr><td colspan=3><b>Total: 1600 ml/día</b></td><td colspan=4><b>Total: 1600 ml/día</b></td></tr>",
+    "</table>",
+    "<h2>Principios de uso</h2>",
+    "<div class='cols'><div>",
+    "<h3>Las 5 R</h3>",
+    "<p>Las soluciones <b>son medicamentos</b>. Las cinco erres del uso correcto:</p>",
+    "<ul><li><b>Reanimación</b> · <b>Mantenimiento de rutina</b> · <b>Reemplazo</b> · <b>Redistribución</b> · <b>Reevaluación</b>.</li></ul>",
+    "</div><div>",
+    "<h3>«ABCD» de la hipovolemia (NICE 2013)</h3>",
+    "<ul><li><b>Pulso &gt;90 lpm</b> · <b>presión arterial sistólica &lt;100 mmHg</b> · <b>llenado capilar &gt;2 segundos</b> · <b>frecuencia respiratoria &gt;20/min</b>.</li></ul>",
+    "</div></div>",
+    "<h3>ROSD/E en el paciente crítico</h3>",
+    "<ul><li><b>R</b>escue (rescate) · <b>O</b>ptimization (optimización) · <b>S</b>tabilization (estabilización) · <b>D</b>e-escalation (desescalada) · <b>E</b>vacuation (evacuación).</li></ul>",
+    "<h2>Cristaloides</h2>",
+    "<p><b>Solutos pequeños</b>, orgánicos e inorgánicos, diluidos en agua y <b>libremente permeables</b>.</p>",
+    "<table><tr><th>mmol/L</th><th>Plasma</th><th>SS 0.45%</th><th>SS 0.9%</th><th>SS 3%</th><th>Hartmann</th><th>Plasma-Lyte</th></tr>",
+    "<tr><td><b>Osmolalidad</b></td><td>280–295</td><td>145</td><td>286–308</td><td><b>1030</b></td><td>257–278</td><td>294</td></tr>",
+    "<tr><td><b>Sodio</b></td><td>140</td><td>77</td><td><b>154</b></td><td><b>513</b></td><td>131</td><td>140</td></tr>",
+    "<tr><td><b>Potasio</b></td><td>5</td><td>0</td><td>0</td><td>0</td><td>5</td><td>5</td></tr>",
+    "<tr><td><b>Cloro</b></td><td>100</td><td>77</td><td><b>154</b></td><td><b>513</b></td><td>111</td><td>98</td></tr>",
+    "<tr><td><b>Calcio</b></td><td>2.2</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td></tr>",
+    "<tr><td><b>Magnesio</b></td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1.5</td></tr>",
+    "<tr><td><b>Bicarbonato</b></td><td>24</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>",
+    "<tr><td><b>Lactato</b></td><td>1</td><td>0</td><td>0</td><td>0</td><td><b>29</b></td><td>0</td></tr>",
+    "<tr><td><b>Acetato</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>27</b></td></tr>",
+    "<tr><td><b>Gluconato</b></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><b>23</b></td></tr>",
+    "</table>",
+    "<p>Las tres primeras columnas son <b>no balanceadas</b>; Hartmann y Plasma-Lyte son <b>balanceadas</b>.</p>",
+    "<ul>",
+    "<li><b>Hipotónicas:</b> el <b>Ringer lactato</b> contiene Na⁺, K⁺, Cl⁻ y Ca²⁺ similares al plasma, y <b>se vuelve hipotónico al metabolizarse el lactato</b>; pH 7.5. El <b>Plasma-Lyte</b> tiene una <b>capacidad amortiguadora significativa</b> por la adición de <b>lactato, acetato y gluconato</b>.</li>",
+    "<li><b>Isotónica:</b> el <b>cloruro de sodio al 0.9%</b> es la <b>más utilizada</b>: <b>9 g de sal</b> y <b>3.6 g de sodio (154 mEq/L)</b>, <b>cloro 154 mmol/L</b>, pH 7.5. Su problema característico es la <b>acidosis metabólica hiperclorémica</b>.</li>",
+    "<li><b>Hipertónicas:</b> soluciones de sodio al <b>3%, 5% y 7.5%</b>. En pacientes sometidos a <b>cirugía de control de daños</b> se asociaron a <b>menor incidencia de SDRA, septicemia, falla multiorgánica y mortalidad</b>.</li>",
+    "<li><b>Solución al medio normal (fisiológica al 0.45%):</b> se prepara <b>retirando la mitad del volumen de la salina (500 ml)</b> y <b>aforando al volumen original con solución inyectable</b>. Indicada en la <b>hipernatremia</b>.</li>",
+    "</ul>",
+    "<h2>Coloides</h2>",
+    "<p><b>Macromoléculas no cristalinas</b> dispersas en otra solución, incapaces de cruzar la membrana capilar por su <b>peso molecular</b>. <b>No previenen ni mejoran el edema hístico ni producen una expansión sostenida del volumen intravascular.</b></p>",
+    "<table><tr><th>Líquido</th><th>Na</th><th>Cl</th><th>K</th><th>Ca</th><th>Mg</th><th>Búfer</th><th>Osm</th></tr>",
+    "<tr><td><b>Plasma</b></td><td>140</td><td>103</td><td>4</td><td>2.2</td><td>2</td><td>HCO₃ (25)</td><td>291</td></tr>",
+    "<tr><td>Albúmina 4%</td><td>148</td><td>128</td><td>—</td><td>—</td><td>—</td><td>Octanato (6.4)</td><td>250</td></tr>",
+    "<tr><td>HES 6% 130/0.4</td><td>154</td><td>154</td><td>—</td><td>—</td><td>—</td><td>—</td><td>308</td></tr>",
+    "<tr><td>HES 6% 130/0.4</td><td>137</td><td>110</td><td>4</td><td>—</td><td>1.5</td><td>Acetato (34)</td><td>286</td></tr>",
+    "<tr><td>Gelatina 3.5%</td><td>145</td><td>145</td><td>5.1</td><td>6.25</td><td>—</td><td>—</td><td>301</td></tr>",
+    "<tr><td>Gelatina succinato 4%</td><td>154</td><td>120</td><td>—</td><td>—</td><td>—</td><td>—</td><td>274</td></tr>",
+    "<tr><td>Gelatina posuccinato 4%</td><td>130</td><td>85</td><td>5.4</td><td>0.9</td><td>1</td><td>Acetato (27)</td><td>—</td></tr>",
+    "</table>",
+    "<ul>",
+    "<li><b>Plasma:</b> útil en <b>acidemia grave</b>; puede <b>restaurar el endotelio vascular dañado y la capa de glucocálix</b>. El <b>plasma liofilizado</b> es <b>compatible con todos los grupos sanguíneos</b>, se conserva a <b>temperatura ambiente hasta 2 años</b> y se reconstituye en <b>menos de 6 minutos</b>.</li>",
+    "<li><b>Gelatina:</b> coloide sintético derivado de la <b>hidrólisis del colágeno de huesos de ganado bovino</b>; vida en plasma de <b>2–3 horas</b>.</li>",
+    "<li><b>Semisintéticos:</b> <b>dextranos</b> e <b>hidroxietil almidón</b> (HES), producido por <b>hidroxietilación de la amilopectina</b> del almidón de maíz o papa.</li>",
+    "<li><b>Albúmina:</b> el <b>único coloide natural</b>. Se prepara aforando en <b>1000 ml</b> cuatro frascos de albúmina de 50 ml al 20%. Su ventaja es <b>mayor expansión del volumen intravascular con menor volumen infundido</b>. Utilidad principal: <b>cirróticos con peritonitis bacteriana espontánea</b> y <b>síndrome hepatorrenal</b>.</li>",
+    "<li><b>Guía sobre albúmina intravenosa:</b> en cirrosis y ascitis sometidas a <b>paracentesis de gran volumen (&gt;5 L)</b>, se sugiere albúmina para <b>prevenir la disfunción circulatoria inducida por la paracentesis</b>. En cirrosis con <b>peritonitis bacteriana espontánea</b>, se sugiere albúmina para <b>reducir la mortalidad</b>.</li>",
+    "</ul>",
+    "<h2>Prescripción</h2>",
+    "<ul>",
+    "<li><b>Evaluación inicial:</b> la cantidad de agua y electrólitos perdidos <b>antes de iniciar el tratamiento</b>. Se determina <b>una sola vez</b>; el resto son <b>pérdidas en curso</b>.</li>",
+    "<li><b>Indicaciones:</b> <b>reanimación</b>, <b>mantenimiento</b>, y <b>corrección y reposición de electrólitos y estado ácido-base</b>.</li>",
+    "</ul>",
+    "<div class='cols'><div>",
+    "<h3>1. Reanimación</h3>",
+    "<ul>",
+    "<li><b>Bolo de líquido:</b> administración <b>rápida</b> de fluidos <b>sin necesariamente monitorear la respuesta en tiempo real</b>.</li>",
+    "<li><b>Reto de líquidos:</b> una <b>prueba del sistema cardiovascular</b> que evalúa si el paciente <b>tiene reserva de precarga utilizable</b> para aumentar el gasto cardiaco con volumen adicional.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>2. Mantenimiento</h3>",
+    "<ul>",
+    "<li>En un paciente <b>sin pérdidas</b> probablemente <b>no deben superar 1 ml/kg/h</b> (sin vía oral ni enteral).</li>",
+    "<li>Por <b>cada grado centígrado por encima de 37 °C</b>, los requerimientos aumentan de <b>100 a 150 ml/día</b>.</li>",
+    "</ul>",
+    "</div></div>",
+    "<table><tr><th>Aumentar el aporte</th><th>Disminuir el aporte</th></tr>",
+    "<tr><td><b>Pérdidas externas:</b> diarrea, vómito, fístulas gastrointestinales y poliuria.<br><b>Condiciones que exigen mayor flujo urinario:</b> hipercalcemia, quimioterapia y uso de medios de contraste</td><td><b>Lesión renal aguda oligúrica</b> · <b>estados edematosos</b> (cirrosis hepática, insuficiencia cardiaca) · <b>hipotiroidismo</b> · uso de <b>aire humidificado</b></td></tr>",
+    "</table>",
+    "<h3>3. Corrección de electrólitos</h3>",
+    "<ul><li>La reposición de <b>Ca²⁺, Mg²⁺, P, Na⁺, K⁺ y Cl⁻</b> puede hacerse <b>por separado de la solución de base</b>, según los requerimientos del paciente. Preparados habituales: <b>SS 0.9%, NaCl 17.7%, KCl, K₂HPO₄, MgSO₄ 10%, gluconato de calcio 10%, glucosada 50%, albúmina 20%, dextrosa 5% y NaHCO₃</b>.</li></ul>",
+    "<h3>Contraindicaciones y riesgos</h3>",
+    "<ul>",
+    "<li><b>Contraindicación absoluta: edema agudo pulmonar.</b> El resto son relativas.</li>",
+    "<li><b>Consecuencias de la reanimación excesiva:</b> <b>suministro deficiente de O₂</b>, <b>morbilidad cardiopulmonar</b>, <b>estancia prolongada en UCI</b>, <b>síndrome de insuficiencia multiorgánica</b> y <b>muerte</b>.</li>",
+    "</ul>",
+    "<h2>Evidencia</h2>",
+    "<table><tr><th>Estudio</th><th>Diseño y población</th><th>Resultado</th></tr>",
+    "<tr><td><b>SMART</b><br><i>Balanced Crystalloids versus Saline in Critically Ill Adults</i><br>N Engl J Med 2018</td><td>Ensayo <b>pragmático, aleatorizado por conglomerados y de cruce múltiple</b>. Junio 2015 a abril 2017, <b>5 UCI</b>, <b>15 802 pacientes</b> (7942 con cristaloides balanceados y 7860 con salina). Desenlace: <b>MAKE-30</b></td><td><b>Los pacientes con sepsis, daño renal previo y lesión cerebral se benefician de los cristaloides balanceados</b></td></tr>",
+    "<tr><td><b>Cetoacidosis diabética</b><br>JAMA Netw Open 2020</td><td>Subanálisis aleatorizado, pragmático, por conglomerados y cruzado. Enero–abril 2020, <b>172 pacientes</b> (94 balanceados, 78 salina)</td><td><b>OR 0.59 y 0.69</b> a favor de los balanceados: el <b>tiempo hasta la resolución de la cetoacidosis y hasta terminar la infusión de insulina fue menor</b></td></tr>",
+    "<tr><td><b>Lesión cerebral</b><br>Crit Care 2013</td><td>Ensayo piloto <b>unicéntrico, de 2 brazos, aleatorizado y doble ciego</b> en traumatismo grave (Glasgow 8)</td><td>Mortalidad del <b>14% con salina</b> frente al <b>25% con balanceada</b> (P = 0.387). La <b>evolución de la PIC</b> y la <b>tasa de hemorragia intracerebral</b> <b>no parecieron diferir</b> entre grupos</td></tr>",
+    "<tr><td><b>Albúmina en el crítico</b><br>Crit Care Med 2024</td><td>Retrospectivo unicéntrico: <b>20 957 admisiones</b>, <b>3478 recibieron albúmina</b>. Dos grupos <b>isooncóticos</b> (12.5–25 g en 500 ml, albúmina 5%; n = 2406) y uno <b>hiperoncótico</b> (20 g en 100 ml, albúmina 20%; n = 1342)</td><td>Se ha <b>incrementado el uso de albúmina</b> en el paciente crítico, <b>provocando hemodilución durante 12 horas</b></td></tr>",
+    "</table>",
+    "<div class='extra'>La acidosis hiperclorémica de la salina al 0.9% no es un detalle de laboratorio: mira la tabla y verás que aporta <b>154 mmol/L de cloro</b> frente a los <b>100 del plasma</b>. Ese exceso de cloro produce <b>vasoconstricción de la arteriola aferente</b> y reduce el flujo renal — que es exactamente el mecanismo por el que el estudio SMART encontró más eventos renales adversos con salina que con balanceadas. La solución «fisiológica» no es tan fisiológica.</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Cómo se distribuye el agua corporal total?",
+      "r": "Es el <b>60% del peso corporal</b>, dividida en <b>intracelular (60%)</b> y <b>extracelular (40%)</b>; el extracelular se reparte en <b>intersticial (20%)</b> e <b>intravascular (10%)</b>."
+    },
+    {
+      "p": "¿Qué dos factores determinan el intercambio de líquidos entre el intersticio y el espacio vascular?",
+      "r": "Las <b>fuerzas de Starling</b> —diferencias entre presión hidrostática y oncótica— y la <b>integridad del glucocálix</b>."
+    },
+    {
+      "p": "¿Qué es el glucocálix y qué determina?",
+      "r": "Una <b>capa de glicoproteínas y proteoglicanos</b> en la <b>porción luminal de las células endoteliales</b>. Es determinante de la <b>permeabilidad vascular</b>."
+    },
+    {
+      "p": "¿Qué mantiene el riñón en el balance hidroelectrolítico?",
+      "r": "El <b>volumen efectivo circulante</b>, la <b>osmolaridad</b> y la <b>homeostasis de electrólitos</b>."
+    },
+    {
+      "p": "¿Por dónde se pierden principalmente los electrólitos?",
+      "r": "Por la <b>orina</b>, con una <b>menor contribución de la piel y el tracto gastrointestinal</b>."
+    },
+    {
+      "p": "¿Cuáles son las 5 R del uso correcto de los líquidos?",
+      "r": "<b>Reanimación, mantenimiento de rutina, reemplazo, redistribución y reevaluación</b>. Las soluciones se consideran <b>medicamentos</b>."
+    },
+    {
+      "p": "¿Cuáles son los criterios «ABCD» de hipovolemia de las guías NICE 2013?",
+      "r": "<b>Pulso mayor de 90 lpm</b>, <b>presión arterial sistólica menor de 100 mmHg</b>, <b>tiempo de llenado capilar mayor de 2 segundos</b> y <b>frecuencia respiratoria mayor de 20 por minuto</b>."
+    },
+    {
+      "p": "¿Qué significan las siglas ROSD/E en el manejo de soluciones del paciente crítico?",
+      "r": "<b>R</b>escue (rescate), <b>O</b>ptimization (optimización), <b>S</b>tabilization (estabilización), <b>D</b>e-escalation (desescalada) y <b>E</b>vacuation (evacuación)."
+    },
+    {
+      "p": "¿Qué son los cristaloides?",
+      "r": "<b>Solutos pequeños, orgánicos e inorgánicos, diluidos en agua</b> y <b>libremente permeables</b>."
+    },
+    {
+      "p": "¿Cuál es la osmolalidad del plasma y la de la solución salina al 3%?",
+      "r": "El plasma <b>280–295 mOsmol/kg</b>; la salina al 3%, <b>1030 mOsmol/kg</b>."
+    },
+    {
+      "p": "¿Cuánto sodio y cloro aporta la solución salina al 0.9% y cuánto tiene el plasma?",
+      "r": "La salina al 0.9% aporta <b>154 mmol/L de sodio y 154 de cloro</b>. El plasma tiene <b>140 de sodio y 100 de cloro</b>."
+    },
+    {
+      "p": "¿Qué composición tiene la solución de Hartmann?",
+      "r": "<b>Sodio 131</b>, <b>potasio 5</b>, <b>cloro 111</b>, <b>calcio 2</b>, <b>magnesio 1</b> y <b>lactato 29</b> mmol/L, con osmolalidad de <b>257–278</b>."
+    },
+    {
+      "p": "¿Qué composición tiene el Plasma-Lyte?",
+      "r": "<b>Sodio 140</b>, <b>potasio 5</b>, <b>cloro 98</b>, <b>magnesio 1.5</b>, <b>acetato 27</b> y <b>gluconato 23</b> mmol/L, con osmolalidad de <b>294</b>."
+    },
+    {
+      "p": "¿Qué cristaloides se consideran balanceados y cuáles no?",
+      "r": "<b>Balanceados:</b> Hartmann y Plasma-Lyte. <b>No balanceados:</b> las soluciones salinas al <b>0.45%, 0.9% y 3%</b>."
+    },
+    {
+      "p": "¿Por qué el Ringer lactato se comporta como solución hipotónica?",
+      "r": "Porque <b>se convierte en hipotónica al metabolizarse el lactato</b>. Contiene Na⁺, K⁺, Cl⁻ y Ca²⁺ en cifras similares al plasma, con pH 7.5."
+    },
+    {
+      "p": "¿Qué le da al Plasma-Lyte su capacidad amortiguadora?",
+      "r": "La adición de <b>lactato, acetato y gluconato</b>."
+    },
+    {
+      "p": "¿Cuál es la composición y el pH de la solución de cloruro de sodio al 0.9%?",
+      "r": "<b>9 g de sal</b> y <b>3.6 g de sodio (154 mEq/L)</b>, con <b>cloro de 154 mmol/L</b> y <b>pH 7.5</b>. Es la <b>más utilizada</b>."
+    },
+    {
+      "p": "¿Qué complicación característica produce la solución salina al 0.9%?",
+      "r": "La <b>acidosis metabólica hiperclorémica</b>."
+    },
+    {
+      "p": "¿Qué concentraciones tienen las soluciones hipertónicas de sodio?",
+      "r": "Al <b>3%, 5% y 7.5%</b>."
+    },
+    {
+      "p": "¿Qué beneficio mostraron las soluciones hipertónicas en cirugía de control de daños?",
+      "r": "Una <b>menor incidencia de síndrome de insuficiencia respiratoria aguda, septicemia, síndrome de insuficiencia multiorgánica y mortalidad</b>."
+    },
+    {
+      "p": "¿Cómo se prepara la solución al medio normal y para qué se indica?",
+      "r": "<b>Retirando la mitad del volumen de la solución salina (500 ml)</b> y <b>aforando al volumen original con solución inyectable</b>. Es la <b>fisiológica al 0.45%</b> y se indica en la <b>hipernatremia</b>."
+    },
+    {
+      "p": "¿Qué son los coloides?",
+      "r": "<b>Macromoléculas no cristalinas</b> dispersas en otra solución, por lo general agua, <b>incapaces de cruzar la membrana capilar vascular</b> debido a su <b>peso molecular</b>."
+    },
+    {
+      "p": "¿Qué limitación importante tienen los coloides?",
+      "r": "Que <b>no previenen ni mejoran el edema hístico ni producen una expansión sostenida del volumen intravascular</b>."
+    },
+    {
+      "p": "¿Cuál es la utilidad del plasma como coloide?",
+      "r": "La <b>acidemia grave</b>. Puede <b>restaurar el endotelio vascular dañado y la capa de glucocálix endotelial</b>."
+    },
+    {
+      "p": "¿Qué ventajas tiene el plasma liofilizado?",
+      "r": "Es <b>compatible con todos los tipos de sangre</b>, se conserva a <b>temperatura ambiente hasta por dos años</b> y su <b>reconstitución requiere menos de 6 minutos</b>."
+    },
+    {
+      "p": "¿De dónde deriva la gelatina y cuál es su vida en plasma?",
+      "r": "Es un <b>coloide sintético derivado de la hidrólisis del colágeno de los huesos del ganado bovino</b>, con una <b>vida en plasma de 2 a 3 horas</b>."
+    },
+    {
+      "p": "¿Qué son los coloides semisintéticos y cómo se produce el hidroxietil almidón?",
+      "r": "Los <b>dextranos</b> y el <b>hidroxietil almidón</b>. Este último se produce por <b>hidroxietilación de la amilopectina</b>, el almidón del maíz o la papa."
+    },
+    {
+      "p": "¿Cuál es el único coloide natural y cómo se prepara?",
+      "r": "La <b>albúmina</b>. Se prepara <b>aforando en 1000 ml de solución cuatro frascos de albúmina de 50 ml al 20%</b>."
+    },
+    {
+      "p": "¿Cuál es la ventaja principal de la albúmina?",
+      "r": "Una <b>mayor expansión del volumen intravascular con menor volumen infundido</b>."
+    },
+    {
+      "p": "¿Cuál es la principal utilidad clínica de la albúmina?",
+      "r": "Los <b>pacientes cirróticos con peritonitis bacteriana espontánea</b> y el <b>síndrome hepatorrenal</b>."
+    },
+    {
+      "p": "¿Cuándo se sugiere albúmina en un cirrótico sometido a paracentesis?",
+      "r": "En la <b>paracentesis de gran volumen (más de 5 litros)</b>, para <b>prevenir la disfunción circulatoria inducida por la paracentesis</b>."
+    },
+    {
+      "p": "¿Qué beneficio aporta la albúmina en la peritonitis bacteriana espontánea?",
+      "r": "<b>Reduce la mortalidad</b> en pacientes con cirrosis."
+    },
+    {
+      "p": "¿Qué es la evaluación inicial en la prescripción de soluciones?",
+      "r": "La <b>cantidad de agua y electrólitos perdidos previamente al inicio del tratamiento</b>. Se determina <b>una sola vez</b>; el resto se consideran <b>pérdidas en curso</b>."
+    },
+    {
+      "p": "¿Cuáles son las tres indicaciones de la prescripción de soluciones?",
+      "r": "<b>Reanimación</b>, <b>mantenimiento</b> y <b>corrección y reposición de electrólitos y estado ácido-base</b>."
+    },
+    {
+      "p": "¿Qué diferencia hay entre un bolo de líquido y un reto de líquidos?",
+      "r": "El <b>bolo</b> es la administración <b>rápida</b> de fluidos <b>sin monitorizar necesariamente la respuesta en tiempo real</b>. El <b>reto</b> es una <b>prueba del sistema cardiovascular</b> que evalúa si el paciente tiene <b>reserva de precarga utilizable</b> para aumentar el gasto cardiaco con volumen adicional."
+    },
+    {
+      "p": "¿Cuál es el aporte de mantenimiento en un paciente sin pérdidas?",
+      "r": "Probablemente <b>no mayor de 1 ml/kg/h</b>, en ausencia de vía oral o enteral."
+    },
+    {
+      "p": "¿Cuánto aumentan los requerimientos de líquidos por cada grado de fiebre?",
+      "r": "De <b>100 a 150 ml al día</b> por cada <b>grado centígrado por encima de 37 °C</b>."
+    },
+    {
+      "p": "¿En qué situaciones deben aumentarse los aportes de solución?",
+      "r": "Ante <b>pérdidas externas</b> —diarrea, vómito, fístulas gastrointestinales y poliuria— y en <b>condiciones que requieren mayor flujo urinario</b>: <b>hipercalcemia, quimioterapia y uso de medios de contraste</b>."
+    },
+    {
+      "p": "¿En qué situaciones deben disminuirse los ingresos de agua?",
+      "r": "En la <b>lesión renal aguda oligúrica</b>, los <b>estados edematosos</b> (cirrosis hepática, insuficiencia cardiaca), el <b>hipotiroidismo</b> y el <b>uso de aire humidificado</b>."
+    },
+    {
+      "p": "¿Cómo se repone el resto de electrólitos respecto a la solución de base?",
+      "r": "<b>De forma separada</b> de la solución de base, según los requerimientos del paciente: calcio, magnesio, fósforo, sodio, potasio y cloro."
+    },
+    {
+      "p": "¿Cuál es la contraindicación absoluta para la administración de soluciones?",
+      "r": "El <b>edema agudo pulmonar</b>. El resto de contraindicaciones son <b>relativas</b>."
+    },
+    {
+      "p": "¿Cuáles son las consecuencias de una reanimación con líquidos excesiva?",
+      "r": "<b>Suministro de oxígeno deficiente</b>, <b>morbilidad cardiopulmonar</b>, <b>estancia prolongada en UCI</b>, <b>síndrome de insuficiencia multiorgánica</b> y <b>muerte</b>."
+    },
+    {
+      "p": "¿Cuál fue el diseño y el tamaño del estudio SMART de cristaloides balanceados frente a salina?",
+      "r": "Un ensayo <b>pragmático, aleatorizado por conglomerados y de cruce múltiple</b>, realizado entre junio de 2015 y abril de 2017 en <b>5 unidades de cuidados intensivos</b>, con <b>15 802 pacientes</b>: 7942 con cristaloides balanceados y 7860 con solución salina."
+    },
+    {
+      "p": "¿Cuál fue el desenlace principal del estudio SMART y su conclusión?",
+      "r": "El desenlace fue el <b>MAKE-30</b> (eventos adversos renales a 30 días). La conclusión: los pacientes con <b>sepsis, daño renal previo y lesión cerebral se benefician de los cristaloides balanceados</b>."
+    },
+    {
+      "p": "¿Qué encontró el estudio de cristaloides balanceados en la cetoacidosis diabética?",
+      "r": "Que el <b>tiempo de resolución de la cetoacidosis y el de la infusión de insulina fueron menores con los cristaloides balanceados</b>, con <b>OR de 0.59 y 0.69</b>. Fueron 172 pacientes: 94 balanceados y 78 salina."
+    },
+    {
+      "p": "¿Qué encontró el estudio piloto de soluciones balanceadas en pacientes con lesión cerebral?",
+      "r": "Que la <b>evolución de la presión intracraneal</b> y la <b>tasa de hemorragia intracerebral no parecieron diferir</b> entre los grupos. La mortalidad fue del <b>14% con salina</b> frente al <b>25% con balanceada</b> (P = 0.387)."
+    },
+    {
+      "p": "¿Qué concluyó el análisis retrospectivo sobre la administración de albúmina en el paciente crítico?",
+      "r": "Que se ha <b>incrementado su uso</b>, <b>provocando hemodilución durante 12 horas</b>. Fue un estudio de <b>20 957 admisiones</b>, de las que <b>3478 recibieron albúmina</b>."
+    },
+    {
+      "p": "¿Cuáles son los ingresos mínimos de agua de un adulto promedio y cuánto suman?",
+      "r": "<b>Ingesta de agua 500 ml</b>, <b>agua contenida en los alimentos 800 ml</b> y <b>agua de oxidación de los alimentos 300 ml</b>. Total: <b>1600 ml/día</b>."
+    },
+    {
+      "p": "¿Cuáles son los egresos obligatorios de agua de un adulto promedio y cuánto suman?",
+      "r": "<b>Orina 500 ml</b>, <b>heces 200 ml</b>, <b>respiración 400 ml</b> y <b>sudoración 500 ml</b>. Total: <b>1600 ml/día</b>."
+    },
+    {
+      "p": "¿Qué proporción de los ingresos mínimos de agua NO procede de beber?",
+      "r": "Dos tercios: <b>800 ml del agua contenida en los alimentos</b> y <b>300 ml de la oxidación de los alimentos</b>, frente a solo <b>500 ml de ingesta directa</b>."
+    }
+  ],
+  "cloze": [
+    "El agua corporal total es el {{c1::60%}} del peso, con un {{c2::60%}} intracelular y un 40% extracelular, que se reparte en {{c3::20%}} intersticial y {{c4::10%}} intravascular.",
+    "La solución salina al 0.9% aporta {{c1::154}} mmol/L de sodio y de cloro, frente a los {{c2::140}} y {{c3::100}} del plasma, y por eso produce {{c4::acidosis metabólica hiperclorémica}}.",
+    "Las 5 R del uso correcto de líquidos son reanimación, mantenimiento, {{c1::reemplazo}}, {{c2::redistribución}} y {{c3::reevaluación}}.",
+    "Por cada grado centígrado por encima de {{c1::37 °C}}, los requerimientos de líquidos aumentan de {{c2::100 a 150 ml/día}}."
+  ]
+}

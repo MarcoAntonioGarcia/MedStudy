@@ -1,0 +1,358 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Choque y Perfiles Hemodinámicos",
+  "autor": "R2 MI Paul Eduardo Castro Ramírez",
+  "fuentes": "2022 AHA/ACC/HFSA Guideline for Heart Failure · SCAI SHOCK 2022 · Thiele & Hassager, N Engl J Med 2025 · Am J Physiol Regul Integr Comp Physiol 2021",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/CHOQUE (FISIOPATOLOGÍA Y PERFILES HEMODINÁMICOS).pptx",
+  "resumen_html": [
+    "<h2>Definición</h2>",
+    "<ul><li>Se caracteriza por <b>tres componentes</b>: <b>1) hipotensión arterial sistémica</b> (PAS &lt;90 mmHg o <b>PAM &lt;70 mmHg</b>) · <b>2) signos clínicos de hipoperfusión tisular</b> (piel fría y húmeda, <b>oliguria &lt;0.5 ml/kg/h</b>, alteración del estado mental) · <b>3) hiperlactatemia &gt;1.5 mmol/L</b>.</li></ul>",
+    "<div class='cols'><div>",
+    "<h3>Frecuencia relativa de los tipos</h3>",
+    "<table><tr><th>Tipo</th><th>%</th></tr>",
+    "<tr><td><b>Distributivo (séptico)</b></td><td><b>62%</b></td></tr>",
+    "<tr><td>Cardiogénico</td><td>16%</td></tr>",
+    "<tr><td>Hipovolémico</td><td>16%</td></tr>",
+    "<tr><td>Distributivo no séptico</td><td>4%</td></tr>",
+    "<tr><td>Obstructivo</td><td>2%</td></tr>",
+    "</table>",
+    "</div><div>",
+    "<h3>El lactato</h3>",
+    "<ul><li>Refleja el cambio metabólico de la <b>fosforilación oxidativa a la glucólisis anaeróbica</b>, mediado por el estado <b>redox</b> celular y la activación del <b>factor inducible por hipoxia (HIF-1)</b>.</li>",
+    "<li>El <b>piruvato</b> se genera por la glucólisis anaeróbica (vía de <b>Embden-Meyerhof</b>); su interconversión con el lactato ocurre en el <b>citosol</b> y la cataliza la <b>lactato deshidrogenasa (LDH)</b>.</li>",
+    "<li>Se producen unos <b>20 mmol de lactato por kilogramo de peso</b> al día.</li></ul>",
+    "</div></div>",
+    "<h3>Glucocálix y DAMPs</h3>",
+    "<p>Los <b>DAMPs</b> son <b>patrones moleculares asociados a daño</b>: señales endógenas que la célula lesionada libera y que desencadenan la respuesta inflamatoria.</p>",
+    "<ul><li><b>Sindecanos:</b> proteoglicanos transmembrana que forman la <b>columna vertebral</b> del glucocálix. <b>CD44:</b> receptor transmembrana que se une al <b>ácido hialurónico</b>, el cual no está unido covalentemente a proteínas centrales sino <b>entrelazado</b> entre los proteoglicanos. Su función es <b>controlar la permeabilidad vascular y permitir la mecanosensación</b>. Su pérdida es central en el choque distributivo.</li></ul>",
+    "<h2>Reconocimiento y perfiles</h2>",
+    "<p>Ante <b>hipotensión arterial</b> se buscan signos de hipoperfusión: <b>cerebro</b> (estado mental alterado), <b>piel</b> (moteada, húmeda), <b>riñón</b> (oliguria), más <b>taquicardia</b> y <b>lactato elevado</b>. Si están presentes → <b>choque circulatorio</b>; se estima entonces el <b>gasto cardiaco o la SvO₂</b>.</p>",
+    "<table><tr><th>Paso</th><th>Resultado</th><th>Tipo</th></tr>",
+    "<tr><td>Gasto cardiaco / SvO₂</td><td><b>Normal o alto</b></td><td><b>Distributivo</b></td></tr>",
+    "<tr><td>Gasto bajo → <b>PVC</b></td><td><b>Baja</b></td><td><b>Hipovolémico</b></td></tr>",
+    "<tr><td>Gasto bajo → <b>PVC</b></td><td><b>Alta</b></td><td><b>Cardiogénico</b> u <b>obstructivo</b></td></tr>",
+    "</table>",
+    "<table><tr><th>Ecocardiografía</th><th>Hallazgo</th></tr>",
+    "<tr><td><b>Distributivo</b></td><td>Cámaras cardiacas <b>normales</b> y contractilidad habitualmente <b>preservada</b></td></tr>",
+    "<tr><td><b>Hipovolémico</b></td><td>Cámaras <b>pequeñas</b> con contractilidad <b>normal o alta</b></td></tr>",
+    "<tr><td><b>Cardiogénico</b></td><td>Ventrículos <b>grandes</b> con <b>pobre contractilidad</b></td></tr>",
+    "<tr><td><b>Obstructivo</b></td><td><b>Taponamiento:</b> derrame pericárdico, ventrículos derecho e izquierdo pequeños, <b>VCI dilatada</b>. <b>TEP o neumotórax:</b> <b>VD dilatado</b> con VI pequeño</td></tr>",
+    "</table>",
+    "<h3>Determinantes del gasto cardiaco</h3>",
+    "<ul><li><b>Gasto cardiaco = frecuencia cardiaca × volumen sistólico.</b> El <b>volumen sistólico</b> depende de la <b>precarga</b> (volumen telediastólico, +), la <b>contractilidad</b> (velocidad de acortamiento de las fibras, +) y la <b>poscarga</b> (resistencia que el ventrículo debe vencer, <b>−</b>: al aumentar, baja el volumen sistólico).</li></ul>",
+    "<h2>Choque hipovolémico</h2>",
+    "<div class='cols'><div>",
+    "<h3>Fases</h3>",
+    "<ul>",
+    "<li><b>1. Compensatoria (pérdida &lt;30%):</b> <b>neural</b> por barorreceptores → taquicardia y vasoconstricción periférica · <b>hormonal</b> → activación del <b>SRAA</b> (vasoconstricción, retención de sodio y agua) y liberación de <b>ACTH</b> por hipófisis anterior y médula adrenal · <b>redistribución del flujo</b> desde órganos no vitales hacia los vitales · <b>respuesta hemostática</b> con activación de la cascada y de las plaquetas en el sitio de hemorragia.</li>",
+    "<li><b>2. Descompensatoria (pérdida &gt;30%):</b> si la hemorragia no se revierte, la vasoconstricción intensa progresa <b>paradójicamente a vasodilatación</b>.</li>",
+    "<li><b>3. Recompensatoria:</b> cuando el sangrado se detiene.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Volumen sanguíneo — fórmula de Nadler</h3>",
+    "<ul>",
+    "<li><b>Varones:</b> (0.3669 × talla en m³) + (0.03219 × peso en kg) + 0.6041</li>",
+    "<li><b>Mujeres:</b> (0.3561 × talla en m³) + (0.03308 × peso en kg) + 0.1833</li>",
+    "<li><i>Ejemplo:</i> varón de 70 kg y 1.60 m → 0.3669×(1.6)³ + 0.03219×70 + 0.6041 = 1.5028 + 2.2533 + 0.6041 = <b>4.36 litros</b>.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h3>La tríada letal</h3>",
+    "<ul><li>La hemorragia alimenta un círculo de <b>hipotermia → coagulopatía → acidosis</b>. La <b>pérdida de sangre</b> deplecciona hematíes, factores de coagulación y plaquetas, reduce la marginación plaquetaria (anemia) y la actividad de los factores (pérdida de calor y acidosis). Los <b>factores iatrogénicos</b> —infusión de cristaloides fríos con hemodilución, hipotermia y acidosis sin anión gap, y la exposición ambiental— la agravan.</li>",
+    "<li>Respuestas: <b>simpatoadrenal</b> (vasoconstricción, activación endotelial y de neutrófilos, <b>shedding del glucocálix</b>, ↑permeabilidad) · <b>hemostasia local</b> (conversión de fibrinógeno a fibrina, activación plaquetaria) · <b>genética</b> (↑genes de inmunidad innata, ↓adaptativa) · <b>lesión tisular e hipoperfusión</b> (liberación de péptidos formilados y ADN mitocondrial —<b>DAMPs o alarminas</b>—, proteína C activada que inactiva los factores V y VIII, ↑plasmina, liberación de tPA, ↑trombomodulina soluble).</li></ul>",
+    "<h2>Choque cardiogénico</h2>",
+    "<ul><li><b>Perfil hemodinámico:</b> <b>índice cardiaco bajo (≤2.2 L/min/m²)</b> con <b>índice de resistencia vascular sistémica elevado (&gt;2200 dinas/cm/segundo)</b>. Se valora también la <b>presión de oclusión de la arteria pulmonar (POAP)</b>.</li></ul>",
+    "<h3>SCAI SHOCK 2022</h3>",
+    "<ul>",
+    "<li>Consenso de la Society for Cardiovascular Angiography and Interventions con ACC, ACEP, AHA, ESC, ISHLT, SCCM y STS.</li>",
+    "<li>Introduce un <b>modelo de 3 ejes</b>: <b>severidad del choque</b>, <b>modificadores de riesgo</b>, y <b>etiología y fenotipos</b>.</li>",
+    "<li><b>Fenotipos hemodinámicos formales</b> para guiar la terapia: <b>gasto o poder cardiaco bajo</b>, <b>presiones de llenado elevadas</b> y <b>extracción aumentada de oxígeno</b> (saturación venosa reducida).</li>",
+    "<li>Para identificar la <b>falla ventricular derecha</b> recomienda la <b>relación presión auricular derecha / presión capilar pulmonar</b> y el <b>índice de pulsatilidad de la arteria pulmonar</b>.</li>",
+    "<li>Los algoritmos de <b>aprendizaje automático</b> apoyan que existen fenotipos distintos que estratifican aún más la mortalidad <b>dentro de cada estadio SCAI</b>. Se enfatizan las <b>trayectorias</b> del paciente: quién responde a la terapia frente a quién está fallando o deteriorándose.</li>",
+    "</ul>",
+    "<h2>Choque distributivo</h2>",
+    "<div class='cols'><div>",
+    "<h3>Mecanismo</h3>",
+    "<ul><li><b>Vasodilatación arterial y venosa</b> · <b>aumento de la permeabilidad capilar</b> con fuga de plasma al espacio extravascular · <b>maldistribución del flujo</b> sanguíneo a los tejidos · <b>disfunción endotelial con pérdida del glucocálix protector</b>.</li>",
+    "<li><b>TSST-1:</b> toxina-1 del síndrome de choque tóxico, un <b>superantígeno</b>.</li></ul>",
+    "</div><div>",
+    "<h3>Perfil tras la reanimación con líquidos</h3>",
+    "<table><tr><th>Variable</th><th>Comportamiento</th></tr>",
+    "<tr><td>Gasto cardiaco</td><td><b>↑↑</b> (normal o elevado en &gt;90%)</td></tr>",
+    "<tr><td>Resistencia vascular sistémica</td><td><b>↓↓↓</b></td></tr>",
+    "<tr><td>Presión arterial</td><td>↓↓</td></tr>",
+    "<tr><td>Frecuencia cardiaca</td><td>↑↑ taquicardia</td></tr>",
+    "<tr><td><b>SvO₂</b></td><td><b>↑ o normal</b> — la extracción de O₂ está <b>disminuida</b></td></tr>",
+    "<tr><td>Presión de llenado</td><td>Variable, puede subir por los líquidos</td></tr>",
+    "<tr><td>Lactato</td><td><b>↑</b> por hipoperfusión tisular <b>a pesar del gasto elevado</b></td></tr>",
+    "</table>",
+    "</div></div>",
+    "<h3>Microcirculación en la sepsis</h3>",
+    "<ul><li><b>↑Coagulación:</b> el monocito expresa <b>factor tisular</b>; las <b>NETs</b> atrapan plaquetas y forman trombos. <b>↓Anticoagulación:</b> bajan el inhibidor de la vía del factor tisular, la <b>antitrombina</b>, la <b>trombomodulina</b>, el receptor endotelial de proteína C, la <b>proteína C</b> y la proteína C activada; sube el <b>PAI-1</b> y baja la fibrinólisis.</li>",
+    "<li><b>Pérdida de la función de barrera:</b> vía <b>PAR1</b>, ↑S1P3 y ↓S1P1, ↓proteína C activada con ↑trombina, ↑angiopoyetina 2, ↓VE-cadherina y uniones estrechas → <b>fuga capilar y edema intersticial</b>, retracción y muerte celular.</li>",
+    "<li>Todo converge en <b>↓oxigenación tisular</b> —sumada a la <b>disfunción mitocondrial</b> por liberación de contenidos mitocondriales— y de ahí a la <b>falla orgánica</b>. La <b>↓deformabilidad del hematíe</b> agrava la hipoperfusión.</li></ul>",
+    "<h2>Choque obstructivo</h2>",
+    "<ul><li><b>Mecanismo:</b> obstrucción mecánica de la circulación con <b>resistencia elevada al flujo</b>. Ejemplos: <b>embolia pulmonar</b>, <b>taponamiento cardiaco</b> y <b>neumotórax a tensión</b>.</li></ul>",
+    "<table><tr><th>Entidad</th><th>Mecanismo hemodinámico</th></tr>",
+    "<tr><td><b>Taponamiento cardiaco</b></td><td>Presión pericárdica elevada, que puede alcanzar <b>15–20 mmHg</b> · <b>igualación de las presiones diastólicas</b> en todas las cámaras (aurícula derecha, ventrículo derecho, arteria pulmonar y presión capilar pulmonar) · presión transmural auricular derecha despreciable, con <b>caída masiva del retorno venoso</b> · <b>competencia entre cámaras</b> y <b>interdependencia ventricular</b> por la restricción pericárdica</td></tr>",
+    "<tr><td><b>Embolia pulmonar masiva</b></td><td>Obstrucción del árbol arterial pulmonar → <b>↑poscarga del VD</b> → <b>falla aguda del VD</b> → ↓llenado del VI → ↓gasto cardiaco sistémico → hipotensión</td></tr>",
+    "<tr><td><b>Neumotórax a tensión</b></td><td>Aire que se acumula en el espacio pleural con <b>mecanismo valvular unidireccional</b> → colapso pulmonar ipsilateral → <b>desplazamiento mediastinal contralateral</b> → compresión de la vena cava y del corazón → ↓gasto cardiaco → hipotensión y choque</td></tr>",
+    "</table>",
+    "<div class='extra'>El perfil del choque distributivo tiene una trampa que conviene tener presente: la <b>SvO₂ es normal o alta</b> y el <b>gasto cardiaco está elevado</b>, y aun así el <b>lactato sube</b>. No es una contradicción — el problema no es que llegue poco oxígeno, sino que el tejido <b>no lo extrae</b> por la maldistribución del flujo y la disfunción mitocondrial. Una SvO₂ normal no descarta hipoperfusión en la sepsis.</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Cuáles son los tres componentes que caracterizan al choque?",
+      "r": "<b>1) Hipotensión arterial sistémica</b> (PAS &lt;90 mmHg o PAM &lt;70 mmHg), <b>2) signos clínicos de hipoperfusión tisular</b> y <b>3) hiperlactatemia &gt;1.5 mmol/L</b>."
+    },
+    {
+      "p": "¿Qué cifras definen la hipotensión arterial sistémica en el choque?",
+      "r": "<b>Presión arterial sistólica menor de 90 mmHg</b> o <b>presión arterial media menor de 70 mmHg</b>."
+    },
+    {
+      "p": "¿Cuáles son los signos clínicos de hipoperfusión tisular en el choque?",
+      "r": "<b>Piel fría y húmeda</b>, <b>oliguria menor de 0.5 ml/kg/h</b> y <b>alteración del estado mental</b>."
+    },
+    {
+      "p": "¿A partir de qué cifra se considera hiperlactatemia en el choque?",
+      "r": "Por encima de <b>1.5 mmol/L</b>."
+    },
+    {
+      "p": "¿Cuál es la frecuencia relativa de los tipos de choque?",
+      "r": "<b>Distributivo séptico 62%</b>, <b>cardiogénico 16%</b>, <b>hipovolémico 16%</b>, distributivo no séptico 4% y <b>obstructivo 2%</b>."
+    },
+    {
+      "p": "¿Qué cambio metabólico subyace a la producción de lactato en el choque?",
+      "r": "El paso de la <b>fosforilación oxidativa a la glucólisis anaeróbica</b>, mediado por alteraciones del <b>estado redox celular</b> y la activación del <b>factor inducible por hipoxia (HIF-1)</b>."
+    },
+    {
+      "p": "¿Por qué vía se genera el piruvato y qué enzima lo interconvierte con el lactato?",
+      "r": "Por la glucólisis anaeróbica o <b>vía de Embden-Meyerhof</b>. La interconversión redox-acoplada ocurre en el <b>citosol</b> y la cataliza la <b>lactato deshidrogenasa (LDH)</b>."
+    },
+    {
+      "p": "¿Cuánto lactato se produce diariamente en el cuerpo?",
+      "r": "Aproximadamente <b>20 mmol por kilogramo de peso corporal</b> al día."
+    },
+    {
+      "p": "¿Qué son los DAMPs?",
+      "r": "<b>Patrones moleculares asociados a daño</b>: señales endógenas liberadas por la célula lesionada —como los péptidos formilados y el ADN mitocondrial— que desencadenan la respuesta inflamatoria. También se les llama <b>alarminas</b>."
+    },
+    {
+      "p": "¿Qué son los sindecanos y qué papel tienen en el glucocálix?",
+      "r": "<b>Proteoglicanos transmembrana</b> que constituyen la <b>columna vertebral del glucocálix</b>."
+    },
+    {
+      "p": "¿Qué es el CD44 y a qué se une?",
+      "r": "Un <b>receptor transmembrana</b> que se une específicamente al <b>ácido hialurónico</b>."
+    },
+    {
+      "p": "¿Cómo se dispone el ácido hialurónico en el glucocálix?",
+      "r": "<b>No está unido covalentemente</b> a proteínas centrales, sino <b>entrelazado entre los proteoglicanos</b>."
+    },
+    {
+      "p": "¿Cuáles son las dos funciones del glucocálix?",
+      "r": "<b>Controlar la permeabilidad vascular</b> y <b>permitir la mecanosensación</b>."
+    },
+    {
+      "p": "Ante una hipotensión arterial, ¿qué signos de hipoperfusión buscamos y en qué órganos?",
+      "r": "<b>Cerebro:</b> alteración del estado mental. <b>Piel:</b> moteada y húmeda. <b>Riñón:</b> oliguria. Además <b>taquicardia</b> y <b>lactato elevado</b>."
+    },
+    {
+      "p": "Confirmado el choque circulatorio, ¿cuál es el siguiente paso diagnóstico?",
+      "r": "<b>Estimar el gasto cardiaco o la SvO₂</b>."
+    },
+    {
+      "p": "Si el gasto cardiaco o la SvO₂ están normales o altos, ¿de qué choque se trata?",
+      "r": "De un choque <b>distributivo</b>."
+    },
+    {
+      "p": "Con gasto cardiaco bajo, ¿qué distingue el choque hipovolémico del cardiogénico u obstructivo?",
+      "r": "La <b>presión venosa central</b>: <b>baja</b> en el hipovolémico, <b>alta</b> en el cardiogénico y el obstructivo."
+    },
+    {
+      "p": "¿Qué muestra la ecocardiografía en el choque distributivo?",
+      "r": "<b>Cámaras cardiacas normales</b> y contractilidad <b>habitualmente preservada</b>."
+    },
+    {
+      "p": "¿Qué muestra la ecocardiografía en el choque hipovolémico?",
+      "r": "<b>Cámaras cardiacas pequeñas</b> con contractilidad <b>normal o alta</b>."
+    },
+    {
+      "p": "¿Qué muestra la ecocardiografía en el choque cardiogénico?",
+      "r": "<b>Ventrículos grandes</b> con <b>pobre contractilidad</b>."
+    },
+    {
+      "p": "¿Qué muestra la ecocardiografía en el choque obstructivo?",
+      "r": "En el <b>taponamiento</b>: derrame pericárdico, ventrículos derecho e izquierdo <b>pequeños</b> y <b>vena cava inferior dilatada</b>. En la <b>embolia pulmonar o el neumotórax</b>: <b>ventrículo derecho dilatado</b> con ventrículo izquierdo pequeño."
+    },
+    {
+      "p": "¿De qué depende el gasto cardiaco?",
+      "r": "De la <b>frecuencia cardiaca</b> y del <b>volumen sistólico</b>."
+    },
+    {
+      "p": "¿De qué depende el volumen sistólico y cómo influye cada factor?",
+      "r": "De la <b>precarga</b> (volumen de sangre en los ventrículos al final de la diástole, efecto <b>positivo</b>), la <b>contractilidad</b> (velocidad de acortamiento de las fibras miocárdicas, <b>positivo</b>) y la <b>poscarga</b> (resistencia que el ventrículo debe vencer, efecto <b>negativo</b>)."
+    },
+    {
+      "p": "¿Hasta qué pérdida de volumen sanguíneo dura la fase compensatoria del choque hipovolémico?",
+      "r": "Hasta una pérdida <b>menor del 30%</b> del volumen sanguíneo."
+    },
+    {
+      "p": "¿En qué consiste la compensación neural del choque hipovolémico?",
+      "r": "En la respuesta de los <b>barorreceptores</b>, que produce <b>aumento de la frecuencia cardiaca</b> y <b>vasoconstricción periférica</b>."
+    },
+    {
+      "p": "¿En qué consiste la compensación hormonal del choque hipovolémico?",
+      "r": "En la activación del <b>sistema renina-angiotensina-aldosterona</b>, que produce vasoconstricción y retención de sodio y agua, y en la liberación de <b>ACTH</b> por la hipófisis anterior y la médula adrenal."
+    },
+    {
+      "p": "¿Qué es la redistribución del flujo en la fase compensatoria?",
+      "r": "Un <b>shunt de sangre desde los órganos no vitales hacia los órganos vitales</b>."
+    },
+    {
+      "p": "¿En qué consiste la respuesta hemostática de la fase compensatoria?",
+      "r": "En la <b>activación de la cascada de coagulación y de las plaquetas</b> en el sitio de la hemorragia."
+    },
+    {
+      "p": "¿Qué ocurre en la fase descompensatoria del choque hipovolémico?",
+      "r": "Cuando se pierde aproximadamente el <b>30% del volumen sanguíneo</b> y la hemorragia no se revierte, la <b>vasoconstricción intensa progresa paradójicamente a vasodilatación</b>."
+    },
+    {
+      "p": "¿Cuándo se establece la fase recompensatoria del choque hipovolémico?",
+      "r": "Cuando el <b>sangrado se detiene</b>."
+    },
+    {
+      "p": "¿Cuál es la fórmula de Nadler para calcular el volumen sanguíneo en varones?",
+      "r": "<b>(0.3669 × talla en m³) + (0.03219 × peso en kg) + 0.6041</b>."
+    },
+    {
+      "p": "¿Cuál es la fórmula de Nadler para calcular el volumen sanguíneo en mujeres?",
+      "r": "<b>(0.3561 × talla en m³) + (0.03308 × peso en kg) + 0.1833</b>."
+    },
+    {
+      "p": "Según la fórmula de Nadler, ¿cuál es el volumen sanguíneo de un varón de 70 kg y 1.60 m?",
+      "r": "<b>4.36 litros</b>: 0.3669×(1.6)³ + 0.03219×70 + 0.6041 = 1.5028 + 2.2533 + 0.6041."
+    },
+    {
+      "p": "¿Cuál es la tríada letal del choque hemorrágico?",
+      "r": "<b>Hipotermia, coagulopatía y acidosis</b>, que se retroalimentan entre sí."
+    },
+    {
+      "p": "¿Qué factores iatrogénicos agravan la coagulopatía del choque hemorrágico?",
+      "r": "La <b>infusión de cristaloides fríos</b>, que produce <b>hemodilución, hipotermia y acidosis sin anión gap</b>, y la <b>exposición ambiental</b>."
+    },
+    {
+      "p": "¿Qué efectos tiene la pérdida de sangre sobre la hemostasia?",
+      "r": "<b>Depleción de hematíes, factores de coagulación y plaquetas</b>, <b>disminución de la marginación plaquetaria</b> por la anemia, y <b>descenso de la actividad de los factores</b> por la pérdida de calor y la acidosis."
+    },
+    {
+      "p": "¿Qué ocurre en la respuesta simpatoadrenal al choque hemorrágico?",
+      "r": "<b>Vasoconstricción</b>, <b>activación endotelial y de neutrófilos</b>, <b>shedding del glucocálix</b> y <b>aumento de la permeabilidad</b>."
+    },
+    {
+      "p": "¿Qué se libera en la lesión tisular e hipoperfusión del choque hemorrágico?",
+      "r": "<b>Péptidos formilados y ADN mitocondrial</b> (los <b>DAMPs</b> o alarminas), se activa la <b>proteína C</b> que inactiva los <b>factores V y VIII</b>, aumenta la <b>plasmina</b>, se libera <b>tPA</b> y sube la <b>trombomodulina soluble</b>."
+    },
+    {
+      "p": "¿Qué cambios genéticos acompañan al choque hemorrágico?",
+      "r": "<b>Sobreexpresión de genes de inmunidad innata</b> y <b>represión de los de inmunidad adaptativa</b>."
+    },
+    {
+      "p": "¿Cuál es el perfil hemodinámico del choque cardiogénico?",
+      "r": "<b>Índice cardiaco bajo (≤2.2 L/min/m²)</b> con <b>índice de resistencia vascular sistémica elevado (&gt;2200 dinas/cm/segundo)</b>."
+    },
+    {
+      "p": "¿Qué es el consenso SCAI SHOCK 2022 y quiénes lo respaldan?",
+      "r": "Un consenso de la <b>Society for Cardiovascular Angiography and Interventions</b> junto con ACC, ACEP, AHA, ESC, ISHLT, SCCM y STS."
+    },
+    {
+      "p": "¿Cuáles son los tres ejes del modelo SCAI SHOCK 2022?",
+      "r": "La <b>severidad del choque</b>, los <b>modificadores de riesgo</b>, y la <b>etiología y los fenotipos</b>."
+    },
+    {
+      "p": "¿Qué fenotipos hemodinámicos formales propone la SCAI para guiar la terapia?",
+      "r": "<b>Gasto cardiaco o poder cardiaco bajo</b>, <b>presiones de llenado elevadas</b> y <b>extracción aumentada de oxígeno</b> (saturación venosa de oxígeno reducida)."
+    },
+    {
+      "p": "¿Qué parámetros recomienda la SCAI para identificar la falla ventricular derecha?",
+      "r": "La <b>relación presión auricular derecha / presión capilar pulmonar</b> y el <b>índice de pulsatilidad de la arteria pulmonar</b>."
+    },
+    {
+      "p": "¿Qué aportan los algoritmos de aprendizaje automático al choque cardiogénico?",
+      "r": "Apoyan que existen <b>fenotipos distintos</b> que permiten <b>estratificar aún más el riesgo de mortalidad dentro de cada estadio SCAI</b>."
+    },
+    {
+      "p": "¿Por qué la SCAI enfatiza las trayectorias del paciente?",
+      "r": "Para <b>reconocer quiénes responden a la terapia frente a quiénes están fallando o deteriorándose</b>."
+    },
+    {
+      "p": "¿Cuáles son los mecanismos del choque distributivo?",
+      "r": "<b>Vasodilatación arterial y venosa</b>, <b>aumento de la permeabilidad capilar</b> con fuga de plasma al espacio extravascular, <b>maldistribución del flujo sanguíneo</b> y <b>disfunción endotelial con pérdida del glucocálix protector</b>."
+    },
+    {
+      "p": "¿Qué es la TSST-1?",
+      "r": "La <b>toxina-1 del síndrome de choque tóxico</b>, un <b>superantígeno</b>."
+    },
+    {
+      "p": "Tras la reanimación con líquidos, ¿cómo están el gasto cardiaco y la resistencia vascular en el choque distributivo?",
+      "r": "El <b>gasto cardiaco está aumentado</b> (normal o elevado en más del 90% de los pacientes) y la <b>resistencia vascular sistémica muy disminuida</b>."
+    },
+    {
+      "p": "¿Cómo está la SvO₂ en el choque distributivo y por qué?",
+      "r": "<b>Aumentada o normal</b>, porque la <b>extracción de oxígeno está disminuida</b>: el tejido no lo aprovecha."
+    },
+    {
+      "p": "¿Por qué sube el lactato en el choque distributivo si el gasto cardiaco está elevado?",
+      "r": "Porque hay <b>hipoperfusión tisular a pesar del gasto cardiaco elevado</b>: el problema es la <b>maldistribución del flujo</b> y la disfunción mitocondrial, no el aporte."
+    },
+    {
+      "p": "¿Qué ocurre con la coagulación en la microcirculación séptica?",
+      "r": "<b>Aumenta</b>: el monocito expresa <b>factor tisular</b> y las <b>NETs</b> atrapan plaquetas formando trombos."
+    },
+    {
+      "p": "¿Qué mecanismos anticoagulantes se pierden en la sepsis?",
+      "r": "Descienden el <b>inhibidor de la vía del factor tisular</b>, la <b>antitrombina</b>, la <b>trombomodulina</b>, el <b>receptor endotelial de proteína C</b>, la <b>proteína C</b> y la proteína C activada; y sube el <b>PAI-1</b>, que reduce la fibrinólisis."
+    },
+    {
+      "p": "¿Cómo se pierde la función de barrera endotelial en la sepsis?",
+      "r": "Por la vía <b>PAR1</b>, con <b>aumento de S1P3 y descenso de S1P1</b>, <b>descenso de proteína C activada con aumento de trombina</b>, <b>aumento de angiopoyetina 2</b> y <b>descenso de VE-cadherina y uniones estrechas</b>, lo que produce <b>fuga capilar y edema intersticial</b>."
+    },
+    {
+      "p": "¿A qué conduce finalmente la disfunción microcirculatoria de la sepsis?",
+      "r": "A la <b>disminución de la oxigenación tisular</b> —agravada por la <b>disfunción mitocondrial</b>— y de ahí a la <b>falla orgánica</b>."
+    },
+    {
+      "p": "¿Cuál es el mecanismo del choque obstructivo y qué ejemplos hay?",
+      "r": "La <b>obstrucción mecánica de la circulación</b> con <b>resistencia elevada al flujo sanguíneo</b>. Ejemplos: <b>embolia pulmonar</b>, <b>taponamiento cardiaco</b> y <b>neumotórax a tensión</b>."
+    },
+    {
+      "p": "¿Qué presión pericárdica puede alcanzarse en el taponamiento cardiaco?",
+      "r": "Entre <b>15 y 20 mmHg</b>."
+    },
+    {
+      "p": "¿Qué es la igualación de presiones diastólicas en el taponamiento?",
+      "r": "Que las presiones diastólicas se igualan <b>en todas las cámaras cardiacas</b>: aurícula derecha, ventrículo derecho, arteria pulmonar y presión capilar pulmonar."
+    },
+    {
+      "p": "¿Por qué cae el retorno venoso en el taponamiento cardiaco?",
+      "r": "Porque la <b>presión transmural auricular derecha se vuelve despreciable</b>, lo que produce una <b>disminución masiva del retorno venoso sistémico</b>."
+    },
+    {
+      "p": "¿Qué es la interdependencia ventricular en el taponamiento?",
+      "r": "Que el <b>llenado de un ventrículo afecta al otro</b> debido a la <b>restricción pericárdica</b>. También hay competencia entre aurícula y ventrículo derechos y entre ambos ventrículos."
+    },
+    {
+      "p": "¿Cuál es la secuencia hemodinámica de la embolia pulmonar masiva?",
+      "r": "Obstrucción del árbol arterial pulmonar → <b>aumento de la poscarga del ventrículo derecho</b> → <b>falla aguda del VD</b> → <b>disminución del llenado del ventrículo izquierdo</b> → <b>caída del gasto cardiaco sistémico</b> → <b>hipotensión</b>."
+    },
+    {
+      "p": "¿Cuál es la secuencia hemodinámica del neumotórax a tensión?",
+      "r": "Acumulación progresiva de aire en el espacio pleural con <b>mecanismo de válvula unidireccional</b> → <b>colapso pulmonar ipsilateral</b> → <b>desplazamiento mediastinal contralateral</b> → <b>compresión de la vena cava y del corazón</b> → caída del gasto cardiaco → hipotensión y choque."
+    }
+  ],
+  "cloze": [
+    "El choque se define por hipotensión (PAS &lt;90 o PAM &lt;{{c1::70}} mmHg), signos de hipoperfusión (oliguria &lt;{{c2::0.5 ml/kg/h}}) e hiperlactatemia &gt;{{c3::1.5 mmol/L}}.",
+    "El tipo de choque más frecuente es el {{c1::distributivo séptico}} con un {{c2::62%}}; el cardiogénico y el hipovolémico suponen un {{c3::16%}} cada uno.",
+    "El perfil del choque cardiogénico es índice cardiaco {{c1::≤2.2 L/min/m²}} con índice de resistencia vascular sistémica {{c2::&gt;2200}} dinas/cm/segundo.",
+    "En el choque hipovolémico, la fase descompensatoria aparece al perder más del {{c1::30%}} del volumen sanguíneo, cuando la vasoconstricción progresa paradójicamente a {{c2::vasodilatación}}."
+  ]
+}

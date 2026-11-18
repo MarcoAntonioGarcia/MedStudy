@@ -1,0 +1,7 @@
+# Servidor web local
+fastapi
+uvicorn[standard]
+
+# Export a Anki (.apkg). El IMPORT no necesita nada: un .apkg es un zip con
+# una base SQLite dentro, y ambos vienen en la librería estándar.
+genanki

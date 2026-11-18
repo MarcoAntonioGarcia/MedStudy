@@ -1,0 +1,234 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Fenotipos de Lesión Renal Aguda",
+  "autor": "R1 MI Dr. Jair Naranjo Vera",
+  "fuentes": "Ostermann et al., Lancet 2025 · Vaara et al., Crit Care 2022 · Wang et al., Front Pharmacol 2025 · Wan et al., Sci Rep 2025 · ADQI Consensus, JAMA Netw Open 2020",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/LRA FENOTIPOS Y SUBFENOTIPOS_compressed.pdf",
+  "resumen_html": [
+    "<h2>Por qué fenotipar</h2>",
+    "<ul><li><b>Estratificación de riesgo</b> · <b>tratamiento personalizado</b> · <b>comprensión de mecanismos</b>.</li></ul>",
+    "<div class='cols'><div>",
+    "<h3>Clasificación tradicional por etiología</h3>",
+    "<ul>",
+    "<li><b>Prerrenal (36.5%):</b> hipoperfusión reversible.</li>",
+    "<li><b>Intrínseca o renal (46.5%):</b> daño estructural.</li>",
+    "<li><b>Posrenal (17.0%):</b> obstrucción urinaria.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Fenotipos según función y daño estructural</h3>",
+    "<ul>",
+    "<li><b>Sin LRA:</b> función normal.</li>",
+    "<li><b>LRA subclínica (estadio 1S):</b> hay <b>marcadores de lesión</b> sin pérdida de función.</li>",
+    "<li><b>Azotemia prerrenal:</b> <b>pérdida de función sin daño</b> estructural.</li>",
+    "<li><b>LRA intrínseca:</b> <b>daño estructural y pérdida de función</b>.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h2>Subfenotipos moleculares</h2>",
+    "<h3>ASSESS-AKI</h3>",
+    "<ul>",
+    "<li><b>Clase 1:</b> menor riesgo de eventos renales adversos.</li>",
+    "<li><b>Clase 2:</b> mayor riesgo de <b>MAKE</b>, con <b>inflamación</b> y <b>lesión epitelial</b>.</li>",
+    "</ul>",
+    "<h3>Subfenotipos según respuesta a vasopresina</h3>",
+    "<p>Identificados por <b>análisis de clases latentes</b> en tres cohortes: <b>descubrimiento (794 pacientes)</b>, <b>replicación (425)</b> y <b>validación en VASST (271)</b>. La LRA se definió por <b>creatinina y diuresis</b>.</p>",
+    "<table><tr><th></th><th>AKI-SP1</th><th>AKI-SP2</th></tr>",
+    "<tr><td><b>Mecanismo dominante</b></td><td><b>Disfunción endotelial</b>, con <b>autorregulación conservada</b></td><td><b>Inflamación</b>, con <b>disfunción endotelial severa</b></td></tr>",
+    "<tr><td><b>Severidad clínica</b></td><td><b>Menor</b></td><td><b>Mayor</b></td></tr>",
+    "<tr><td><b>Función renal basal</b></td><td>Mejor</td><td>Peor</td></tr>",
+    "<tr><td><b>Uso de vasopresores</b></td><td>Menor</td><td>Mayor</td></tr>",
+    "<tr><td><b>Perfil molecular</b></td><td><b>Inflamación baja</b>: IL-6, IL-8, sTNFR-1</td><td><b>Inflamación alta</b>: IL-6, IL-8, sTNFR-1 y <b>angiopoyetina-2</b></td></tr>",
+    "<tr><td><b>Pronóstico</b></td><td>—</td><td><b>No recuperación a 7 días</b> y <b>mayor mortalidad a 28 días</b></td></tr>",
+    "<tr><td><b>Respuesta a vasopresina</b></td><td><b>Mortalidad 27% vs 46% (P = 0.02)</b><br>Beneficio absoluto <b>19%</b>, <b>NNT ≈ 5</b></td><td><b>45% vs 49% (P = 0.99)</b> — sin diferencia</td></tr>",
+    "</table>",
+    "<p>La <b>interacción entre subfenotipo y tratamiento</b> tuvo una <b>P = 0.05</b>: es decir, el beneficio de la vasopresina depende del subfenotipo.</p>",
+    "<h3>Vasopresina frente a norepinefrina en el riñón</h3>",
+    "<table><tr><th>Vasopresina</th><th>Norepinefrina</th></tr>",
+    "<tr><td><b>Mejora la función renal</b>: aclaramiento <b>2.5×</b> a las <b>6 h</b><br><b>Preserva la perfusión medular</b> y reduce la hiperemia</td><td>Mejora solo <b>transitoria</b>: aclaramiento <b>3.5×</b> a las <b>2 h</b><br><b>Agrava la isquemia y la hipoxia medular</b></td></tr>",
+    "</table>",
+    "<h3>Evidencia clínica en choque séptico</h3>",
+    "<ul>",
+    "<li><b>VANISH:</b> mortalidad a 28 días <b>no significativa</b>; necesidad de <b>TRR con RR 0.71</b>.</li>",
+    "<li><b>Metaanálisis 2025:</b> descenso de creatinina con <b>diferencia de medias de 0.15 mg/dl</b>; <b>TRR con RR 0.76</b>.</li>",
+    "<li><b>Subanálisis de VASST:</b> el <b>beneficio aparece en el choque menos severo</b>.</li>",
+    "</ul>",
+    "<h2>Trayectorias de función renal</h2>",
+    "<p>El modelado de trayectorias clasifica la evolución en cuatro subfenotipos:</p>",
+    "<table><tr><th>Subfenotipo</th><th>Trayectoria</th><th>Mortalidad</th></tr>",
+    "<tr><td><b>1</b></td><td>Descenso <b>rápido</b> de la TFGe con <b>aumento</b> del gasto urinario</td><td><b>24%</b></td></tr>",
+    "<tr><td><b>2</b></td><td>TFGe <b>y</b> gasto urinario descienden <b>rápidamente</b></td><td>—</td></tr>",
+    "<tr><td><b>3</b></td><td>TFGe desciende con gasto urinario <b>estable</b></td><td>—</td></tr>",
+    "<tr><td><b>4</b></td><td>TFGe <b>aumenta</b> con gasto urinario <b>estable</b></td><td><b>15%</b></td></tr>",
+    "</table>",
+    "<h3>Ventajas del modelado de trayectorias</h3>",
+    "<ul><li><b>Captura la naturaleza dinámica</b> de la LRA · <b>mejora la estratificación de riesgo</b> · <b>identifica la recuperación temprana</b> · <b>facilita la medicina de precisión</b> · <b>integra múltiples dominios</b>.</li></ul>",
+    "<h2>EASIX</h2>",
+    "<div class='cols'><div>",
+    "<h3>Puntos de corte</h3>",
+    "<ul>",
+    "<li><b>≥2.32:</b> aumento de mortalidad en insuficiencia cardiaca (<b>HR 2.14–3.34</b>).</li>",
+    "<li><b>≥10.83:</b> punto de <b>inflexión de mortalidad</b> en sepsis con LRA asociada.</li>",
+    "<li><b>Ln-EASIX &gt; −0.916:</b> umbral de <b>multimorbilidad cardiometabólica</b>.</li>",
+    "<li><b>≥1.904:</b> predice <b>nefropatía post-TAVR</b>.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Ventajas</h3>",
+    "<ul><li><b>Simplicidad</b> · <b>bajo costo</b> · <b>disponibilidad inmediata</b> · <b>aplicabilidad amplia</b> · <b>valor pronóstico independiente</b>.</li></ul>",
+    "<h3>Limitaciones</h3>",
+    "<ul><li>Influencia de <b>condiciones no endoteliales</b> · <b>validación prospectiva pendiente</b> · <b>variación de los puntos de corte</b>.</li></ul>",
+    "</div></div>",
+    "<div class='extra'>El EASIX (<i>Endothelial Activation and Stress Index</i>) se calcula como <b>LDH × creatinina / plaquetas</b>. Sus tres componentes son marcadores indirectos de daño endotelial —lisis celular, disfunción renal y consumo plaquetario—, y de ahí que un índice construido con tres analíticas de rutina funcione como sustituto barato de la activación endotelial.</div>",
+    "<h3>Sobrecarga hídrica</h3>",
+    "<ul><li><b>Sobrecarga % = [(entrada de líquidos − salida de líquidos) / peso corporal] × 100.</b></li></ul>",
+    "<h2>Aplicación e importancia clínica</h2>",
+    "<div class='cols'><div>",
+    "<h3>Aplicaciones prácticas</h3>",
+    "<ul><li><b>Identificación temprana</b> de los pacientes de alto riesgo · <b>evita intervenciones innecesarias</b> · <b>guía la terapia de reemplazo renal</b> · <b>enriquece los ensayos clínicos</b>.</li></ul>",
+    "<h3>Importancia de la fenotipificación</h3>",
+    "<ul><li><b>Enriquecimiento pronóstico</b> · <b>enriquecimiento predictivo</b> · <b>medicina de precisión</b> · <b>desarrollo de terapias dirigidas</b>.</li></ul>",
+    "</div><div>",
+    "<h3>Limitaciones y direcciones futuras</h3>",
+    "<ul><li><b>Validación prospectiva necesaria</b> · desarrollo de <b>herramientas predictivas tempranas</b> · <b>integración de biomarcadores de daño tubular</b> · <b>estudios de respuesta terapéutica diferencial</b>.</li></ul>",
+    "</div></div>",
+    "<p><i>«El reconocimiento crece de que el subfenotipado de LRA con biomarcadores nuevos y convencionales, junto con características clínicas seleccionadas, es necesario para identificar subpoblaciones reproducibles que podrían responder de manera diferente al tratamiento, permitiendo un manejo personalizado y orientado a la precisión.»</i></p>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Para qué sirve identificar fenotipos de lesión renal aguda?",
+      "r": "Para la <b>estratificación de riesgo</b>, el <b>tratamiento personalizado</b> y la <b>comprensión de mecanismos</b>."
+    },
+    {
+      "p": "¿Cómo se distribuye porcentualmente la clasificación tradicional de la LRA por etiología?",
+      "r": "<b>Prerrenal 36.5%</b> (hipoperfusión reversible), <b>intrínseca o renal 46.5%</b> (daño estructural) y <b>posrenal 17.0%</b> (obstrucción urinaria)."
+    },
+    {
+      "p": "¿Cuáles son los cuatro fenotipos de LRA según función y daño estructural?",
+      "r": "<b>Sin LRA</b> (función normal), <b>LRA subclínica o estadio 1S</b> (marcadores de lesión), <b>azotemia prerrenal</b> (pérdida de función sin daño) y <b>LRA intrínseca</b> (daño estructural y pérdida de función)."
+    },
+    {
+      "p": "¿Qué caracteriza a la LRA subclínica o estadio 1S?",
+      "r": "La presencia de <b>marcadores de lesión</b> sin la correspondiente pérdida de función."
+    },
+    {
+      "p": "¿Qué caracteriza a la azotemia prerrenal en la clasificación por función y daño?",
+      "r": "La <b>pérdida de función sin daño estructural</b>."
+    },
+    {
+      "p": "¿Qué distingue a las clases 1 y 2 del estudio ASSESS-AKI?",
+      "r": "La <b>clase 1</b> tiene <b>menor riesgo de eventos renales adversos</b>. La <b>clase 2</b> tiene <b>mayor riesgo de MAKE</b>, con <b>inflamación</b> y <b>lesión epitelial</b>."
+    },
+    {
+      "p": "¿Cómo se identificaron los subfenotipos AKI-SP1 y AKI-SP2?",
+      "r": "Por <b>análisis de clases latentes</b> en tres cohortes: <b>descubrimiento con 794 pacientes</b>, <b>replicación con 425</b> y <b>validación en VASST con 271</b>. La LRA se definió por <b>creatinina y diuresis</b>."
+    },
+    {
+      "p": "¿Qué caracteriza clínicamente al subfenotipo AKI-SP1?",
+      "r": "<b>Menor severidad clínica</b>, <b>mejor función renal basal</b> y <b>menor uso de vasopresores</b>."
+    },
+    {
+      "p": "¿Cuál es el perfil molecular del AKI-SP1?",
+      "r": "<b>Inflamación baja</b>: IL-6, IL-8 y sTNFR-1 bajos. Su mecanismo dominante es la <b>disfunción endotelial</b> con <b>autorregulación conservada</b>."
+    },
+    {
+      "p": "¿Qué caracteriza clínicamente al subfenotipo AKI-SP2?",
+      "r": "<b>Mayor severidad clínica</b>, <b>peor función renal</b> y <b>mayor uso de vasopresores</b>."
+    },
+    {
+      "p": "¿Cuál es el perfil molecular del AKI-SP2?",
+      "r": "<b>Inflamación alta</b>: IL-6, IL-8, sTNFR-1 y <b>angiopoyetina-2</b>. Cursa con <b>disfunción endotelial severa</b>."
+    },
+    {
+      "p": "¿Qué diferencias pronósticas tiene el AKI-SP2?",
+      "r": "<b>No recuperación a los 7 días</b> y <b>mayor mortalidad a los 28 días</b>."
+    },
+    {
+      "p": "¿Qué efecto tiene la vasopresina sobre la mortalidad en el subfenotipo AKI-SP1?",
+      "r": "Reduce la mortalidad del <b>46% al 27% (P = 0.02)</b>, con un <b>beneficio absoluto del 19%</b> y un <b>NNT de aproximadamente 5</b>."
+    },
+    {
+      "p": "¿Qué efecto tiene la vasopresina en el subfenotipo AKI-SP2?",
+      "r": "<b>Ninguno significativo</b>: mortalidad del <b>45% frente al 49% (P = 0.99)</b>."
+    },
+    {
+      "p": "¿Qué significa que la interacción entre subfenotipo y tratamiento tenga P = 0.05?",
+      "r": "Que el <b>beneficio de la vasopresina depende del subfenotipo</b>: no es un efecto uniforme sobre todos los pacientes."
+    },
+    {
+      "p": "¿Qué efectos renales tiene la vasopresina frente a la norepinefrina?",
+      "r": "La <b>vasopresina mejora la función renal</b> con un aclaramiento <b>2.5 veces mayor a las 6 horas</b> y <b>preserva la perfusión medular</b> reduciendo la hiperemia."
+    },
+    {
+      "p": "¿Qué efectos renales tiene la norepinefrina?",
+      "r": "Una mejora solo <b>transitoria</b> —aclaramiento <b>3.5 veces mayor a las 2 horas</b>— pero <b>agrava la isquemia y la hipoxia medular</b>."
+    },
+    {
+      "p": "¿Qué mostró el ensayo VANISH sobre la vasopresina?",
+      "r": "Que la <b>mortalidad a 28 días no fue significativa</b>, pero la necesidad de <b>terapia de reemplazo renal tuvo un RR de 0.71</b>."
+    },
+    {
+      "p": "¿Qué mostró el metaanálisis de 2025 sobre la vasopresina?",
+      "r": "Un descenso de creatinina con <b>diferencia de medias de 0.15 mg/dl</b> y una necesidad de <b>terapia de reemplazo renal con RR 0.76</b>."
+    },
+    {
+      "p": "¿Qué mostró el subanálisis de VASST sobre en quién funciona la vasopresina?",
+      "r": "Que el <b>beneficio aparece en el choque menos severo</b>."
+    },
+    {
+      "p": "¿Cuáles son los cuatro subfenotipos de trayectoria de función renal?",
+      "r": "<b>1:</b> descenso rápido de TFGe con aumento del gasto urinario. <b>2:</b> TFGe y gasto urinario descienden rápidamente. <b>3:</b> TFGe desciende con gasto urinario estable. <b>4:</b> TFGe aumenta con gasto urinario estable."
+    },
+    {
+      "p": "¿Qué mortalidad tienen los subfenotipos de trayectoria 1 y 4?",
+      "r": "El <b>subfenotipo 1</b>, un <b>24%</b>. El <b>subfenotipo 4</b>, un <b>15%</b>."
+    },
+    {
+      "p": "¿Qué ventajas aporta el modelado de trayectorias en la LRA?",
+      "r": "<b>Captura la naturaleza dinámica</b> de la LRA, <b>mejora la estratificación de riesgo</b>, <b>identifica la recuperación temprana</b>, <b>facilita la medicina de precisión</b> e <b>integra múltiples dominios</b>."
+    },
+    {
+      "p": "¿Qué indica un EASIX mayor o igual a 2.32?",
+      "r": "<b>Aumento de la mortalidad en insuficiencia cardiaca</b>, con un <b>HR de 2.14 a 3.34</b>."
+    },
+    {
+      "p": "¿Qué indica un EASIX mayor o igual a 10.83?",
+      "r": "El <b>punto de inflexión de la mortalidad</b> en la <b>sepsis con LRA asociada</b>."
+    },
+    {
+      "p": "¿Qué umbral de Ln-EASIX marca la multimorbilidad cardiometabólica?",
+      "r": "<b>Ln-EASIX mayor de −0.916</b>."
+    },
+    {
+      "p": "¿Qué predice un EASIX mayor o igual a 1.904?",
+      "r": "La <b>nefropatía posterior a un TAVR</b>."
+    },
+    {
+      "p": "¿Cuáles son las ventajas del EASIX?",
+      "r": "Su <b>simplicidad</b>, su <b>bajo costo</b>, su <b>disponibilidad inmediata</b>, su <b>aplicabilidad amplia</b> y su <b>valor pronóstico independiente</b>."
+    },
+    {
+      "p": "¿Cuáles son las limitaciones del EASIX?",
+      "r": "La <b>influencia de condiciones no endoteliales</b>, que su <b>validación prospectiva está pendiente</b> y la <b>variación de los puntos de corte</b> entre estudios."
+    },
+    {
+      "p": "¿Cómo se calcula el porcentaje de sobrecarga hídrica?",
+      "r": "<b>Sobrecarga % = [(entrada de líquidos − salida de líquidos) / peso corporal] × 100.</b>"
+    },
+    {
+      "p": "¿Cuáles son las aplicaciones clínicas prácticas de los subfenotipos de LRA?",
+      "r": "La <b>identificación temprana de los pacientes de alto riesgo</b>, <b>evitar intervenciones innecesarias</b>, <b>guiar la terapia de reemplazo renal</b> y <b>enriquecer los ensayos clínicos</b>."
+    },
+    {
+      "p": "¿Qué aporta la fenotipificación a la investigación y al tratamiento?",
+      "r": "<b>Enriquecimiento pronóstico</b>, <b>enriquecimiento predictivo</b>, <b>medicina de precisión</b> y <b>desarrollo de terapias dirigidas</b>."
+    },
+    {
+      "p": "¿Cuáles son las limitaciones y direcciones futuras del subfenotipado de la LRA?",
+      "r": "Hace falta <b>validación prospectiva</b>, <b>herramientas predictivas tempranas</b>, la <b>integración de biomarcadores de daño tubular</b> y <b>estudios de respuesta terapéutica diferencial</b>."
+    }
+  ],
+  "cloze": [
+    "En la clasificación tradicional, la LRA prerrenal supone el {{c1::36.5%}}, la intrínseca el {{c2::46.5%}} y la posrenal el {{c3::17%}}.",
+    "En el subfenotipo AKI-SP1 la vasopresina reduce la mortalidad del 46% al {{c1::27%}}, con un beneficio absoluto del {{c2::19%}} y un NNT de {{c3::5}}; en el AKI-SP2 no hay diferencia.",
+    "La vasopresina preserva la {{c1::perfusión medular}} renal, mientras que la norepinefrina agrava la {{c2::isquemia e hipoxia medular}}.",
+    "El porcentaje de sobrecarga hídrica se calcula como [(entrada − salida) / {{c1::peso corporal}}] × {{c2::100}}."
+  ]
+}

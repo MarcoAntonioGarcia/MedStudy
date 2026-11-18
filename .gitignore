@@ -1,0 +1,16 @@
+# Datos de cada instalación: progreso, notas y cachés. Nunca al repo.
+database.db
+*.db-journal
+assets/paginas/
+biblioteca/
+exports/
+# Texto sacado de las presentaciones (las presentaciones no se publican)
+herramientas/extraido/
+# Secretos y basura local
+.env
+*.log
+__pycache__/
+.DS_Store
+config.local.json
+*.pyc
+.venv/

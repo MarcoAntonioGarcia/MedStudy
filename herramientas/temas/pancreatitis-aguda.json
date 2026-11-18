@@ -1,0 +1,328 @@
+{
+  "seccion": "Gastro",
+  "tema": "Pancreatitis Aguda",
+  "autor": "RI MI Mariela Guadalupe Pérez Guerra · Dra. Cristina Durán Rosas",
+  "fuentes": "IAP/APA Revised Guidelines 2025 (Pancreatology) · iLATAM-AP 2026 (UEG J) · Harrison 22ª ed., cap. 359 · Trikudanathan, Gastroenterology 2019 y 2024 · WATERFALL, N Engl J Med 2022",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Gastro/PANCREATITIS AGUDA.pptx",
+  "resumen_html": [
+    "<h2>Definición y epidemiología</h2>",
+    "<div class=\"cols\"><div>",
+    "<ul>",
+    "<li><b>Pancreatitis aguda (PA):</b> inflamación repentina del parénquima pancreático con afectación de tejidos locales o sistémicos; va de leve a grave con necrosis y complicaciones sistémicas.</li>",
+    "<li><b>Idiopática:</b> sin causa tras anamnesis exhaustiva, laboratorio y <b>≥1 imagen avanzada</b>.</li>",
+    "<li><b>Recurrente:</b> <b>≥2 episodios</b> separados por <b>&gt;3 meses</b> de resolución completa.</li>",
+    "<li><b>Histopatología:</b> <b>intersticial</b> (se conserva el riego, cede espontáneamente) vs <b>necrosante</b> (se interrumpe el riego).</li>",
+    "</ul></div><div><ul>",
+    "<li>Incidencia <b>33.74/100,000</b> personas/año; mortalidad <b>1.6/100,000</b>/año.</li>",
+    "<li><b>1/3</b> desarrolla complicaciones locales o sistémicas.</li>",
+    "<li>Mortalidad <b>50%</b> con falla orgánica persistente o múltiple.</li>",
+    "<li><b>Factores de riesgo de gravedad:</b> edad <b>≥65 años</b>, IMC <b>&gt;25 kg/m²</b>, grasa visceral aumentada, hipertrigliceridemia.</li>",
+    "</ul></div></div>",
+    "<h2>Etiología y patogenia</h2>",
+    "<table><tr><th>Causa</th><th>Frecuencia / dato clave</th><th>Causa</th><th>Frecuencia / dato clave</th></tr>",
+    "<tr><td><b>Litiasis biliar</b></td><td><b>42%</b>; ALT <b>&gt;150 U/L</b> → VPP <b>&gt;85%</b></td><td><b>CPRE</b></td><td><b>5–10%</b></td></tr>",
+    "<tr><td><b>Alcohol</b></td><td><b>25–40%</b></td><td><b>Fármacos</b></td><td><b>&lt;2%</b> (azatioprina, 6-mercaptopurina)</td></tr>",
+    "<tr><td><b>Hipertrigliceridemia</b></td><td><b>1–4%</b></td><td><b>Idiopática</b></td><td><b>20%</b>; de ellas <b>66%</b> con mutación genética</td></tr>",
+    "<tr><td>Traumatismos</td><td>—</td><td>Hiperparatiroidismo</td><td>Hipercalcemia con PTH inapropiadamente elevada</td></tr>",
+    "</table>",
+    "<p><b>Fisiopatología:</b> activación intraacinar prematura de <b>tripsinógeno → tripsina</b> → autodigestión y cascada inflamatoria local y sistémica. <b>Patogenia en 3 fases:</b> (1) activación de la tripsina; (2) activación, quimioatracción y secuestro de leucocitos y macrófagos; (3) enzimas proteolíticas y citocinas liberadas actúan en órganos distantes.</p>",
+    "<h2>Clínica y diagnóstico</h2>",
+    "<div class=\"cols\"><div>",
+    "<ul>",
+    "<li><b>Dolor abdominal</b> epigástrico irradiado a dorso, tórax, flancos e hipogastrio; náusea, vómito, distensión (hipomotilidad).</li>",
+    "<li><b>EF:</b> fiebre, taquicardia, hipotensión; signos de <b>Cullen</b> (periumbilical), <b>Grey Turner</b> (flancos) y <b>Fox</b> (inguinal).</li>",
+    "<li><b>Diagnóstico: 2 de 3</b> — (I) dolor abdominal superior agudo; (II) lipasa o amilasa <b>&gt;3× LSN</b>; (III) imagen compatible.</li>",
+    "<li><b>Imagen:</b> USG transabdominal (S <b>60%</b>; busca etiología biliar); ecoendoscopia; RM/CPRM (curso tardío, complicaciones); <b>TC contrastada a las 72–96 h</b> del inicio.</li>",
+    "</ul></div><div>",
+    "<table><tr><th>Enzima</th><th>Inicio</th><th>Pico</th><th>Duración</th><th>Especificidad</th></tr>",
+    "<tr><td><b>Amilasa</b></td><td>6 h</td><td>48 h</td><td>3–5 días</td><td>Menor</td></tr>",
+    "<tr><td><b>Lipasa</b></td><td>4 h</td><td>24 h</td><td>8–14 días</td><td><b>Mayor</b></td></tr>",
+    "</table>",
+    "<p>Función exocrina: <b>elastasa fecal</b> (detección precoz de IPE). Función endocrina: glucosa en ayunas, <b>HbA1c</b> y/o <b>péptido C</b>.</p>",
+    "</div></div>",
+    "<h2>Clasificación de Atlanta revisada y fases</h2>",
+    "<table><tr><th>Morfología</th><th>&lt;4 semanas</th><th>≥4 semanas</th></tr>",
+    "<tr><td><b>Intersticial edematosa</b> (la más frecuente; sin necrosis)</td><td>Colección aguda de líquido peripancreático: homogénea, <b>sin pared</b></td><td><b>Pseudoquiste:</b> encapsulado, pared definida, necrosis mínima o nula</td></tr>",
+    "<tr><td><b>Necrotizante</b> (<b>5–10%</b>; necrosis parenquimatosa y/o peripancreática)</td><td>Colección necrótica aguda (ANC): líquido + necrosis, <b>sin pared</b></td><td><b>Necrosis encapsulada (WON):</b> pared inflamatoria bien definida</td></tr>",
+    "</table>",
+    "<table><tr><th>Gravedad</th><th>Definición</th><th>Fases</th></tr>",
+    "<tr><td><b>Leve</b> (65–80%)</td><td>Sin falla orgánica ni complicaciones locales/sistémicas</td><td rowspan=\"3\"><b>Temprana (&lt;2 sem):</b> SRIS; falla de 3 aparatos (respiratorio, cardiovascular, renal); falla persistente &gt;48 h.<br><b>Tardía (&gt;2 sem):</b> falla persistente y pancreatitis necrosante.</td></tr>",
+    "<tr><td><b>Moderada</b></td><td>Falla orgánica <b>transitoria &lt;48 h</b> y/o complicaciones locales o sistémicas</td></tr>",
+    "<tr><td><b>Grave</b></td><td>Falla orgánica <b>persistente &gt;48 h</b>, única o múltiple</td></tr>",
+    "</table>",
+    "<h2>Escalas de gravedad</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>Paciente grave:</b> SRIS al ingreso y persistente a las 48 h (± PCR o IL-6 elevadas); falla orgánica &gt;48 h sin respuesta; <b>BISAP ≥3</b>; <b>APACHE II ≥8</b>; Marshall <b>≥2</b> en cualquier órgano → <b>UCI</b>. Laboratorios pronósticos: PCR, BUN, Hto, PCT, IL-6, TG, glucosa, calcio, dímero D, índice neutrófilo/linfocito.</p>",
+    "<p><b>BISAP</b> (mortalidad en las primeras 24 h), 1 punto cada uno: <b>B</b>UN &gt;25 mg/dL · alteración del estado mental (<b>ECG &lt;15</b>) · <b>S</b>IRS · edad <b>&gt;60</b> · derrame <b>p</b>leural. <b>≥3 = grave</b>; ≤2 = leve.</p>",
+    "<p><b>SIRS (≥2 de 4):</b> T <b>&lt;36 o &gt;38 °C</b> · FC <b>&gt;90</b> · FR <b>&gt;20</b> o PaCO₂ <b>&lt;32 mmHg</b> · leucocitos <b>&lt;4,000 o &gt;12,000</b> o <b>&gt;10% bandas</b>.</p>",
+    "<p><b>APACHE II</b> (0–71): fisiología aguda, edad y salud crónica; al ingreso, 24 y 48 h. <b>≥8 predice PA grave</b>.</p>",
+    "</div><div>",
+    "<table><tr><th>Marshall modificado</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>",
+    "<tr><td>PaO₂/FiO₂</td><td>&gt;400</td><td>301–400</td><td>201–300</td><td>101–200</td><td>≤100</td></tr>",
+    "<tr><td>Creatinina (mg/dL)</td><td>&lt;1.4</td><td>1.5–1.8</td><td>1.9–3.6</td><td>3.7–4.9</td><td>≥5</td></tr>",
+    "<tr><td>TAS (mmHg)</td><td>&gt;90</td><td>&lt;90, responde a líquidos</td><td>&lt;90, no responde</td><td>&lt;90, pH 7.2–7.3</td><td>&lt;90, pH &lt;7.2</td></tr>",
+    "</table>",
+    "<table><tr><th>Ranson</th><th>No biliar</th><th>Biliar</th></tr>",
+    "<tr><td colspan=\"3\"><b>Al ingreso</b></td></tr>",
+    "<tr><td>Edad</td><td>&gt;55 años</td><td>&gt;70 años</td></tr>",
+    "<tr><td>Leucocitos</td><td>&gt;16,000</td><td>&gt;18,000</td></tr>",
+    "<tr><td>Glucosa</td><td>&gt;200 mg/dL</td><td>&gt;220 mg/dL</td></tr>",
+    "<tr><td>LDH</td><td>&gt;350 UI/L</td><td>&gt;400 UI/L</td></tr>",
+    "<tr><td>AST</td><td>&gt;250</td><td>&gt;250</td></tr>",
+    "<tr><td colspan=\"3\"><b>A las 48 h</b></td></tr>",
+    "<tr><td>↓ Hto</td><td>&gt;10 puntos</td><td>&gt;10 puntos</td></tr>",
+    "<tr><td>↑ BUN</td><td>&gt;5 mg/dL</td><td>&gt;2 mg/dL</td></tr>",
+    "<tr><td>Calcio</td><td>&lt;8 mg/dL</td><td>&lt;8 mg/dL</td></tr>",
+    "<tr><td>PaO₂</td><td>&lt;60 mmHg</td><td>—</td></tr>",
+    "<tr><td>Déficit de base</td><td>&gt;4 mEq/L</td><td>&gt;5 mEq/L</td></tr>",
+    "<tr><td>Secuestro de líquidos</td><td>&gt;6 L</td><td>&gt;4 L</td></tr>",
+    "<tr><td colspan=\"3\"><b>≥3 puntos = PA grave</b></td></tr>",
+    "</table>",
+    "</div></div>",
+    "<table><tr><th colspan=\"2\">Balthazar — grado por TC</th><th colspan=\"2\">Necrosis</th><th colspan=\"2\">Índice de severidad (suma)</th></tr>",
+    "<tr><td><b>A</b> normal</td><td>0</td><td>0%</td><td>0</td><td>0–3</td><td>Bajo</td></tr>",
+    "<tr><td><b>B</b> inflamación local o difusa</td><td>1</td><td>&lt;30%</td><td>2</td><td>4–6</td><td>Medio</td></tr>",
+    "<tr><td><b>C</b> + cambios de la grasa peripancreática</td><td>2</td><td>30–50%</td><td>4</td><td>7–10</td><td>Alto</td></tr>",
+    "<tr><td><b>D</b> una colección mal definida</td><td>3</td><td>&gt;50%</td><td>6</td><td></td><td></td></tr>",
+    "<tr><td><b>E</b> ≥2 colecciones o gas</td><td>4</td><td></td><td></td><td></td><td></td></tr>",
+    "</table>",
+    "<h2>Tratamiento</h2>",
+    "<p><b>85–90%</b> cede espontáneamente en <b>3–7 días</b>, sin falla orgánica ni complicaciones locales.</p>",
+    "<table><tr><th>Medida</th><th>Recomendación</th></tr>",
+    "<tr><td><b>Líquidos</b></td><td><b>Ringer lactato</b> a <b>1.5 mL/kg/h</b>; bolo de <b>10 mL/kg</b> solo si hay hipovolemia o hipotensión al ingreso; en UCI, guiar con diámetro y colapsabilidad de la VCI por USG. <b>Metas:</b> PAM <b>65–85 mmHg</b>, diuresis <b>≥0.5 mL/kg/h</b>, BUN <b>&lt;20 mg/dL</b> (urea &lt;40), Hto <b>&lt;44%</b>.</td></tr>",
+    "<tr><td><b>Analgesia</b></td><td>Dolor = síntoma cardinal; valorar con EVA. <b>AINE</b> u <b>opioides</b> si es intenso; evitar opioides con depresión respiratoria, alteración mental o íleo.</td></tr>",
+    "<tr><td><b>Antibióticos</b></td><td>Solo con infección extrapancreática comprobada o fuerte sospecha de necrosis infectada. <b>No</b> profilaxis. Tasa justificada <b>20–40%</b>. Único biomarcador útil: <b>procalcitonina</b>.</td></tr>",
+    "<tr><td><b>Nutrición</b></td><td>Leve–moderada: <b>vía oral lo antes posible</b> (sólida baja en grasa o líquidos claros). Si no tolera VO: <b>enteral por sonda nasoentérica en ≤72 h</b>, fórmula <b>polimérica</b>.</td></tr>",
+    "<tr><td><b>CPRE</b></td><td>Urgente <b>≤24 h</b> solo si hay <b>colangitis</b> aguda.</td></tr>",
+    "<tr><td><b>Colecistectomía</b></td><td>Leve biliar: laparoscópica en la <b>misma hospitalización</b>. Moderada–grave: diferir <b>hasta 8 semanas</b> tras el alta o hasta resolver colecciones.</td></tr>",
+    "</table>",
+    "<div class=\"extra\"><b>WATERFALL (NEJM 2022):</b> 249 pacientes. Reanimación agresiva (bolo 20 mL/kg + 3 mL/kg/h) vs moderada (1.5 mL/kg/h): sin menor gravedad (<b>22.1% vs 17.3%</b> moderada-grave) y <b>más sobrecarga hídrica (20.5% vs 6.3%)</b>; se detuvo por seguridad. Sustenta la pauta moderada.</div>",
+    "<h2>Situaciones especiales</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>PA por hipertrigliceridemia:</b> TG <b>&gt;1000 mg/dL</b> confirman la causa; <b>&gt;500</b> la hacen muy probable. Mecanismo: quilomicrones en capilares pancreáticos (isquemia, acidosis) y ácidos grasos libres por lipólisis (daño acinar). Ayuno <b>48 h</b> → dieta blanda baja en grasa (enteral si no tolera).</p>",
+    "<ul><li><b>Insulina:</b> primera línea para bajar TG.</li>",
+    "<li><b>HBPM</b> a corto plazo (<b>&lt;3 días</b>).</li>",
+    "<li><b>Plasmaféresis</b> de doble filtración si TG <b>&gt;5000 mg/dL</b>.</li>",
+    "<li><b>Fenofibrato:</b> el más usado a largo plazo.</li>",
+    "<li>Familiar/TG muy altos: antisentido contra apo C-III (<b>volanesorsen, olezarsen</b>) reducen recurrencia.</li></ul>",
+    "</div><div>",
+    "<p><b>Necrosis:</b> manejo conservador; si se infecta, antibiótico de amplio espectro. Estándar de oro: <b>PAAF + cultivo</b> guiado por TC o USG. <b>PCT ≥3.5 ng/mL</b>: S <b>90%</b>, E <b>89%</b> para necrosis infectada.</p>",
+    "<p><b>Alta:</b> estable, tolera VO, mejoría de PCR/leucocitos, sin fiebre y con poca o nula analgesia no opioide. Reingreso <b>&gt;20%</b>.</p>",
+    "</div></div>",
+    "<h2>Complicaciones</h2>",
+    "<table><tr><th>Complicación</th><th>Datos clave</th></tr>",
+    "<tr><td><b>Hipertensión intraabdominal</b> (17%)</td><td>PIA <b>&gt;12 mmHg</b>. <b>Síndrome compartimental:</b> PIA sostenida <b>&gt;20 mmHg</b> (± PPA &lt;60) con disfunción orgánica nueva. Tx: drenaje percutáneo, analgesia, descompresión con sonda nasogástrica/rectal, evitar balance positivo.</td></tr>",
+    "<tr><td><b>Hemorragia</b> (0.5–1.2%)</td><td><b>60% pseudoaneurismas</b> (arteria <b>esplénica 35–50%</b>), 20% sangrado en pseudoquiste, 20% vasos pequeños. Mortalidad <b>11–38%</b>. Dx: <b>TC trifásica</b>. Tx: <b>angioembolización</b> (éxito 88–100%).</td></tr>",
+    "<tr><td><b>Trombosis venosa esplácnica</b> (1–24%)</td><td>Dx: TC contrastada. <b>No anticoagular</b> la trombosis esplénica aislada; considerar si se extiende a porta o mesentérica.</td></tr>",
+    "<tr><td><b>Fístula intestinal</b> (10–15% de la necrotizante)</td><td>Colon y duodeno > estómago e intestino delgado. Alta: Dx endoscópico, <b>no requiere tratamiento</b>. Colónica: conservador; <b>cirugía</b> si infección persistente, peritonitis o salida fecal por la colección.</td></tr>",
+    "<tr><td><b>Insuficiencia pancreática exocrina</b></td><td>Por necrosis extensa; esteatorrea o desnutrición con elastasa fecal <b>&lt;100 μg/g</b> → <b>terapia de reemplazo enzimático</b>.</td></tr>",
+    "<tr><td><b>Largo plazo</b></td><td>PA recurrente y pancreatitis crónica, recurrencia de colecciones, fístula pancreático-cutánea, obstrucción biliar o gástrica, <b>cáncer de páncreas</b>.</td></tr>",
+    "</table>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Cuándo se considera idiopática una pancreatitis aguda?",
+      "r": "Sin causa tras anamnesis exhaustiva, laboratorio y <b>al menos una imagen avanzada</b>."
+    },
+    {
+      "p": "¿Cómo se define la pancreatitis aguda recurrente?",
+      "r": "<b>≥2 episodios</b> distintos separados por <b>&gt;3 meses</b> de resolución completa."
+    },
+    {
+      "p": "¿Qué distingue histológicamente la pancreatitis intersticial de la necrosante?",
+      "r": "En la <b>intersticial</b> se conserva el riego y cede sola; en la <b>necrosante</b> el riego se interrumpe."
+    },
+    {
+      "p": "¿Cuál es la incidencia anual de pancreatitis aguda?",
+      "r": "<b>33.74 por 100,000</b> personas al año."
+    },
+    {
+      "p": "¿Qué mortalidad tiene la pancreatitis aguda con falla orgánica persistente o múltiple?",
+      "r": "<b>50%</b>."
+    },
+    {
+      "p": "¿Cuáles son los factores de riesgo de gravedad en PA?",
+      "r": "Edad <b>≥65 años</b>, IMC <b>&gt;25</b>, grasa visceral aumentada e <b>hipertrigliceridemia</b>."
+    },
+    {
+      "p": "¿Qué valor de ALT sugiere origen biliar en la PA y con qué VPP?",
+      "r": "ALT <b>&gt;150 U/L</b>, con VPP <b>&gt;85%</b>."
+    },
+    {
+      "p": "¿Qué fármacos se citan como causa de PA y con qué frecuencia?",
+      "r": "<b>Azatioprina</b> y <b>6-mercaptopurina</b>; los fármacos causan <b>&lt;2%</b>."
+    },
+    {
+      "p": "¿Qué proporción de PA idiopática tiene una mutación genética?",
+      "r": "<b>66%</b> de las idiopáticas, que son el <b>20%</b> del total."
+    },
+    {
+      "p": "¿Cuál es el evento inicial en la fisiopatología de la pancreatitis aguda?",
+      "r": "Activación <b>intraacinar prematura de tripsinógeno a tripsina</b>, que causa autodigestión."
+    },
+    {
+      "p": "¿Cuáles son las tres fases de la patogenia de la PA?",
+      "r": "(1) <b>Activación de tripsina</b>; (2) <b>secuestro de leucocitos y macrófagos</b>; (3) <b>enzimas y citocinas en órganos distantes</b>."
+    },
+    {
+      "p": "¿Cómo es el dolor típico de la pancreatitis aguda?",
+      "r": "<b>Epigástrico</b>, irradiado a <b>dorso</b>, tórax, flancos y abdomen inferior."
+    },
+    {
+      "p": "¿Qué signos cutáneos de hemorragia retroperitoneal pueden verse en la PA?",
+      "r": "<b>Cullen</b> (periumbilical), <b>Grey Turner</b> (flancos) y <b>Fox</b> (inguinal)."
+    },
+    {
+      "p": "¿Qué criterios diagnostican la pancreatitis aguda?",
+      "r": "<b>2 de 3:</b> dolor abdominal superior agudo, <b>lipasa o amilasa &gt;3× LSN</b> e imagen compatible."
+    },
+    {
+      "p": "¿Por qué la lipasa es preferible a la amilasa en PA?",
+      "r": "Es <b>más específica</b> y permanece elevada más tiempo (<b>8–14 días</b> vs 3–5)."
+    },
+    {
+      "p": "¿Qué prueba detecta precozmente la insuficiencia pancreática exocrina?",
+      "r": "La <b>elastasa fecal</b>."
+    },
+    {
+      "p": "¿Qué sensibilidad tiene el ultrasonido transabdominal en PA y para qué sirve?",
+      "r": "<b>60%</b>; su utilidad principal es buscar <b>etiología biliar</b>."
+    },
+    {
+      "p": "¿Cuándo está indicada la TC contrastada en pancreatitis aguda?",
+      "r": "A las <b>72–96 h</b> del inicio de los síntomas."
+    },
+    {
+      "p": "¿Con qué frecuencia la PA es necrotizante?",
+      "r": "En el <b>5–10%</b>; la intersticial edematosa es la más frecuente."
+    },
+    {
+      "p": "¿Cómo se define la PA moderada según Atlanta?",
+      "r": "Falla orgánica <b>transitoria &lt;48 h</b> y/o complicaciones locales o sistémicas."
+    },
+    {
+      "p": "¿Cómo se define la PA grave según Atlanta?",
+      "r": "Falla orgánica <b>persistente &gt;48 h</b>, única o múltiple."
+    },
+    {
+      "p": "¿Qué colección aparece en la PA intersticial después de 4 semanas?",
+      "r": "El <b>pseudoquiste</b>: líquido encapsulado con pared definida y necrosis mínima."
+    },
+    {
+      "p": "¿Qué evalúa el BISAP y qué punto de corte define PA grave?",
+      "r": "El riesgo de <b>mortalidad en las primeras 24 h</b>; <b>≥3</b> = grave."
+    },
+    {
+      "p": "¿Qué puntaje de APACHE II predice pancreatitis grave?",
+      "r": "<b>≥8</b>, evaluado al ingreso, a las 24 y a las 48 h."
+    },
+    {
+      "p": "¿Qué define falla orgánica en la escala de Marshall modificada?",
+      "r": "<b>≥2 puntos</b> en cualquier órgano; indica valorar <b>UCI</b>."
+    },
+    {
+      "p": "¿Qué puntaje de Ranson define PA grave?",
+      "r": "<b>≥3 puntos</b>."
+    },
+    {
+      "p": "¿Qué evalúa el índice de Balthazar además del grado tomográfico?",
+      "r": "El <b>porcentaje de necrosis</b>: &lt;30% = 2, 30–50% = 4, &gt;50% = 6 puntos."
+    },
+    {
+      "p": "¿Qué proporción de PA cede espontáneamente y en cuánto tiempo?",
+      "r": "<b>85–90%</b>, en <b>3–7 días</b>."
+    },
+    {
+      "p": "¿Qué líquido y a qué velocidad se usa para reanimar en PA?",
+      "r": "<b>Ringer lactato</b> a <b>1.5 mL/kg/h</b>."
+    },
+    {
+      "p": "¿Cuándo se da bolo de líquidos en PA y de cuánto?",
+      "r": "<b>10 mL/kg</b>, solo si hay <b>hipovolemia o hipotensión</b> al ingreso."
+    },
+    {
+      "p": "¿Qué mostró el ensayo WATERFALL sobre la reanimación agresiva?",
+      "r": "No redujo la gravedad y aumentó la <b>sobrecarga hídrica (20.5% vs 6.3%)</b>; se detuvo por seguridad."
+    },
+    {
+      "p": "¿Cuándo deben evitarse los opioides en PA?",
+      "r": "Con <b>depresión respiratoria</b>, <b>alteración del estado mental</b> o <b>íleo paralítico</b>."
+    },
+    {
+      "p": "¿Cuándo están indicados los antibióticos en PA?",
+      "r": "Solo con <b>infección extrapancreática</b> o sospecha de <b>necrosis infectada</b>; nunca profilaxis. Guía: <b>procalcitonina</b>."
+    },
+    {
+      "p": "¿Cuándo se inicia la vía oral en PA leve–moderada?",
+      "r": "<b>Lo antes posible</b> en cuanto se tolere, con dieta sólida baja en grasa o líquidos claros."
+    },
+    {
+      "p": "¿Cuándo se indica nutrición enteral por sonda en PA y con qué fórmula?",
+      "r": "Si no tolera VO: sonda <b>nasoentérica en ≤72 h</b>, fórmula <b>polimérica</b>."
+    },
+    {
+      "p": "¿Cuándo está indicada la CPRE urgente en PA?",
+      "r": "En las primeras <b>24 h</b> solo si hay <b>colangitis aguda</b>."
+    },
+    {
+      "p": "¿Cuándo se hace la colecistectomía en PA biliar?",
+      "r": "Leve: en la <b>misma hospitalización</b>. Moderada–grave: diferir <b>hasta 8 semanas</b> o hasta resolver colecciones."
+    },
+    {
+      "p": "¿Qué niveles de triglicéridos confirman la hipertrigliceridemia como causa de PA?",
+      "r": "<b>&gt;1000 mg/dL</b> la confirman; <b>&gt;500 mg/dL</b> la hacen muy probable."
+    },
+    {
+      "p": "¿Cuál es el tratamiento de primera línea para bajar triglicéridos en PA?",
+      "r": "<b>Insulina</b>."
+    },
+    {
+      "p": "¿Cuándo se indica plasmaféresis en PA por hipertrigliceridemia?",
+      "r": "Doble filtración con triglicéridos <b>&gt;5000 mg/dL</b>."
+    },
+    {
+      "p": "¿Qué fármacos antisentido reducen la recurrencia en hipertrigliceridemia familiar?",
+      "r": "<b>Volanesorsen</b> y <b>olezarsen</b>, dirigidos al ARNm de la <b>apo C-III</b>."
+    },
+    {
+      "p": "¿Cuál es el estándar de oro para diagnosticar necrosis pancreática infectada?",
+      "r": "<b>PAAF con cultivo</b> guiada por TC o ultrasonido."
+    },
+    {
+      "p": "¿Qué punto de corte de procalcitonina detecta necrosis infectada y con qué rendimiento?",
+      "r": "<b>3.5 ng/mL</b>: sensibilidad <b>90%</b>, especificidad <b>89%</b>."
+    },
+    {
+      "p": "¿Cómo se define el síndrome compartimental abdominal?",
+      "r": "PIA sostenida <b>&gt;20 mmHg</b> con disfunción orgánica nueva o progresiva."
+    },
+    {
+      "p": "¿Cuál es la causa más frecuente de hemorragia en PA y qué arteria se afecta más?",
+      "r": "<b>Pseudoaneurismas (60%)</b>; la arteria <b>esplénica</b> en el 35–50%."
+    },
+    {
+      "p": "¿Cómo se diagnostica y trata la hemorragia por pseudoaneurisma en PA?",
+      "r": "<b>TC trifásica</b> para diagnóstico; <b>angioembolización</b> (éxito 88–100%) para tratamiento."
+    },
+    {
+      "p": "¿Cuándo se anticoagula la trombosis venosa esplácnica en PA?",
+      "r": "<b>No</b> si es esplénica aislada; considerar si afecta <b>porta o mesentérica</b>."
+    },
+    {
+      "p": "¿Cuándo se da reemplazo enzimático tras una PA?",
+      "r": "Con esteatorrea o desnutrición y <b>elastasa fecal &lt;100 μg/g</b>."
+    },
+    {
+      "p": "¿Cuáles son los criterios de alta en pancreatitis aguda?",
+      "r": "Estable, <b>tolera VO</b>, mejoría de <b>PCR</b>/leucocitos, sin fiebre y con poca analgesia no opioide."
+    }
+  ],
+  "cloze": [
+    "Etiología de la PA: litiasis biliar {{c1::42%}}, alcohol {{c2::25–40%}} y CPRE {{c3::5–10%}}.",
+    "Amilasa: inicia a las {{c1::6 h}} y alcanza su pico a las {{c2::48 h}}; lipasa: inicia a las {{c1::4 h}} y alcanza su pico a las {{c2::24 h}}.",
+    "BISAP: BUN {{c1::&gt;25 mg/dL}}, alteración del estado mental, SIRS, edad {{c2::&gt;60 años}} y {{c3::derrame pleural}}.",
+    "SIRS (≥2 de 4): temperatura {{c1::&lt;36 o &gt;38 °C}}, FC {{c2::&gt;90 lpm}}, FR {{c3::&gt;20 rpm}} o PaCO₂ &lt;32 mmHg, y alteración de leucocitos.",
+    "Metas de reanimación en PA: PAM {{c1::65–85 mmHg}}, diuresis {{c2::≥0.5 mL/kg/h}}, BUN {{c3::&lt;20 mg/dL}} y Hto &lt;44%.",
+    "Ranson al ingreso (no biliar): edad {{c1::&gt;55 años}}, leucocitos {{c2::&gt;16,000}} y glucosa {{c3::&gt;200 mg/dL}}."
+  ]
+}

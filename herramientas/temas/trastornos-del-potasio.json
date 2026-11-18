@@ -1,0 +1,410 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Trastornos del Potasio",
+  "autor": "R1 MI Miguel Ochoa Aguilera — Hospital Pemex Salamanca",
+  "fuentes": "Nefrología al Día (de Sequera, Alcázar, Albalate) · Rev Med UAS: Hiperkalemia",
+  "resumen_html": [
+    "<h2>Homeostasis del potasio</h2>",
+    "<ul>",
+    "<li><b>Potasio sérico normal: 3.5–5.0 mEq/L.</b> Están entre las alteraciones electrolíticas más frecuentes; actúan alterando la <b>polarización de la membrana celular</b>.</li>",
+    "<li>La concentración plasmática resulta de tres factores: <b>ingesta, eliminación y distribución transcelular</b>. Requerimiento diario <b>1 mEq/kg</b> (≈40–80 mEq).</li>",
+    "<li><b>Distribución:</b> el <b>98%</b> es intracelular (~140 mEq/L) y solo el <b>2%</b> extracelular. Esa diferencia determina el <b>potencial de membrana en reposo</b>, base de la transmisión neuromuscular; la <b>bomba Na⁺/K⁺-ATPasa</b> mantiene el gradiente.</li>",
+    "<li><b>Eliminación:</b> <b>80% renal</b> · 15% digestiva · 5% sudor. El riñón puede bajar su excreción a <b>&lt;5 mEq/día</b>. El <b>90% del K filtrado se reabsorbe en el túbulo proximal</b>; la eliminación se ajusta en las porciones finales del <b>contorneado distal</b> y el <b>colector cortical</b>.</li>",
+    "</ul>",
+    "<div class='cols'><div>",
+    "<h3>Intercambio intra–extracelular</h3>",
+    "<table><tr><th>K hacia dentro de la célula</th><th>K hacia fuera</th></tr>",
+    "<tr><td>Alcalosis metabólica · <b>insulina</b> · estimulación β2-adrenérgica · <b>aldosterona</b></td><td>Acidosis metabólica · hiperosmolalidad extracelular · agonistas α-adrenérgicos · <b>lisis celular</b> (tumoral, rabdomiólisis, hemólisis)</td></tr>",
+    "</table>",
+    "</div><div>",
+    "<h3>Factores que regulan la secreción distal</h3>",
+    "<ul><li>Ingesta de potasio en la dieta · concentración de potasio plasmático · <b>pH sistémico</b> · <b>flujo tubular distal y aporte distal de sodio</b> · excreción de aniones no reabsorbibles · <b>aldosterona</b>.</li></ul>",
+    "</div></div>",
+    "<h2>Hipopotasemia</h2>",
+    "<div class='cols'><div>",
+    "<h3>Definición y grados (K &lt; 3.5 mEq/L)</h3>",
+    "<ul>",
+    "<li><b>Leve 3.0–3.5:</b> suele ser asintomática; fatiga o calambres ligeros.</li>",
+    "<li><b>Moderada 2.5–2.9:</b> debilidad muscular evidente, mayor riesgo de arritmias.</li>",
+    "<li><b>Grave &lt;2.5:</b> parálisis, insuficiencia respiratoria y arritmias.</li>",
+    "</ul>",
+    "<h3>Mecanismos</h3>",
+    "<ul><li>Redistribución · pérdidas renales · pérdidas extrarrenales.</li></ul>",
+    "</div><div>",
+    "<h3>Clínica</h3>",
+    "<ul>",
+    "<li><b>Cardíacas:</b> aplanamiento e inversión de la <b>onda T</b>, <b>onda U prominente</b>, descenso del ST, QT y PR largos, arritmias; predisposición a <b>toxicidad digitálica</b>.</li>",
+    "<li><b>Neuromusculares:</b> debilidad, calambres, parestesias, parálisis respiratoria, <b>rabdomiólisis</b>.</li>",
+    "<li><b>Digestivas:</b> estreñimiento, <b>íleo paralítico</b>.</li>",
+    "<li><b>Renales:</b> ↓FG y FPR, nefritis intersticial, <b>diabetes insípida nefrogénica</b>, alcalosis metabólica, ↑NH₃ (encefalopatía hepática), quistes renales si es crónica.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h3>Etiología</h3>",
+    "<table><tr><th>Mecanismo</th><th>Causas (* las más frecuentes)</th></tr>",
+    "<tr><td><b>Captación celular</b></td><td>Pseudohipopotasemia (leucocitosis extrema)</td></tr>",
+    "<tr><td><b>Falta de ingesta</b></td><td>Bajo contenido en la dieta (raro)</td></tr>",
+    "<tr><td><b>Redistribución intracelular</b></td><td>Alcalosis metabólica* · β2-agonistas*, estrés · insulina* · parálisis periódica hipopotasémica · proliferación celular (leucemias, Burkitt, tratamiento de anemia megaloblástica) · bario, tolueno, teofilina · Ac antidigoxina</td></tr>",
+    "<tr><td><b>Pérdidas extrarrenales</b></td><td>Digestivas (diarrea*, laxantes, fístulas) · cutáneas (sudoración profusa, quemaduras)</td></tr>",
+    "<tr><td><b>Pérdidas renales</b></td><td><b>PA normal:</b> diuréticos* · vómitos*/aspiración NG · hipomagnesemia · aniones no reabsorbibles (penicilina) · tubulopatías (ATR, Bartter, Gitelman, cisplatino, aminoglucósidos, anfotericina).<br><b>HTA + hiperactividad mineralocorticoidea:</b> renina baja → hiperaldosteronismo 1.º, regaliz, carbenoxolona, corticoides*; renina alta/normal → estenosis arterial renal, HTA maligna, Cushing.<br><b>HTA sin hiperactividad:</b> S. de Liddle. <b>Otros:</b> cetoacidosis diabética*, poliuria postobstructiva</td></tr>",
+    "</table>",
+    "<h3>Diagnóstico: gradiente transtubular de potasio</h3>",
+    "<ul>",
+    "<li><b>TTKG = [K orina × Osm plasma] / [K plasma × Osm orina]</b>. Evalúa la secreción neta de potasio; refleja la <b>actividad mineralocorticoide</b>.</li>",
+    "<li><b>Normal 8–9.</b> En hipopotasemia se espera <b>&lt;3</b> (algunos autores &lt;2); en hiperpotasemia, <b>&gt;7</b>.</li>",
+    "<li><b>&lt;4:</b> ausencia de actividad mineralocorticoide en el TCD. <b>&gt;7:</b> presencia de actividad mineralocorticoide en el TCD.</li>",
+    "</ul>",
+    "<h3>Tratamiento</h3>",
+    "<ul>",
+    "<li>Valorar la <b>gravedad</b> y estimar el <b>déficit</b>; analizar electrolitos acompañantes (<b>hipomagnesemia</b>) y equilibrio ácido-base.</li>",
+    "<li><b>Criterios de gravedad → ClK i.v.:</b> alteraciones ECG, tratamiento con digoxina, cetoacidosis diabética, debilidad muscular con hipoventilación. También si hay intolerancia digestiva o íleo paralítico.</li>",
+    "<li><b>ClK i.v. en solución NO glucosada:</b> periférica 20 mEq/500 ml o <b>10 mEq/h</b> · central 30 mEq/500 ml o <b>40 mEq/h</b>. Monitorizar K en sangre y orina.</li>",
+    "<li><b>Sin criterios de gravedad:</b> potasio oral (dieta y preparados). Si hay tubulopatía o precisa diuréticos → <b>ahorradores de potasio</b>.</li>",
+    "<li>Si hay <b>hipomagnesemia, corregirla</b>. Si hay acidosis metabólica, corregirla <b>pero nunca antes</b> de la hipopotasemia.</li>",
+    "<li><b>Alimentos ricos en K:</b> hoja verde, aguacate, brócoli, tomate, legumbres, patata · plátano, naranja, kiwi, mango, frutos secos · leche y quesos, chocolate, embutidos, pan integral, regaliz y <b>sustitutos de la sal</b>.</li>",
+    "</ul>",
+    "<div class='extra'>La reposición nunca va en suero glucosado porque la glucosa estimula la liberación de insulina, que introduce potasio en la célula y agrava el cuadro. Y una hipopotasemia que no remonta pese a reponer obliga a medir <b>magnesio</b>: sin corregirlo, la pérdida renal de potasio continúa.</div>",
+    "<h2>Hiperpotasemia</h2>",
+    "<div class='cols'><div>",
+    "<h3>Definición y predictores (K &gt; 5–5.5 mEq/L)</h3>",
+    "<ul>",
+    "<li>Diabetes tipo 2 · mayor ingesta de proteínas · menor bicarbonato sérico · raza blanca · <b>↓TFG</b>.</li>",
+    "<li><b>ERC:</b> el factor de riesgo más importante, además del bloqueo del SRAA.</li>",
+    "</ul>",
+    "<h3>Gravedad de la hiperpotasemia aguda (KDIGO 2020)</h3>",
+    "<p>No la define solo la cifra: es la <b>combinación de la concentración con las alteraciones del ECG</b>.</p>",
+    "<table><tr><th>K (mmol/L)</th><th>ECG sin alteraciones</th><th>ECG con alteraciones</th></tr>",
+    "<tr><td><b>5–6</b></td><td>Ligera</td><td><b>Moderada</b></td></tr>",
+    "<tr><td><b>6.1–6.5</b></td><td>Moderada</td><td><b>Grave</b></td></tr>",
+    "<tr><td><b>&gt; 6.5</b></td><td><b>Grave</b></td><td><b>Grave</b></td></tr>",
+    "</table>",
+    "</div><div>",
+    "<h3>Clínica</h3>",
+    "<ul>",
+    "<li>Trastornos de la <b>conducción cardíaca</b> y de la <b>función neuromuscular</b>.</li>",
+    "<li><b>≈6.5 mEq/L:</b> ondas T picudas. <b>&gt;7:</b> PR largo, pérdida de la onda P, luego QRS ancho. <b>&gt;8:</b> el QRS converge con la T y forma <b>onda sinuosa</b>.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h3>Etiología</h3>",
+    "<table><tr><th>Mecanismo</th><th>Causas</th></tr>",
+    "<tr><td><b>Pseudohiperpotasemia</b></td><td>Muestra hemolizada · leucocitosis &gt;200.000/mm³ o trombocitosis &gt;500.000/mm³ · torniquete apretado o contracción muscular</td></tr>",
+    "<tr><td><b>Aporte excesivo</b></td><td>Potasio oral o i.v. en presencia de insuficiencia renal</td></tr>",
+    "<tr><td><b>↓ Eliminación renal</b></td><td>IR aguda o crónica · Addison · hiperplasia adrenal congénita · hipoaldosteronismo hiporreninémico y ATR tipo IV · fármacos que interfieren con la aldosterona (IECA, ARA-II, inhibidores de renina, heparina, ciclosporina, tacrolimus, digital) · fármacos que inhiben la secreción renal (espironolactona, eplerenona, triamtereno, amiloride, trimetoprim, pentamidina) · disfunción tubular distal (mieloma, amiloidosis, lupus, trasplante, drepanocitosis)</td></tr>",
+    "<tr><td><b>Paso al extracelular</b></td><td>Acidosis · lisis celular (traumatismos, quemaduras, lisis tumoral, rabdomiólisis, hemólisis) · parálisis periódica hiperpotasémica · déficit de insulina e hiperglucemia grave · betabloqueantes, digital, succinilcolina, agonistas α, arginina, soluciones hipertónicas</td></tr>",
+    "</table>",
+    "<h3>Diagnóstico</h3>",
+    "<ul>",
+    "<li>Ante <b>K &gt; 5.5 mEq/L</b>, primero: <b>¿hay lisis de células sanguíneas?</b> Si la hay → <b>pseudohiperpotasemia</b> (muestra hemolizada, torniquete muy apretado, leucocitosis &gt;70.000, trombocitosis &gt;600.000).</li>",
+    "<li>Si no la hay, se miran el <b>K en orina de 24 h</b> y el <b>TTKG</b>:</li>",
+    "</ul>",
+    "<table><tr><th>K orina / TTKG</th><th>Significado y causas</th></tr>",
+    "<tr><td><b>K&#8338; &gt; 100 mEq/24 h<br>TTKG &gt; 7</b></td><td>El riñón elimina bien; el problema está fuera. <b>Redistribución</b> (acidosis, hiperglucemia grave, β-bloqueantes, parálisis periódica, succinilcolina, arginina, intoxicación digitálica) · <b>liberación tisular</b> (traumatismos extensos, lisis tumoral, hemólisis, quemaduras, rabdomiólisis) · <b>administración exógena</b></td></tr>",
+    "<tr><td><b>K&#8338; &lt; 100 mEq/24 h<br>TTKG &lt; 5–7</b></td><td>Fallo en la eliminación renal. <b>¿Filtrado glomerular disminuido?</b><br><b>Sí →</b> insuficiencia renal con ↓flujo tubular.<br><b>No →</b> <b>déficit de mineralocorticoides</b> (Addison, hiperplasia adrenal congénita, hipoaldosteronismo hiporreninémico, AINE, ARA-II, IECA, heparina) o <b>déficit en la secreción tubular de K</b> (espironolactona, eplerenona, triamtereno, amiloride, ciclosporina, trimetoprim)</td></tr>",
+    "</table>",
+    "<h3>Tratamiento urgente</h3>",
+    "<ul><li><b>ECG con alteraciones → tratamiento urgente.</b> ECG normal → <b>confirmar con otra determinación</b> para descartar pseudohiperpotasemia. Si hay IR severa o no mejora → <b>diálisis</b>.</li></ul>",
+    "<table><tr><th>Agente</th><th>Dosis</th><th>Inicio / duración</th><th>Mecanismo</th></tr>",
+    "<tr><td><b>Gluconato cálcico 10%</b><br>Cloruro cálcico</td><td>10–30 ml al 10% i.v. en 2–5 min<br>10–30 ml al 10% i.v.</td><td>5–10 min / <b>30–60 min</b></td><td rowspan='1'><b>Antagoniza el efecto cardiaco</b> de la hiperpotasemia</td></tr>",
+    "<tr><td><b>β-agonistas</b> (salbutamol)</td><td>0.5 mg en 100 ml de glucosado 5% en 15 min i.v.<br>10–20 mg nebulizados en 10 min</td><td>30 min / 2–3 h</td><td rowspan='3'><b>Desplazan el K al interior de la célula</b></td></tr>",
+    "<tr><td><b>Insulina + glucosa</b></td><td>10 U de insulina rápida en 500 ml de glucosado 10% (o 50 ml al 50%) i.v.</td><td>15 min / 6–8 h</td></tr>",
+    "<tr><td><b>Bicarbonato sódico</b><br><i>(sobre todo si hay acidosis)</i></td><td>1/6 M 250–500 ml, o 50 cc de 1 M i.v.</td><td>30–60 min / 6–8 h</td></tr>",
+    "<tr><td><b>Diuréticos de asa</b></td><td>Furosemida 40–200 mg i.v.<br>Torasemida 10–100 mg i.v. según función renal</td><td>30 min / horas</td><td rowspan='3'><b>Eliminan el potasio del organismo</b></td></tr>",
+    "<tr><td><b>Captores de potasio</b></td><td>Ciclosilicato de circonio sódico (CSZ) 5–10 g/día<br>Patiromer 8.4–25.2 g/día</td><td>1–2 h / 12 h<br>7 h / 12–24 h</td></tr>",
+    "<tr><td><b>Diálisis</b></td><td>Hemodiálisis · diálisis peritoneal</td><td>Minutos / horas</td></tr>",
+    "</table>",
+    "<p><b>Pautas concretas de la clase</b> — moderada: glucosado 10% + <b>12 UI</b> de insulina rápida en 500 ml a pasar en 30 min (no si glucemia &gt;200 mg/dl) · bicarbonato 1 M <b>1 mEq/kg</b> i.v. en 5 min solo si hay acidosis · furosemida <b>60 mg</b> i.v. dosis única, contraindicada en IR. Severa: gluconato cálcico <b>1–2 ampollas</b> i.v. lentas en 5 min, <b>repetir a los 10 min</b> si no mejora el ECG (precaución con digoxina) · salbutamol i.v. 0.5 mg en 100 ml de salino en 20 min, nebulizado 5–10 mg, o subcutáneo 2 ampollas · hemodiálisis, única medida eficaz en IR avanzada.</p>",
+    "<ul><li><b>Etiológico y a largo plazo:</b> tratar la causa · restricción dietética de potasio · valorar suspender fármacos · resinas de intercambio catiónico · diuréticos del asa · <b>fludrocortisona</b> en insuficiencia suprarrenal e hipoaldosteronismo hiporreninémico.</li></ul>",
+    "<div class='extra'>El gluconato cálcico <b>no baja el potasio</b>: antagoniza su efecto sobre la membrana del miocardiocito y compra tiempo, con un efecto que dura unos 30–60 minutos. Por eso siempre se acompaña de una medida que redistribuya (insulina, β-agonista) y de otra que elimine potasio del organismo (diuréticos, resinas o diálisis).</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Cuál es el rango normal de potasio sérico?",
+      "r": "<b>3.5–5.0 mEq/L</b>."
+    },
+    {
+      "p": "¿Cuáles son los tres factores que determinan la concentración plasmática de potasio?",
+      "r": "<b>Ingesta</b>, <b>eliminación</b> y <b>distribución transcelular</b>."
+    },
+    {
+      "p": "¿Cuál es el requerimiento diario de potasio?",
+      "r": "<b>1 mEq/kg de peso</b> (aproximadamente 40–80 mEq)."
+    },
+    {
+      "p": "¿Cómo se distribuye el potasio corporal entre el espacio intracelular y el extracelular?",
+      "r": "<b>98% intracelular</b> (~140 mEq/L) y <b>2% extracelular</b> (3.5–5 mEq/L)."
+    },
+    {
+      "p": "¿Por qué es importante la diferencia de potasio entre el interior y el exterior de la célula?",
+      "r": "Es el <b>determinante del potencial de membrana en reposo</b>, fundamental para la transmisión neuromuscular y el mantenimiento de las funciones celulares."
+    },
+    {
+      "p": "¿Qué mantiene el gradiente de sodio y potasio a través de la membrana celular?",
+      "r": "La bomba <b>Na⁺/K⁺-ATPasa</b>."
+    },
+    {
+      "p": "¿Cómo se reparte la eliminación diaria de potasio?",
+      "r": "<b>80% por los riñones</b>, <b>15% por el tracto gastrointestinal</b> y <b>5% por el sudor</b>."
+    },
+    {
+      "p": "¿Hasta qué cifra puede reducir el riñón la excreción de potasio?",
+      "r": "A <b>menos de 5 mEq/día</b>."
+    },
+    {
+      "p": "¿Qué proporción del potasio filtrado se reabsorbe en el túbulo proximal?",
+      "r": "El <b>90%</b>."
+    },
+    {
+      "p": "¿Qué segmentos de la nefrona controlan la eliminación renal de potasio?",
+      "r": "Las <b>porciones finales del túbulo contorneado distal</b> y el <b>túbulo colector cortical</b>."
+    },
+    {
+      "p": "¿Cómo se define la hipopotasemia?",
+      "r": "Potasio sérico <b>por debajo de 3.5 mEq/L</b>."
+    },
+    {
+      "p": "¿Cuáles son los grados de hipopotasemia y sus cifras?",
+      "r": "<b>Leve</b> 3.0–3.5 · <b>Moderada</b> 2.5–2.9 · <b>Grave</b> &lt;2.5 mEq/L."
+    },
+    {
+      "p": "¿Qué manifestaciones produce la hipopotasemia leve (3.0–3.5)?",
+      "r": "Suele ser <b>asintomática</b>; puede dar fatiga o calambres ligeros."
+    },
+    {
+      "p": "¿Qué riesgos añade la hipopotasemia moderada (2.5–2.9)?",
+      "r": "<b>Debilidad muscular más evidente</b> y <b>aumento del riesgo de arritmias</b>."
+    },
+    {
+      "p": "¿Qué riesgos conlleva la hipopotasemia grave (&lt;2.5)?",
+      "r": "<b>Parálisis</b>, <b>insuficiencia respiratoria</b> y <b>arritmias</b>."
+    },
+    {
+      "p": "¿Cuáles son los tres mecanismos generales de hipopotasemia?",
+      "r": "<b>Redistribución</b> (paso al interior celular), <b>pérdidas renales</b> y <b>pérdidas extrarrenales</b>."
+    },
+    {
+      "p": "¿Qué causas de hipopotasemia se deben a redistribución intracelular?",
+      "r": "<b>Alcalosis metabólica</b>, estimulación <b>beta-2 adrenérgica</b> (β2-agonistas, estrés), <b>insulina</b>, parálisis periódica hipopotasémica, proliferación celular (leucemias, linfoma de Burkitt, tratamiento de la anemia megaloblástica), intoxicación por bario/tolueno/teofilina y anticuerpos antidigoxina."
+    },
+    {
+      "p": "¿Cuáles son las pérdidas extrarrenales de potasio?",
+      "r": "<b>Digestivas</b> (diarrea, laxantes crónicos, fístulas) y <b>cutáneas</b> (sudoración profusa, quemaduras extensas)."
+    },
+    {
+      "p": "¿Qué causas producen pérdida renal de potasio con presión arterial normal?",
+      "r": "<b>Diuréticos</b>, <b>vómitos</b> o aspiración nasogástrica, <b>hipomagnesemia</b>, aniones no reabsorbibles (penicilina) y trastornos tubulares (acidosis tubular renal, <b>Bartter</b>, <b>Gitelman</b>, cisplatino, aminoglucósidos, anfotericina)."
+    },
+    {
+      "p": "En hipopotasemia con HTA e hiperactividad mineralocorticoidea, ¿qué causas cursan con renina baja y cuáles con renina alta?",
+      "r": "<b>Renina baja:</b> hiperaldosteronismo primario, regaliz, carbenoxolona, corticoides. <b>Renina alta o normal:</b> estenosis arterial renal, HTA maligna y síndrome de Cushing."
+    },
+    {
+      "p": "¿Qué causa hipopotasemia con HTA pero SIN hiperactividad mineralocorticoidea?",
+      "r": "El <b>síndrome de Liddle</b>."
+    },
+    {
+      "p": "¿Qué alteraciones electrocardiográficas produce la hipopotasemia?",
+      "r": "<b>Aplanamiento e inversión de la onda T</b>, <b>onda U prominente</b>, descenso del ST, prolongación del QT y del PR, y arritmias auriculares y ventriculares."
+    },
+    {
+      "p": "¿Qué manifestaciones neuromusculares causa la hipopotasemia?",
+      "r": "Debilidad, astenia, calambres, parestesias, <b>parálisis respiratoria</b> y <b>rabdomiólisis</b>."
+    },
+    {
+      "p": "¿Qué efectos renales tiene la hipopotasemia?",
+      "r": "Descenso del filtrado glomerular y del flujo plasmático renal, nefritis intersticial, <b>diabetes insípida nefrogénica</b>, alcalosis metabólica, aumento de la producción renal de NH₃ (predispone a encefalopatía hepática) y de prostaglandinas, y <b>quistes renales</b> en la forma crónica."
+    },
+    {
+      "p": "¿Qué manifestación digestiva característica produce la hipopotasemia?",
+      "r": "<b>Estreñimiento e íleo paralítico</b> — importante vigilar el potasio en el postoperatorio de cirugía digestiva."
+    },
+    {
+      "p": "¿Cuál es la fórmula del gradiente transtubular de potasio (TTKG)?",
+      "r": "<b>TTKG = [K orina × Osm plasma] / [K plasma × Osm orina]</b>. Evalúa de forma rápida la secreción neta de potasio y refleja la <b>actividad mineralocorticoide</b>."
+    },
+    {
+      "p": "¿Qué valor de TTKG es normal, y cuál se espera en hipo e hiperpotasemia?",
+      "r": "<b>Normal 8–9</b> con alimentación normal. En <b>hipopotasemia</b> debería ser <b>&lt;3</b> (algunos autores &lt;2); en <b>hiperpotasemia</b>, <b>&gt;7</b>."
+    },
+    {
+      "p": "¿Qué indica un TTKG menor de 4 y qué indica uno mayor de 7?",
+      "r": "<b>&lt;4:</b> ausencia de actividad mineralocorticoide en el túbulo contorneado distal. <b>&gt;7:</b> presencia de actividad mineralocorticoide en el TCD."
+    },
+    {
+      "p": "En el algoritmo de tratamiento de la hipopotasemia, ¿qué debe valorarse antes de reponer?",
+      "r": "La <b>gravedad</b> y la estimación del <b>déficit de potasio</b>, además de las alteraciones electrolíticas acompañantes (<b>hipomagnesemia</b>) y del equilibrio ácido-base."
+    },
+    {
+      "p": "¿Qué criterios de gravedad obligan a reponer potasio por vía intravenosa?",
+      "r": "<b>Alteraciones electrocardiográficas</b>, tratamiento con <b>digoxina</b>, <b>cetoacidosis diabética</b> y <b>debilidad muscular con hipoventilación</b>."
+    },
+    {
+      "p": "¿Cómo se administra el cloruro potásico intravenoso?",
+      "r": "En <b>solución NO glucosada</b>. Por vía <b>periférica</b>: 20 mEq/500 ml o <b>10 mEq/hora</b>. Por vía <b>central</b>: 30 mEq/500 ml o <b>40 mEq/hora</b>. Monitorizar con frecuencia el potasio en sangre y en orina."
+    },
+    {
+      "p": "¿Por qué la reposición de potasio nunca debe hacerse en solución glucosada?",
+      "r": "Porque la glucosa estimula la liberación de <b>insulina</b>, que introduce potasio en la célula y <b>agrava la hipopotasemia</b>."
+    },
+    {
+      "p": "Si coexisten hipopotasemia y acidosis metabólica, ¿en qué orden se corrigen?",
+      "r": "Se corrige la acidosis <b>pero nunca antes</b> de haber corregido la hipopotasemia."
+    },
+    {
+      "p": "¿Qué se hace si hay intolerancia digestiva o sospecha de íleo paralítico en una hipopotasemia sin criterios de gravedad?",
+      "r": "Pasar a <b>cloruro potásico intravenoso</b> en lugar de la vía oral."
+    },
+    {
+      "p": "Menciona alimentos con alto contenido en potasio.",
+      "r": "<b>Verduras:</b> hoja verde (espinaca, acelga), aguacate, brócoli, coles de Bruselas, tomate, legumbres, patata, remolacha. <b>Frutas:</b> naranja, plátano, kiwi, mango, papaya, ciruelas pasas, frutos secos. <b>Otros:</b> leche y quesos, chocolate y cacao, embutidos, pan integral, regaliz, <b>sustitutos de la sal</b>."
+    },
+    {
+      "p": "¿Cómo se define la hiperpotasemia?",
+      "r": "Potasio sérico <b>por encima de 5 o 5.5 mEq/L</b>."
+    },
+    {
+      "p": "¿Cuáles son los predictores de hiperpotasemia?",
+      "r": "<b>Diabetes tipo 2</b>, mayor ingesta de proteínas, menor bicarbonato sérico, raza blanca, <b>disminución de la TFG</b> y <b>enfermedad renal crónica</b> (el factor de riesgo más importante, junto al bloqueo del SRAA)."
+    },
+    {
+      "p": "¿De qué dos variables depende la clasificación de gravedad de la hiperpotasemia aguda (KDIGO 2020)?",
+      "r": "De la <b>concentración de potasio</b> y de la <b>presencia o ausencia de alteraciones en el ECG</b>. La cifra por sí sola no define la gravedad."
+    },
+    {
+      "p": "Con potasio de 5–6 mmol/L, ¿qué gravedad tiene la hiperpotasemia según haya o no alteraciones del ECG?",
+      "r": "Sin alteraciones ECG: <b>ligera</b>. Con alteraciones ECG: <b>moderada</b>."
+    },
+    {
+      "p": "Con potasio de 6.1–6.5 mmol/L, ¿qué gravedad tiene la hiperpotasemia según el ECG?",
+      "r": "Sin alteraciones ECG: <b>moderada</b>. Con alteraciones ECG: <b>grave</b>."
+    },
+    {
+      "p": "¿Qué gravedad tiene una hiperpotasemia con potasio mayor de 6.5 mmol/L?",
+      "r": "<b>Grave</b>, haya o no alteraciones en el ECG."
+    },
+    {
+      "p": "¿Qué causas producen pseudohiperpotasemia?",
+      "r": "<b>Muestra hemolizada</b>, <b>leucocitosis &gt;200.000/mm³</b> o trombocitosis &gt;500.000/mm³, y <b>torniquete excesivamente apretado</b> o contracción muscular de la extremidad."
+    },
+    {
+      "p": "¿Qué causas de hiperpotasemia se deben a disminución de la eliminación renal?",
+      "r": "Insuficiencia renal aguda o crónica, <b>enfermedad de Addison</b>, hiperplasia adrenal congénita, <b>hipoaldosteronismo hiporreninémico</b> y acidosis tubular renal tipo IV, y disfunción tubular distal (mieloma, amiloidosis, lupus, trasplante renal, drepanocitosis)."
+    },
+    {
+      "p": "¿Qué fármacos causan hiperpotasemia al interferir con la aldosterona o inhibir la secreción renal de potasio?",
+      "r": "<b>IECAs, ARA-II</b>, inhibidores de la renina, heparina, ciclosporina, tacrolimus, sobredosis de digital; y <b>diuréticos ahorradores de potasio</b> (espironolactona, eplerenona, triamtereno, amiloride), trimetoprim, pentamidina y L-arginina."
+    },
+    {
+      "p": "¿Qué causas producen hiperpotasemia por paso de potasio al líquido extracelular?",
+      "r": "<b>Acidosis</b>, <b>lisis celular</b> (traumatismos extensos, quemaduras, lisis tumoral, rabdomiólisis, hemólisis), parálisis periódica hiperpotasémica, <b>déficit de insulina e hiperglucemia grave</b>, y fármacos (betabloqueantes, intoxicación digitálica, succinilcolina, agonistas alfa, arginina, soluciones hipertónicas)."
+    },
+    {
+      "p": "Describe la secuencia electrocardiográfica de la hiperpotasemia según la cifra de potasio.",
+      "r": "Alrededor de <b>6.5 mEq/L: ondas T picudas</b>. Por encima de <b>7: prolongación del PR, pérdida de la onda P</b> y después <b>ensanchamiento del QRS</b>. Por encima de <b>8: el QRS converge con la onda T y forma una onda sinuosa</b>."
+    },
+    {
+      "p": "¿Cuáles son las principales manifestaciones clínicas de la hiperpotasemia?",
+      "r": "Trastornos de la <b>conducción cardíaca</b> y de la <b>función neuromuscular</b>."
+    },
+    {
+      "p": "En el algoritmo de la hiperpotasemia, ¿qué se hace si el ECG no muestra alteraciones?",
+      "r": "<b>Confirmar con otra determinación</b>, para distinguir la hiperpotasemia verdadera de una <b>pseudohiperpotasemia</b> (hemólisis, leucocitosis, trombocitosis)."
+    },
+    {
+      "p": "¿Cuál es el primer paso del algoritmo diagnóstico de la hiperpotasemia ante un K sérico &gt;5.5 mEq/L?",
+      "r": "Preguntarse si <b>existe lisis de células sanguíneas</b>. Si la hay, se trata de una <b>pseudohiperpotasemia</b>: muestra hemolizada, torniquete muy apretado, leucocitosis severa (&gt;70.000) o trombocitosis severa (&gt;600.000)."
+    },
+    {
+      "p": "Descartada la pseudohiperpotasemia, ¿qué dos parámetros orientan el diagnóstico?",
+      "r": "El <b>potasio en orina de 24 horas</b> y el <b>TTKG</b>."
+    },
+    {
+      "p": "¿Qué significa una hiperpotasemia con potasio en orina &gt;100 mEq/24 h y TTKG &gt;7?",
+      "r": "Que el <b>riñón está eliminando correctamente</b>: la causa está fuera del riñón. Puede ser por <b>redistribución</b> (acidosis, hiperglucemia grave, β-bloqueantes, parálisis periódica, succinilcolina, arginina, intoxicación digitálica), por <b>liberación tisular</b> (traumatismos extensos, lisis tumoral, hemólisis, quemaduras, rabdomiólisis) o por <b>administración exógena</b>."
+    },
+    {
+      "p": "¿Qué significa una hiperpotasemia con potasio en orina &lt;100 mEq/24 h y TTKG &lt;5–7?",
+      "r": "Que hay un <b>fallo en la eliminación renal</b>. Entonces se valora el filtrado glomerular: si está <b>disminuido</b>, insuficiencia renal con descenso del flujo tubular; si es <b>normal</b>, déficit de mineralocorticoides o déficit en la secreción tubular de potasio."
+    },
+    {
+      "p": "Con eliminación renal baja y filtrado glomerular normal, ¿qué dos grupos de causas hay?",
+      "r": "<b>Déficit de mineralocorticoides:</b> Addison, hiperplasia adrenal congénita, hipoaldosteronismo hiporreninémico y fármacos (AINE, ARA-II, IECA, heparina). <b>Déficit en la secreción tubular de K:</b> espironolactona, eplerenona, triamtereno, amiloride, ciclosporina, trimetoprim."
+    },
+    {
+      "p": "¿Cuáles son los tres mecanismos por los que actúan los tratamientos de la hiperpotasemia?",
+      "r": "<b>Antagonizar el efecto cardiaco</b> (sales de calcio), <b>desplazar el potasio al interior de la célula</b> (β-agonistas, insulina + glucosa, bicarbonato) y <b>eliminar potasio del organismo</b> (diuréticos de asa, captores de potasio, diálisis)."
+    },
+    {
+      "p": "¿Cuál es el inicio de acción y la duración de las sales de calcio en la hiperpotasemia?",
+      "r": "Inicio en <b>5–10 minutos</b> y duración de solo <b>30–60 minutos</b>. Dosis: 10–30 ml de gluconato cálcico al 10% i.v. en 2–5 minutos."
+    },
+    {
+      "p": "¿Cuál es el inicio y la duración del efecto de la insulina con glucosa en la hiperpotasemia?",
+      "r": "Inicio a los <b>15 minutos</b> y duración de <b>6–8 horas</b>. En la tabla: 10 U de insulina rápida en 500 ml de glucosado al 10%, o 50 ml de glucosado al 50% i.v."
+    },
+    {
+      "p": "¿Cuál es el inicio y la duración de los β-agonistas en la hiperpotasemia?",
+      "r": "Inicio a los <b>30 minutos</b> y duración de <b>2–3 horas</b>. Salbutamol 0.5 mg en 100 ml de glucosado al 5% en 15 min i.v., o 10–20 mg nebulizados en 10 min."
+    },
+    {
+      "p": "¿Qué son los captores de potasio, cuáles se usan y a qué dosis?",
+      "r": "Fármacos que <b>eliminan potasio del organismo</b>: <b>ciclosilicato de circonio sódico (CSZ)</b> 5–10 g/día, con inicio en 1–2 h, y <b>patiromer</b> 8.4–25.2 g/día, con inicio a las 7 h."
+    },
+    {
+      "p": "Además de la furosemida, ¿qué otro diurético de asa recoge la tabla de tratamiento urgente?",
+      "r": "La <b>torasemida</b>, 10–100 mg i.v. ajustada según la función renal. La furosemida figura a 40–200 mg i.v."
+    },
+    {
+      "p": "¿Cuáles son las medidas del tratamiento urgente de la hiperpotasemia?",
+      "r": "<b>Sales de calcio</b>, <b>β-agonistas</b>, <b>insulina ± glucosa</b>, <b>diuréticos del asa</b> y <b>resinas</b> de intercambio catiónico."
+    },
+    {
+      "p": "¿Cómo se administra la solución glucosada con insulina en la hiperpotasemia moderada?",
+      "r": "<b>12 UI de insulina rápida en 500 ml de solución glucosada al 10%</b>, infundidos en <b>30 minutos</b>. <b>No se administra si la glucemia es superior a 200 mg/dl.</b>"
+    },
+    {
+      "p": "¿Cuándo y cómo se usa el bicarbonato sódico 1 M en la hiperpotasemia?",
+      "r": "<b>1 mEq (1 ml)/kg IV en 5 minutos</b>, <b>solo si hay acidosis metabólica</b>. Aumenta la efectividad de la insulina en pacientes con acidemia."
+    },
+    {
+      "p": "¿Cuál es la dosis de furosemida en la hiperpotasemia y su contraindicación?",
+      "r": "<b>60 mg IV en dosis única</b>. Está <b>contraindicada en la insuficiencia renal</b>."
+    },
+    {
+      "p": "¿Cómo se administra el gluconato cálcico en la hiperpotasemia severa?",
+      "r": "<b>Gluconato cálcico al 10%</b> (ampollas de 10 ml), <b>1–2 ampollas IV lentas en 5 minutos</b>. Se <b>repite a los 10 minutos si no hay mejoría electrocardiográfica</b>."
+    },
+    {
+      "p": "¿En qué situación hay que tener especial precaución con el gluconato cálcico?",
+      "r": "En la <b>intoxicación digitálica</b>, es decir, en pacientes en tratamiento con <b>digoxina</b>."
+    },
+    {
+      "p": "¿Cuáles son las tres vías y dosis de salbutamol en la hiperpotasemia severa?",
+      "r": "<b>IV:</b> 0.5 mg (1 ampolla) en 100 ml de salino, en 20 minutos. <b>Nebulizado:</b> 5–10 mg diluidos en 4 ml de salino con flujo de O₂ de 6–8 L/min durante 10 minutos. <b>Subcutáneo:</b> 2 ampollas, una en cada deltoides."
+    },
+    {
+      "p": "¿Cuándo está indicada la hemodiálisis en la hiperpotasemia?",
+      "r": "Es la <b>única medida eficaz</b> en pacientes con <b>insuficiencia renal avanzada e hiperpotasemia grave</b>. Debe realizarse con precaución por el <b>riesgo de arritmias</b>."
+    },
+    {
+      "p": "¿Qué incluye el tratamiento etiológico y a largo plazo de la hiperpotasemia?",
+      "r": "Tratar la causa, <b>restricción de potasio en la dieta</b>, valorar la <b>suspensión de fármacos</b>, <b>resinas de intercambio catiónico</b>, <b>diuréticos del asa</b> y <b>fludrocortisona</b> (en insuficiencia suprarrenal e hipoaldosteronismo hiporreninémico)."
+    },
+    {
+      "p": "¿Qué factores favorecen la ENTRADA de potasio al espacio intracelular?",
+      "r": "<b>Alcalosis metabólica</b>, <b>insulina</b>, estimulación <b>β2-adrenérgica</b> y <b>aldosterona</b>."
+    },
+    {
+      "p": "¿Qué factores favorecen la SALIDA de potasio al espacio extracelular?",
+      "r": "<b>Acidosis metabólica</b>, <b>hiperosmolalidad extracelular</b>, agonistas <b>α-adrenérgicos</b> y <b>lisis celular</b> (tumoral, rabdomiólisis, hemólisis)."
+    },
+    {
+      "p": "¿Qué factores regulan la secreción distal de potasio?",
+      "r": "La <b>ingesta de potasio en la dieta</b>, la <b>concentración de potasio plasmático</b>, el <b>pH sistémico</b>, el <b>flujo tubular distal y el aporte distal de sodio</b>, la <b>excreción de aniones no reabsorbibles</b> y la <b>aldosterona</b>."
+    }
+  ],
+  "cloze": [
+    "El potasio sérico normal es de {{c1::3.5–5.0 mEq/L}}; el {{c2::98%}} del potasio corporal es intracelular y solo el {{c3::2%}} extracelular.",
+    "En la hiperpotasemia aparecen ondas T picudas alrededor de {{c1::6.5 mEq/L}}, pérdida de la onda P y ensanchamiento del QRS por encima de {{c2::7 mEq/L}}, y onda sinuosa por encima de {{c3::8 mEq/L}}.",
+    "El cloruro potásico intravenoso se administra en solución {{c1::no glucosada}}, a {{c2::10 mEq/hora}} por vía periférica y hasta {{c3::40 mEq/hora}} por vía central."
+  ],
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/TRASTORNOS DEL POTASIO.pptx"
+}

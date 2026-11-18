@@ -1,0 +1,267 @@
+{
+  "seccion": "Gastro",
+  "tema": "Pancreatitis Crónica",
+  "autor": "R1 MI Eric Salomón Mendoza Ávila",
+  "fuentes": "Thierens et al., Lancet 2025 · Chang et al., Molecules 2023 · Farreras-Rozman, Medicina Interna 20ª ed. 2024 · Vanek & Freeman, Gastroenterol Clin 2024 · Dua & Visser (abordajes quirúrgicos)",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Gastro/Pancreatitis crónica (1).pdf",
+  "resumen_html": [
+    "<h2>Definición y epidemiología</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>Pancreatitis crónica (PC):</b> síndrome <b>fibroinflamatorio</b> patológico del páncreas con respuestas persistentes al daño o estrés parenquimatoso → <b>pérdida de función</b>, complicaciones locales y <b>dolor</b>.</p>",
+    "<p><b>Continuo de la enfermedad:</b> en riesgo → PA o PA recurrente → <b>PC temprana</b> (función preservada, cambios sutiles; <b>reversible</b>) → <b>PC definitiva</b> (cambios morfológicos característicos).</p>",
+    "</div><div><ul>",
+    "<li>Incidencia <b>10/100,000</b>/año; en India <b>114–125/100,000</b>/año.</li>",
+    "<li>Relación <b>H:M 2:1</b>.</li>",
+    "<li><b>Alcohol y tabaco</b> presentes en <b>&gt;50%</b>.</li>",
+    "</ul></div></div>",
+    "<h2>Factores de riesgo: M-ANNHEIM</h2>",
+    "<table><tr><th>Letra</th><th>Factor</th><th>Letra</th><th>Factor</th></tr>",
+    "<tr><td><b>M</b></td><td><b>Múltiples</b> factores superpuestos</td><td><b>H</b></td><td><b>Hereditario:</b> genes <b>PRSS1, SPINK1, CFTR</b></td></tr>",
+    "<tr><td><b>A</b></td><td><b>Alcohol</b> (g/día, años)</td><td><b>E</b></td><td><b>Conducto eferente:</b> obstrucción (cálculo, <b>páncreas divisum</b>)</td></tr>",
+    "<tr><td><b>N</b></td><td><b>Nicotina</b> (paquetes-año)</td><td><b>I</b></td><td><b>Inmunológico:</b> autoanticuerpos, <b>IgG4</b></td></tr>",
+    "<tr><td><b>N</b></td><td><b>Nutrición:</b> dieta alta en grasa, desnutrición</td><td><b>M</b></td><td><b>Misceláneos/metabólicos:</b> hipertrigliceridemia, hipercalcemia, fármacos</td></tr>",
+    "</table>",
+    "<h2>Fisiopatología (4 pasos)</h2>",
+    "<table><tr><th>Paso</th><th>Mecanismo</th></tr>",
+    "<tr><td><b>1. Lesión acinar y estrés</b></td><td>↑ <b>ROS</b>; alteración del retículo endoplásmico (calcio) y mitocondrial (ATP); activación prematura de zimógenos (<b>catepsina B → tripsinógeno</b>); vía <b>NF-κB</b> con IL-1, IL-6, TNF-α y reclutamiento de macrófagos.</td></tr>",
+    "<tr><td><b>2. Activación de células estrelladas (CEP)</b></td><td>Por citocinas; expresan <b>α-actina</b>; secretan <b>colágeno I y III</b>, fibronectina, laminina e inhibidores de metaloproteinasas; producen más <b>TGF-β1 y PDGF</b> → fibrogénesis.</td></tr>",
+    "<tr><td><b>3. Alteraciones estructurales / disfunción ductal</b></td><td>↓ secreción de <b>bicarbonato</b> y litostatina, acidificación luminal; <b>tapones proteicos y calcificación</b>; obstrucción litiásica, estenosis fibrótica e isquémica.</td></tr>",
+    "<tr><td><b>4. Pérdida funcional</b></td><td><b>Exocrina</b> (con daño <b>&gt;90%</b>): malabsorción de lípidos, esteatorrea, déficit de <b>A, D, E, K</b>. <b>Endocrina:</b> diabetes <b>lábil</b> (déficit de insulina <b>y</b> glucagón).</td></tr>",
+    "</table>",
+    "<h2>Clínica y diagnóstico</h2>",
+    "<div class=\"cols\"><div>",
+    "<ul>",
+    "<li><b>Dolor</b> epigástrico intenso, irradiado a flancos, que <b>empeora con la ingesta</b>.</li>",
+    "<li><b>Esteatorrea</b>; <b>pérdida de peso sin anorexia</b>, sarcopenia.</li>",
+    "<li>Déficit de vitaminas <b>A, D, E, K, B6, B12</b>, magnesio y zinc.</li>",
+    "<li><b>Diabetes pancreatopriva</b>.</li>",
+    "<li>Obstrucción del vaciamiento gástrico, vómito, distensión, flatulencia, diarrea.</li>",
+    "</ul>",
+    "<p><b>Sospecha clínica</b> (combinación de): dolor intermitente posprandial o crónico · PA recurrente · alcohol y/o tabaco a largo plazo · esteatorrea tras comidas grasas · pérdida de peso no intencional · <b>diabetes de nueva aparición</b>.</p>",
+    "</div><div>",
+    "<table><tr><th>Estudio</th><th>Hallazgos</th></tr>",
+    "<tr><td><b>Imagen</b> (TC, RM, CPRE, USE)</td><td><b>Calcificaciones difusas</b>, <b>dilatación del conducto principal</b>, hipodensidad del parénquima.</td></tr>",
+    "<tr><td><b>Séricos</b></td><td>↓ amilasa, lipasa y tripsina.</td></tr>",
+    "<tr><td><b>Heces</b></td><td>Grasa fecal y <b>elastasa fecal</b>.</td></tr>",
+    "<tr><td><b>Aliento</b></td><td>Prueba con <b>triglicéridos mixtos marcados con ¹³C</b>.</td></tr>",
+    "</table>",
+    "</div></div>",
+    "<h2>Tratamiento</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>Medidas generales:</b> suspender <b>tabaco y alcohol</b>; dieta fraccionada; <b>IBP</b> para evitar la inactivación ácida de las enzimas (omeprazol <b>20–40 mg/día</b>); suplementar <b>A, D, E, K</b>; <b>densitometría</b> basal y <b>cada 2 años</b>.</p>",
+    "<p><b>Reemplazo enzimático (TREP)</b> indicado con: grasa fecal <b>&gt;15 g/24 h</b>, pérdida de peso o elastasa fecal <b>&lt;200 μg/g</b>.</p>",
+    "<table><tr><th>Dosis de lipasa</th><th>Comidas</th><th>Refrigerios</th></tr>",
+    "<tr><td>Sin cirugía pancreática</td><td><b>40,000–50,000 U</b></td><td>20,000–25,000 U</td></tr>",
+    "<tr><td>Tras cirugía pancreática</td><td><b>75,000 U</b></td><td>37,500 U</td></tr>",
+    "</table>",
+    "<p><b>Si el efecto es insuficiente</b>, en orden: revisar <b>adherencia</b> → <b>duplicar o triplicar</b> dosis → añadir <b>IBP</b> → balance de grasa de 72 h o prueba de aliento ¹³C y buscar maldigestión secundaria (<b>SIBO</b>). Si es suficiente: valoración nutricional <b>al menos anual</b>.</p>",
+    "<p><b>Diabetes:</b> <b>metformina</b> de primera línea (<b>1000–2000 mg/día</b>; menos efectos adversos, <b>reduce riesgo de adenocarcinoma ductal</b>; vigilar TFG). Insulina <b>0.2–0.4 UI/kg/día</b> (degludec o glargina). iDPP-4: sitagliptina 100 mg/día, linagliptina 5 mg/día. <b>Evitar:</b> sulfonilureas (hipoglucemia), <b>GLP-1</b> (riesgo de pancreatitis), <b>iSGLT2</b> (más pérdida de peso).</p>",
+    "</div><div>",
+    "<table><tr><th colspan=\"2\">Escalera del dolor</th></tr>",
+    "<tr><td><b>Analgésicos</b></td><td>Paracetamol <b>500–1000 mg c/6–8 h</b>; ibuprofeno 400–600 mg c/8 h o celecoxib 100–200 mg c/12 h, <b>7–14 días</b> en reagudizaciones leves.</td></tr>",
+    "<tr><td><b>Neuromoduladores</b></td><td><b>Pregabalina</b> 150–300 mg/día en 2 tomas; <b>gabapentina</b> 300–1800 mg/día en 3 tomas; <b>duloxetina</b> 30 → 60 mg/día; <b>amitriptilina</b> 10–75 mg/día (anticolinérgica).</td></tr>",
+    "<tr><td><b>Opioides</b></td><td>Vigilar efectos adversos (EIO/EEO). <b>Tramadol</b> 50 mg c/6–8 h, máx 400 mg/día (menor riesgo); <b>tapentadol</b> 50 mg c/12 h, máx 250 mg c/12 h (perfil mixto); <b>buprenorfina</b> parche 5–10 μg/h cada 7 días (menor depresión respiratoria).</td></tr>",
+    "<tr><td><b>Bloqueo / neurólisis del plexo celíaco</b></td><td>Guiado por USG; alivio <b>temporal (3–6 meses)</b>; más útil en dolor <b>maligno</b>. 5–10 mL de bupivacaína 0.25–0.5% + 10–20 mL de alcohol al 98–100%.</td></tr>",
+    "</table>",
+    "<table><tr><th colspan=\"2\">Endoscopia y cirugía</th></tr>",
+    "<tr><td><b>CPRE</b></td><td>Abordaje endoscópico del conducto pancreático.</td></tr>",
+    "<tr><td><b>Puestow modificado</b></td><td>Apertura del conducto, extracción de litos y <b>pancreaticoyeyunostomía laterolateral en Y de Roux</b>; requiere conducto principal dilatado (<b>5–7 mm</b>).</td></tr>",
+    "<tr><td><b>Frey</b></td><td>Resección del tejido inflamatorio de la <b>cabeza</b>, respetando el reborde duodenal y los vasos mesentéricos.</td></tr>",
+    "<tr><td><b>Beger</b></td><td>Resección <b>subtotal de la cabeza</b> pancreática.</td></tr>",
+    "<tr><td><b>Sospecha de malignidad</b></td><td><b>Pancreatoduodenectomía</b>; pancreatectomía total con <b>autotrasplante de islotes</b> (PT-ATI).</td></tr>",
+    "</table>",
+    "</div></div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Cómo se define la pancreatitis crónica?",
+      "r": "Síndrome <b>fibroinflamatorio</b> con respuesta persistente al daño que causa <b>pérdida de función</b>, complicaciones y <b>dolor</b>."
+    },
+    {
+      "p": "¿Qué caracteriza la pancreatitis crónica temprana?",
+      "r": "Función pancreática <b>preservada</b> con cambios sutiles; todavía es <b>reversible</b>."
+    },
+    {
+      "p": "¿Qué distingue la pancreatitis crónica definitiva de la temprana?",
+      "r": "Presenta <b>manifestaciones morfológicas características</b>."
+    },
+    {
+      "p": "¿Cuál es la incidencia de pancreatitis crónica?",
+      "r": "<b>10/100,000</b> por año; en India, <b>114–125/100,000</b>."
+    },
+    {
+      "p": "¿Cuál es la relación por sexo de la pancreatitis crónica?",
+      "r": "<b>2:1</b> hombres sobre mujeres."
+    },
+    {
+      "p": "¿En qué proporción de pancreatitis crónica están presentes alcohol y tabaco?",
+      "r": "En <b>más del 50%</b>."
+    },
+    {
+      "p": "¿Qué genes se asocian con pancreatitis crónica hereditaria?",
+      "r": "<b>PRSS1</b>, <b>SPINK1</b> y <b>CFTR</b>."
+    },
+    {
+      "p": "¿Qué causas obstructivas incluye la \"E\" de M-ANNHEIM?",
+      "r": "Obstrucción del <b>conducto eferente</b>: cálculo o <b>páncreas divisum</b>."
+    },
+    {
+      "p": "¿Qué causa inmunológica de pancreatitis crónica recoge M-ANNHEIM?",
+      "r": "La autoinmune, con autoanticuerpos e <b>IgG4</b>."
+    },
+    {
+      "p": "¿Qué causas metabólicas recoge M-ANNHEIM?",
+      "r": "<b>Hipertrigliceridemia</b>, <b>hipercalcemia</b> y fármacos."
+    },
+    {
+      "p": "¿Cuáles son los 4 pasos de la fisiopatología de la pancreatitis crónica?",
+      "r": "Lesión acinar → <b>activación de células estrelladas</b> → alteraciones estructurales → <b>pérdida funcional</b>."
+    },
+    {
+      "p": "¿Qué zimógeno activa la catepsina B en la lesión acinar?",
+      "r": "El <b>tripsinógeno</b>, que se activa prematuramente."
+    },
+    {
+      "p": "¿Qué vía inflamatoria se activa en la lesión acinar de la PC?",
+      "r": "<b>NF-κB</b>, con IL-1, IL-6, <b>TNF-α</b> y reclutamiento de macrófagos."
+    },
+    {
+      "p": "¿Qué secretan las células estrelladas pancreáticas activadas?",
+      "r": "<b>Colágeno I y III</b>, fibronectina, laminina e inhibidores de metaloproteinasas."
+    },
+    {
+      "p": "¿Qué factores de crecimiento perpetúan la fibrosis en la PC?",
+      "r": "<b>TGF-β1</b> y <b>PDGF</b>."
+    },
+    {
+      "p": "¿Qué marcador expresan las células estrelladas activadas?",
+      "r": "<b>α-actina</b>."
+    },
+    {
+      "p": "¿Qué alteración de la secreción ductal favorece los cálculos en PC?",
+      "r": "↓ <b>bicarbonato</b> y litostatina con acidificación luminal → <b>tapones proteicos y calcificación</b>."
+    },
+    {
+      "p": "¿Con qué grado de daño aparece la insuficiencia exocrina?",
+      "r": "Con destrucción <b>&gt;90%</b> del páncreas."
+    },
+    {
+      "p": "¿Por qué la diabetes de la pancreatitis crónica es lábil?",
+      "r": "Porque faltan <b>insulina y glucagón</b>."
+    },
+    {
+      "p": "¿Cómo es el dolor de la pancreatitis crónica?",
+      "r": "Epigástrico, <b>intenso</b>, irradiado a flancos y <b>empeora con la ingesta</b>."
+    },
+    {
+      "p": "¿Qué característica tiene la pérdida de peso en la pancreatitis crónica?",
+      "r": "Ocurre <b>sin anorexia</b>, por maldigestión."
+    },
+    {
+      "p": "¿Qué micronutrientes se deben vigilar en pancreatitis crónica?",
+      "r": "Vitaminas <b>A, D, E, K, B6, B12</b>, <b>magnesio</b> y <b>zinc</b>."
+    },
+    {
+      "p": "¿Qué datos clínicos combinados hacen sospechar pancreatitis crónica?",
+      "r": "Dolor posprandial o crónico, <b>PA recurrente</b>, alcohol/tabaco, esteatorrea, pérdida de peso y <b>diabetes nueva</b>."
+    },
+    {
+      "p": "¿Qué hallazgos de imagen sugieren pancreatitis crónica?",
+      "r": "<b>Calcificaciones difusas</b>, <b>dilatación del conducto principal</b> e hipodensidad del parénquima."
+    },
+    {
+      "p": "¿Qué pruebas en heces evalúan la función exocrina?",
+      "r": "<b>Grasa fecal</b> y <b>elastasa fecal</b>."
+    },
+    {
+      "p": "¿Qué prueba de aliento evalúa la función exocrina pancreática?",
+      "r": "La de <b>triglicéridos mixtos marcados con ¹³C</b>."
+    },
+    {
+      "p": "¿Cuándo se indica reemplazo enzimático en pancreatitis crónica?",
+      "r": "Grasa fecal <b>&gt;15 g/24 h</b>, <b>pérdida de peso</b> o elastasa fecal <b>&lt;200 μg/g</b>."
+    },
+    {
+      "p": "¿Qué dosis de lipasa se da en las comidas principales sin cirugía pancreática?",
+      "r": "<b>40,000–50,000 U</b>; la mitad con los refrigerios."
+    },
+    {
+      "p": "¿Qué dosis de lipasa se da en las comidas tras cirugía pancreática?",
+      "r": "<b>75,000 U</b>; <b>37,500 U</b> con los refrigerios."
+    },
+    {
+      "p": "¿Qué se hace primero si el reemplazo enzimático es insuficiente?",
+      "r": "Verificar la <b>adherencia</b>; después, <b>duplicar o triplicar</b> la dosis."
+    },
+    {
+      "p": "¿Por qué se añade un IBP al reemplazo enzimático?",
+      "r": "Para evitar la <b>inactivación ácida</b> de las enzimas; omeprazol <b>20–40 mg/día</b>."
+    },
+    {
+      "p": "¿Qué se busca si persiste la maldigestión pese a enzimas e IBP?",
+      "r": "Balance de grasa de <b>72 h</b> o aliento ¹³C y causas secundarias como <b>SIBO</b>."
+    },
+    {
+      "p": "¿Cada cuánto se hace densitometría en pancreatitis crónica?",
+      "r": "<b>Basal</b> y después <b>cada 2 años</b>."
+    },
+    {
+      "p": "¿Cuál es el antidiabético de primera línea en pancreatitis crónica y por qué?",
+      "r": "<b>Metformina</b> 1000–2000 mg/día: pocos efectos adversos y <b>reduce el riesgo de adenocarcinoma</b>."
+    },
+    {
+      "p": "¿Qué dosis de insulina se usa en la diabetes pancreatopriva?",
+      "r": "<b>0.2–0.4 UI/kg/día</b> de degludec o glargina."
+    },
+    {
+      "p": "¿Qué antidiabéticos se evitan en pancreatitis crónica y por qué?",
+      "r": "<b>Sulfonilureas</b> (hipoglucemia), <b>GLP-1</b> (pancreatitis) e <b>iSGLT2</b> (pérdida de peso)."
+    },
+    {
+      "p": "¿Cuánto tiempo se usan los AINE en reagudizaciones leves de PC?",
+      "r": "<b>7–14 días</b> (ibuprofeno o celecoxib)."
+    },
+    {
+      "p": "¿Qué neuromoduladores se usan para el dolor de pancreatitis crónica?",
+      "r": "<b>Pregabalina</b>, <b>gabapentina</b>, <b>duloxetina</b> y <b>amitriptilina</b>."
+    },
+    {
+      "p": "¿Qué dosis de pregabalina se usa en el dolor de pancreatitis crónica?",
+      "r": "<b>150–300 mg/día</b> en 2 tomas."
+    },
+    {
+      "p": "¿Qué opioide tiene menor riesgo en pancreatitis crónica y a qué dosis?",
+      "r": "<b>Tramadol</b> 50 mg c/6–8 h, máximo <b>400 mg/día</b>."
+    },
+    {
+      "p": "¿Qué ventaja tiene la buprenorfina transdérmica en PC?",
+      "r": "<b>Menor depresión respiratoria</b>; parche de 5–10 μg/h cada 7 días."
+    },
+    {
+      "p": "¿Cuánto dura el alivio del bloqueo del plexo celíaco?",
+      "r": "Es <b>temporal: 3–6 meses</b>; más útil en dolor maligno."
+    },
+    {
+      "p": "¿Qué requisito anatómico tiene el procedimiento de Puestow modificado?",
+      "r": "Conducto pancreático principal <b>dilatado (5–7 mm)</b>."
+    },
+    {
+      "p": "¿En qué consiste el procedimiento de Puestow modificado?",
+      "r": "Apertura del conducto, extracción de litos y <b>pancreaticoyeyunostomía laterolateral en Y de Roux</b>."
+    },
+    {
+      "p": "¿En qué se diferencian los procedimientos de Frey y Beger?",
+      "r": "<b>Frey</b>: resección del tejido inflamatorio de la cabeza. <b>Beger</b>: resección <b>subtotal</b> de la cabeza."
+    },
+    {
+      "p": "¿Qué cirugías se consideran ante sospecha de malignidad en PC?",
+      "r": "<b>Pancreatoduodenectomía</b> o pancreatectomía total con <b>autotrasplante de islotes</b>."
+    }
+  ],
+  "cloze": [
+    "M-ANNHEIM: M {{c1::múltiples factores}}, A {{c2::alcohol}}, N {{c2::nicotina}}, N {{c2::nutrición}}, H {{c3::hereditario}}, E {{c3::conducto eferente}}, I {{c3::inmunológico}}, M misceláneos.",
+    "Neuromoduladores: gabapentina {{c1::300–1800 mg/día}} en 3 tomas, duloxetina {{c2::30 → 60 mg/día}} y amitriptilina {{c3::10–75 mg/día}}.",
+    "iDPP-4 en diabetes pancreatopriva: sitagliptina {{c1::100 mg/día}} y linagliptina {{c2::5 mg/día}}.",
+    "Neurólisis del plexo celíaco: {{c1::5–10 mL}} de bupivacaína 0.25–0.5% y {{c2::10–20 mL}} de alcohol al {{c3::98–100%}}."
+  ]
+}

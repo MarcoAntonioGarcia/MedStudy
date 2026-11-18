@@ -1,0 +1,425 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Trastornos del Sodio",
+  "autor": "Gloria Estefanía Ramírez Sánchez — Medicina Interna",
+  "fuentes": "Tucker & Grand, nephSAP 2024 (Hyponatremia e Hypernatremia) · Castellanos et al., Horizonte Médico 2016 · Manual Práctico de Ácido-Base, Líquidos y Electrolitos (Sánchez Díaz et al., 2021) · Fórmula de Adrogué-Madias",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/TRASTORNOS DEL SODIO.pptx",
+  "resumen_html": [
+    "<h2>El sodio</h2>",
+    "<ul>",
+    "<li>Es el <b>principal catión del líquido extracelular</b> y el <b>regulador más importante de la osmolaridad sérica</b>, que a su vez <b>indica cambios en el agua corporal total</b>. La <b>osmolaridad sérica</b> mide la <b>concentración de partículas o solutos disueltos en el suero</b>.</li>",
+    "<li>Determina la <b>osmolalidad plasmática</b> y el <b>volumen del líquido extracelular</b>. Sus desequilibrios <b>alteran el volumen celular, especialmente en el cerebro</b>.</li>",
+    "<li><b>Regulación:</b> por los <b>osmorreceptores hipotalámicos</b> y por <b>volumen</b>. La relación entre el sodio y el balance hídrico se determina por los <b>cambios en el aporte y la excreción de agua</b>.</li>",
+    "</ul>",
+    "<h3>Agua corporal total según sexo y edad</h3>",
+    "<table><tr><th>Grupo</th><th>Factor</th></tr>",
+    "<tr><td><b>Hombres jóvenes / adultos</b></td><td>Peso (kg) × <b>0.6</b> — el 60% del peso es agua</td></tr>",
+    "<tr><td><b>Mujeres jóvenes / adultas</b></td><td>Peso (kg) × <b>0.5</b> — el 50%</td></tr>",
+    "<tr><td><b>Hombres ancianos (&gt;65 años)</b></td><td>Peso (kg) × <b>0.5</b> — el 50%</td></tr>",
+    "<tr><td><b>Mujeres ancianas (&gt;65 años)</b></td><td>Peso (kg) × <b>0.45</b> — el 45%</td></tr>",
+    "</table>",
+    "<h2>Hiponatremia</h2>",
+    "<ul><li><b>Epidemiología:</b> <b>20%</b> de las personas mayores de 65 años · <b>20%</b> de los que ingresan por insuficiencia cardiaca · <b>25%</b> de la población oncológica · <b>29%</b> de los traumatismos craneoencefálicos.</li></ul>",
+    "<h3>Abordaje paso a paso</h3>",
+    "<ol>",
+    "<li><b>Medición de sodio</b> — sodio sérico &lt;135 mmol/L.</li>",
+    "<li><b>Determinación del tiempo de evolución</b> — aguda o crónica.</li>",
+    "<li><b>Sintomatología</b> — sintomático o asintomático, con atención a los <b>síntomas neurológicos</b>.</li>",
+    "<li><b>Osmolaridad plasmática</b>.</li>",
+    "<li><b>Osmolaridad urinaria</b>.</li>",
+    "<li><b>Sodio urinario</b>.</li>",
+    "<li><b>Evaluación de la volemia</b>.</li>",
+    "</ol>",
+    "<div class='cols'><div>",
+    "<h3>Osmolaridad plasmática</h3>",
+    "<p>Mide la concentración de partículas disueltas en el plasma, en <b>miliosmoles por litro</b>. Determina el <b>movimiento del agua a través de las membranas celulares</b>, fundamental para mantener el volumen y la hidratación celular. <b>Rango normal en adultos sanos: 275–295 mOsm/L</b>.</p>",
+    "<ul>",
+    "<li><b>Hipotónica:</b> &lt;275 mOsm/L.</li>",
+    "<li><b>Isotónica:</b> 275–295 mOsm/L.</li>",
+    "<li><b>Hipertónica:</b> &gt;295 mOsm/L.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Osmolaridad urinaria</h3>",
+    "<p>Permite distinguir entre la <b>excreción normal o anormal de agua</b>.</p>",
+    "<ul>",
+    "<li><b>Baja (&lt;100 mOsm/kg):</b> el riñón <b>funciona perfectamente</b> — detecta el exceso de agua y produce una <b>orina completamente diluida</b>. Causas: <b>potomanía</b> o <b>desnutrición severa</b> (dieta de té y tostadas).</li>",
+    "<li><b>Alta (&gt;100 mOsm/kg):</b> el riñón está <b>reteniendo agua de forma inapropiada</b> pese a que el cuerpo ya está diluido. Casi siempre por presencia de <b>hormona antidiurética (ADH)</b>.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h3>Índices urinarios</h3>",
+    "<ul>",
+    "<li><b>Excreción fraccional de sodio (FENa):</b> porcentaje del sodio filtrado que termina excretado. <b>&lt;1%</b> indica <b>causa prerrenal</b> (deshidratación, hemorragia, insuficiencia cardiaca): el riñón retiene sodio para retener agua. <b>&gt;2%</b> indica <b>causa intrínseca o necrosis tubular aguda</b>: los túbulos dañados no reabsorben el sodio.</li>",
+    "<li><b>Cuidado con dos situaciones:</b> los <b>diuréticos</b> fuerzan la eliminación de sodio y elevan la FENa por encima del 2% <b>incluso en un paciente severamente deshidratado</b> (falso positivo de necrosis tubular); y la <b>enfermedad renal crónica previa</b>, en la que el riñón ya no maneja el sodio con normalidad.</li>",
+    "<li><b>Excreción fraccional de urea (FEUrea):</b> sirve para distinguir la <b>LRA prerrenal de la intrínseca en pacientes con diuréticos</b>. Una fracción excretada <b>&lt;55% indica causa prerrenal</b>.</li>",
+    "</ul>",
+    "<h3>Algoritmo diagnóstico</h3>",
+    "<p>Ante un <b>sodio sérico &lt;135 mmol/L</b> se mide la <b>osmolalidad sérica</b>:</p>",
+    "<table><tr><th>Osmolalidad</th><th>Interpretación</th></tr>",
+    "<tr><td><b>Isotónica (275–299)</b></td><td>Exceso de <b>osmoles ineficaces</b> (urea) · <b>hiperlipidemia o hiperproteinemia</b> → confirmar con <b>ISE</b>; si es normal, <b>pseudohiponatremia</b></td></tr>",
+    "<tr><td><b>Hipertónica (≥300)</b></td><td>Exceso de <b>osmoles efectivos</b> (glucosa, manitol) → <b>hiponatremia por translocación</b></td></tr>",
+    "<tr><td><b>Hipotónica (&lt;275)</b></td><td>Hiponatremia verdadera → seguir con la <b>osmolalidad urinaria</b></td></tr>",
+    "</table>",
+    "<ul>",
+    "<li><b>Osmolalidad urinaria &lt;100 mOsm/kg:</b> vasopresina independiente — <b>polidipsia primaria</b>, <b>baja ingesta de solutos</b>, <b>potomanía de la cerveza</b>.</li>",
+    "<li><b>&gt;100 mOsm/kg (dependiente de AVP):</b> se mira el <b>sodio urinario</b>. <b>&lt;30 mmol/L</b> → volumen arterial efectivo bajo con <b>SRAA activado</b>. <b>&gt;30 mmol/L</b> → considerar <b>uso de diuréticos o enfermedad renal</b>.</li>",
+    "<li><b>Evaluación clínica del volumen extracelular ± POCUS:</b> <b>VEC ampliado</b> —edema periférico, sacro o pulmonar, derrame pleural, ascitis, yugulares distendidas, <b>VCI &gt;2 cm con índice de colapsabilidad &lt;50%</b>, contractilidad reducida, ecogenicidad hepática aumentada— apunta a <b>insuficiencia cardiaca, cirrosis hepática o síndrome nefrótico</b>. <b>VEC contraído</b> —mucosas secas, taquicardia, presión baja, pulsos débiles, <b>VCI &lt;2 cm con colapsabilidad &gt;50%</b>— apunta a <b>pérdida gastrointestinal o tercer espacio</b>. <b>VEC normal</b>, sin signos de contracción ni expansión: <b>insuficiencia suprarrenal primaria</b> (cortisol matutino en ayunas), <b>vómitos</b> (cloruro en orina), <b>pérdida cerebral o renal de sal</b>, <b>insuficiencia suprarrenal secundaria</b>, <b>hipotiroidismo grave</b> (TSH y fT4) o <b>SIAD</b> (con cortisol y TSH normales).</li>",
+    "<li><b>Hiponatremia inducida por diuréticos:</b> marcadores de contracción del VEC bajo tratamiento diurético — <b>excreción fraccional de urea &lt;35%</b> con cualquier diurético; y con <b>tiazídicos</b>, <b>excreción fraccional de ácido úrico &lt;8%</b>, <b>sodio urinario menos potasio urinario menos cloruro &gt;42 mmol/L</b>, y <b>cloruro urinario menos potasio urinario &lt;15 mmol/L</b>.</li>",
+    "</ul>",
+    "<h3>Mecanismos etiológicos por volemia</h3>",
+    "<table><tr><th>Estado</th><th>Mecanismo</th><th>Causas</th></tr>",
+    "<tr><td><b>Euvolemia (SIAD)</b></td><td>El aumento del <b>agua corporal total es proporcionalmente mayor que la pérdida de sodio</b> → <b>dilución</b>. AVP inapropiada → retención de agua libre → expansión leve de volumen → <b>natriuresis secundaria</b> → hiponatremia dilucional. También <b>baja carga de solutos con exceso de agua</b></td><td>Tumores, pulmón, SNC, dolor, náusea, <b>fármacos</b></td></tr>",
+    "<tr><td><b>Hipovolemia</b></td><td>Se <b>pierde más agua que sodio</b>: la pérdida de volumen activa <b>AVP y SRAA</b> → retención de agua &gt; sodio</td><td>Diarrea, vómito, <b>diuréticos</b>, <b>insuficiencia suprarrenal</b></td></tr>",
+    "<tr><td><b>Hipervolemia</b></td><td>Se <b>retiene más agua que sodio</b> pese al edema: el bajo gasto cardiaco o la vasodilatación activan <b>AVP y SRAA</b> → dilución</td><td>Insuficiencia cardiaca congestiva, cirrosis</td></tr>",
+    "</table>",
+    "<h3>Cálculo del déficit de sodio</h3>",
+    "<ul>",
+    "<li><b>Déficit = (Na objetivo − Na medido) × agua corporal total.</b></li>",
+    "<li><i>Ejemplo:</i> hiponatremia aguda, sodio 115, varón de 70 kg y 40 años. <b>ACT = 70 × 0.6 = 42 litros</b>. <b>120 − 115 = 5</b>. <b>5 × 42 = 210 mEq</b> de déficit.</li>",
+    "<li><b>Fórmula de Adrogué-Madias</b> para estimar el cambio de sodio por litro de solución perfundida.</li>",
+    "<li><b>Solución salina hipertónica al 3% (SSH3%):</b> la más utilizada. <b>Osmolaridad 1027 mOsm/L</b> y <b>contenido de sodio 513 mEq/L</b>. <b>Preparación:</b> mezclar <b>870 ml de salina 0.9%</b> + <b>13 ámpulas (130 ml) de sodio hipertónico al 17.7%</b> —cada ámpula con 30 mEq de Na— para obtener <b>1000 ml con 524 mEq de sodio</b>.</li>",
+    "</ul>",
+    "<h3>Tratamiento por gravedad de los síntomas</h3>",
+    "<table><tr><th>Nivel</th><th>Síntomas</th><th>Tratamiento</th></tr>",
+    "<tr><td><b>3 — graves</b></td><td><b>Coma, obnubilación, convulsiones, dificultad respiratoria, vómitos</b></td><td><b>Todos: NaCl hipertónico</b>, seguido de <b>restricción de líquidos ± vaptán</b></td></tr>",
+    "<tr><td><b>2 — moderados</b></td><td>Alteración del estado mental, desorientación, confusión, náuseas inexplicables, <b>inestabilidad de la marcha</b></td><td><b>Hipovolémica:</b> reposición de solutos (NaCl isotónico IV o reemplazo de sodio oral). <b>Euvolémica:</b> vaptán, NaCl hipertónico limitado o urea, seguido de restricción de líquidos. <b>Hipervolémica:</b> vaptán seguido de restricción de líquidos</td></tr>",
+    "<tr><td><b>1 — sin síntomas o mínimos</b></td><td>Dificultad para concentrarse, irritabilidad, alteración del estado de ánimo, depresión, cefalea inexplicable</td><td><b>Todos: restricción de líquidos</b>. Considerar <b>vaptán o urea</b> en circunstancias específicas: incapacidad de tolerar la restricción o fracaso previsto de la misma · <b>sodio muy bajo (&lt;125 mmol/L)</b> con mayor riesgo de hiponatremia sintomática · necesidad de corregir a niveles más seguros para cirugía, procedimientos o alta · <b>marcha inestable o alto riesgo de fracturas</b> · prevención del empeoramiento con mayor administración de líquidos · ensayo terapéutico para mejorar los síntomas</td></tr>",
+    "</table>",
+    "<table><tr><th>Opción</th><th>Indicación</th><th>Dosis</th><th>Vigilancia</th></tr>",
+    "<tr><td><b>Salina hipertónica</b></td><td>Hiponatremia aguda</td><td><b>100 ml en bolo (hasta 3 veces)</b> o <b>150 ml (hasta 2 veces)</b>. Segura por vía <b>periférica y central</b>. Una dosis única sube el sodio unos <b>2 mmol/L</b></td><td><b>Medición directa por ISE tras cada bolo</b>, y luego a la <b>1, 6 y 12 horas</b>. Riesgo: <b>corrección demasiado rápida</b>, flebitis o irritación local</td></tr>",
+    "<tr><td><b>Salina isotónica</b></td><td>Hiponatremia <b>hipovolémica</b></td><td><b>1 ml/kg/h</b>. Se prefiere <b>salina al 0.9% sobre Ringer lactato</b></td><td>Sodio <b>cada 4–6 horas</b> hasta superar <b>125 mmol/L</b>; aumentar la frecuencia al iniciarse la <b>diuresis acuosa</b>. <b>Precaución en insuficiencia cardiaca</b></td></tr>",
+    "<tr><td><b>Restricción de líquidos</b></td><td><b>SIAD</b> e hiponatremia <b>hipervolémica</b></td><td><b>0–1000 ml al día</b>. Sube unos <b>3 mmol/L a los 3 días</b> y <b>4 mmol/L a los 30 días</b></td><td>Sodio cada 4–6 h hasta &gt;125 mmol/L; controlar <b>presión arterial y creatinina</b>. Adversos: <b>hipotensión ortostática</b> y <b>lesión renal aguda</b>. Contraindicada con fármacos que exigen diuresis sustancial (cisplatino, aciclovir)</td></tr>",
+    "</table>",
+    "<h2>Hipernatremia</h2>",
+    "<ul>",
+    "<li><b>Fisiopatología:</b> resulta de una <b>pérdida neta de agua</b> —lo más común— o de una <b>ganancia de sodio hipertónico</b>. El sodio plasmático es un <b>osmol efectivo</b>: el agua <b>sale de las células</b> y se produce <b>deshidratación celular</b>.</li>",
+    "</ul>",
+    "<h3>Etiología</h3>",
+    "<table><tr><th>Falta de ingesta de agua</th><th>Pérdida de agua</th><th>Aumento de sodio</th></tr>",
+    "<tr><td>El mecanismo central</td><td><b>Extrarrenal:</b> respiración, <b>sudor</b>, <b>vómitos</b>, diarrea.<br><b>Renal:</b> <b>poliuria relacionada con la AVP</b> y <b>diuresis osmótica</b></td><td><b>Extrarrenal:</b> ingestión excesiva de sal, infusión de solución salina hipertónica.<br><b>Renal:</b> <b>hiperaldosteronismo</b>, <b>hipercortisolismo</b>.<br>Es <b>menos común</b>, generalmente <b>iatrogénica o accidental</b>, y se presenta con <b>hipervolemia</b></td></tr>",
+    "</table>",
+    "<h3>Fase diagnóstica</h3>",
+    "<ul>",
+    "<li><b>Paso 1 — excluir pseudohipernatremia:</b> causada por <b>proteínas o lípidos plasmáticos disminuidos</b>. Se resuelve usando un <b>electrodo selectivo de iones (ISE) directo</b> o midiendo la <b>osmolalidad sérica</b>.</li>",
+    "<li><b>Paso 2 — corrección por glucosa:</b> <b>sodio corregido = sNa + 0.024 × [glucosa (mg/dL) − 100]</b> (fórmula de Hillier). Alternativa de <b>Katz: + 0.016 × [glucosa − 100]</b>. <b>Aplicar siempre en pacientes con hiperglucemia</b> para revelar el verdadero estado del sodio.</li>",
+    "<li><b>Paso 3 — evaluar el volumen extracelular:</b> clasificar clínicamente en <b>hipo-, eu- o hipervolemia</b>.</li>",
+    "</ul>",
+    "<h3>Cálculo y corrección</h3>",
+    "<ul>",
+    "<li><b>Déficit de agua (litros) = agua corporal total × [(sodio medido / 140) − 1].</b></li>",
+    "<li><b>Velocidad de corrección:</b> <b>1–2 mEq/hora como máximo en la hipernatremia aguda</b> y <b>0.5 mEq/hora en la crónica</b>.</li>",
+    "<li><i>Ejemplo:</i> con un déficit de <b>1.6 litros = 8 mEq</b>, para bajar 0.5 mEq/h harían falta 0.1 L = <b>100 ml/hora</b>. Repartiendo esos <b>1600 ml en 24 horas</b> salen <b>66.6 ml/hora</b>, con lo que se baja <b>menos de 0.5 mEq/hora</b> y aun así se reponen los 8 mEq en el día.</li>",
+    "</ul>",
+    "<h3>Síndrome de desmielinización osmótica</h3>",
+    "<ul><li>Complicación de la <b>corrección demasiado rápida</b>, con características de <b>mielinólisis pontina central y/o extrapontina</b>. Se manifiesta con <b>alteración del estado mental</b>, <b>déficit motor</b> —<b>cuadriparesia o cuadriplejia</b>—, <b>convulsiones mioclónicas o tónico-clónicas generalizadas secundarias</b> y <b>disfunción de los nervios craneales</b>.</li></ul>",
+    "<h3>Tratamiento específico: diabetes insípida</h3>",
+    "<p><b>Prueba de privación de agua</b>, en dos pasos.</p>",
+    "<ul>",
+    "<li><b>Paso 1 — restricción de agua:</b> durante la noche si la <b>osmolaridad urinaria es &gt;100 mOsm/kg</b>, o <b>2–3 horas si es &lt;100</b>. <b>Objetivo:</b> subir el sodio a <b>145 mEq/L</b> y la osmolaridad plasmática a <b>295</b>, para <b>estimular la liberación de AVP</b>. Si no se consigue, se usa <b>solución salina al 2–3% a 0.1 cc/kg/min</b>, <b>deteniéndose con Na &gt;144 mEq/L o Uosm &gt;700</b>.</li>",
+    "<li><b>Paso 2 — respuesta a la desmopresina:</b> se administra por vía <b>nasal, subcutánea o intravenosa</b> y se mide la <b>osmolaridad urinaria cada 30 minutos durante 2 horas</b>.</li>",
+    "</ul>",
+    "<table><tr><th>Aumento de la osmolaridad urinaria</th><th>Interpretación</th></tr>",
+    "<tr><td><b>&lt;15%</b> (Uosm &lt;300)</td><td><b>Resistencia completa a la AVP</b> (nefrogénica completa)</td></tr>",
+    "<tr><td><b>15–45%</b> (Uosm &lt;300)</td><td><b>Resistencia parcial a la AVP</b></td></tr>",
+    "<tr><td><b>15–100%</b> (Uosm &gt;300)</td><td><b>Disfunción parcial de la AVP</b> (central parcial)</td></tr>",
+    "<tr><td><b>Más del doble</b></td><td><b>Disfunción completa de la AVP</b> (central completa)</td></tr>",
+    "</table>",
+    "<p>Si <b>no hay aumento</b> o la <b>osmolaridad urinaria es &gt;300</b>, la prueba <b>no es diagnóstica</b>. Entonces se hace una <b>prueba de desmopresina de 3 días</b> para distinguir la <b>polidipsia primaria</b> de la <b>disfunción parcial de la AVP</b>.</p>",
+    "<div class='extra'>La corrección lenta no es una precaución burocrática: en la hiponatremia crónica el cerebro lleva días expulsando osmolitos para no hincharse, y subir el sodio deprisa lo deja <b>hiperosmolar respecto al plasma</b> — es el mecanismo del <b>síndrome de desmielinización osmótica</b>. En la hipernatremia crónica pasa lo simétrico: la célula ha acumulado osmolitos idiogénicos, y bajar el sodio deprisa la hace <b>captar agua y producir edema cerebral</b>. Por eso los dos límites que hay que llevar memorizados son <b>cuánto se puede subir</b> y <b>cuánto se puede bajar</b> por hora, no solo la cifra objetivo.</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Qué papel tiene el sodio en el organismo?",
+      "r": "Es el <b>principal catión del líquido extracelular</b> y el <b>regulador más importante de la osmolaridad sérica</b>, que a su vez indica los <b>cambios en el agua corporal total</b>."
+    },
+    {
+      "p": "¿Qué es la osmolaridad sérica?",
+      "r": "La medida que determina la <b>concentración de partículas o solutos disueltos en el suero de la sangre</b>."
+    },
+    {
+      "p": "¿Por qué los desequilibrios del sodio son peligrosos?",
+      "r": "Porque el sodio determina la <b>osmolalidad plasmática y el volumen del líquido extracelular</b>, y sus desequilibrios <b>alteran el volumen celular, especialmente en el cerebro</b>."
+    },
+    {
+      "p": "¿Cómo se regula el sodio?",
+      "r": "Por los <b>osmorreceptores hipotalámicos</b> y por <b>volumen</b>. La relación entre el sodio y el balance hídrico se determina por los <b>cambios en el aporte y la excreción de agua</b>."
+    },
+    {
+      "p": "¿Cómo se calcula el agua corporal total según sexo y edad?",
+      "r": "<b>Hombres jóvenes/adultos:</b> peso × <b>0.6</b>. <b>Mujeres jóvenes/adultas:</b> peso × <b>0.5</b>. <b>Hombres mayores de 65:</b> peso × <b>0.5</b>. <b>Mujeres mayores de 65:</b> peso × <b>0.45</b>."
+    },
+    {
+      "p": "¿Cuál es la epidemiología de la hiponatremia?",
+      "r": "Afecta al <b>20% de los mayores de 65 años</b>, al <b>20% de los que ingresan por insuficiencia cardiaca</b>, al <b>25% de la población oncológica</b> y al <b>29% de los traumatismos craneoencefálicos</b>."
+    },
+    {
+      "p": "¿Cuáles son los pasos del abordaje de la hiponatremia?",
+      "r": "<b>1)</b> Medición de sodio · <b>2)</b> determinación del tiempo de evolución · <b>3)</b> sintomatología · <b>4)</b> osmolaridad plasmática · <b>5)</b> osmolaridad urinaria · <b>6)</b> sodio urinario · <b>7)</b> evaluación de la volemia."
+    },
+    {
+      "p": "¿Qué mide la osmolaridad plasmática y cuál es su rango normal?",
+      "r": "La <b>concentración de partículas disueltas en el plasma</b>, en miliosmoles por litro. Determina el <b>movimiento del agua a través de las membranas celulares</b>. Rango normal: <b>275 a 295 mOsm/L</b>."
+    },
+    {
+      "p": "¿Cómo se clasifica la hiponatremia según la osmolaridad plasmática?",
+      "r": "<b>Hipotónica:</b> menor de 275 mOsm/L. <b>Isotónica:</b> 275–295. <b>Hipertónica:</b> mayor de 295 mOsm/L."
+    },
+    {
+      "p": "¿Qué significa una osmolaridad urinaria menor de 100 mOsm/kg y qué causas tiene?",
+      "r": "Que <b>el riñón funciona perfectamente</b>: detecta el exceso de agua y produce una <b>orina completamente diluida</b>. Las causas son la <b>potomanía</b> y la <b>desnutrición severa</b> (dieta de té y tostadas)."
+    },
+    {
+      "p": "¿Qué significa una osmolaridad urinaria mayor de 100 mOsm/kg?",
+      "r": "Que el riñón está produciendo <b>orina muy concentrada, reteniendo agua de forma inapropiada</b> pese a que el cuerpo ya está diluido. Casi siempre por presencia de <b>hormona antidiurética</b>."
+    },
+    {
+      "p": "¿Para qué sirve la osmolaridad urinaria en la hiponatremia?",
+      "r": "Para <b>distinguir entre la excreción normal o anormal de agua</b>."
+    },
+    {
+      "p": "¿Qué es la excreción fraccional de sodio?",
+      "r": "El <b>porcentaje de sodio filtrado por el riñón que termina siendo excretado en la orina</b>."
+    },
+    {
+      "p": "¿Qué indica una FENa menor del 1%?",
+      "r": "Una <b>causa prerrenal</b> —deshidratación, hemorragia, insuficiencia cardiaca—: el riñón <b>retiene sodio para retener agua</b>."
+    },
+    {
+      "p": "¿Qué indica una FENa mayor del 2%?",
+      "r": "Una <b>causa intrínseca o necrosis tubular aguda</b>: los <b>túbulos dañados no pueden absorber el sodio</b> y este se pierde."
+    },
+    {
+      "p": "¿Por qué los diuréticos invalidan la FENa y qué se usa en su lugar?",
+      "r": "Porque <b>fuerzan la eliminación de sodio</b> y elevan la FENa por encima del 2% <b>incluso en un paciente severamente deshidratado</b> — un falso positivo de necrosis tubular. En ese caso es mejor usar la <b>FEUrea</b>."
+    },
+    {
+      "p": "¿Qué otra situación altera la interpretación de la FENa?",
+      "r": "La <b>enfermedad renal crónica previa</b>: los riñones con daño crónico <b>ya no manejan el sodio de forma normal</b>."
+    },
+    {
+      "p": "¿Para qué sirve la excreción fraccional de urea y cuál es su punto de corte?",
+      "r": "Para <b>distinguir la lesión renal aguda prerrenal de la intrínseca en pacientes tratados con diuréticos</b>. Una fracción excretada <b>menor del 55% indica causa prerrenal</b>."
+    },
+    {
+      "p": "Ante una hiponatremia isotónica, ¿en qué se piensa?",
+      "r": "En un <b>exceso de osmoles ineficaces</b> como la urea, o en <b>hiperlipidemia e hiperproteinemia</b>. Se confirma con <b>electrodo selectivo de iones</b>; si el sodio medido así es normal, se trata de una <b>pseudohiponatremia</b>."
+    },
+    {
+      "p": "Ante una hiponatremia hipertónica, ¿en qué se piensa?",
+      "r": "En un <b>exceso de osmoles efectivos</b> como la <b>glucosa o el manitol</b>, que produce una <b>hiponatremia por translocación</b>."
+    },
+    {
+      "p": "Con osmolalidad urinaria baja e independiente de vasopresina, ¿qué causas hay?",
+      "r": "La <b>polidipsia primaria</b>, la <b>baja ingesta de solutos</b> y la <b>potomanía de la cerveza</b>."
+    },
+    {
+      "p": "En una hiponatremia dependiente de AVP, ¿qué indica un sodio urinario menor de 30 mmol/L?",
+      "r": "Un <b>volumen arterial efectivo bajo con el sistema renina-angiotensina-aldosterona activado</b>."
+    },
+    {
+      "p": "En una hiponatremia dependiente de AVP, ¿qué indica un sodio urinario mayor de 30 mmol/L?",
+      "r": "Que hay que considerar el <b>uso de diuréticos</b> o una <b>enfermedad renal</b>."
+    },
+    {
+      "p": "¿Qué hallazgos indican un volumen extracelular ampliado y a qué causas apuntan?",
+      "r": "<b>Edema periférico, sacro o pulmonar</b>, derrame pleural, ascitis, yugulares distendidas, <b>VCI mayor de 2 cm con índice de colapsabilidad menor del 50%</b>, contractilidad ventricular reducida y aumento de la ecogenicidad hepática. Apuntan a <b>insuficiencia cardiaca, cirrosis hepática o síndrome nefrótico</b>."
+    },
+    {
+      "p": "¿Qué hallazgos indican un volumen extracelular contraído y a qué apuntan?",
+      "r": "<b>Mucosas secas, taquicardia, presión arterial baja, pulsos periféricos débiles</b> y <b>VCI menor de 2 cm con índice de colapsabilidad mayor del 50%</b>. Apuntan a <b>pérdida gastrointestinal</b> o <b>tercer espacio</b>."
+    },
+    {
+      "p": "Con volumen extracelular normal en una hiponatremia, ¿qué causas hay que descartar?",
+      "r": "<b>Insuficiencia suprarrenal primaria</b> (medir cortisol matutino en ayunas), <b>vómitos</b> (medir cloruro en orina), <b>pérdida cerebral o renal de sal</b>, <b>insuficiencia suprarrenal secundaria</b>, <b>hipotiroidismo grave</b> (TSH y fT4) y <b>SIAD</b>, que cursa con cortisol y TSH normales."
+    },
+    {
+      "p": "¿Qué marcador sugiere contracción de volumen en un paciente con diuréticos?",
+      "r": "Una <b>excreción fraccional de urea menor del 35%</b>, válida con cualquier diurético."
+    },
+    {
+      "p": "¿Qué marcadores adicionales se usan con diuréticos tiazídicos?",
+      "r": "Una <b>excreción fraccional de ácido úrico menor del 8%</b>, un <b>sodio urinario menos potasio urinario menos cloruro mayor de 42 mmol/L</b>, y un <b>cloruro urinario menos potasio urinario menor de 15 mmol/L</b>."
+    },
+    {
+      "p": "¿Cuál es el mecanismo de la hiponatremia euvolémica del SIAD?",
+      "r": "Una <b>AVP inapropiada</b> produce <b>retención de agua libre</b> → <b>expansión leve de volumen</b> → <b>natriuresis secundaria</b> → <b>hiponatremia dilucional</b>. El aumento del agua corporal total es <b>proporcionalmente mayor que la pérdida de sodio</b>."
+    },
+    {
+      "p": "¿Cuáles son las causas del SIAD?",
+      "r": "<b>Tumores</b>, patología <b>pulmonar</b>, patología del <b>sistema nervioso central</b>, <b>dolor</b>, <b>náusea</b> y <b>fármacos</b>."
+    },
+    {
+      "p": "¿Cuál es el mecanismo de la hiponatremia hipovolémica?",
+      "r": "La <b>pérdida de volumen activa la AVP y el SRAA</b>, produciendo <b>retención de agua mayor que de sodio</b>: se <b>pierde más agua que sodio</b>, con signos de depleción."
+    },
+    {
+      "p": "¿Cuáles son las causas de hiponatremia hipovolémica?",
+      "r": "<b>Diarrea, vómito, diuréticos e insuficiencia suprarrenal</b>."
+    },
+    {
+      "p": "¿Cuál es el mecanismo de la hiponatremia hipervolémica?",
+      "r": "El <b>bajo gasto cardiaco o la vasodilatación</b> —insuficiencia cardiaca, cirrosis— producen <b>activación neurohormonal de AVP y SRAA</b>, con retención de agua y sodio, <b>pero más agua</b>: dilución <b>a pesar del edema</b>."
+    },
+    {
+      "p": "¿Cómo se calcula el déficit de sodio en la hiponatremia?",
+      "r": "<b>(Sodio objetivo − sodio medido) × agua corporal total.</b>"
+    },
+    {
+      "p": "Calcula el déficit de un varón de 40 años y 70 kg con sodio de 115 y objetivo de 120.",
+      "r": "El agua corporal total es <b>70 × 0.6 = 42 litros</b>; la diferencia <b>120 − 115 = 5</b>; el déficit es <b>5 × 42 = 210 mEq</b>."
+    },
+    {
+      "p": "¿Qué osmolaridad y qué contenido de sodio tiene la solución salina hipertónica al 3%?",
+      "r": "Osmolaridad de <b>1027 mOsm/L</b> y contenido de sodio de <b>513 mEq/L</b>. Es la <b>más utilizada</b>."
+    },
+    {
+      "p": "¿Cómo se prepara un litro de solución salina hipertónica al 3%?",
+      "r": "Mezclando <b>870 ml de salina al 0.9%</b> con <b>13 ámpulas (130 ml) de sodio hipertónico al 17.7%</b> —cada ámpula aporta <b>30 mEq de sodio</b>— para obtener <b>1000 ml con 524 mEq de sodio</b>."
+    },
+    {
+      "p": "¿Qué síntomas definen la hiponatremia de nivel 3 y cuál es su tratamiento?",
+      "r": "<b>Coma, obnubilación, convulsiones, dificultad respiratoria y vómitos</b>. En <b>todos</b> se administra <b>NaCl hipertónico</b>, seguido de <b>restricción de líquidos con o sin vaptán</b>."
+    },
+    {
+      "p": "¿Qué síntomas definen la hiponatremia de nivel 2?",
+      "r": "<b>Alteración del estado mental, desorientación, confusión, náuseas inexplicables e inestabilidad de la marcha</b>."
+    },
+    {
+      "p": "¿Cuál es el tratamiento de la hiponatremia de nivel 2 según la volemia?",
+      "r": "<b>Hipovolémica:</b> reposición de solutos con NaCl isotónico IV o reemplazo de sodio oral. <b>Euvolémica:</b> vaptán, NaCl hipertónico limitado o urea, seguido de restricción de líquidos. <b>Hipervolémica:</b> vaptán seguido de restricción de líquidos."
+    },
+    {
+      "p": "¿Qué síntomas definen la hiponatremia de nivel 1 y cuál es su tratamiento base?",
+      "r": "<b>Dificultad para concentrarse, irritabilidad, alteración del estado de ánimo, depresión y cefalea inexplicable</b>. El tratamiento base en todos es la <b>restricción de líquidos</b>."
+    },
+    {
+      "p": "¿En qué circunstancias se considera terapia farmacológica en la hiponatremia de nivel 1?",
+      "r": "Si hay <b>incapacidad de tolerar la restricción</b> o se prevé su fracaso, <b>sodio muy bajo (&lt;125 mmol/L)</b> con mayor riesgo de hiponatremia sintomática, necesidad de corregir a niveles seguros <b>para cirugía, procedimientos o alta</b>, <b>marcha inestable o alto riesgo de fracturas</b>, prevención del empeoramiento por mayor administración de líquidos, o como <b>ensayo terapéutico para mejorar los síntomas</b>."
+    },
+    {
+      "p": "¿Cuál es la dosis de salina hipertónica en la hiponatremia aguda y cuánto sube el sodio?",
+      "r": "<b>100 ml en bolo hasta 3 veces</b>, o <b>150 ml hasta 2 veces</b>. Una dosis única sube el sodio unos <b>2 mmol/L</b>. La administración es segura tanto por vía <b>periférica como central</b>."
+    },
+    {
+      "p": "¿Cómo se vigila el sodio tras un bolo de salina hipertónica?",
+      "r": "Con <b>medición directa por electrodo selectivo de iones después de cada bolo</b>, y luego a la <b>1, 6 y 12 horas</b>."
+    },
+    {
+      "p": "¿Cuáles son los riesgos de la salina hipertónica?",
+      "r": "La <b>corrección demasiado rápida del sodio</b> y la <b>flebitis o irritación local</b> si se administra en tejidos conectivos o durante un periodo prolongado. <b>No tiene contraindicaciones</b> formales."
+    },
+    {
+      "p": "¿Cuál es la pauta de salina isotónica en la hiponatremia hipovolémica?",
+      "r": "<b>1 ml/kg/h</b>, prefiriendo la <b>solución salina al 0.9% sobre el Ringer lactato</b>. Precaución en pacientes con <b>insuficiencia cardiaca</b>."
+    },
+    {
+      "p": "¿Con qué frecuencia se mide el sodio durante la reposición con salina isotónica?",
+      "r": "<b>Cada 4 a 6 horas</b> hasta alcanzar una concentración <b>mayor de 125 mmol/L</b>. La frecuencia debe <b>aumentarse al inicio de la diuresis acuosa</b>."
+    },
+    {
+      "p": "¿Cuál es la pauta de restricción de líquidos y cuánto sube el sodio?",
+      "r": "<b>0 a 1000 ml por día</b>. Sube unos <b>3 mmol/L después de 3 días</b> y unos <b>4 mmol/L después de 30 días</b>. Se indica en <b>SIAD</b> e hiponatremia <b>hipervolémica</b>."
+    },
+    {
+      "p": "¿Cuáles son los efectos adversos y contraindicaciones de la restricción de líquidos?",
+      "r": "<b>Hipotensión ortostática</b> y <b>lesión renal aguda</b>. Está contraindicada con <b>medicamentos concomitantes que requieren una diuresis sustancial</b>, como el <b>cisplatino o el aciclovir</b>."
+    },
+    {
+      "p": "¿Cuáles son los dos mecanismos de la hipernatremia?",
+      "r": "La <b>pérdida neta de agua</b>, que es lo más común, o la <b>ganancia de sodio hipertónico</b>."
+    },
+    {
+      "p": "¿Por qué la hipernatremia produce deshidratación celular?",
+      "r": "Porque el <b>sodio plasmático es un osmol efectivo</b>: al subir, el <b>agua sale de las células</b>."
+    },
+    {
+      "p": "¿Cuáles son las causas de pérdida extrarrenal de agua en la hipernatremia?",
+      "r": "La <b>respiración</b>, el <b>sudor</b>, los <b>vómitos</b> y la <b>diarrea</b>."
+    },
+    {
+      "p": "¿Cuáles son las causas de pérdida renal de agua en la hipernatremia?",
+      "r": "La <b>poliuria relacionada con la AVP</b> y la <b>diuresis osmótica</b>."
+    },
+    {
+      "p": "¿Cuáles son las causas de aumento de sodio en la hipernatremia?",
+      "r": "<b>Extrarrenales:</b> ingestión excesiva de sal e infusión de solución salina hipertónica. <b>Renales:</b> <b>hiperaldosteronismo</b> e <b>hipercortisolismo</b>."
+    },
+    {
+      "p": "¿Qué caracteriza a la hipernatremia por ganancia de sodio hipertónico?",
+      "r": "Que es <b>menos común</b>, generalmente <b>iatrogénica o accidental</b>, y se presenta con <b>hipervolemia</b>."
+    },
+    {
+      "p": "¿Cuál es el primer paso diagnóstico ante una hipernatremia y por qué?",
+      "r": "<b>Excluir la pseudohipernatremia</b>, causada por <b>proteínas o lípidos plasmáticos disminuidos</b>. Se hace usando un <b>electrodo selectivo de iones directo</b> o midiendo la <b>osmolalidad sérica</b>."
+    },
+    {
+      "p": "¿Cuál es la fórmula de Hillier para corregir el sodio por glucosa?",
+      "r": "<b>Sodio corregido = sodio sérico + 0.024 × [glucosa (mg/dL) − 100].</b>"
+    },
+    {
+      "p": "¿Cuál es la fórmula alternativa de Katz para corregir el sodio por glucosa?",
+      "r": "<b>Sodio corregido = sodio sérico + 0.016 × [glucosa − 100].</b>"
+    },
+    {
+      "p": "¿Cuándo debe aplicarse la corrección del sodio por glucosa?",
+      "r": "<b>Siempre en pacientes con hiperglucemia</b>, para <b>revelar el verdadero estado del sodio</b>."
+    },
+    {
+      "p": "¿Cuál es el tercer paso del abordaje de la hipernatremia?",
+      "r": "<b>Evaluar el volumen extracelular</b>, clasificando clínicamente al paciente en <b>hipovolemia, euvolemia o hipervolemia</b>."
+    },
+    {
+      "p": "¿Cómo se calcula el déficit de agua en la hipernatremia?",
+      "r": "<b>Déficit de agua (litros) = agua corporal total × [(sodio medido / 140) − 1].</b>"
+    },
+    {
+      "p": "¿Cuál es la velocidad máxima de corrección de la hipernatremia?",
+      "r": "<b>1 a 2 mEq por hora en la hipernatremia aguda</b> y <b>0.5 mEq por hora en la crónica</b>."
+    },
+    {
+      "p": "Con un déficit de 1.6 litros equivalente a 8 mEq, ¿a qué ritmo se repone en 24 horas?",
+      "r": "Repartiendo los <b>1600 ml en 24 horas</b> salen <b>66.6 ml/hora</b>, con lo que se baja <b>menos de 0.5 mEq por hora</b> y aun así se reponen los <b>8 mEq</b> en el día."
+    },
+    {
+      "p": "¿Qué es el síndrome de desmielinización osmótica y cómo se manifiesta?",
+      "r": "Una complicación de la <b>corrección demasiado rápida del sodio</b>, con características de <b>mielinólisis pontina central y/o extrapontina</b>. Cursa con <b>alteración del estado mental</b>, <b>déficit motor</b> —cuadriparesia o cuadriplejia—, <b>convulsiones mioclónicas o tónico-clónicas generalizadas secundarias</b> y <b>disfunción de los nervios craneales</b>."
+    },
+    {
+      "p": "¿En qué consiste el paso 1 de la prueba de privación de agua?",
+      "r": "En la <b>restricción de agua</b>: durante la noche si la osmolaridad urinaria es <b>mayor de 100 mOsm/kg</b>, o <b>2–3 horas si es menor de 100</b>. El objetivo es subir el sodio a <b>145 mEq/L</b> y la osmolaridad plasmática a <b>295</b>, para <b>estimular la liberación de AVP</b>."
+    },
+    {
+      "p": "Si la restricción de agua no alcanza el objetivo, ¿qué se hace y cuándo se detiene?",
+      "r": "Se administra <b>solución salina al 2–3% a 0.1 cc/kg/min</b>, <b>deteniéndola con un sodio mayor de 144 mEq/L o una osmolaridad urinaria mayor de 700</b>."
+    },
+    {
+      "p": "¿En qué consiste el paso 2 de la prueba de privación de agua?",
+      "r": "En administrar <b>desmopresina por vía nasal, subcutánea o intravenosa</b> y <b>medir la osmolaridad urinaria cada 30 minutos durante 2 horas</b>."
+    },
+    {
+      "p": "Tras la desmopresina, ¿qué indica un aumento de la osmolaridad urinaria menor del 15%?",
+      "r": "Una <b>resistencia completa a la AVP</b>, con osmolaridad urinaria menor de 300."
+    },
+    {
+      "p": "¿Qué indica un aumento de la osmolaridad urinaria del 15 al 45% tras desmopresina?",
+      "r": "Una <b>resistencia parcial a la AVP</b>, con osmolaridad urinaria menor de 300."
+    },
+    {
+      "p": "¿Qué indica un aumento del 15 al 100% con osmolaridad urinaria mayor de 300?",
+      "r": "Una <b>disfunción parcial de la AVP</b>."
+    },
+    {
+      "p": "¿Qué indica que la osmolaridad urinaria más que se duplique tras la desmopresina?",
+      "r": "Una <b>disfunción completa de la AVP</b>."
+    },
+    {
+      "p": "¿Cuándo no es diagnóstica la prueba de privación de agua y qué se hace entonces?",
+      "r": "Cuando <b>no hay aumento</b> de la osmolaridad urinaria o esta es <b>mayor de 300</b>. Entonces se realiza una <b>prueba de desmopresina de 3 días</b> para distinguir la <b>polidipsia primaria</b> de la <b>disfunción parcial de la AVP</b>."
+    }
+  ],
+  "cloze": [
+    "El agua corporal total se calcula multiplicando el peso por {{c1::0.6}} en hombres adultos, por {{c2::0.5}} en mujeres adultas y en hombres mayores de 65, y por {{c3::0.45}} en mujeres mayores de 65.",
+    "La osmolaridad plasmática normal es de {{c1::275–295 mOsm/L}}; una osmolaridad urinaria menor de {{c2::100 mOsm/kg}} indica que el riñón diluye correctamente.",
+    "Una FENa menor del {{c1::1%}} indica causa prerrenal y mayor del {{c2::2%}} causa intrínseca; con diuréticos se usa la FEUrea, cuyo corte prerrenal es {{c3::menor del 55%}}.",
+    "El déficit de agua en la hipernatremia es ACT × [(sodio medido / {{c1::140}}) − 1], y se corrige a un máximo de {{c2::1–2 mEq/hora}} si es aguda o {{c3::0.5 mEq/hora}} si es crónica."
+  ]
+}

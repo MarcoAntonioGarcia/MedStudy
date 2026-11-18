@@ -1,0 +1,408 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Sepsis",
+  "autor": "R2 MI Rosa Hilda Becerra Castillo",
+  "fuentes": "Surviving Sepsis Campaign 2026 (Crit Care Med) · Ranzani et al., JAMA 2025 (SOFA-2) · Angus & van der Poll, N Engl J Med 2013 · ADRENAL trial, N Engl J Med 2018 · OMS 2024 · UpToDate",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/sepsis.pptx",
+  "resumen_html": [
+    "<h2>Historia y definición</h2>",
+    "<ul>",
+    "<li><b>«Sepsis»</b> viene del griego <i>sepo</i>: <b>«me pudro»</b> o descomposición. Homero usó la palabra e <b>Hipócrates</b> la describió como un proceso biológico peligroso en el que el cuerpo se descomponía. Los romanos hablaban de <b>«pus bonum et laudabile»</b>. En el siglo XIX <b>Pasteur y Koch</b> establecieron que se debía a la invasión de microorganismos —la <b>teoría de los gérmenes</b>—, y en <b>1914 Hugo Schottmüller</b> dio la primera definición moderna: invasión de bacterias patógenas al torrente sanguíneo desde un foco infeccioso.</li>",
+    "<li><b>Sepsis-3:</b> <b>disfunción orgánica potencialmente mortal secundaria a una infección</b>. <b>Choque séptico:</b> pacientes con <b>disfunción circulatoria que confiere alto riesgo de mortalidad</b>.</li>",
+    "</ul>",
+    "<table><tr><th>Sepsis-1 (1991)</th><th>Sepsis-2 (2001)</th><th>Sepsis-3</th></tr>",
+    "<tr><td><b>Sepsis</b> = infección sospechada o documentada <b>+ ≥2 criterios de SIRS</b>.<br><b>Sepsis grave</b> = sepsis + disfunción orgánica, hipoperfusión o hipotensión.<br><b>SIRS (≥2):</b> temperatura &gt;38 °C o &lt;36 °C · FC &gt;90 lpm · FR &gt;20 rpm o PaCO₂ &lt;32 mmHg · leucocitos &gt;12 000, &lt;4000 o &gt;10% bandas</td><td>Amplía los criterios clínicos y de laboratorio: <b>lactato, PCR, procalcitonina, hiperglucemia, alteraciones de la coagulación, trombocitopenia y disfunción hepática</b></td><td>Cambio de paradigma: escalas. <b>Infección sospechada o confirmada + aumento de ≥2 puntos en SOFA</b>. Un aumento de más de 2 puntos <b>se asocia a mayor mortalidad</b></td></tr>",
+    "</table>",
+    "<div class='cols'><div>",
+    "<h3>SOFA-2</h3>",
+    "<ul><li>Se analizaron más de <b>3.3 millones</b> de pacientes de UCI. La premisa: el SOFA original <b>no se actualizaba desde 1994</b>. El SOFA-2 <b>conserva los mismos seis órganos</b> pero <b>actualiza los puntos de corte</b> e <b>incorpora terapias modernas</b>. <b>AUROC 0.79</b> (IC 0.76–0.81) frente a <b>0.77</b> (0.74–0.81) del SOFA-1.</li></ul>",
+    "</div><div>",
+    "<h3>NEWS y MEWS</h3>",
+    "<ul><li>Son <b>escalas de alerta temprana</b>. A diferencia del SOFA, <b>no miden disfunción orgánica</b>: intentan <b>detectar rápidamente a los pacientes que se están deteriorando</b>.</li></ul>",
+    "</div></div>",
+    "<h3>Epidemiología y factores de riesgo</h3>",
+    "<ul>",
+    "<li>En 2020 se produjeron cerca de <b>48.9 millones de casos</b> y <b>11 millones de muertes</b>, el <b>20% de todas las defunciones mundiales</b>. Por cada <b>1000 pacientes hospitalizados, 15</b> desarrollarán sepsis como complicación de la atención sanitaria. El grupo de <b>mayor riesgo son los ancianos</b>.</li>",
+    "<li><b>Factores de riesgo:</b> estancia en UCI · bacteriemia · <b>edad &gt;65 años</b> · inmunosupresión · <b>diabetes y obesidad</b> · cáncer · neumonía · hospitalizaciones previas · factores genéticos y socioeconómicos.</li>",
+    "</ul>",
+    "<h2>Fisiopatología</h2>",
+    "<div class='cols'><div>",
+    "<h3>Gramnegativos</h3>",
+    "<ul><li>La desencadena el <b>lipopolisacárido (LPS) o endotoxina</b>, parte de la <b>membrana externa</b> bacteriana, que se libera al torrente sanguíneo <b>cuando hay lisis bacteriana</b>. El huésped responde liberando un reactante hepático de fase aguda, la <b>proteína fijadora de lipopolisacárido</b>, que forma un complejo con el LPS y <b>cataliza su unión al receptor CD14 del macrófago</b>, con la consiguiente síntesis de <b>citocinas proinflamatorias</b>.</li></ul>",
+    "</div><div>",
+    "<h3>Grampositivos</h3>",
+    "<ul><li>Al menos <b>dos mecanismos</b>: la producción de <b>exotoxinas que actúan como superantígenos</b>, y los <b>componentes de la membrana celular</b> (peptidoglicanos, ácido lipoteicoico, lipoproteínas, modulina soluble en fenol), que interactúan con el <b>TLR2</b>. Aún <b>no hay trabajos clínicos convincentes</b> que demuestren su presencia a las concentraciones de los estudios experimentales.</li></ul>",
+    "</div></div>",
+    "<ul>",
+    "<li><b>Cascada de citocinas:</b> <b>proinflamatorias</b> — TNF-α, interleucinas 1 y 12, interferón gamma — frente a <b>antiinflamatorias</b> — interleucinas 10, 4 y 6, factor de crecimiento transformador beta, antagonista del receptor de IL-1 y algunas prostaglandinas. Si <b>predomina la proinflamatoria sobreviene la sepsis</b>; si <b>predomina la antiinflamatoria</b>, se instala un estado de <b>inmunosupresión relativa</b>.</li>",
+    "<li><b>Vasodilatación generalizada:</b> la determina sobre todo el <b>óxido nítrico</b>. Su síntesis endotelial, catalizada por las <b>óxido nítrico sintasas</b> a partir de la <b>L-arginina</b>, mantiene el tono vasodilatador; las citocinas proinflamatorias inducen una <b>isoforma distinta de la habitual</b> de la enzima, y esa <b>síntesis excesiva</b> explica la <b>hipotensión resistente</b> del choque séptico.</li>",
+    "<li><b>Insuficiencia suprarrenal relativa:</b> resulta de la <b>supresión del eje hipotálamo-hipófisis-suprarrenal</b> por las citocinas. La endotoxemia estimula IL-1, IL-6 y TNF-α: las <b>interleucinas 1 y 6</b> activan el hipotálamo y aumentan la liberación de <b>hormona liberadora de corticotropina</b> y con ella el cortisol; el <b>TNF-α</b> induce la secreción de ACTH pero <b>deteriora la liberación de ACTH inducida por la CRH</b>. Su expresión clínica más severa es la <b>baja respuesta a aminas vasopresoras</b>.</li>",
+    "</ul>",
+    "<h2>Cuadro clínico</h2>",
+    "<ul>",
+    "<li>La presentación es <b>inespecífica</b>: otras entidades como la <b>pancreatitis</b> o el <b>SDRA</b> pueden parecerse. Lo típico es <b>hipotensión, taquicardia, fiebre y leucocitosis</b>; al agravarse aparecen signos de choque (<b>piel fría, cianosis</b>) y de disfunción orgánica (<b>oliguria, lesión renal aguda, estado mental alterado</b>).</li>",
+    "<li><b>Signos de hipoperfusión:</b> en fases tempranas la piel puede estar <b>caliente y enrojecida</b>; al progresar a choque <b>se enfría</b> por la redirección del flujo a los órganos centrales. El <b>llenado capilar disminuido</b>, la <b>cianosis</b> o el <b>moteado</b> indican choque. Se añaden <b>estado mental alterado</b>, obnubilación o inquietud, y <b>oliguria o anuria</b>. El <b>íleo o la ausencia de ruidos intestinales</b> suele ser un signo de hipoperfusión <b>en etapa terminal</b>.</li>",
+    "<li><b>Mottling score:</b> escala clínica simple que evalúa la <b>perfusión cutánea periférica</b> observando el <b>moteado alrededor de la rodilla</b>.</li>",
+    "</ul>",
+    "<h3>Síntomas y evaluación microbiológica según el foco</h3>",
+    "<table><tr><th>Sitio sospechoso</th><th>Síntomas y signos</th><th>Evaluación microbiológica inicial</th></tr>",
+    "<tr><td><b>Tracto respiratorio superior</b></td><td>Inflamación faríngea más exudado, ± hinchazón y linfadenopatía</td><td><b>Hisopado faríngeo</b> para cultivo aeróbico</td></tr>",
+    "<tr><td><b>Tracto respiratorio inferior</b></td><td>Tos productiva, dolor torácico pleurítico, hallazgos auscultatorios de consolidación</td><td><b>Esputo de buena calidad</b>, prueba rápida de influenza, <b>antígeno urinario</b> (neumococo, legionela; no recomendado en niños), cultivo cuantitativo de cepillo protegido o <b>lavado broncoalveolar</b></td></tr>",
+    "<tr><td><b>Tracto urinario</b></td><td>Urgencia, disuria, dolor lumbar o de espalda</td><td><b>Cultivo de orina</b> y microscopía que muestre <b>piuria</b></td></tr>",
+    "<tr><td><b>Catéteres vasculares</b> (arterial, venoso central)</td><td>Enrojecimiento o drenaje en el sitio de inserción</td><td><b>Cultivo de sangre del catéter y de un sitio periférico</b>, y cultivo de la <b>punta del catéter</b> si se retiró</td></tr>",
+    "<tr><td><b>Catéter pleural permanente</b></td><td>Enrojecimiento o drenaje en el sitio de inserción</td><td><b>Cultivo de líquido pleural</b> a través del catéter</td></tr>",
+    "<tr><td><b>Herida o quemadura</b></td><td>Inflamación, edema, eritema, secreción de pus</td><td><b>Tinción de Gram y cultivo del drenaje de pus</b>. El <b>cultivo de herida no es confiable</b></td></tr>",
+    "</table>",
+    "<h3>Signos de perfusión adecuada</h3>",
+    "<ul><li><b>TAM 60–65 mmHg</b> · <b>uresis &gt;0.5 ml/kg/min</b> · <b>PaO₂ &gt;60 mmHg</b> · <b>Glasgow 15</b> · <b>llenado capilar menor de 3 segundos</b>.</li></ul>",
+    "<h3>Laboratorio</h3>",
+    "<p>Los hallazgos son <b>inespecíficos</b>: pueden deberse a la causa subyacente, a la hipoperfusión tisular o a la disfunción orgánica.</p>",
+    "<table><tr><th>Parámetro</th><th>Alteración</th></tr>",
+    "<tr><td>Leucocitos</td><td><b>&gt;12 000</b> o <b>&lt;4000</b></td></tr>",
+    "<tr><td>Glucosa</td><td><b>&gt;140 mg/dl</b> (7.7 mmol/l) <b>en ausencia de diabetes</b></td></tr>",
+    "<tr><td>Proteína C reactiva</td><td>Más de <b>2 desviaciones estándar</b> por encima del valor normal</td></tr>",
+    "<tr><td>Oxigenación</td><td><b>PaO₂/FiO₂ &lt;300</b></td></tr>",
+    "<tr><td>Diuresis</td><td><b>&lt;0.5 ml/kg/h durante al menos 2 horas</b> pese a la reposición adecuada</td></tr>",
+    "<tr><td>Coagulación</td><td><b>INR &gt;1.5</b> o <b>aPTT &gt;60 segundos</b></td></tr>",
+    "<tr><td>Plaquetas</td><td><b>&lt;100 000/µL</b></td></tr>",
+    "<tr><td>Creatinina</td><td>Aumento <b>&gt;0.5 mg/dl</b> (44.2 µmol/l)</td></tr>",
+    "<tr><td>Bilirrubina total</td><td><b>&gt;4 mg/dl</b> (70 µmol/l)</td></tr>",
+    "<tr><td><b>Lactato</b></td><td><b>&gt;2 mmol/L</b> es hiperlactatemia. <b>≥4 mmol/L</b> es <b>consistente, pero no diagnóstico</b>, de choque séptico</td></tr>",
+    "</table>",
+    "<p>También pueden hallarse <b>insuficiencia suprarrenal</b> (hiponatremia, hiperpotasemia) y <b>síndrome del eutiroideo enfermo</b>.</p>",
+    "<h3>Biomarcadores</h3>",
+    "<table><tr><th></th><th>Proteína C reactiva</th><th>Procalcitonina</th></tr>",
+    "<tr><td><b>Qué es</b></td><td><b>Pentámero</b> de síntesis <b>hepática</b> con actividades antiinflamatorias</td><td><b>Proteína glucosilada</b> producida en <b>macrófagos</b> y a nivel <b>hepático</b></td></tr>",
+    "<tr><td><b>Cinética</b></td><td>Síntesis a las <b>4–6 h</b>, <b>duplica su valor cada 8 h</b>, pico a las <b>46–50 h</b>; vida media de <b>19 h</b> al retirar el estímulo</td><td>Síntesis a las <b>4 h</b>, <b>pico a las 6 h</b>, vida media de <b>25–30 h</b>, que <b>aumenta en la falla renal</b></td></tr>",
+    "<tr><td><b>Rendimiento</b></td><td>Especificidad para infección de <b>50%</b> en el mejor de los casos; sensibilidad hasta <b>91%</b></td><td><b>&lt;0.5 ng/ml:</b> infección bacteriana poco probable (puede haber infección local)<br><b>0.5–2:</b> posible infección sistémica<br><b>&gt;2:</b> muy probable sepsis<br><b>&gt;10:</b> reacción inflamatoria sistémica importante, casi siempre <b>sepsis bacteriana grave o choque séptico</b></td></tr>",
+    "</table>",
+    "<ul>",
+    "<li><b>PCR:</b> establece que <b>hay inflamación</b>, pero <b>no es específica ni se correlaciona con la gravedad</b>. En sepsis documentada sirve para <b>valorar la respuesta al tratamiento</b>. Se eleva en cuadros no infecciosos, <b>tarda más en descender</b> tras controlar la inflamación y <b>tarda más en subir</b> tras el inicio de la sepsis.</li>",
+    "<li><b>Condiciones que elevan la procalcitonina sin sepsis:</b> <b>enfermedad renal terminal o diálisis</b>, <b>insuficiencia cardiaca congestiva</b>, <b>EPOC</b> y <b>cirrosis hepática</b>.</li>",
+    "</ul>",
+    "<h2>Manejo</h2>",
+    "<h3>Fluidos</h3>",
+    "<ul>",
+    "<li>La guía sugiere <b>al menos 30 ml/kg de cristaloide intravenoso en las primeras 3 horas</b>, con <b>baja certeza de evidencia</b>. <b>No significa pasar los 30 ml/kg de forma ciega y sin reevaluación</b>: hay que ajustarlo al paciente.</li>",
+    "<li>Se prefieren los <b>cristaloides balanceados sobre la solución salina al 0.9%</b>.</li>",
+    "</ul>",
+    "<h3>Antibióticos</h3>",
+    "<ul>",
+    "<li>Se favorece la <b>infusión prolongada</b>.</li>",
+    "<li><b>Cuidado con el ajuste renal precoz:</b> los ajustes de dosis se basan en pacientes con <b>ERC estable</b>, no en una <b>LRA dinámica</b>. De <b>18 650 pacientes</b>, un <b>17.5% presentó LRA al ingreso</b>. Reducir la dosis precozmente puede causar <b>infradosificación en el periodo crítico</b>. En antibióticos de <b>amplio margen terapéutico</b>, como muchos <b>betalactámicos</b>, puede <b>diferirse el ajuste renal hasta 48 horas</b>. En cambio, <b>vancomicina, aminoglucósidos y polimixinas requieren ajuste y monitorización tempranos</b>.</li>",
+    "</ul>",
+    "<h3>Esteroides</h3>",
+    "<ul><li><b>50 mg IV cada 6 horas</b>, o <b>infusión continua de 200 mg/día</b>. Indicados en quienes requieren <b>dosis de vasopresor mayores de 0.25 µg/kg/min</b>.</li></ul>",
+    "<h3>Tromboprofilaxis</h3>",
+    "<ul><li>La incidencia de <b>TVP adquirida en UCI llega al 10%</b> y la de <b>embolia pulmonar al 2–4%</b>. <b>Contraindicaciones:</b> <b>sangrado activo mayor</b> y <b>coagulopatía severa no corregida</b> —en esta puede usarse <b>tromboprofilaxis mecánica</b>.</li></ul>",
+    "<table><tr><th>Fármaco</th><th>Dosis</th></tr>",
+    "<tr><td><b>Enoxaparina</b></td><td><b>40 mg SC cada 24 h</b> en peso normal, sobrepeso y obesidad grado 1–2 (o 1 mg/kg cada 12 h) · <b>30 mg SC cada 24 h</b> en bajo peso · en <b>IMC &gt;40</b>, cada 12 h o 0.7–0.8 mg/kg cada 12 h · en <b>IMC &gt;50</b>, <b>60 mg SC cada 12 h</b>. Máximo <b>150 mg por dosis</b></td></tr>",
+    "<tr><td><b>Dalteparina</b></td><td><b>100 UI/kg cada 24 h</b> — <b>sin ajuste renal</b></td></tr>",
+    "<tr><td><b>Tinzaparina</b></td><td><b>4500 UI SC cada 24 h</b> (75 UI/kg/día) — <b>sin ajuste renal</b></td></tr>",
+    "<tr><td><b>Heparina no fraccionada</b></td><td><b>5000 UI SC cada 8–12 h</b>; su efecto desaparece en <b>1–4 horas</b></td></tr>",
+    "</table>",
+    "<h3>Conclusión</h3>",
+    "<p><b>Control temprano de la infección con reanimación hemodinámica individualizada:</b> iniciar <b>antibióticos empíricos de amplio espectro lo antes posible</b>, obtener <b>cultivos sin retrasar su administración</b>, <b>controlar el foco</b> y <b>desescalar</b> según microbiología. A la vez, usar <b>norepinefrina como vasopresor inicial</b>, administrar <b>líquidos solo si hay respuesta a volumen</b>, y <b>reevaluar la perfusión</b> con <b>llenado capilar, lactato y ecocardiografía</b>, evitando <b>tanto la hipoperfusión como la sobrecarga</b>.</p>",
+    "<div class='extra'>El punto sobre el ajuste renal precoz de antibióticos es el más contraintuitivo de la clase y merece detenerse: la tabla de dosificación que se usa a diario está construida sobre pacientes con <b>enfermedad renal crónica estable</b>, no sobre un riñón que está fallando <b>ahora</b> y que puede recuperarse en horas. Bajar la dosis el primer día por una creatinina que aún está subiendo es tratar una función renal que el paciente todavía no tiene — y hacerlo justo en la ventana en que la concentración del antibiótico más importa.</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿De dónde viene la palabra «sepsis» y qué significa?",
+      "r": "Del griego <b><i>sepo</i></b>, que significa <b>«me pudro»</b> o <b>«descomposición»</b>."
+    },
+    {
+      "p": "¿Cómo describió Hipócrates la sepsis?",
+      "r": "Como un <b>proceso biológico peligroso donde el cuerpo se descomponía</b>."
+    },
+    {
+      "p": "¿Qué aportaron Pasteur y Koch al concepto de sepsis?",
+      "r": "En el <b>siglo XIX</b> determinaron que la sepsis se debía a la <b>invasión de microorganismos nocivos</b>: la <b>teoría de los gérmenes</b>."
+    },
+    {
+      "p": "¿Quién dio la primera definición moderna de sepsis y cuál fue?",
+      "r": "<b>Hugo Schottmüller, en 1914</b>: la <b>invasión de bacterias patógenas al torrente sanguíneo desde un foco infeccioso</b>, generando síntomas clínicos."
+    },
+    {
+      "p": "¿Cómo define Sepsis-3 la sepsis y el choque séptico?",
+      "r": "<b>Sepsis:</b> disfunción orgánica <b>potencialmente mortal secundaria a una infección</b>. <b>Choque séptico:</b> pacientes con <b>disfunción circulatoria que confiere alto riesgo de mortalidad</b>."
+    },
+    {
+      "p": "¿Cómo definía Sepsis-1 (1991) la sepsis y la sepsis grave?",
+      "r": "<b>Sepsis</b> = infección sospechada o documentada <b>más 2 o más criterios de SIRS</b>. <b>Sepsis grave</b> = sepsis más disfunción orgánica, hipoperfusión o hipotensión."
+    },
+    {
+      "p": "¿Cuáles son los criterios de SIRS?",
+      "r": "Dos o más de: <b>temperatura &gt;38 °C o &lt;36 °C</b>, <b>frecuencia cardiaca &gt;90 lpm</b>, <b>frecuencia respiratoria &gt;20 rpm o PaCO₂ &lt;32 mmHg</b>, y <b>leucocitos &gt;12 000, &lt;4000 o más del 10% de bandas</b>."
+    },
+    {
+      "p": "¿Qué añadió Sepsis-2 (2001)?",
+      "r": "Amplió los criterios clínicos y de laboratorio, incorporando <b>lactato, PCR, procalcitonina, hiperglucemia, alteraciones de la coagulación, trombocitopenia y disfunción hepática</b>."
+    },
+    {
+      "p": "¿Cuál es la definición operativa de sepsis según Sepsis-3?",
+      "r": "<b>Infección sospechada o confirmada más un aumento de 2 o más puntos en la escala SOFA</b>. Un aumento de más de 2 puntos se asocia con <b>mayor mortalidad</b>."
+    },
+    {
+      "p": "¿Por qué se desarrolló el SOFA-2 y sobre cuántos pacientes?",
+      "r": "Porque el <b>SOFA original no se actualizaba desde 1994</b>. Se analizaron más de <b>3.3 millones de pacientes de UCI</b>."
+    },
+    {
+      "p": "¿Qué cambia el SOFA-2 respecto al SOFA original?",
+      "r": "<b>Conserva los mismos seis órganos</b>, pero <b>actualiza los puntos de corte</b> e <b>incorpora terapias modernas</b>."
+    },
+    {
+      "p": "¿Cuál es el rendimiento del SOFA-2 frente al SOFA-1?",
+      "r": "<b>AUROC 0.79</b> (IC 95% 0.76–0.81) frente a <b>0.77</b> (0.74–0.81) del SOFA-1."
+    },
+    {
+      "p": "¿En qué se diferencian NEWS y MEWS del SOFA?",
+      "r": "En que son <b>escalas de alerta temprana</b>: <b>no miden disfunción orgánica</b>, sino que intentan <b>detectar rápidamente a los pacientes que se están deteriorando</b>."
+    },
+    {
+      "p": "¿Cuántos casos y muertes por sepsis se produjeron en 2020 en el mundo?",
+      "r": "Cerca de <b>48.9 millones de casos</b> y <b>11 millones de muertes</b>, lo que representa el <b>20% de todas las defunciones mundiales</b>."
+    },
+    {
+      "p": "¿Cuántos pacientes hospitalizados desarrollan sepsis como complicación de la atención sanitaria?",
+      "r": "<b>15 de cada 1000</b> pacientes hospitalizados."
+    },
+    {
+      "p": "¿Cuál es el grupo de mayor riesgo de sepsis?",
+      "r": "Los <b>ancianos</b>."
+    },
+    {
+      "p": "¿Cuáles son los factores de riesgo de sepsis?",
+      "r": "Estancia en <b>UCI</b>, <b>bacteriemia</b>, <b>edad mayor de 65 años</b>, <b>inmunosupresión</b>, <b>diabetes y obesidad</b>, <b>cáncer</b>, <b>neumonía</b>, <b>hospitalizaciones previas</b> y factores <b>genéticos y socioeconómicos</b>."
+    },
+    {
+      "p": "¿Qué desencadena la sepsis por gramnegativos y cuándo se libera?",
+      "r": "El <b>lipopolisacárido (LPS) o endotoxina</b>, que forma parte de la <b>membrana celular externa</b> de la bacteria y se libera al torrente sanguíneo <b>cuando hay lisis bacteriana</b>."
+    },
+    {
+      "p": "¿Cuál es la respuesta inicial del huésped al lipopolisacárido?",
+      "r": "Liberar un <b>reactante hepático de fase aguda</b>, la <b>proteína fijadora de lipopolisacárido</b>."
+    },
+    {
+      "p": "¿Cómo llega la señal del lipopolisacárido al macrófago?",
+      "r": "La proteína fijadora forma un <b>complejo con el LPS</b> que <b>cataliza su unión al receptor CD14 del macrófago</b>, lo que resulta en la <b>síntesis de citocinas proinflamatorias</b>."
+    },
+    {
+      "p": "¿Por qué dos mecanismos se desencadena la sepsis por grampositivos?",
+      "r": "Por la <b>producción de exotoxinas que actúan como superantígenos</b> y por <b>componentes de la membrana celular</b> —peptidoglicanos, ácido lipoteicoico, lipoproteínas y modulina soluble en fenol— que interactúan con el <b>TLR2</b>."
+    },
+    {
+      "p": "¿Qué limitación tiene la evidencia sobre los mediadores de la sepsis por grampositivos?",
+      "r": "Que <b>aún no existen trabajos clínicos convincentes</b> que demuestren su presencia a concentraciones similares a las de los estudios experimentales."
+    },
+    {
+      "p": "¿Cuáles son las citocinas proinflamatorias de la cascada séptica?",
+      "r": "El <b>TNF-α</b>, las <b>interleucinas 1 y 12</b> y el <b>interferón gamma</b>."
+    },
+    {
+      "p": "¿Cuáles son las señales antiinflamatorias de la cascada séptica?",
+      "r": "Las <b>interleucinas 10, 4 y 6</b>, el <b>factor de crecimiento transformador beta</b>, el <b>antagonista del receptor de interleucina 1</b> y algunas <b>prostaglandinas</b>."
+    },
+    {
+      "p": "¿Qué ocurre según predomine la respuesta proinflamatoria o la antiinflamatoria?",
+      "r": "Si predomina la <b>proinflamatoria sobreviene la sepsis</b>; si predomina la <b>antiinflamatoria</b>, ocurre un estado de <b>inmunosupresión relativa</b>."
+    },
+    {
+      "p": "¿Qué mediador determina principalmente la vasodilatación generalizada de la sepsis?",
+      "r": "El <b>óxido nítrico</b>."
+    },
+    {
+      "p": "¿Cómo se sintetiza el óxido nítrico y qué papel tiene?",
+      "r": "Lo sintetiza la <b>célula endotelial</b> a partir del aminoácido <b>L-arginina</b>, catalizado por la familia de las <b>óxido nítrico sintasas</b>. Es responsable del <b>tono vasodilatador</b>, esencial para regular la presión arterial."
+    },
+    {
+      "p": "¿Por qué el óxido nítrico causa hipotensión resistente en el choque séptico?",
+      "r": "Porque las <b>citocinas proinflamatorias inducen la expresión de una isoforma distinta de la habitual</b> de la óxido nítrico sintasa, con una <b>liberación endotelial masiva</b> y una <b>síntesis excesiva</b>."
+    },
+    {
+      "p": "¿Qué es la insuficiencia suprarrenal relativa asociada con sepsis?",
+      "r": "El resultado de la <b>supresión del eje hipotálamo-hipófisis-suprarrenal por las citocinas proinflamatorias</b>."
+    },
+    {
+      "p": "¿Qué efecto tienen las interleucinas 1 y 6 sobre el eje suprarrenal en la sepsis?",
+      "r": "Son <b>activadores hipotalámicos</b> que aumentan la liberación de <b>hormona liberadora de corticotropina</b>, lo que aumenta la <b>secreción de cortisol</b>."
+    },
+    {
+      "p": "¿Cuál es el efecto paradójico del TNF-α sobre el eje suprarrenal?",
+      "r": "Es <b>inductor de la secreción de ACTH</b>, pero <b>deteriora la liberación de ACTH inducida por la hormona liberadora de corticotropina</b>."
+    },
+    {
+      "p": "¿Cuál es la expresión clínica más severa de la insuficiencia suprarrenal relativa en sepsis?",
+      "r": "La <b>baja respuesta a las aminas vasopresoras</b>."
+    },
+    {
+      "p": "¿Por qué la presentación clínica de la sepsis es problemática?",
+      "r": "Porque es <b>inespecífica</b>: otras entidades como la <b>pancreatitis</b> o el <b>síndrome de dificultad respiratoria aguda</b> pueden presentarse de forma similar."
+    },
+    {
+      "p": "¿Cuál es la presentación típica de un paciente con sepsis?",
+      "r": "<b>Hipotensión, taquicardia, fiebre y leucocitosis</b>. Al empeorar aparecen signos de choque —piel fría y cianosis— y de disfunción orgánica —oliguria, lesión renal aguda, estado mental alterado—."
+    },
+    {
+      "p": "¿Cómo cambia la piel a lo largo de la evolución de la sepsis?",
+      "r": "En las <b>primeras fases</b> puede estar <b>caliente y enrojecida</b>; al progresar a choque <b>se enfría</b> por la <b>redirección del flujo sanguíneo a los órganos centrales</b>."
+    },
+    {
+      "p": "¿Qué signo cutáneo es característico de hipoperfusión en etapa terminal?",
+      "r": "El <b>íleo o la ausencia de ruidos intestinales</b> es el signo de hipoperfusión <b>en etapa terminal</b>. El moteado, la cianosis y el llenado capilar disminuido indican choque establecido."
+    },
+    {
+      "p": "¿Qué es el mottling score?",
+      "r": "Una <b>escala clínica simple</b> que evalúa la <b>perfusión cutánea periférica</b> observando las <b>manchas moteadas alrededor de la rodilla</b> en pacientes con sepsis y choque séptico."
+    },
+    {
+      "p": "¿Cuáles son los signos de perfusión adecuada en la sepsis?",
+      "r": "<b>TAM de 60–65 mmHg</b>, <b>uresis mayor de 0.5 ml/kg/min</b>, <b>PaO₂ mayor de 60 mmHg</b>, <b>Glasgow de 15</b> y <b>llenado capilar menor de 3 segundos</b>."
+    },
+    {
+      "p": "¿Qué cifra de glucosa se considera alterada en sepsis y en qué contexto?",
+      "r": "Una glucosa plasmática <b>mayor de 140 mg/dl</b> (7.7 mmol/l) <b>en ausencia de diabetes</b>."
+    },
+    {
+      "p": "¿Qué relación PaO₂/FiO₂ indica hipoxemia arterial en la sepsis?",
+      "r": "Menor de <b>300</b>."
+    },
+    {
+      "p": "¿Cómo se define la oliguria aguda en la sepsis?",
+      "r": "Diuresis <b>menor de 0.5 ml/kg/hora durante al menos 2 horas</b>, a pesar de la reposición adecuada de líquidos."
+    },
+    {
+      "p": "¿Qué alteraciones de la coagulación se buscan en la sepsis?",
+      "r": "Un <b>INR mayor de 1.5</b> o un <b>aPTT mayor de 60 segundos</b>, además de <b>trombocitopenia con plaquetas menores de 100 000/µL</b>."
+    },
+    {
+      "p": "¿Qué cifras de creatinina y bilirrubina se consideran alteradas en la sepsis?",
+      "r": "Un <b>aumento de creatinina mayor de 0.5 mg/dl</b> (44.2 µmol/l) y una <b>bilirrubina total mayor de 4 mg/dl</b> (70 µmol/l)."
+    },
+    {
+      "p": "¿Qué cifras de lactato importan en la sepsis?",
+      "r": "Un lactato <b>mayor de 2 mmol/L</b> es hiperlactatemia. Un lactato <b>igual o mayor de 4 mmol/L</b> es <b>consistente, pero no diagnóstico</b>, de choque séptico."
+    },
+    {
+      "p": "¿Qué otras alteraciones endocrinas pueden encontrarse en la sepsis?",
+      "r": "La <b>insuficiencia suprarrenal</b> —con hiponatremia e hiperpotasemia— y el <b>síndrome del eutiroideo enfermo</b>."
+    },
+    {
+      "p": "¿Qué es la proteína C reactiva y dónde se sintetiza?",
+      "r": "Un <b>pentámero</b> con actividades <b>antiinflamatorias</b>, de <b>síntesis hepática</b>."
+    },
+    {
+      "p": "¿Cuál es la utilidad y la limitación principal de la PCR en la sepsis?",
+      "r": "<b>Establece la presencia de inflamación</b>, pero <b>no es específica ni se correlaciona con la gravedad</b>. En sepsis documentada sirve para <b>valorar la respuesta al tratamiento</b>."
+    },
+    {
+      "p": "¿Cuál es la cinética de la proteína C reactiva?",
+      "r": "La síntesis se inicia a las <b>4–6 horas</b>, <b>duplica su valor cada 8 horas</b> y alcanza el máximo a las <b>46–50 horas</b>. Al retirarse el estímulo desciende con una <b>vida media de unas 19 horas</b>."
+    },
+    {
+      "p": "¿Cuál es la sensibilidad y la especificidad de la PCR para detectar infección?",
+      "r": "La <b>especificidad</b> alcanza en el mejor de los casos el <b>50%</b>; la <b>sensibilidad</b> llega hasta el <b>91%</b> en algunas series."
+    },
+    {
+      "p": "¿Qué es la procalcitonina y dónde se produce?",
+      "r": "Una <b>proteína glucosilada</b> producida principalmente en los <b>macrófagos</b> y a nivel <b>hepático</b>."
+    },
+    {
+      "p": "¿Cuál es la cinética de la procalcitonina?",
+      "r": "La síntesis se inicia a las <b>4 horas</b>, con <b>pico a las 6 horas</b> y una <b>vida media de 25–30 horas</b>, que <b>se incrementa en los casos de falla renal</b>."
+    },
+    {
+      "p": "¿Cómo se interpretan los valores de procalcitonina?",
+      "r": "<b>&lt;0.5 ng/ml:</b> infección bacteriana poco probable, puede haber infección local. <b>0.5–2:</b> posible infección sistémica. <b>&gt;2:</b> muy probable infección sistémica o sepsis. <b>&gt;10:</b> reacción inflamatoria sistémica importante, casi siempre por <b>sepsis bacteriana grave o choque séptico</b>."
+    },
+    {
+      "p": "¿Qué condiciones elevan la procalcitonina sin que haya sepsis?",
+      "r": "La <b>enfermedad renal terminal o en diálisis</b>, la <b>insuficiencia cardiaca congestiva</b>, la <b>EPOC</b> y la <b>cirrosis hepática</b>."
+    },
+    {
+      "p": "¿Qué volumen de cristaloide sugiere la guía en las primeras 3 horas de la sepsis?",
+      "r": "<b>Al menos 30 ml/kg de cristaloide intravenoso</b>, con <b>baja certeza de evidencia</b>."
+    },
+    {
+      "p": "¿Cómo debe interpretarse la recomendación de los 30 ml/kg?",
+      "r": "<b>No significa pasar los 30 ml/kg de forma ciega y sin reevaluación</b>: la recomendación tiene <b>baja certeza</b> y debe <b>ajustarse a las características del paciente</b>."
+    },
+    {
+      "p": "¿Qué cristaloide se prefiere en la reanimación de la sepsis?",
+      "r": "Los <b>cristaloides balanceados</b>, por encima de la <b>solución salina al 0.9%</b>."
+    },
+    {
+      "p": "¿Por qué es problemático ajustar precozmente la dosis renal de antibióticos en la sepsis?",
+      "r": "Porque los <b>ajustes de dosis se basan en pacientes con ERC estable, no en una LRA dinámica</b>. Reducir la dosis de forma precoz puede causar <b>infradosificación durante el periodo crítico</b> del tratamiento."
+    },
+    {
+      "p": "¿Qué proporción de pacientes presenta LRA al ingreso en el estudio sobre dosificación renal?",
+      "r": "El <b>17.5%</b> de <b>18 650 pacientes</b>."
+    },
+    {
+      "p": "¿En qué antibióticos puede diferirse el ajuste renal y por cuánto tiempo?",
+      "r": "En los de <b>amplio margen terapéutico</b>, como muchos <b>betalactámicos</b>, puede diferirse <b>hasta 48 horas</b>."
+    },
+    {
+      "p": "¿Qué antibióticos requieren ajuste renal y monitorización tempranos?",
+      "r": "La <b>vancomicina</b>, los <b>aminoglucósidos</b> y las <b>polimixinas</b>."
+    },
+    {
+      "p": "¿Cuál es la dosis de esteroides en el choque séptico?",
+      "r": "<b>50 mg IV cada 6 horas</b>, o una <b>infusión continua de 200 mg al día</b>."
+    },
+    {
+      "p": "¿En qué pacientes están indicados los esteroides en el choque séptico?",
+      "r": "En los que requieren <b>dosis de vasopresor mayores de 0.25 µg/kg/min</b>."
+    },
+    {
+      "p": "¿Cuál es la incidencia de TVP y de embolia pulmonar adquiridas en la UCI?",
+      "r": "La <b>TVP hasta un 10%</b> y la <b>embolia pulmonar un 2–4%</b>."
+    },
+    {
+      "p": "¿Cuáles son las contraindicaciones de la tromboprofilaxis farmacológica en sepsis?",
+      "r": "El <b>sangrado activo mayor</b> y la <b>coagulopatía severa no corregida</b>; en esta última puede considerarse la <b>tromboprofilaxis mecánica</b>."
+    },
+    {
+      "p": "¿Cuál es la dosis de enoxaparina para tromboprofilaxis según el peso?",
+      "r": "<b>Bajo peso:</b> 30 mg SC cada 24 h. <b>Peso normal, sobrepeso y obesidad grado 1–2:</b> <b>40 mg SC cada 24 h</b> o 1 mg/kg cada 12 h. <b>IMC &gt;40:</b> cada 12 horas, o 0.7–0.8 mg/kg cada 12 h. <b>IMC &gt;50:</b> <b>60 mg SC cada 12 h</b>. Máximo <b>150 mg por dosis</b>."
+    },
+    {
+      "p": "¿Cuál es la dosis de dalteparina y de tinzaparina para tromboprofilaxis?",
+      "r": "<b>Dalteparina:</b> 100 UI/kg cada 24 horas. <b>Tinzaparina:</b> 4500 UI SC cada 24 horas (75 UI/kg/día). <b>Ninguna requiere ajuste renal.</b>"
+    },
+    {
+      "p": "¿Cuál es la dosis de heparina no fraccionada para tromboprofilaxis y cuánto dura su efecto?",
+      "r": "<b>5000 UI subcutáneas cada 8–12 horas</b>. Su efecto <b>desaparece en 1 a 4 horas</b>."
+    },
+    {
+      "p": "¿Cuál es la conclusión sobre el manejo integral de la sepsis?",
+      "r": "<b>Control temprano de la infección con reanimación hemodinámica individualizada</b>: antibióticos empíricos de amplio espectro <b>lo antes posible</b>, <b>cultivos sin retrasar su administración</b>, <b>control del foco</b> y <b>desescalada</b> según microbiología; <b>norepinefrina como vasopresor inicial</b>, <b>líquidos solo si hay respuesta a volumen</b>, y <b>reevaluación de la perfusión</b> con llenado capilar, lactato y ecocardiografía, evitando <b>tanto la hipoperfusión como la sobrecarga</b>."
+    },
+    {
+      "p": "Ante sospecha de foco en el tracto respiratorio inferior, ¿qué evaluación microbiológica inicial se pide?",
+      "r": "<b>Esputo de buena calidad</b>, <b>prueba rápida de influenza</b>, <b>antígeno urinario</b> para neumococo y legionela —no recomendado en niños—, y <b>cultivo cuantitativo de cepillo protegido o lavado broncoalveolar</b>."
+    },
+    {
+      "p": "Ante sospecha de foco urinario en sepsis, ¿qué se solicita?",
+      "r": "<b>Cultivo de orina</b> y <b>microscopía</b> que muestre <b>piuria</b>. Los síntomas orientadores son urgencia, disuria y dolor lumbar o de espalda."
+    },
+    {
+      "p": "Con sospecha de infección por catéter vascular, ¿qué cultivos se toman?",
+      "r": "<b>Cultivo de sangre del catéter y de un sitio periférico</b>, y <b>cultivo de la punta del catéter</b> si se retiró. El signo es el <b>enrojecimiento o drenaje en el sitio de inserción</b>."
+    },
+    {
+      "p": "Ante una herida o quemadura como foco séptico, ¿qué muestra es fiable?",
+      "r": "La <b>tinción de Gram y el cultivo del drenaje de pus</b>. El <b>cultivo de herida NO es confiable</b>."
+    },
+    {
+      "p": "¿Qué evaluación inicial se hace ante sospecha de foco en el tracto respiratorio superior?",
+      "r": "Un <b>hisopado faríngeo para cultivo aeróbico</b>. Los signos son inflamación faríngea con exudado, con o sin hinchazón y linfadenopatía."
+    }
+  ],
+  "cloze": [
+    "Sepsis-3 define la sepsis como infección sospechada o confirmada más un aumento de {{c1::2 o más}} puntos en la escala {{c2::SOFA}}.",
+    "En 2020 hubo cerca de {{c1::48.9 millones}} de casos de sepsis y {{c2::11 millones}} de muertes, el {{c3::20%}} de todas las defunciones mundiales.",
+    "La procalcitonina menor de {{c1::0.5 ng/ml}} hace poco probable la infección bacteriana; mayor de {{c2::2}} hace muy probable la sepsis; y mayor de {{c3::10}} indica sepsis bacteriana grave o choque séptico.",
+    "Los esteroides en choque séptico se dan a {{c1::50 mg IV cada 6 horas}} o en infusión continua de {{c2::200 mg/día}}, indicados con vasopresor por encima de {{c3::0.25 µg/kg/min}}."
+  ]
+}

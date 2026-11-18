@@ -1,0 +1,312 @@
+{
+  "seccion": "Gastro",
+  "tema": "Isquemia Mesentérica",
+  "autor": "R1 MI Jair Naranjo Vera · Hospital Regional Salamanca, Pemex",
+  "fuentes": "La presentación no incluye bibliografía",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Gastro/Isquemia Mesentérica.pdf",
+  "resumen_html": [
+    "<h2>Definición y anatomía</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>Isquemia mesentérica:</b> flujo sanguíneo insuficiente para las demandas metabólicas del intestino. Se define por el <b>territorio vascular afectado</b> y la <b>viabilidad tisular</b>, no solo por el vaso ocluido. <b>Factor crítico: circulación colateral.</b></p>",
+    "<p><b>Tres mecanismos:</b> (1) <b>aporte arterial inadecuado</b> (embolia, bajo flujo, compresión; el más frecuente); (2) <b>presión transmural elevada</b> (obstrucción intestinal que colapsa los capilares); (3) <b>drenaje venoso inadecuado</b> (trombosis venosa u obstrucción tumoral → congestión y cese del flujo arterial).</p>",
+    "</div><div>",
+    "<table><tr><th>Arteria</th><th>Territorio</th></tr>",
+    "<tr><td><b>Tronco celiaco</b></td><td>Estómago, hígado, bazo, duodeno proximal</td></tr>",
+    "<tr><td><b>AMS</b></td><td>Intestino delgado y colon derecho hasta el <b>ángulo esplénico</b></td></tr>",
+    "<tr><td><b>AMI</b></td><td>Colon descendente y tercio superior del recto</td></tr>",
+    "</table>",
+    "<p><b>Colaterales:</b> <b>arco de Riolan</b> y <b>arteria marginal de Drummond</b>; su extensión determina la tolerancia a la oclusión de un solo vaso. <b>Zonas limítrofes (watershed):</b> <b>punto de Griffith</b> (ángulo esplénico) y <b>punto de Sudeck</b> (unión rectosigmoidea); son las primeras en colapsar con bajo flujo.</p>",
+    "</div></div>",
+    "<h2>Epidemiología: las tres entidades</h2>",
+    "<table><tr><th></th><th>Isquemia mesentérica aguda (IMA)</th><th>Isquemia mesentérica crónica (IMC)</th><th>Isquemia colónica (IC)</th></tr>",
+    "<tr><td><b>Incidencia</b></td><td><b>6.2</b>/100,000/año; <b>18.4</b> en &gt;70 años</td><td><b>1.4</b>/100,000/año</td><td><b>22.9</b>/100,000/año (se <b>cuadruplicó</b> desde 6.1)</td></tr>",
+    "<tr><td><b>Mortalidad</b></td><td><b>59.6%</b> global (de 68.7% a 55.0% actual)</td><td>Variable</td><td><b>4–12%</b></td></tr>",
+    "<tr><td><b>Perfil</b></td><td>Mayores de 70 años</td><td><b>Mujeres</b> &gt;65 años (65–72% de los oclusivos)</td><td>Mujeres octogenarias (57–76%); 97 veces más que en &lt;40 años</td></tr>",
+    "<tr><td><b>Mecanismo</b></td><td>Oclusión arterial en <b>68.6%</b></td><td><b>Aterosclerosis &gt;90%</b></td><td>Hipoperfusión microvascular</td></tr>",
+    "</table>",
+    "<ul><li>La incidencia sube exponencialmente con la edad: a los <b>80 años</b> el riesgo es <b>10 veces</b> el de los 60; en <b>&gt;75 años</b> la IMA <b>supera a la apendicitis</b> como causa de abdomen agudo. La IMA supone <b>5 de cada 10,000</b> ingresos.</li>",
+    "<li><b>Cambio etiológico de la IMA:</b> embolia de 40–50% a <b>~25%</b> (anticoagulación en FA); trombosis arterial de 20–35% a <b>~40%</b> (primera causa); NOMI de 5–15% a <b>~25%</b> (más supervivientes en UCI).</li>",
+    "<li><b>IC:</b> primera causa de <b>hemorragia digestiva baja aguda</b> (9–24% de los ingresos).</li></ul>",
+    "<h2>Isquemia crónica y factores de riesgo</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>IMC:</b> reducción gradual del aporte; diagnóstico tardío por la red colateral. Tríada: <b>angina intestinal</b> (dolor posprandial), <b>pérdida de peso</b> y <b>aversión a la comida</b>. <b>Regla de los dos vasos:</b> los síntomas requieren afectación de <b>≥2 vasos mayores</b>; el <b>18%</b> de los &gt;65 años tiene estenosis asintomática. Una placa estable + <b>trombosis sobreañadida</b> → IMA: la IMC <b>nunca es benigna</b>.</p>",
+    "<p><b>Tóxicos (cocaína, anfetaminas):</b> vasoespasmo y estado protrombótico; edad media <b>32.6 años</b> (vs &gt;60 en la oclusiva); afecta el <b>íleon terminal</b> en las primeras <b>48 h</b> tras el consumo.</p>",
+    "</div><div>",
+    "<ul><li><b>Cardioembólica:</b> <b>FA (hasta 50% de las IMA)</b> y trombos murales posinfarto; el émbolo se aloja en la <b>AMS distal</b> y a veces respeta el yeyuno proximal.</li>",
+    "<li><b>Aterosclerosis:</b> HTA (75%), aterosclerosis generalizada (65%), tabaquismo; suele haber síntomas crónicos previos.</li>",
+    "<li><b>NOMI:</b> bajo flujo o vasoespasmo esplácnico: insuficiencia cardiaca, choque, hipovolemia, cirugía cardiaca, <b>hemodiálisis</b>. Los vasopresores suben el flujo sistémico pero <b>no el esplácnico</b>.</li>",
+    "<li><b>Trombosis venosa:</b> hasta <b>90%</b> ligada a <b>hipercoagulabilidad</b>; también trauma e inflamación local (pancreatitis, diverticulitis, vía biliar).</li></ul>",
+    "</div></div>",
+    "<h2>Clínica y sospecha</h2>",
+    "<div class=\"cols\"><div>",
+    "<p>Rasgo cardinal: <b>dolor desproporcionado a la exploración</b>, aunque a menudo falta. <b>Tríada de Bergen</b> (dolor intenso, vaciamiento intestinal, fuente embólica): solo en el <b>40–80%</b> de las embólicas. En <b>AMESI</b>, <b>1.7%</b> no tuvo ningún síntoma sugestivo: <b>un cuadro atípico nunca la excluye</b>.</p>",
+    "<table><tr><th>Perfil</th><th>Sospecha principal</th></tr>",
+    "<tr><td>Adulto + FA</td><td>Embolia</td></tr>",
+    "<tr><td>Anciano + dolor previo</td><td>Trombosis (IMA/IMC)</td></tr>",
+    "<tr><td>Cualquier edad + choque en UCI</td><td>NOMI</td></tr>",
+    "<tr><td>Joven sano</td><td>Cocaína / drogas</td></tr>",
+    "</table>",
+    "</div><div>",
+    "<table><tr><th>Tipo</th><th>Presentación</th></tr>",
+    "<tr><td><b>Embólica</b></td><td>Inicio <b>súbito</b>, tríada clásica, FA; oclusión sin colaterales</td></tr>",
+    "<tr><td><b>Trombótica</b></td><td><b>Insidiosa</b>; aterosclerosis o angina intestinal previa</td></tr>",
+    "<tr><td><b>Venosa</b></td><td>Dolor <b>gradual</b>; estados protrombóticos, cáncer, hepatopatía</td></tr>",
+    "<tr><td><b>NOMI</b></td><td>Paciente crítico; enmascarada por el choque</td></tr>",
+    "</table>",
+    "<p><b>Biomarcadores:</b> ninguno sustituye a la imagen. <b>Lactato y dímero D</b>: disponibles pero poco específicos; un lactato normal <b>no la descarta</b>. Citrulina y α-GST: sensibilidad insuficiente. <b>I-FABP</b>: AUROC <b>0.44</b>. <b>No esperar al lactato para pedir la TC.</b></p>",
+    "</div></div>",
+    "<h2>Diagnóstico por imagen y escalas</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>Angio-TC bifásica:</b> estudio inicial; S <b>&gt;92%</b>, E <b>&gt;98.8%</b>. (1) Fase <b>arterial y venosa portal</b> (split-bolus aceptable); (2) <b>sin contraste oral</b>; (3) hacerla aunque haya LRA o <b>TFG &lt;30</b>.</p>",
+    "<p><b>Lectura de adentro hacia afuera:</b> <b>pared</b> (realce ausente, pared en papel = irreversible, diana = venosa) → <b>intestino</b> (dilatación precoz; neumatosis y gas portomesentérico = necrosis transmural) → <b>vasos</b> (defecto de llenado, corte vascular; MPR/3D).</p>",
+    "<table><tr><th>Etiología</th><th>Firma radiológica</th></tr>",
+    "<tr><td>Arterial oclusiva</td><td>Defecto en AMS; pared en papel; dilatación <b>&gt;25 mm</b></td></tr>",
+    "<tr><td>Venosa</td><td>Trombo visible; engrosamiento; <b>signo de la diana</b></td></tr>",
+    "<tr><td>NOMI</td><td>Difusa; neumatosis <b>59%</b>, gas portal <b>48–55%</b></td></tr>",
+    "<tr><td>Colitis isquémica</td><td>Engrosamiento colónico con estriación grasa</td></tr>",
+    "</table>",
+    "</div><div>",
+    "<table><tr><th>Fase</th><th>Escala</th><th>Para qué</th></tr>",
+    "<tr><td>Preimagen</td><td><b>Wang</b> (leucocitos, RDW, VPM, dímero D)</td><td>Decidir la TC; S <b>97.8%</b></td></tr>",
+    "<tr><td rowspan=\"3\">Tomográfica</td><td><b>AMESI CT-score</b></td><td>Necrosis; variables <b>parietales</b>; precisión 70% (corte ≥2) → <b>guía el bisturí</b></td></tr>",
+    "<tr><td><b>Sinz</b> (edad, ASA, neumatosis, distensión)</td><td>Necesidad de exploración; <b>ningún laboratorio</b> (ni lactato) predijo necrosis</td></tr>",
+    "<tr><td><b>NOMI-ITN</b></td><td>NOMI en UCI</td></tr>",
+    "<tr><td>Posquirúrgica</td><td><b>AAII48</b></td><td>Mortalidad a 48 h; variables <b>vasculares</b>; VPN <b>92%</b> → <b>guía la reanimación</b></td></tr>",
+    "</table>",
+    "</div></div>",
+    "<h2>Tratamiento</h2>",
+    "<div class=\"cols\"><div>",
+    "<p><b>Objetivos:</b> restaurar el flujo y <b>resecar el intestino no viable</b>. <b>Las 3 R:</b> reanimación, rápido diagnóstico, revascularización.</p>",
+    "<table><tr><th>Medida inmediata</th><th>Detalle</th></tr>",
+    "<tr><td><b>Anticoagulación</b></td><td><b>Heparina IV a dosis plena</b> de inmediato; supervivencia a 30 días <b>53.5% vs 41.7% (NNT 8)</b>; no debe retrasar la revascularización.</td></tr>",
+    "<tr><td><b>Antibióticos</b></td><td>Empíricos precoces (<b>cefalosporina de 3.ª + metronidazol</b>) sin esperar cultivos; IMA: <b>mínimo 4 días</b> (colitis isquémica: 72 h).</td></tr>",
+    "<tr><td><b>Líquidos</b></td><td>Cristaloides; evitar vasopresores salvo necesidad crítica.</td></tr>",
+    "<tr><td><b>Ayuno</b></td><td>Absoluto: la ingesta agrava la isquemia.</td></tr>",
+    "</table>",
+    "<p><b>Cirugía urgente si:</b> peritonitis franca, perforación (neumoperitoneo) o deterioro progresivo (acidosis refractaria, lactato en ascenso, <b>SOFA &gt;8</b>) → control de daños. Abdomen abierto solo en casos seleccionados (ventilación prolongada OR 4.04).</p>",
+    "</div><div>",
+    "<table><tr><th>Etiología</th><th>Terapia principal</th><th>Cirugía</th><th>Fármacos</th></tr>",
+    "<tr><td><b>Arterial</b></td><td>Revascularización (endo/abierta)</td><td>Resección + <b>second-look programado</b></td><td>Heparina como puente</td></tr>",
+    "<tr><td><b>Venosa</b></td><td><b>Anticoagulación</b> definitiva</td><td>Solo peritonitis o sangrado</td><td>Heparina → ACOD/AVK</td></tr>",
+    "<tr><td><b>NOMI</b></td><td>Vasodilatación intraarterial</td><td>Peritonitis o deterioro; relaparotomía <b>a demanda</b></td><td>Papaverina + retirar vasopresores</td></tr>",
+    "</table>",
+    "<ul><li><b>Endovascular</b> (sin peritonitis y con experiencia): menos resección (OR 0.42) e intestino corto (OR 0.39). <b>Abierta</b> (peritonitis u oclusión extensa): embolectomía o bypass con vena autóloga. <b>ROMS:</b> stent retrógrado abierto híbrido. Second-look arterial: hasta <b>57%</b> requiere más resección.</li>",
+    "<li><b>TVM:</b> heparina (HNF/HBPM) → oral tras <b>24–48 h</b> estable; <b>ACOD &gt; AVK</b> en no cirróticos (eficacia OR 4.33; sangrado mayor OR 0.09); empezar parenteral por malabsorción.</li>",
+    "<li><b>NOMI:</b> <b>papaverina o PGE1 intraarterial</b> en AMS los primeros 2 días (mortalidad −11.6%); norepinefrina si hay choque; vasopresina solo adyuvante.</li></ul>",
+    "</div></div>",
+    "<h2>Pronóstico y seguimiento</h2>",
+    "<p>Revascularizar <b>&lt;48 h</b>: mortalidad perioperatoria <b>14%</b> e intestino corto <b>12%</b>; <b>&gt;48 h</b>: <b>39%</b> y <b>39%</b>. El <b>aclaramiento de lactato</b> es el predictor independiente más robusto de evolución. Supervivencia a 5 años <b>~75%</b>; pronóstico <b>venosa &gt; NOMI &gt; arterial</b>. Tras revascularizar: antitrombótico <b>de por vida</b> y angio-TC o dúplex al <b>mes 1, 6, 12 y luego anual</b>; la isquemia recurrente causa el <b>6–8%</b> de las muertes tardías.</p>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Cómo se define la isquemia mesentérica?",
+      "r": "Flujo insuficiente para las demandas del intestino; se define por <b>territorio afectado</b> y <b>viabilidad tisular</b>."
+    },
+    {
+      "p": "¿Cuál es el factor crítico que determina la tolerancia a la oclusión mesentérica?",
+      "r": "La <b>circulación colateral</b>."
+    },
+    {
+      "p": "¿Cuáles son los tres mecanismos de isquemia intestinal?",
+      "r": "Aporte <b>arterial</b> inadecuado, <b>presión transmural</b> elevada y <b>drenaje venoso</b> inadecuado."
+    },
+    {
+      "p": "¿Qué territorio irriga la arteria mesentérica superior?",
+      "r": "Intestino delgado y colon derecho hasta el <b>ángulo esplénico</b>."
+    },
+    {
+      "p": "¿Qué territorio irriga la arteria mesentérica inferior?",
+      "r": "Colon descendente y <b>tercio superior del recto</b>."
+    },
+    {
+      "p": "¿Qué colaterales conectan los territorios mesentéricos?",
+      "r": "El <b>arco de Riolan</b> y la <b>arteria marginal de Drummond</b>."
+    },
+    {
+      "p": "¿Cuáles son las zonas limítrofes (watershed) del colon?",
+      "r": "<b>Punto de Griffith</b> (ángulo esplénico) y <b>punto de Sudeck</b> (unión rectosigmoidea)."
+    },
+    {
+      "p": "¿Cuál es la mortalidad de la isquemia mesentérica aguda?",
+      "r": "<b>59.6%</b> global; ha bajado de 68.7% a <b>55.0%</b>."
+    },
+    {
+      "p": "¿A partir de qué edad la IMA supera a la apendicitis como causa de abdomen agudo?",
+      "r": "En mayores de <b>75 años</b>."
+    },
+    {
+      "p": "¿Cuánto aumenta el riesgo de isquemia mesentérica a los 80 años frente a los 60?",
+      "r": "<b>10 veces</b>."
+    },
+    {
+      "p": "¿Por qué ha disminuido la IMA embólica?",
+      "r": "Por el uso extendido de <b>anticoagulantes en fibrilación auricular</b>."
+    },
+    {
+      "p": "¿Cuál es la causa de más del 90% de la isquemia mesentérica crónica?",
+      "r": "La <b>aterosclerosis progresiva</b>."
+    },
+    {
+      "p": "¿Qué tríada clínica caracteriza la isquemia mesentérica crónica?",
+      "r": "<b>Angina intestinal</b> (dolor posprandial), <b>pérdida de peso</b> y <b>aversión a la comida</b>."
+    },
+    {
+      "p": "¿Qué es la regla de los dos vasos?",
+      "r": "La IMC sintomática requiere afectar <b>al menos 2 vasos mayores</b>, por la colateralización."
+    },
+    {
+      "p": "¿Qué proporción de mayores de 65 años tiene estenosis mesentérica asintomática?",
+      "r": "El <b>18%</b>."
+    },
+    {
+      "p": "¿Por qué la isquemia mesentérica crónica nunca es benigna?",
+      "r": "Una <b>trombosis sobreañadida</b> sobre la placa la convierte en <b>IMA</b>."
+    },
+    {
+      "p": "¿Cuál es la mortalidad de la isquemia colónica?",
+      "r": "<b>4–12%</b>, mucho menor que la de la IMA."
+    },
+    {
+      "p": "¿De qué es la primera causa la isquemia colónica?",
+      "r": "De <b>hemorragia digestiva baja aguda</b> (9–24% de los ingresos)."
+    },
+    {
+      "p": "¿Qué proporción de IMA se asocia a fibrilación auricular?",
+      "r": "<b>Hasta el 50%</b>."
+    },
+    {
+      "p": "¿Dónde se aloja típicamente el émbolo en la IMA?",
+      "r": "En la <b>AMS distal</b>, a veces respetando el <b>yeyuno proximal</b>."
+    },
+    {
+      "p": "¿Qué situaciones desencadenan la NOMI?",
+      "r": "Insuficiencia cardiaca, <b>choque</b>, hipovolemia, cirugía cardiaca y <b>hemodiálisis</b>."
+    },
+    {
+      "p": "¿Cuál es la paradoja de los vasopresores en la NOMI?",
+      "r": "Aumentan el flujo <b>sistémico</b> pero <b>no el microcirculatorio esplácnico</b>."
+    },
+    {
+      "p": "¿Con qué se relaciona hasta el 90% de la trombosis venosa mesentérica?",
+      "r": "Con estados de <b>hipercoagulabilidad</b>."
+    },
+    {
+      "p": "¿Qué edad media tiene la isquemia mesentérica por cocaína y qué segmento afecta?",
+      "r": "<b>32.6 años</b>; afecta el <b>íleon terminal</b> en las primeras 48 h."
+    },
+    {
+      "p": "¿Cuál es el rasgo clínico cardinal de la isquemia mesentérica aguda?",
+      "r": "<b>Dolor desproporcionado a la exploración</b>, aunque puede faltar."
+    },
+    {
+      "p": "¿Qué componentes tiene la tríada de Bergen y en qué proporción aparece?",
+      "r": "<b>Dolor intenso, vaciamiento intestinal y fuente embólica</b>; solo en <b>40–80%</b> de las embólicas."
+    },
+    {
+      "p": "¿Cómo es el inicio del dolor en la trombosis venosa mesentérica?",
+      "r": "<b>Gradual</b>, en pacientes protrombóticos, con cáncer o hepatopatía."
+    },
+    {
+      "p": "¿Un lactato normal descarta isquemia mesentérica?",
+      "r": "<b>No</b>; no hay que esperar al lactato para pedir la TC."
+    },
+    {
+      "p": "¿Qué rendimiento mostró la I-FABP en isquemia aguda?",
+      "r": "Un AUROC de apenas <b>0.44</b>."
+    },
+    {
+      "p": "¿Cuál es el estudio inicial en sospecha de isquemia mesentérica y su rendimiento?",
+      "r": "<b>Angio-TC bifásica</b>: sensibilidad <b>&gt;92%</b>, especificidad <b>&gt;98.8%</b>."
+    },
+    {
+      "p": "¿Por qué está contraindicado el contraste oral en la angio-TC mesentérica?",
+      "r": "Porque <b>enmascara el realce de la pared</b> intestinal."
+    },
+    {
+      "p": "¿Se hace la angio-TC si hay lesión renal aguda o TFG <30?",
+      "r": "<b>Sí</b>: el riesgo de infarto intestinal supera al de nefropatía."
+    },
+    {
+      "p": "¿Qué hallazgo tomográfico de la pared indica daño irreversible?",
+      "r": "El <b>adelgazamiento en papel</b> sin realce."
+    },
+    {
+      "p": "¿Qué hallazgos tomográficos indican necrosis transmural?",
+      "r": "<b>Neumatosis intestinal</b> y <b>gas portomesentérico</b>."
+    },
+    {
+      "p": "¿Qué signo tomográfico sugiere isquemia de origen venoso?",
+      "r": "El <b>signo de la diana</b> por edema submucoso."
+    },
+    {
+      "p": "¿Qué variables usa la escala de Wang y qué sensibilidad tiene?",
+      "r": "<b>Leucocitos, RDW, VPM y dímero D</b>; sensibilidad <b>97.8%</b> para decidir la TC."
+    },
+    {
+      "p": "¿Qué predice el AMESI CT-score y con qué variables?",
+      "r": "La <b>necrosis</b>, con variables <b>parietales</b>; guía la exploración quirúrgica."
+    },
+    {
+      "p": "¿Qué predice el AAII48 y con qué rendimiento?",
+      "r": "La <b>mortalidad a 48 h</b> tras cirugía; <b>VPN 92%</b>; guía la reanimación."
+    },
+    {
+      "p": "¿Qué variables incluye el nomograma de Sinz?",
+      "r": "<b>Edad</b>, <b>ASA</b>, <b>neumatosis</b> y <b>distensión de asas</b>."
+    },
+    {
+      "p": "¿Qué beneficio tiene la heparina IV inmediata en la IMA?",
+      "r": "Supervivencia a 30 días <b>53.5% vs 41.7%</b> (<b>NNT 8</b>)."
+    },
+    {
+      "p": "¿Qué antibiótico empírico se usa en la IMA y por cuánto tiempo?",
+      "r": "<b>Cefalosporina de 3.ª + metronidazol</b>, mínimo <b>4 días</b>."
+    },
+    {
+      "p": "¿Qué signos obligan a cirugía urgente en la isquemia mesentérica?",
+      "r": "<b>Peritonitis</b>, <b>perforación</b> o deterioro con acidosis refractaria, lactato en ascenso o <b>SOFA &gt;8</b>."
+    },
+    {
+      "p": "¿Qué ventaja tiene el abordaje endovascular en la IMA arterial?",
+      "r": "Menos <b>resección</b> (OR 0.42) y menos <b>intestino corto</b> (OR 0.39)."
+    },
+    {
+      "p": "¿Cuándo se prefiere la cirugía abierta en la IMA arterial?",
+      "r": "Con <b>peritonitis franca</b> u <b>oclusión extensa</b>: embolectomía o bypass venoso autólogo."
+    },
+    {
+      "p": "¿Cómo se maneja el second-look según la etiología?",
+      "r": "Arterial: <b>programado</b> (hasta 57% requiere más resección). NOMI: <b>a demanda</b>."
+    },
+    {
+      "p": "¿Qué anticoagulante oral se prefiere en la trombosis venosa mesentérica?",
+      "r": "<b>ACOD sobre AVK</b> en no cirróticos (sangrado mayor OR 0.09)."
+    },
+    {
+      "p": "¿Por qué se inicia con heparina parenteral en la trombosis venosa mesentérica?",
+      "r": "Porque el <b>edema intestinal causa malabsorción</b>."
+    },
+    {
+      "p": "¿Qué tratamiento específico recibe la NOMI y con qué beneficio?",
+      "r": "<b>Papaverina o PGE1 intraarterial</b> en AMS; reduce la mortalidad <b>11.6%</b>."
+    },
+    {
+      "p": "¿Qué vasopresor se elige en la NOMI con choque?",
+      "r": "<b>Norepinefrina</b>, evitando dosis altas; vasopresina solo adyuvante."
+    },
+    {
+      "p": "¿Qué marcador predice mejor la evolución en la isquemia mesentérica?",
+      "r": "El <b>aclaramiento de lactato</b>."
+    },
+    {
+      "p": "¿Qué seguimiento requiere el paciente revascularizado?",
+      "r": "Antitrombótico <b>de por vida</b> e imagen al <b>mes 1, 6, 12</b> y anual."
+    }
+  ],
+  "cloze": [
+    "Etiología actual de la IMA: trombosis arterial {{c1::~40%}}, embolia {{c2::~25%}} y NOMI {{c3::~25%}}.",
+    "Revascularización antes de 48 h: mortalidad {{c1::14%}} e intestino corto 12%; después de 48 h: mortalidad {{c2::39%}} e intestino corto {{c3::39%}}.",
+    "Pronóstico por etiología: {{c1::venosa}} &gt; {{c2::NOMI}} &gt; {{c3::arterial}}; supervivencia a 5 años ~75%.",
+    "Incidencia por 100,000/año: IMA {{c1::6.2}}, IMC {{c2::1.4}} e isquemia colónica {{c3::22.9}}."
+  ]
+}

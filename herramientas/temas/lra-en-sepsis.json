@@ -1,0 +1,278 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Lesión Renal Aguda en Sepsis",
+  "autor": "R1 MI José Guadalupe Mejía Martínez",
+  "fuentes": "Kounatidis et al., Diagnostics 2024 · Poston & Koyner, BMJ 2019 · Surviving Sepsis Campaign 2026 · Ostermann et al., Lancet 2025 · Crit Care 2020–2024 · JACC 2020",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/LESION RENAL AGUDA EN SEPSIS.pdf",
+  "resumen_html": [
+    "<h2>Epidemiología</h2>",
+    "<ul>",
+    "<li><b>62–70%</b> de los pacientes con sepsis desarrollan <b>SA-AKI</b> (lesión renal aguda asociada a sepsis). En <b>choque séptico</b> la cifra sube al <b>92.8%</b>.</li>",
+    "<li>Representa <b>1 de cada 6 admisiones a UCI (16–18%)</b>, con tendencia al aumento — <b>18% en 2021</b> en estudios multicéntricos. Con las definiciones RIFLE, AKIN y KDIGO la incidencia sube hasta el <b>52%</b>.</li>",
+    "<li><b>Distribución por estadios:</b> estadio 1 en <b>22.9–54%</b> · estadio 2 en <b>19.3–27.3%</b> · <b>estadio 3 en 42.7–58%</b>.</li>",
+    "<li><b>Pronóstico:</b> mortalidad hospitalaria <b>18–31%</b>, a 30 días <b>42–48%</b>, y a 1 año <b>5 veces mayor</b>. <b>MAKE</b> (eventos renales adversos mayores) del <b>37.7%</b> al alta. <b>Dependencia de diálisis en el 10%</b> de los supervivientes. Mayor riesgo de ERC, eventos cardiovasculares y muerte.</li>",
+    "<li><b>México:</b> metaanálisis de 83 artículos — prevalencia global de LRA <b>35%</b>, mortalidad en adultos con LRA <b>36%</b>, y <b>49%</b> en los que requieren terapia de reemplazo renal.</li>",
+    "</ul>",
+    "<h3>Factores de riesgo (odds ratio para desarrollar LRA)</h3>",
+    "<table><tr><th>Presentes antes de la enfermedad aguda</th><th>OR</th></tr>",
+    "<tr><td><b>Diabetes mellitus</b> (para LRA estadio III)</td><td><b>10.3</b></td></tr>",
+    "<tr><td><b>ERC</b> con TFGe &lt;30 ml/min/1.73 m²</td><td><b>18.3</b> (6.2 con TFGe 30–44; 2.9 con 45–59)</td></tr>",
+    "<tr><td><b>Hipoalbuminemia</b> (por cada g/dl de descenso)</td><td>2.34</td></tr>",
+    "<tr><td>Enfermedad hepática crónica</td><td>2.18</td></tr>",
+    "<tr><td>Insuficiencia cardiaca</td><td>2.18 a 24.0</td></tr>",
+    "<tr><td>Edad ≥65 años</td><td>1.5</td></tr>",
+    "</table>",
+    "<p>El <b>sexo</b> y la <b>raza</b> dan <b>datos inconsistentes</b>. Causados por la enfermedad aguda: <b>falla cardiovascular</b> (OR 1.84 para desarrollar LRA). Para <b>muerte con LRA</b> destacan la <b>ventilación mecánica (OR 5.1)</b>, la falla hepática (1.90) y la propia sepsis (1.87–2.1).</p>",
+    "<h2>Fisiopatología: PAMPs y DAMPs</h2>",
+    "<ul>",
+    "<li><b>Cortocircuito glomerular:</b> <b>constricción de la arteriola aferente</b> con <b>dilatación de la eferente</b> desvía el flujo por capilares de shunt. Cae la <b>presión intraglomerular</b> y con ella el <b>filtrado glomerular</b> — <b>sin isquemia franca</b>. Es la clave: la SA-AKI no es, sobre todo, un problema de hipoperfusión.</li>",
+    "<li><b>PAMPs y DAMPs filtrados</b> llegan al túbulo y activan los <b>receptores tipo Toll (TLR)</b> de la célula tubular renal.</li>",
+    "<li><b>Capilar peritubular:</b> se pasa de un <b>flujo continuo con convección preservada</b> a un <b>flujo lento con pérdida de convección</b>. Por el camino hay <b>shedding del glucocálix</b>, <b>activación, rodamiento, adhesión y transmigración leucocitaria</b>, salida de agua al <b>intersticio</b> y <b>edema intersticial</b>, que <b>aumenta la distancia de difusión del oxígeno</b>.</li>",
+    "<li>Participan además las <b>especies reactivas de oxígeno (ROS)</b>, las <b>mitocondrias lesionadas</b>, las plaquetas y las células presentadoras de antígeno.</li>",
+    "</ul>",
+    "<h2>Fenotipos</h2>",
+    "<h3>Por biomarcadores plasmáticos y urinarios</h3>",
+    "<table><tr><th></th><th>AKI-SP1 — reparativo / regenerativo</th><th>AKI-SP2 — inmune / inflamatorio</th></tr>",
+    "<tr><td><b>Proteínas urinarias elevadas</b></td><td>Depósito de colágeno (<b>GP6</b>) · derivadas de podocitos (<b>SPOCK2</b>) · proliferación de células mesenquimales (<b>IL11RA</b>) · antiinflamatorias (<b>IL10RB</b> y <b>TREM2</b>)</td><td>Inflamación y quimioatracción de neutrófilos y monocitos (<b>CXCL1</b> y <b>REG3A</b>) · estrés oxidativo (<b>SOD2</b>)</td></tr>",
+    "<tr><td><b>Vías activadas</b></td><td><b>Adhesión celular</b></td><td><b>Respuesta inmune, activación del complemento y señalización de quimiocinas</b></td></tr>",
+    "<tr><td><b>Clínica</b></td><td>Perfil reparativo</td><td>Asociado a <b>bacteriemia</b> · <b>mayor riesgo de progresar a TRR</b> · <b>peor pronóstico</b></td></tr>",
+    "</table>",
+    "<h3>Por tiempo de aparición</h3>",
+    "<ul>",
+    "<li><b>SA-AKI temprana (&lt;2 días desde el diagnóstico de sepsis):</b> el fenotipo clínico <b>más común</b>. La incidencia disminuye día a día desde el inicio de la sepsis; refleja probablemente el <b>impacto directo de la respuesta séptica inicial</b>.</li>",
+    "<li><b>SA-AKI tardía (2–7 días):</b> <b>menos común</b>. Puede reflejar <b>complicaciones secundarias</b>, <b>intervenciones terapéuticas</b> o <b>progresión de la enfermedad</b>.</li>",
+    "</ul>",
+    "<h2>Tratamiento</h2>",
+    "<h3>Fase de reanimación inicial</h3>",
+    "<ul>",
+    "<li><b>Cristaloides balanceados</b>, mínimo <b>30 ml/kg</b> intravenosos.</li>",
+    "<li>Los <b>coloides sintéticos (almidones) aumentan el riesgo de terapia de reemplazo renal y deben evitarse</b>.</li>",
+    "<li>La <b>albúmina no reduce</b> el riesgo de LRA severa en sepsis.</li>",
+    "</ul>",
+    "<h3>Reanimación según metas dinámicas</h3>",
+    "<table><tr><th>Estudio</th><th>n</th><th>Resultados</th></tr>",
+    "<tr><td><b>FRESH</b><br><i>CHEST 2020</i></td><td>124 con choque séptico</td><td><b>Necesidad de TRR: 5.1%</b> con reanimación personalizada frente a <b>17.5%</b> con cuidado habitual · <b>ventilación mecánica invasiva 17.7% menos</b> · <b>balance de líquidos a 72 h: −1.37 L</b></td></tr>",
+    "<tr><td><b>RESPONSE</b><br><i>Crit Care 2022</i></td><td>130</td><td><b>Duplicación del gasto urinario</b>: 15.9% con seguimiento no intervencionista frente a <b>32.8%</b> con bolo de líquidos (RR 0.49) · <b>balance acumulado</b> 678 ml frente a 1071 ml, diferencia <b>−387 ml</b></td></tr>",
+    "<tr><td><b>REVERSE-AKI</b><br><i>Intensive Care Med 2021</i></td><td>100</td><td><b>Balance a 72 h: −1080 ml</b> con manejo restrictivo frente a +61 ml con cuidado habitual (diferencia −1148 ml) · <b>duración de la LRA 2 frente a 3 días</b> · <b>necesidad de TRR 13% frente a 30%</b></td></tr>",
+    "</table>",
+    "<h3>POCUS</h3>",
+    "<p>Las guías <b>Surviving Sepsis Campaign 2026</b> sugieren usar <b>medidas dinámicas —incluido el POCUS— sobre las estáticas</b> para guiar la reanimación. Permite evaluar dinámicamente la respuesta a fluidos, identificar a quién le beneficia más volumen y detectar precozmente la sobrecarga.</p>",
+    "<table><tr><th>Hipovolemia</th><th>Hipervolemia / sobrecarga</th></tr>",
+    "<tr><td><b>VCI pequeña (≤2.1 cm) con colapso &gt;50%</b> en inspiración · ventrículo derecho de diámetro reducido · <b>ausencia de líneas B</b> · VCI «colapsada» o «en hilo» en casos severos</td><td><b>VCI dilatada (&gt;2.1 cm) con colapso &lt;50%</b> (LR 3.9, especificidad 79%) · <b>líneas B bilaterales</b> —más de 2 en al menos 2 zonas bilaterales— con <b>sensibilidad 93%</b> y LR negativo 0.09 · presión venosa yugular elevada por ultrasonido · <b>flujo venoso anormal</b>: reversión sistólica en vena hepática y pulsatilidad portal aumentada</td></tr>",
+    "</table>",
+    "<h3>Vasopresores</h3>",
+    "<ul>",
+    "<li>El <b>inicio muy temprano de vasopresor</b> se asocia a <b>disminución del riesgo de mortalidad</b> (cohorte prospectiva de 233 pacientes de UCI). El <b>metaanálisis de Shi (2025)</b>, con 10 estudios y <b>4767 pacientes</b>, confirma la <b>reducción de mortalidad</b>.</li>",
+    "<li><b>Surviving Sepsis Campaign 2026:</b> bolo inicial de cristaloides seguido de soporte vasopresor si persiste la hipotensión (recomendación <b>condicional</b>, evidencia de <b>muy baja certeza</b>). En el <b>choque séptico inestable</b> puede justificarse la <b>administración concurrente inmediata</b> de vasopresores junto con los cristaloides.</li>",
+    "<li>La <b>vasopresina puede ser mejor que la noradrenalina</b> en la lesión renal aguda por sepsis.</li>",
+    "<li>La <b>posición del catéter venoso central y del de diálisis afecta el aclaramiento de fármacos</b> durante la TRR continua (modelo animal: cerdos en choque con noradrenalina y gentamicina, catéter 13.5 Fr en yugular externa y femoral).</li>",
+    "</ul>",
+    "<h3>Diuréticos</h3>",
+    "<ul>",
+    "<li>Un metaanálisis de <b>28 estudios con 3228 pacientes</b> <b>no encontró diferencias en mortalidad</b> (OR 0.84).</li>",
+    "<li><b>Valor pronóstico, no terapéutico:</b> los pacientes que responden a diuréticos tienen mejores desenlaces, pero eso <b>refleja una LRA menos severa</b> más que un efecto del fármaco.</li>",
+    "<li><b>Recomendación práctica:</b> <b>optimizar primero la hemodinamia</b> (cristaloides balanceados y noradrenalina) · usar diuréticos <b>solo si hay hipervolemia documentada</b> · considerar <b>TRR temprana</b> si la sobrecarga es refractaria · <b>no usarlos con la intención de «proteger» o «recuperar» la función renal</b>.</li>",
+    "<li><b>Test de furosemida:</b> <b>1.0–1.5 mg/kg IV</b> y se mide el gasto urinario. <b>Menos de 200 ml en 2 horas</b> indica <b>mayor riesgo de progresión y de necesitar TRR</b>.</li>",
+    "<li><b>Resistencia a diuréticos:</b> dosis altas de furosemida IV (hasta <b>200–240 mg</b>) · terapia combinada (<b>diurético de asa + tiazida</b>) · infusión continua frente a bolos, de <b>eficacia similar</b> aunque la infusión da mayor control.</li>",
+    "</ul>",
+    "<h3>Conclusiones</h3>",
+    "<ul><li>El mecanismo de la LRA por sepsis es <b>múltiple</b> · la reanimación con volumen debe <b>individualizarse</b> con metas y medidas <b>dinámicas</b> · <b>inicio temprano del vasopresor</b> · <b>diferenciar fenotipos</b> y su posible respuesta a vasopresores · usar el diurético <b>solo en estado de hipervolemia</b>.</li></ul>",
+    "<div class='extra'>Los tres ensayos de metas dinámicas apuntan en la misma dirección y conviene leerlos juntos: dar <b>menos líquido</b>, guiado por respuesta y no por protocolo, reduce la necesidad de diálisis (5.1% frente a 17.5% en FRESH; 13% frente a 30% en REVERSE-AKI). El daño del exceso de volumen en el riñón séptico es <b>congestión venosa renal</b> — el riñón es un órgano encapsulado, y la presión que se le transmite por la vena renal le hace tanto daño como la hipoperfusión.</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Qué proporción de los pacientes con sepsis desarrolla lesión renal aguda?",
+      "r": "Entre el <b>62 y el 70%</b>."
+    },
+    {
+      "p": "¿Qué proporción de los pacientes con choque séptico desarrolla algún grado de lesión renal?",
+      "r": "El <b>92.8%</b>."
+    },
+    {
+      "p": "¿Qué peso tiene la SA-AKI en las admisiones a UCI?",
+      "r": "Representa aproximadamente <b>1 de cada 6 admisiones (16–18%)</b>, con tendencia al aumento: <b>18% en 2021</b> en estudios multicéntricos."
+    },
+    {
+      "p": "¿Cómo cambia la incidencia de SA-AKI según la definición empleada?",
+      "r": "Con las definiciones <b>RIFLE, AKIN y KDIGO</b> la incidencia aumenta hasta el <b>52%</b>."
+    },
+    {
+      "p": "¿Cómo se distribuye la SA-AKI por estadios de severidad?",
+      "r": "<b>Estadio 1: 22.9–54%</b> · <b>estadio 2: 19.3–27.3%</b> · <b>estadio 3: 42.7–58%</b> de los casos."
+    },
+    {
+      "p": "¿Cuál es la mortalidad hospitalaria y a 30 días de la SA-AKI?",
+      "r": "Hospitalaria del <b>18 al 31%</b> y a 30 días del <b>42 al 48%</b>."
+    },
+    {
+      "p": "¿Qué son los MAKE y con qué frecuencia ocurren en la SA-AKI?",
+      "r": "Los <b>eventos renales adversos mayores</b>, que ocurren en el <b>37.7%</b> de los pacientes al alta hospitalaria."
+    },
+    {
+      "p": "¿Qué proporción de los supervivientes de SA-AKI queda dependiente de diálisis?",
+      "r": "El <b>10%</b>."
+    },
+    {
+      "p": "¿Cómo es la mortalidad a un año tras una SA-AKI?",
+      "r": "<b>Cinco veces mayor</b>. Además aumenta el riesgo de enfermedad renal crónica, eventos cardiovasculares y muerte."
+    },
+    {
+      "p": "Según el metaanálisis mexicano, ¿cuál es la prevalencia global de LRA y su mortalidad?",
+      "r": "Prevalencia global del <b>35%</b>; mortalidad en adultos con LRA del <b>36%</b>, y del <b>49%</b> en quienes requieren terapia de reemplazo renal. Se incluyeron 83 artículos de texto completo."
+    },
+    {
+      "p": "¿Cuál es el odds ratio de la diabetes mellitus para desarrollar LRA estadio III?",
+      "r": "<b>OR 10.3</b> (IC 95% 7.7–13.6)."
+    },
+    {
+      "p": "¿Cómo influye la enfermedad renal crónica en el riesgo de LRA según la TFGe?",
+      "r": "<b>OR 2.9</b> con TFGe de 45–59, <b>6.2</b> con TFGe de 30–44 y <b>18.3</b> con TFGe menor de 30 ml/min/1.73 m²."
+    },
+    {
+      "p": "¿Qué riesgo aporta la hipoalbuminemia?",
+      "r": "<b>OR 2.34</b> para desarrollar LRA y <b>OR 2.47</b> para muerte con LRA, por cada <b>g/dl</b> de descenso de la albúmina."
+    },
+    {
+      "p": "¿Qué factor de la enfermedad aguda tiene el mayor odds ratio de muerte con LRA?",
+      "r": "La <b>ventilación mecánica</b>, con <b>OR 5.1</b> (IC 2.0–12.8)."
+    },
+    {
+      "p": "¿Qué se sabe del sexo y la raza como factores de riesgo de LRA?",
+      "r": "Que los <b>datos son inconsistentes</b> para ambos."
+    },
+    {
+      "p": "¿Cuáles son los dos subfenotipos de SA-AKI basados en biomarcadores?",
+      "r": "El <b>AKI-SP1</b>, reparativo o regenerativo, y el <b>AKI-SP2</b>, inmune o inflamatorio."
+    },
+    {
+      "p": "¿Qué proteínas urinarias caracterizan al fenotipo AKI-SP1?",
+      "r": "Las implicadas en <b>depósito de colágeno (GP6)</b>, <b>derivadas de podocitos (SPOCK2)</b>, <b>proliferación de células mesenquimales (IL11RA)</b> y <b>antiinflamatorias (IL10RB y TREM2)</b>. La vía activada es la <b>adhesión celular</b>."
+    },
+    {
+      "p": "¿Qué proteínas urinarias caracterizan al fenotipo AKI-SP2?",
+      "r": "Las de <b>inflamación y quimioatracción de neutrófilos y monocitos (CXCL1 y REG3A)</b> y de <b>estrés oxidativo (SOD2)</b>. Las vías activadas son la <b>respuesta inmune, la activación del complemento y la señalización de quimiocinas</b>."
+    },
+    {
+      "p": "¿Qué implicaciones clínicas tiene el fenotipo AKI-SP2?",
+      "r": "Se asocia a <b>bacteriemia</b>, a <b>mayor riesgo de progresión a terapia de reemplazo renal</b> y a <b>peor pronóstico</b>."
+    },
+    {
+      "p": "¿Cómo se clasifica la SA-AKI según el tiempo de aparición?",
+      "r": "<b>Temprana</b> si aparece en <b>menos de 2 días</b> desde el diagnóstico de sepsis, y <b>tardía</b> si lo hace entre los <b>2 y los 7 días</b>."
+    },
+    {
+      "p": "¿Qué caracteriza a la SA-AKI temprana?",
+      "r": "Es el <b>fenotipo clínico más común</b>. La incidencia <b>disminuye día a día</b> desde el inicio de la sepsis, y refleja probablemente el <b>impacto directo de la respuesta séptica inicial</b>."
+    },
+    {
+      "p": "¿Qué puede reflejar la SA-AKI tardía?",
+      "r": "<b>Complicaciones secundarias</b>, <b>intervenciones terapéuticas</b> o <b>progresión de la enfermedad</b>. Es menos común que la temprana."
+    },
+    {
+      "p": "¿Qué líquidos y qué volumen se usan en la reanimación inicial de la sepsis?",
+      "r": "<b>Cristaloides balanceados</b>, con un mínimo de <b>30 ml/kg</b> intravenosos."
+    },
+    {
+      "p": "¿Por qué deben evitarse los coloides sintéticos en la sepsis?",
+      "r": "Porque los <b>almidones aumentan el riesgo de terapia de reemplazo renal</b>."
+    },
+    {
+      "p": "¿Reduce la albúmina el riesgo de LRA severa en la sepsis?",
+      "r": "<b>No</b>: la albúmina <b>no reduce</b> el riesgo de LRA severa en sepsis."
+    },
+    {
+      "p": "¿Qué demostró el estudio FRESH sobre la necesidad de terapia de reemplazo renal?",
+      "r": "Que la <b>reanimación personalizada</b> la redujo al <b>5.1%</b> frente al <b>17.5%</b> del cuidado habitual, en 124 pacientes con choque séptico."
+    },
+    {
+      "p": "¿Qué otros beneficios mostró el estudio FRESH?",
+      "r": "Una <b>reducción del 17.7%</b> en la necesidad de <b>ventilación mecánica invasiva</b> y un <b>balance de líquidos neto menor a las 72 horas</b>, con una diferencia de medias de <b>−1.37 L</b>."
+    },
+    {
+      "p": "¿Qué comparó el estudio RESPONSE y qué encontró?",
+      "r": "El <b>seguimiento no intervencionista frente al bolo de líquidos</b> ante la oliguria, en 130 pacientes estables. La <b>duplicación del gasto urinario</b> fue del <b>15.9%</b> con seguimiento frente al <b>32.8%</b> con bolo (RR 0.49), con un <b>balance acumulado menor</b>: 678 frente a 1071 ml."
+    },
+    {
+      "p": "¿Qué demostró el estudio REVERSE-AKI?",
+      "r": "Que el <b>manejo restrictivo de líquidos</b> logró un balance a 72 horas de <b>−1080 ml</b> frente a +61 ml del cuidado habitual, <b>acortó la duración de la LRA</b> (2 frente a 3 días) y <b>redujo la necesidad de TRR</b> (13% frente a 30%)."
+    },
+    {
+      "p": "¿Qué recomiendan las guías Surviving Sepsis Campaign 2026 sobre las medidas para guiar la reanimación?",
+      "r": "Usar <b>medidas dinámicas —incluido el POCUS— por encima de las medidas estáticas</b>."
+    },
+    {
+      "p": "¿Qué hallazgos de POCUS indican hipovolemia?",
+      "r": "<b>VCI pequeña (≤2.1 cm) con colapso mayor del 50%</b> durante la inspiración, <b>ventrículo derecho de diámetro reducido</b>, <b>ausencia de líneas B pulmonares</b> y, en casos severos, VCI <b>«colapsada» o «en hilo»</b>."
+    },
+    {
+      "p": "¿Qué hallazgos de POCUS indican hipervolemia y con qué rendimiento?",
+      "r": "<b>VCI dilatada (&gt;2.1 cm) con colapso menor del 50%</b> (LR 3.9, especificidad 79%), <b>líneas B bilaterales</b> —más de 2 en al menos 2 zonas— con <b>sensibilidad del 93%</b> y LR negativo 0.09, presión venosa yugular elevada por ultrasonido, y <b>patrones de flujo venoso anormales</b>: reversión sistólica en vena hepática y pulsatilidad portal aumentada."
+    },
+    {
+      "p": "¿Qué efecto tiene el inicio muy temprano del vasopresor en el choque séptico?",
+      "r": "Se asocia a una <b>disminución del riesgo de mortalidad</b>. El metaanálisis de Shi (2025), con 10 estudios y <b>4767 pacientes</b>, confirmó la <b>reducción de mortalidad</b>."
+    },
+    {
+      "p": "¿Qué recomienda la Surviving Sepsis Campaign 2026 sobre el momento del vasopresor?",
+      "r": "Un <b>bolo inicial de cristaloides seguido de soporte vasopresor</b> si persiste la hipotensión —recomendación <b>condicional</b> con evidencia de <b>muy baja certeza</b>—. En el <b>choque séptico inestable</b> puede justificarse la <b>administración concurrente inmediata</b> de vasopresores junto con los cristaloides."
+    },
+    {
+      "p": "¿Qué vasopresor podría ser preferible en la lesión renal aguda por sepsis?",
+      "r": "La <b>vasopresina</b>, que puede ser mejor que la <b>noradrenalina</b> en este contexto."
+    },
+    {
+      "p": "¿Qué demostró el modelo animal sobre la posición de los catéteres en la TRR continua?",
+      "r": "Que la <b>posición del catéter venoso central y del de diálisis afecta el aclaramiento de fármacos</b> durante la terapia de reemplazo renal continua."
+    },
+    {
+      "p": "¿Qué encontró el metaanálisis sobre diuréticos y mortalidad en la LRA?",
+      "r": "Que <b>no hay diferencias en mortalidad</b> (OR 0.84), en 28 estudios con <b>3228 pacientes</b>."
+    },
+    {
+      "p": "¿Por qué los pacientes que responden a diuréticos tienen mejores desenlaces?",
+      "r": "Porque la respuesta <b>refleja una LRA menos severa</b>, no un <b>efecto terapéutico</b> del diurético. Su valor es <b>pronóstico</b>, no terapéutico."
+    },
+    {
+      "p": "¿Cuál es la recomendación práctica sobre el uso de diuréticos en la SA-AKI?",
+      "r": "<b>Optimizar primero la hemodinamia</b> con cristaloides balanceados y noradrenalina, usar diuréticos <b>solo si hay hipervolemia documentada</b>, considerar <b>TRR temprana</b> si la sobrecarga es refractaria, y <b>no usarlos con la intención de proteger o recuperar la función renal</b>."
+    },
+    {
+      "p": "¿En qué consiste el test de furosemida y cómo se interpreta?",
+      "r": "Se administran <b>1.0–1.5 mg/kg de furosemida IV</b> y se mide el gasto urinario. Un gasto <b>menor de 200 ml en 2 horas</b> indica <b>mayor riesgo de progresión de la LRA y de necesitar terapia de reemplazo renal</b>."
+    },
+    {
+      "p": "¿Cómo se maneja la resistencia a diuréticos en la hipervolemia refractaria?",
+      "r": "Con <b>dosis altas de furosemida IV (hasta 200–240 mg)</b>, <b>terapia combinada de diurético de asa más tiazida</b>, y valorando <b>infusión continua frente a bolos</b> — de eficacia similar, aunque la infusión permite mayor control."
+    },
+    {
+      "p": "¿Cuáles son las conclusiones sobre el manejo de la LRA en sepsis?",
+      "r": "Que su <b>mecanismo es múltiple</b>, que la <b>reanimación con volumen debe individualizarse</b> con metas y formas <b>dinámicas</b>, que conviene el <b>inicio temprano del vasopresor</b>, que hay que <b>diferenciar fenotipos</b> y sus posibles respuestas, y que el <b>diurético se usa solo en estado de hipervolemia</b>."
+    },
+    {
+      "p": "¿Por qué cae el filtrado glomerular en la sepsis si no hay isquemia franca?",
+      "r": "Por un <b>cortocircuito glomerular</b>: <b>constricción de la arteriola aferente</b> con <b>dilatación de la eferente</b>, que desvía el flujo y <b>reduce la presión intraglomerular</b>. El filtrado cae <b>sin que exista una isquemia franca</b>."
+    },
+    {
+      "p": "¿Qué le ocurre a la arteriola aferente y a la eferente en la lesión renal aguda por sepsis?",
+      "r": "La <b>aferente se constriñe</b> y la <b>eferente se dilata</b>, lo contrario de lo que preservaría el filtrado."
+    },
+    {
+      "p": "¿Qué receptores activan los PAMPs y DAMPs filtrados en el túbulo renal?",
+      "r": "Los <b>receptores tipo Toll (TLR)</b> de la célula tubular renal."
+    },
+    {
+      "p": "¿Qué le ocurre al flujo en el capilar peritubular durante la sepsis?",
+      "r": "Pasa de un <b>flujo continuo con convección preservada</b> a un <b>flujo lento con pérdida de la convección</b>, con <b>shedding del glucocálix</b> y activación, rodamiento, adhesión y transmigración leucocitaria."
+    },
+    {
+      "p": "¿Por qué el edema intersticial empeora la oxigenación renal en la sepsis?",
+      "r": "Porque <b>aumenta la distancia de difusión del oxígeno</b> entre el capilar peritubular y la célula tubular."
+    }
+  ],
+  "cloze": [
+    "Entre el {{c1::62 y el 70%}} de los pacientes con sepsis desarrollan lesión renal aguda, y en el choque séptico la cifra llega al {{c2::92.8%}}.",
+    "En el estudio FRESH la reanimación personalizada redujo la necesidad de terapia de reemplazo renal del {{c1::17.5%}} al {{c2::5.1%}}.",
+    "En POCUS, una VCI menor o igual a {{c1::2.1 cm}} con colapso mayor del {{c2::50%}} sugiere hipovolemia; dilatada con colapso menor del 50%, sobrecarga.",
+    "El test de furosemida usa {{c1::1.0–1.5 mg/kg}} IV; un gasto urinario menor de {{c2::200 ml}} en {{c3::2 horas}} predice progresión de la LRA y necesidad de diálisis."
+  ]
+}

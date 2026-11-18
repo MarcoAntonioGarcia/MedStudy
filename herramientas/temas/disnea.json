@@ -1,0 +1,240 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Disnea",
+  "autor": "R1 MI Eric Salomón Mendoza Ávila",
+  "fuentes": "ATS Statement on Dyspnea 2012 · Harrison 21.ª ed. · MIBE 5.ª ed. · Am Fam Physician 2012 y 2020 · StatPearls",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/Revición Disnea.pdf",
+  "resumen_html": [
+    "<h2>Definición e importancia</h2>",
+    "<p><b>Idea de partida:</b> la disnea <b>no es una enfermedad, es un síntoma</b>. El trabajo clínico consiste en identificar el proceso que la produce.</p>",
+    "<ul>",
+    "<li><b>ATS 2012:</b> «experiencia <b>subjetiva</b> de malestar respiratorio que se compone de <b>sensaciones cualitativamente distintas que varían en intensidad</b>». Deriva de interacciones entre factores <b>fisiológicos, psicológicos, sociales y ambientales</b>, y puede inducir respuestas fisiológicas y conductuales secundarias.</li>",
+    "<li><b>Frecuencia:</b> <b>50%</b> de los pacientes hospitalizados · <b>37%</b> de los mayores de 70 años · origina <b>3–4 millones de consultas al año</b>.</li>",
+    "</ul>",
+    "<div class='cols'><div>",
+    "<h3>Patogenia</h3>",
+    "<ul>",
+    "<li><b>Reducción del aporte:</b> alteraciones del intercambio gaseoso, bajo gasto cardiaco, anemia, pobre unión O₂–Hb, tejidos que no absorben el oxígeno.</li>",
+    "<li><b>Alteraciones en la ventilación:</b> mayor resistencia, cambios intersticiales y alveolares, deformaciones torácicas, embolia, acidosis metabólica, alteraciones neuromusculares, toxinas.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Enfermedades que la producen</h3>",
+    "<ul><li>Asma · EPOC · obstrucción · enfermedad pulmonar intersticial · cifoescoliosis · debilidad neuromuscular · hipertensión pulmonar · miocardiopatía · arteriopatía coronaria · taponamiento · anemia · ansiedad · neumonía · ERGE · insuficiencia cardiaca.</li></ul>",
+    "</div></div>",
+    "<h3>Caracterización: seis ejes</h3>",
+    "<table><tr><th>Eje</th><th>Qué preguntar</th></tr>",
+    "<tr><td><b>Tiempo</b></td><td>Aguda o <b>crónica (&gt; 1 mes)</b></td></tr>",
+    "<tr><td><b>Sensación</b></td><td>Falta de aire, opresión, esfuerzo, respiración superficial</td></tr>",
+    "<tr><td><b>Desencadenantes</b></td><td>Social, dormir, actividad física</td></tr>",
+    "<tr><td><b>Aparición</b></td><td>Progresiva, súbita o paroxística</td></tr>",
+    "<tr><td><b>Posición</b></td><td><b>Platipnea, bendopnea, ortopnea, trepopnea</b></td></tr>",
+    "<tr><td><b>Acompañantes</b></td><td>Fiebre, dolor, edema, sibilancias, tos, hemoptisis</td></tr>",
+    "</table>",
+    "<h3>Intensidad: escala mMRC</h3>",
+    "<table><tr><th>Grado</th><th>Limitación</th></tr>",
+    "<tr><td><b>0</b></td><td>Disnea solo con un gran esfuerzo físico</td></tr>",
+    "<tr><td><b>1</b></td><td>Al andar deprisa en llano o al subir una pendiente poco pronunciada</td></tr>",
+    "<tr><td><b>2</b></td><td>Imposibilita mantener el paso de otras personas de la misma edad en llano, u obliga a detenerse al andar a su propio paso</td></tr>",
+    "<tr><td><b>3</b></td><td>Debe detenerse a descansar al andar unos <b>100 m</b> o a los pocos minutos de andar en llano</td></tr>",
+    "<tr><td><b>4</b></td><td>Impide salir de casa, o aparece al vestirse o desvestirse</td></tr>",
+    "</table>",
+    "<h3>Exploración física</h3>",
+    "<ul><li>Signos vitales y <b>pulso paradójico</b> · <b>distensión yugular</b> y reflejo hepatoyugular · tráquea desplazada, adenopatías, bocio · cianosis, sibilancias, ruidos atenuados, estertores · uso de <b>musculatura accesoria</b>, deformidades torácicas · hepatomegalia y <b>acropaquía</b>.</li></ul>",
+    "<div class='cols'><div>",
+    "<h3>Disnea aguda</h3>",
+    "<table><tr><th>Causa</th><th>Instauración y claves</th></tr>",
+    "<tr><td><b>Edema agudo de pulmón</b></td><td>Minutos a horas · crepitantes, ortopnea</td></tr>",
+    "<tr><td><b>Síndrome coronario agudo</b></td><td>Súbito · dolor precordial</td></tr>",
+    "<tr><td><b>Tromboembolia pulmonar</b></td><td>Súbito · dolor precordial</td></tr>",
+    "<tr><td><b>Neumonía</b></td><td>Horas a días · dolor a la respiración, fiebre, expectoración</td></tr>",
+    "<tr><td><b>Obstrucción</b></td><td>Súbito · <b>estridor</b></td></tr>",
+    "<tr><td><b>Exacerbación de asma o EPOC</b></td><td>Minutos a horas · sibilancias</td></tr>",
+    "</table>",
+    "</div><div>",
+    "<h3>Disnea crónica</h3>",
+    "<table><tr><th>Causa</th><th>Claves</th></tr>",
+    "<tr><td><b>Insuficiencia cardiaca</b></td><td>Edema, disnea paroxística nocturna, bendopnea</td></tr>",
+    "<tr><td><b>Fibrosis idiopática</b></td><td>Estertores, acropaquía</td></tr>",
+    "<tr><td><b>Enf. pulmonar intersticial</b></td><td>Hipoxemia en esfuerzo, tos seca crónica</td></tr>",
+    "<tr><td><b>Reflujo gastroesofágico</b></td><td>Pirosis, tos nocturna, disfonía matutina</td></tr>",
+    "<tr><td><b>Enf. coronaria crónica</b></td><td>Angina de esfuerzo, fatiga progresiva</td></tr>",
+    "<tr><td><b>EPOC</b></td><td>Sibilancias, tos productiva crónica, antecedente de exposición</td></tr>",
+    "</table>",
+    "</div></div>",
+    "<div class='cols'><div>",
+    "<h3>Pruebas</h3>",
+    "<ul>",
+    "<li><b>Laboratorio:</b> BH y Hb, gasometría, electrocardiograma, función renal y hepática, <b>BNP</b>, <b>troponinas</b>, <b>dímero D</b>, TSH, procalcitonina.</li>",
+    "<li><b>Imagen:</b> radiografía de tórax, tomografía computarizada, resonancia magnética, ultrasonografía.</li>",
+    "<li><b>Funcionales:</b> espirometría y pruebas de esfuerzo.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Tratamiento: tres verbos</h3>",
+    "<ul>",
+    "<li><b>Identificar</b> el proceso subyacente.</li>",
+    "<li><b>Optimizar</b> la recuperación del paciente.</li>",
+    "<li><b>Mejorar</b> la sintomatología.</li>",
+    "</ul>",
+    "</div></div>",
+    "<div class='extra'>Las posiciones que alivian o desencadenan orientan mucho: la <b>ortopnea</b> apunta a congestión, la <b>platipnea</b> (empeora al incorporarse) a cortocircuito intrapulmonar o intracardiaco, la <b>trepopnea</b> a patología unilateral, y la <b>bendopnea</b> (al inclinarse hacia delante) a presiones de llenado elevadas en insuficiencia cardiaca.</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Qué es la disnea desde el punto de vista clínico: enfermedad o síntoma?",
+      "r": "<b>No es una enfermedad, es un síntoma</b>. La tarea clínica es identificar el proceso subyacente que la produce."
+    },
+    {
+      "p": "¿Cómo define la ATS (2012) la disnea?",
+      "r": "Una <b>experiencia subjetiva de malestar respiratorio</b> compuesta por <b>sensaciones cualitativamente distintas que varían en intensidad</b>."
+    },
+    {
+      "p": "¿De qué interacciones deriva la experiencia de la disnea según la ATS?",
+      "r": "De interacciones entre <b>múltiples factores fisiológicos, psicológicos, sociales y ambientales</b>. Puede inducir respuestas fisiológicas y conductuales secundarias."
+    },
+    {
+      "p": "¿Qué proporción de los pacientes hospitalizados presenta disnea?",
+      "r": "El <b>50%</b>."
+    },
+    {
+      "p": "¿Qué proporción de los mayores de 70 años presenta disnea?",
+      "r": "El <b>37%</b>."
+    },
+    {
+      "p": "¿Cuántas consultas al año origina la disnea?",
+      "r": "Entre <b>3 y 4 millones</b> de consultas al año."
+    },
+    {
+      "p": "Menciona enfermedades que pueden cursar con disnea.",
+      "r": "Asma, EPOC, obstrucción de la vía aérea, enfermedad pulmonar intersticial, cifoescoliosis, debilidad neuromuscular, hipertensión pulmonar, miocardiopatía, arteriopatía coronaria, taponamiento, anemia, ansiedad, neumonía, ERGE e insuficiencia cardiaca."
+    },
+    {
+      "p": "¿Cuáles son los dos grandes mecanismos patogénicos de la disnea?",
+      "r": "La <b>reducción del aporte</b> de oxígeno y las <b>alteraciones en la ventilación</b>."
+    },
+    {
+      "p": "¿Qué mecanismos producen disnea por reducción del aporte?",
+      "r": "Alteraciones en el <b>intercambio gaseoso</b>, <b>bajo gasto cardiaco</b>, <b>anemia</b>, pobre unión O₂–Hb y tejidos que no absorben el oxígeno."
+    },
+    {
+      "p": "¿Qué mecanismos producen disnea por alteraciones en la ventilación?",
+      "r": "Mayor <b>resistencia</b>, cambios <b>intersticiales y alveolares</b>, <b>deformaciones torácicas</b>, <b>embolia</b>, <b>acidosis metabólica</b>, alteraciones <b>neuromusculares</b> y toxinas."
+    },
+    {
+      "p": "¿Cuáles son los seis ejes con los que se caracteriza una disnea?",
+      "r": "<b>Tiempo</b>, <b>sensación</b>, <b>desencadenantes</b>, <b>aparición</b>, <b>posición</b> y <b>síntomas acompañantes</b>."
+    },
+    {
+      "p": "¿A partir de cuánto tiempo se considera crónica una disnea?",
+      "r": "A partir de <b>un mes</b> de evolución."
+    },
+    {
+      "p": "¿Qué formas de aparición puede tener la disnea?",
+      "r": "<b>Progresiva</b>, <b>súbita</b> o <b>paroxística</b>."
+    },
+    {
+      "p": "¿Qué sensaciones describe el paciente con disnea?",
+      "r": "<b>Falta de aire</b>, <b>opresión</b>, sensación de <b>esfuerzo</b> y <b>respiración superficial</b>."
+    },
+    {
+      "p": "¿Qué cuatro posiciones relacionadas con la disnea deben explorarse?",
+      "r": "<b>Platipnea</b>, <b>bendopnea</b>, <b>ortopnea</b> y <b>trepopnea</b>."
+    },
+    {
+      "p": "¿Qué síntomas acompañantes hay que buscar ante una disnea?",
+      "r": "<b>Fiebre</b>, <b>dolor</b>, <b>edema</b>, <b>sibilancias</b>, <b>tos</b> y <b>hemoptisis</b>."
+    },
+    {
+      "p": "¿Qué escala se usa para graduar la intensidad de la disnea?",
+      "r": "La <b>escala modificada del Consejo de Investigación Médica (mMRC)</b>, de 0 a 4."
+    },
+    {
+      "p": "¿Qué define el grado 0 de la escala mMRC?",
+      "r": "La disnea se produce <b>solo con un gran esfuerzo físico</b>."
+    },
+    {
+      "p": "¿Qué define el grado 1 de la escala mMRC?",
+      "r": "Disnea <b>al andar deprisa en llano</b> o al <b>subir una pendiente poco pronunciada</b>."
+    },
+    {
+      "p": "¿Qué define el grado 2 de la escala mMRC?",
+      "r": "La disnea <b>imposibilita mantener el paso</b> de otras personas de la misma edad caminando en llano, u obliga a <b>detenerse o descansar</b> al andar en llano al propio paso."
+    },
+    {
+      "p": "¿Qué define el grado 3 de la escala mMRC?",
+      "r": "Tiene que <b>detenerse a descansar</b> al andar unos <b>100 metros</b> o a los pocos minutos de andar en llano."
+    },
+    {
+      "p": "¿Qué define el grado 4 de la escala mMRC?",
+      "r": "La disnea <b>impide salir de casa</b> o aparece con actividades como <b>vestirse o desvestirse</b>."
+    },
+    {
+      "p": "¿Qué signos deben buscarse en la exploración física del paciente con disnea?",
+      "r": "Signos vitales y <b>pulso paradójico</b>, <b>distensión yugular</b> y reflejo hepatoyugular, tráquea desplazada, adenopatías, bocio, cianosis, sibilancias, ruidos atenuados, estertores, uso de <b>musculatura accesoria</b>, deformidades torácicas, hepatomegalia y <b>acropaquía</b>."
+    },
+    {
+      "p": "En una disnea aguda de minutos a horas con crepitantes y ortopnea, ¿en qué se piensa?",
+      "r": "En un <b>edema agudo de pulmón</b>."
+    },
+    {
+      "p": "¿Qué dos causas de disnea aguda son de instauración súbita y cursan con dolor precordial?",
+      "r": "El <b>síndrome coronario agudo</b> y la <b>tromboembolia pulmonar</b>."
+    },
+    {
+      "p": "¿Cómo se instaura la disnea de la neumonía y con qué se acompaña?",
+      "r": "En <b>horas a días</b>, con <b>dolor a la respiración</b>, <b>fiebre</b> y <b>expectoración</b>."
+    },
+    {
+      "p": "¿Qué causa de disnea aguda es súbita y cursa con estridor?",
+      "r": "La <b>obstrucción</b> de la vía aérea."
+    },
+    {
+      "p": "¿Cómo se instaura la disnea de una exacerbación de asma o EPOC?",
+      "r": "En <b>minutos a horas</b>, con <b>sibilancias</b>."
+    },
+    {
+      "p": "¿Qué claves clínicas orientan a insuficiencia cardiaca como causa de disnea crónica?",
+      "r": "<b>Edema</b>, <b>disnea paroxística nocturna</b> y <b>bendopnea</b>."
+    },
+    {
+      "p": "¿Qué claves orientan a fibrosis pulmonar idiopática?",
+      "r": "<b>Estertores</b> y <b>acropaquía</b>."
+    },
+    {
+      "p": "¿Qué claves orientan a enfermedad pulmonar intersticial?",
+      "r": "<b>Hipoxemia en esfuerzo</b> y <b>tos seca crónica</b>."
+    },
+    {
+      "p": "¿Qué claves orientan al reflujo gastroesofágico como causa de disnea crónica?",
+      "r": "<b>Pirosis</b>, <b>tos nocturna</b> y <b>disfonía matutina</b>."
+    },
+    {
+      "p": "¿Qué claves orientan a enfermedad coronaria crónica?",
+      "r": "<b>Angina de esfuerzo</b> y <b>fatiga progresiva</b>."
+    },
+    {
+      "p": "¿Qué claves orientan a EPOC como causa de disnea crónica?",
+      "r": "<b>Sibilancias</b>, <b>tos productiva crónica</b> y <b>antecedente de exposición</b>."
+    },
+    {
+      "p": "¿Qué pruebas de laboratorio se solicitan ante una disnea?",
+      "r": "<b>Biometría hemática y hemoglobina</b>, <b>gasometría</b>, <b>electrocardiograma</b>, función renal y hepática, <b>BNP</b>, <b>troponinas</b>, <b>dímero D</b>, <b>TSH</b> y <b>procalcitonina</b>."
+    },
+    {
+      "p": "¿Qué estudios de imagen se emplean en el estudio de la disnea?",
+      "r": "<b>Radiografía de tórax</b>, <b>tomografía computarizada</b>, <b>resonancia magnética</b> y <b>ultrasonografía</b>."
+    },
+    {
+      "p": "¿Qué pruebas funcionales se emplean en el estudio de la disnea?",
+      "r": "La <b>espirometría</b> y las <b>pruebas de esfuerzo</b>."
+    },
+    {
+      "p": "¿Cuáles son los tres objetivos del tratamiento de la disnea?",
+      "r": "<b>Identificar</b> el proceso subyacente, <b>optimizar</b> la recuperación del paciente y <b>mejorar</b> la sintomatología."
+    }
+  ],
+  "cloze": [
+    "La disnea afecta al {{c1::50%}} de los pacientes hospitalizados y al {{c2::37%}} de los mayores de 70 años, y origina {{c3::3–4 millones}} de consultas al año.",
+    "En la escala mMRC, el grado {{c1::3}} obliga a detenerse tras andar unos {{c2::100 metros}} en llano, y el grado {{c3::4}} impide salir de casa o aparece al vestirse.",
+    "Una disnea se considera crónica a partir de {{c1::un mes}} de evolución."
+  ]
+}

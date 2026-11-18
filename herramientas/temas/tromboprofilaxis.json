@@ -1,0 +1,393 @@
+{
+  "seccion": "Generalidades de MI",
+  "tema": "Tromboprofilaxis",
+  "autor": "R1 MI Eric Salomón Mendoza Ávila",
+  "fuentes": "ASH 2018 Guidelines for Management of VTE (Blood Advances) · Gac Med Mex 2012 · Cienc Salud 2024 · J Pers Med 2026 · StatPearls",
+  "origen": "/Users/marco/Desktop/Mariela/PresentacionesResumen/Generalidades de MI/TOMBOPROFILAXIS.pdf",
+  "resumen_html": [
+    "<h2>Definición y magnitud</h2>",
+    "<ul>",
+    "<li><b>Tromboprofilaxis:</b> la <b>estrategia y acciones para disminuir el riesgo de enfermedad tromboembólica venosa (ETV)</b>.</li>",
+    "<li><b>Epidemiología:</b> <b>3.er diagnóstico cardiovascular</b> en frecuencia · el <b>50%</b> de los casos ocurre en hospitalización, por <b>enfermedad (24%)</b> o <b>cirugía (22%)</b> · incidencia <b>1/1000 al año</b>, con un <b>+1% por año</b> en nonagenarios.</li>",
+    "</ul>",
+    "<div class='cols'><div>",
+    "<h3>Factores de riesgo</h3>",
+    "<ul><li>Inmovilidad prolongada (hospitalización, <b>viajes &gt;4 h</b>) · traumatismos · cirugías recientes · <b>cáncer activo o en remisión &lt;6 meses</b> · demográficos (edad, sexo, etnia) · infecciones (tuberculosis, COVID-19) · sedentarismo y dieta · <b>hormonas orales</b> · embarazo · patología renal (ERC, síndrome nefrótico) · alteraciones genéticas.</li></ul>",
+    "</div><div>",
+    "<h3>Fisiopatología: seis mecanismos</h3>",
+    "<ul>",
+    "<li><b>Estasis venosa:</b> factor inducible por hipoxia 1-α → P-selectina y factor tisular.</li>",
+    "<li><b>Daño vascular:</b> ↓trombomodulina y óxido nítrico, ↑factor de von Willebrand.</li>",
+    "<li><b>Hepático:</b> ↓aclaramiento de factores protrombóticos.</li>",
+    "<li><b>IL-6 y TNF-α:</b> ↑fibrinógeno y expresión de factor tisular.</li>",
+    "<li><b>NETs:</b> activación del factor XII y agregación plaquetaria.</li>",
+    "<li><b>Estrógenos:</b> ↑factores II, V, VII, VIII, X y fibrinógeno; ↓antitrombina y proteína S.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h2>Tipos de tromboprofilaxis</h2>",
+    "<div class='cols'><div>",
+    "<h3>Mecánica</h3>",
+    "<ul>",
+    "<li><b>Compresión neumática intermitente:</b> imita el bombeo del <b>sóleo, gastrocnemios y poplíteo</b>. <b>↓estasis venosa</b> y <b>↑velocidad del flujo</b> en venas profundas.</li>",
+    "<li><b>Medias de compresión graduadas:</b> de <b>15–40 mmHg</b>; su eficacia real es discutida.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>Farmacológica</h3>",
+    "<ul><li>Heparina no fraccionada · heparinas de bajo peso molecular · inhibidor selectivo del factor Xa · anticoagulantes orales de acción directa.</li></ul>",
+    "<h3>Combinada</h3>",
+    "<ul><li>Ambas a la vez — pero ojo con la recomendación 04 de la ASH.</li></ul>",
+    "</div></div>",
+    "<h3>Cascada de coagulación y dianas farmacológicas</h3>",
+    "<table><tr><th>Vía</th><th>Secuencia</th></tr>",
+    "<tr><td><b>Extrínseca</b> (mide el <b>TP</b>)</td><td>Activador: <b>factor tisular (III)</b> → VII → <b>VIIa</b> → complejo VII (VIIa + IIIa + calcio) → <b>X</b></td></tr>",
+    "<tr><td><b>Intrínseca</b> (mide el <b>TPT</b>)</td><td>Activador: <b>colágeno, membrana, plaquetas</b> → XII → XIIa → XI → XIa → IX → <b>IXa</b> → complejo VIII (IXa + VIIIa + calcio) → <b>X</b></td></tr>",
+    "<tr><td><b>Común</b></td><td><b>Xa</b> (+ Va) → II protrombina → <b>IIa trombina</b> → I fibrinógeno → <b>Ia fibrina</b> → XIII → XIIIa → agregación de monómeros → <b>malla de fibrina</b></td></tr>",
+    "<tr><td><b>Fibrinólisis</b></td><td>Plasminógeno —(<b>tPA</b>)→ <b>plasmina</b> → productos de degradación de la fibrina (<b>dímero D</b>)</td></tr>",
+    "</table>",
+    "<table><tr><th>Grupo</th><th>Fármacos</th></tr>",
+    "<tr><td><b>Anticoagulantes del factor Xa</b></td><td><b>HBPM</b> (mayor efectividad aquí, enoxaparina) · heparina · <b>fondaparinux</b> · inhibidores directos del Xa (<b>rivaroxabán</b>)</td></tr>",
+    "<tr><td><b>Anticoagulantes del factor IIa</b></td><td>HBPM · <b>heparina</b> (mayor efectividad aquí) · inhibidores directos de trombina (<b>bivalirudina, dabigatrán</b>)</td></tr>",
+    "<tr><td><b>Trombolíticos</b></td><td>Alteplasa · tenecteplasa · estreptoquinasa</td></tr>",
+    "<tr><td><b>Antifibrinolíticos</b></td><td>Ácido tranexámico · ácido aminocaproico</td></tr>",
+    "</table>",
+    "<h3>Fármacos</h3>",
+    "<table><tr><th></th><th>HNF</th><th>HBPM</th><th>Fondaparinux</th></tr>",
+    "<tr><td><b>Qué es</b></td><td>Mezcla heterogénea de polisacáridos de longitud y peso molecular variables; se une a la <b>antitrombina III</b></td><td><b>Primera línea</b> como profilaxis. Enoxaparina, dalteparina, tinzaparina</td><td><b>Pentasacárido</b>: aumenta el efecto de la antitrombina III hasta <b>300 veces</b></td></tr>",
+    "<tr><td><b>Dosis</b></td><td><b>5000–7500 UI SC c/8–12 h</b></td><td><b>20 o 40 mg SC c/24 h</b>, o 30 mg c/12 h · 5000 UI c/24 h</td><td><b>2.5 mg SC c/24 h</b></td></tr>",
+    "<tr><td><b>Inicio de acción</b></td><td>1.5–2 h</td><td>3–5 h</td><td>2–3 h</td></tr>",
+    "<tr><td><b>Ajuste renal</b></td><td><b>No requiere</b></td><td>TFG &lt;30 → <b>reducir 50%</b></td><td>TFG 30–50 → 1.5 mg · <b>&lt;30 contraindicado</b></td></tr>",
+    "<tr><td><b>Otros</b></td><td>Parenteral</td><td>Parenteral</td><td>Nula acción sobre el factor IIa, alta selectividad por Xa; <b>no se une al factor plaquetario 4</b> (no produce trombocitopenia). <b>50% menos hemorragias que HBPM</b>. No usar en &lt;50 kg</td></tr>",
+    "</table>",
+    "<h2>Escalas de riesgo</h2>",
+    "<table><tr><th>Escala</th><th>Para qué</th><th>Fortaleza</th><th>Debilidad</th></tr>",
+    "<tr><td><b>Caprini</b><br><i>perioperatorio</i></td><td>Pacientes quirúrgicos</td><td>Alta sensibilidad en quirúrgicos; ampliamente validada y fácil</td><td>Especificidad moderada, puede <b>sobreestimar</b>; poco útil fuera de lo quirúrgico</td></tr>",
+    "<tr><td><b>Padua</b><br><i>riesgo hospitalario</i></td><td>Pacientes médicos hospitalizados</td><td>Alta sensibilidad; lista de verificación simple</td><td>Posibles falsos positivos; menos útil en entornos mixtos o quirúrgicos</td></tr>",
+    "<tr><td><b>Wells</b><br><i>probabilidad de ETV</i></td><td>Sospecha de ETV</td><td><b>Alta especificidad para descartar</b> TEV; útil en TVP/TEP sintomática</td><td>Requiere juicio clínico; difícil en asintomáticos</td></tr>",
+    "<tr><td><b>Kucher</b><br><i>alertas automáticas</i></td><td>Pacientes críticos</td><td>Identifica a quienes se benefician de la profilaxis; aplicable en UCI</td><td>Validación limitada fuera de la UCI; no captura a todos los de riesgo</td></tr>",
+    "<tr><td><b>IMPROVE</b><br><i>factores de riesgo de ETV</i></td><td>Pacientes médicos hospitalizados</td><td>Alta especificidad: incorpora <b>riesgo de ETV y de sangrado</b></td><td>Más compleja, con puntuación de múltiples variables</td></tr>",
+    "</table>",
+    "<div class='cols'><div>",
+    "<h3>Padua VTE RAM (≥4 = alto riesgo)</h3>",
+    "<table><tr><th>Ítem</th><th>Pts</th></tr>",
+    "<tr><td>Movilidad reducida</td><td><b>3</b></td></tr>",
+    "<tr><td>Cáncer activo</td><td><b>3</b></td></tr>",
+    "<tr><td>ETV previa (no tromboflebitis superficial)</td><td><b>3</b></td></tr>",
+    "<tr><td>Trombofilia conocida</td><td><b>3</b></td></tr>",
+    "<tr><td>Trauma o cirugía reciente (&lt;1 mes)</td><td><b>2</b></td></tr>",
+    "<tr><td>Edad ≥70 años · insuficiencia cardiaca o respiratoria · IAM o ictus isquémico · tratamiento hormonal · obesidad (IMC &gt;30) · infección aguda o enfermedad reumatológica</td><td><b>1</b> c/u</td></tr>",
+    "</table>",
+    "<ul>",
+    "<li><b>&lt;4:</b> bajo riesgo; la tromboprofilaxis se considera caso por caso.</li>",
+    "<li><b>≥4:</b> alto riesgo; se recomienda profilaxis (heparina, enoxaparina) en <b>no embarazadas &gt;18 años sin contraindicaciones</b> — sangrado mayor, plaquetas bajas o aclaramiento de creatinina &lt;30 ml/min.</li>",
+    "</ul>",
+    "</div><div>",
+    "<h3>IMPROVE VTE RAM (≥2 = riesgo aumentado)</h3>",
+    "<table><tr><th>Ítem</th><th>Pts</th></tr>",
+    "<tr><td>ETV previa</td><td><b>3</b></td></tr>",
+    "<tr><td>Trombofilia conocida</td><td><b>2</b></td></tr>",
+    "<tr><td>Parálisis de miembro inferior</td><td><b>2</b></td></tr>",
+    "<tr><td>Cáncer activo</td><td><b>2</b></td></tr>",
+    "<tr><td>Inmovilización ≥7 días · estancia en UCI/UCC · edad &gt;60 años</td><td><b>1</b> c/u</td></tr>",
+    "</table>",
+    "<ul>",
+    "<li><b>≥2:</b> mayor riesgo; iniciar profilaxis <b>farmacológica</b> (HBPM) <b>o mecánica</b> adecuada.</li>",
+    "<li><b>&lt;2:</b> bajo riesgo; <b>no se justifica la profilaxis farmacológica</b>. Puede bastar la deambulación temprana, con o sin profilaxis mecánica.</li>",
+    "</ul>",
+    "</div></div>",
+    "<h2>Recomendaciones ASH 2018</h2>",
+    "<table><tr><th>#</th><th>Recomendación</th><th>#</th><th>Recomendación</th></tr>",
+    "<tr><td><b>01</b></td><td>Dar algo: HNF, HBPM o fondaparinux</td><td><b>02</b></td><td>Preferir <b>fármacos sobre medios mecánicos</b></td></tr>",
+    "<tr><td><b>03</b></td><td>Si no se dan fármacos, al menos medios mecánicos</td><td><b>04</b></td><td><b>No combinar</b> fármacos con medios mecánicos</td></tr>",
+    "<tr><td><b>05</b></td><td>Elegir <b>HBPM</b> sobre anticoagulantes orales</td><td><b>06</b></td><td>Solo durante la <b>estancia hospitalaria</b></td></tr>",
+    "<tr><td><b>07</b></td><td><b>No</b> dar profilaxis a pacientes con atención de enfermería en casa</td><td><b>08</b></td><td>Con <b>≥2</b> de: cirugía reciente, evento previo, posparto, malignidad, terapia hormonal, obesidad, embarazo, viaje &gt;4 h</td></tr>",
+    "<tr><td><b>09</b></td><td>Ajustar la HBPM al <b>peso real, no al ideal</b></td><td><b>10</b></td><td>Con interacción por <b>glicoproteína P o CYP450</b>: usar HBPM o antagonistas de la vitamina K</td></tr>",
+    "<tr><td><b>11</b></td><td>Vigilar el <b>INR</b> si se hace profilaxis en paciente que ya toma AVK (&lt;4 semanas, luego cada 6–12)</td><td><b>12</b></td><td>Con <b>TFG &lt;30 u obesidad</b>: preferir HBPM frente a los anti-Xa</td></tr>",
+    "<tr><td><b>13</b></td><td>Al suspender un AVK: <b>no hacer puente</b> con HBPM ni dar vitamina K</td><td><b>14</b></td><td>Hemorragia con AVK: <b>concentrado de complejo protrombínico de 4 factores + vitamina K</b>, no plasma fresco congelado</td></tr>",
+    "<tr><td><b>15</b></td><td>Hemorragia con inhibidores del Xa: concentrado de complejo protrombínico de 4 factores o factor Xa</td><td><b>16</b></td><td>Hemorragia con <b>dabigatrán: idarucizumab</b></td></tr>",
+    "<tr><td><b>17</b></td><td>Hemorragia con <b>HBPM: protamina</b></td><td><b>18</b></td><td>Tras una hemorragia, suspender el anticoagulante <b>90 días</b></td></tr>",
+    "</table>",
+    "<h3>Antagonistas de la vitamina K en profilaxis</h3>",
+    "<ul>",
+    "<li>Los AVK <b>ya no son el estándar</b> para la profilaxis primaria aguda de la ETV (p. ej., el paciente médico inmovilizado): los han desplazado las <b>HBPM y los ACOD</b>, por mejor perfil de seguridad y menor necesidad de monitorización.</li>",
+    "<li>Su papel queda en la <b>profilaxis secundaria extendida</b> —prevención de recurrencias tras un evento— cuando los ACOD están contraindicados, como en el <b>síndrome antifosfolípido</b> o la <b>insuficiencia renal terminal</b>.</li>",
+    "<li>El INR tarda en moverse lo que tarden en depurarse los factores dependientes de vitamina K (<b>II, VII, IX, X</b>) ya presentes: habitualmente <b>3–7 días</b>. Por eso al iniciar un AVK es obligatorio <b>solapar un anticoagulante parenteral al menos 5 días</b>, y no suspenderlo hasta que el <b>INR llegue a 2.0 en dos días consecutivos</b>.</li>",
+    "</ul>",
+    "<div class='extra'>La recomendación 04 sorprende, pero tiene lógica: combinar fármacos y medios mecánicos no ha demostrado reducir más la ETV y sí complica el cuidado. La compresión mecánica queda como <b>alternativa</b> cuando el fármaco está contraindicado —sangrado activo, plaquetopenia— no como refuerzo rutinario.</div>"
+  ],
+  "fichas": [
+    {
+      "p": "¿Cómo se define la tromboprofilaxis?",
+      "r": "La <b>estrategia y acciones para disminuir el riesgo de enfermedad tromboembólica venosa (ETV)</b>."
+    },
+    {
+      "p": "¿Qué lugar ocupa la ETV entre los diagnósticos cardiovasculares?",
+      "r": "Es el <b>tercer diagnóstico cardiovascular</b> en frecuencia."
+    },
+    {
+      "p": "¿Qué proporción de los casos de ETV se produce en relación con la hospitalización?",
+      "r": "El <b>50%</b>: un <b>24%</b> por enfermedad y un <b>22%</b> por cirugía."
+    },
+    {
+      "p": "¿Cuál es la incidencia anual de ETV y cómo cambia con la edad?",
+      "r": "<b>1 por cada 1000</b> personas al año, con un incremento de <b>+1% por año</b> en nonagenarios."
+    },
+    {
+      "p": "Menciona los factores de riesgo de enfermedad tromboembólica venosa.",
+      "r": "Inmovilidad prolongada (hospitalización, <b>viajes de más de 4 horas</b>), traumatismos, cirugías recientes, <b>cáncer activo o en remisión menor de 6 meses</b>, factores demográficos (edad, sexo, etnia), infecciones (tuberculosis, COVID-19), sedentarismo y dieta, <b>consumo de hormonas orales</b>, embarazo, patología renal (ERC, síndrome nefrótico) y alteraciones genéticas."
+    },
+    {
+      "p": "¿Qué papel tiene la estasis venosa en la fisiopatología de la trombosis?",
+      "r": "Activa el <b>factor inducible por hipoxia 1-α</b>, que aumenta la <b>P-selectina</b> y el <b>factor tisular</b>."
+    },
+    {
+      "p": "¿Qué ocurre en el endotelio tras un daño vascular que favorece la trombosis?",
+      "r": "Disminuyen la <b>trombomodulina</b> y el <b>óxido nítrico</b>, y aumenta el <b>factor de von Willebrand</b>."
+    },
+    {
+      "p": "¿Cómo contribuye el hígado a la trombosis?",
+      "r": "Por <b>disminución del aclaramiento de factores protrombóticos</b>."
+    },
+    {
+      "p": "¿Qué efecto protrombótico tienen la IL-6 y el TNF-α?",
+      "r": "Aumentan el <b>fibrinógeno</b> y la <b>expresión de factor tisular</b>."
+    },
+    {
+      "p": "¿Qué son las NETs y cómo favorecen la trombosis?",
+      "r": "Trampas extracelulares de neutrófilos que producen <b>activación del factor XII</b> y <b>agregación plaquetaria</b>."
+    },
+    {
+      "p": "¿Cómo favorecen los estrógenos la trombosis?",
+      "r": "Aumentan los factores <b>II, V, VII, VIII, X y el fibrinógeno</b>, y disminuyen la <b>antitrombina</b> y la <b>proteína S</b>."
+    },
+    {
+      "p": "¿Cuáles son los tres tipos de tromboprofilaxis?",
+      "r": "<b>Mecánica</b>, <b>farmacológica</b> y <b>combinada</b>."
+    },
+    {
+      "p": "¿Qué medidas mecánicas de tromboprofilaxis existen?",
+      "r": "La <b>compresión neumática intermitente</b> y las <b>medias de compresión graduadas</b>."
+    },
+    {
+      "p": "¿Qué busca imitar la compresión neumática intermitente y qué efectos consigue?",
+      "r": "Imita el <b>efecto de bombeo del sóleo, los gastrocnemios y el poplíteo</b>. Consigue <b>disminuir la estasis venosa</b> y <b>aumentar la velocidad del flujo en las venas profundas</b>."
+    },
+    {
+      "p": "¿A qué presión trabajan las medias de compresión graduadas?",
+      "r": "Entre <b>15 y 40 mmHg</b>."
+    },
+    {
+      "p": "¿Qué fármacos se emplean en la tromboprofilaxis farmacológica?",
+      "r": "<b>Heparina no fraccionada</b>, <b>heparinas de bajo peso molecular</b>, <b>inhibidor selectivo del factor Xa</b> y <b>anticoagulantes orales de acción directa</b>."
+    },
+    {
+      "p": "¿Qué es la heparina no fraccionada y sobre qué actúa?",
+      "r": "Una <b>mezcla heterogénea y biológica de polisacáridos</b> de longitudes de cadena y pesos moleculares variables. Se une a la <b>antitrombina III</b>."
+    },
+    {
+      "p": "¿Cuál es la dosis profiláctica y el inicio de acción de la heparina no fraccionada?",
+      "r": "<b>5000–7500 UI subcutáneas cada 8–12 horas</b>, con inicio de acción en <b>1.5–2 horas</b>. <b>No requiere ajuste renal</b>."
+    },
+    {
+      "p": "¿Cuál es el fármaco de primera línea como tratamiento profiláctico y qué ejemplos hay?",
+      "r": "Las <b>heparinas de bajo peso molecular</b>: <b>enoxaparina, dalteparina y tinzaparina</b>."
+    },
+    {
+      "p": "¿Cuál es la dosis profiláctica y el inicio de acción de las HBPM?",
+      "r": "<b>20 o 40 mg subcutáneos cada 24 horas</b>, o 30 mg cada 12 horas; también 5000 UI cada 24 horas. Inicio de acción en <b>3–5 horas</b>."
+    },
+    {
+      "p": "¿Cómo se ajustan las HBPM en insuficiencia renal?",
+      "r": "Con <b>TFG menor de 30</b> se <b>reduce la dosis un 50%</b>."
+    },
+    {
+      "p": "¿Qué es el fondaparinux y cuál es su mecanismo?",
+      "r": "Un <b>pentasacárido</b> que aumenta el efecto de la <b>antitrombina III hasta 300 veces</b>."
+    },
+    {
+      "p": "¿Qué ventajas tiene el fondaparinux sobre la heparina?",
+      "r": "<b>Afectación nula del factor IIa</b> con alta selectividad por el <b>Xa</b>, <b>no se une al factor plaquetario 4</b> (por lo que no produce trombocitopenia), y produce un <b>50% menos de hemorragias que la HBPM</b>."
+    },
+    {
+      "p": "¿Cuál es la dosis de fondaparinux y su ajuste renal?",
+      "r": "<b>2.5 mg subcutáneos cada 24 horas</b>. Con <b>TFG 30–50</b> se baja a <b>1.5 mg</b>; con <b>TFG &lt;30 está contraindicado</b>. Tampoco se usa en pacientes de <b>menos de 50 kg</b>."
+    },
+    {
+      "p": "¿Cuál es el inicio de acción del fondaparinux?",
+      "r": "<b>2–3 horas</b>."
+    },
+    {
+      "p": "¿Para qué población está mejor validada la escala de Caprini y cuál es su debilidad?",
+      "r": "Para <b>pacientes quirúrgicos</b>, en el <b>perioperatorio</b>. Su especificidad es moderada y <b>puede sobreestimar</b>; tiene utilidad limitada fuera de las poblaciones quirúrgicas."
+    },
+    {
+      "p": "¿Para qué población está diseñada la escala de Padua?",
+      "r": "Para <b>pacientes médicos hospitalizados</b>. Es un enfoque simple de lista de verificación, con alta sensibilidad pero posibles falsos positivos."
+    },
+    {
+      "p": "¿Para qué sirve principalmente la escala de Wells?",
+      "r": "Para estimar la <b>probabilidad de ETV</b> ante una sospecha. Tiene <b>alta especificidad para descartar</b> TEV y es efectiva en TVP/TEP sintomática, pero requiere juicio clínico y es difícil en asintomáticos."
+    },
+    {
+      "p": "¿En qué población es más aplicable la escala de Kucher?",
+      "r": "En <b>pacientes críticamente enfermos, en UCI</b>. Funciona con <b>alertas automáticas</b> e identifica a quienes pueden beneficiarse de la tromboprofilaxis, pero su validación fuera de la UCI es limitada."
+    },
+    {
+      "p": "¿Qué distingue a la escala IMPROVE de las demás?",
+      "r": "Que incorpora <b>tanto el riesgo de ETV como el de sangrado</b>, lo que le da alta especificidad. A cambio es <b>más compleja</b>, con un sistema de puntuación de múltiples variables."
+    },
+    {
+      "p": "¿Qué ítems puntúan 3 en la escala de Padua?",
+      "r": "<b>Movilidad reducida</b>, <b>cáncer activo</b>, <b>ETV previa</b> (excluida la tromboflebitis superficial) y <b>trombofilia conocida</b>."
+    },
+    {
+      "p": "¿Qué ítem puntúa 2 en la escala de Padua?",
+      "r": "<b>Traumatismo o cirugía reciente</b>, en el último mes."
+    },
+    {
+      "p": "¿Qué ítems puntúan 1 en la escala de Padua?",
+      "r": "<b>Edad ≥70 años</b>, <b>insuficiencia cardiaca o respiratoria</b>, <b>infarto agudo de miocardio o ictus isquémico</b>, <b>tratamiento hormonal en curso</b>, <b>obesidad</b> (IMC &gt;30) e <b>infección aguda o enfermedad reumatológica</b>."
+    },
+    {
+      "p": "¿Cuál es el punto de corte de la escala de Padua y qué significa cada lado?",
+      "r": "<b>≥4 = alto riesgo</b> de ETV: se recomienda tromboprofilaxis. <b>&lt;4 = bajo riesgo</b>: la tromboprofilaxis se considera caso por caso."
+    },
+    {
+      "p": "Con un Padua ≥4, ¿en qué pacientes se recomienda la tromboprofilaxis?",
+      "r": "En <b>pacientes no embarazadas mayores de 18 años sin contraindicaciones</b>, entendiendo por contraindicación el <b>sangrado mayor</b>, las <b>plaquetas bajas</b> o un <b>aclaramiento de creatinina &lt;30 ml/min</b>."
+    },
+    {
+      "p": "¿Qué ítem puntúa 3 en la escala IMPROVE?",
+      "r": "La <b>ETV previa</b>."
+    },
+    {
+      "p": "¿Qué ítems puntúan 2 en la escala IMPROVE?",
+      "r": "<b>Trombofilia conocida</b>, <b>parálisis de miembro inferior</b> y <b>cáncer activo</b>."
+    },
+    {
+      "p": "¿Qué ítems puntúan 1 en la escala IMPROVE?",
+      "r": "<b>Inmovilización de 7 días o más</b>, <b>estancia en UCI o unidad coronaria</b> y <b>edad mayor de 60 años</b>."
+    },
+    {
+      "p": "¿Cuál es el punto de corte de la escala IMPROVE y qué se hace en cada caso?",
+      "r": "<b>≥2</b>: mayor riesgo de ETV; se inicia profilaxis <b>farmacológica</b> (HBPM) <b>o mecánica</b>. <b>&lt;2</b>: bajo riesgo; <b>no se justifica la profilaxis farmacológica</b> y puede bastar la deambulación temprana, con o sin profilaxis mecánica."
+    },
+    {
+      "p": "Según la ASH 2018, ¿se prefieren los fármacos o los medios mecánicos?",
+      "r": "Se prefieren los <b>fármacos sobre los medios mecánicos</b>. Si no se pueden dar fármacos, al menos se ponen medios mecánicos."
+    },
+    {
+      "p": "Según la ASH 2018, ¿deben combinarse la profilaxis farmacológica y la mecánica?",
+      "r": "<b>No</b>. La recomendación es <b>no combinar</b> fármacos con medios mecánicos."
+    },
+    {
+      "p": "Según la ASH 2018, ¿qué se elige entre HBPM y anticoagulantes orales para la profilaxis?",
+      "r": "La <b>HBPM</b>, por encima de los anticoagulantes orales."
+    },
+    {
+      "p": "Según la ASH 2018, ¿cuánto debe durar la tromboprofilaxis del paciente hospitalizado?",
+      "r": "<b>Solo durante la estancia hospitalaria</b>."
+    },
+    {
+      "p": "Según la ASH 2018, ¿debe darse profilaxis a los pacientes con atención de enfermería en casa?",
+      "r": "<b>No</b>."
+    },
+    {
+      "p": "Según la ASH 2018, ¿al peso real o al ideal se ajusta la HBPM?",
+      "r": "Al <b>peso real</b>, no al ideal."
+    },
+    {
+      "p": "Con interacciones por glicoproteína P o CYP450, ¿qué anticoagulantes se prefieren?",
+      "r": "La <b>HBPM</b> o los <b>antagonistas de la vitamina K</b>."
+    },
+    {
+      "p": "En un paciente con TFG &lt;30 u obesidad, ¿qué anticoagulante se prefiere?",
+      "r": "La <b>HBPM</b>, por delante de los inhibidores del factor Xa."
+    },
+    {
+      "p": "¿Cómo se maneja una hemorragia en un paciente con antagonistas de la vitamina K?",
+      "r": "Con <b>concentrado de complejo protrombínico de 4 factores y vitamina K</b>, <b>no</b> con plasma fresco congelado."
+    },
+    {
+      "p": "¿Cómo se maneja una hemorragia por inhibidores del factor Xa?",
+      "r": "Con <b>concentrado de complejo protrombínico de 4 factores</b> o <b>factor Xa</b>."
+    },
+    {
+      "p": "¿Cuál es el antídoto de la hemorragia por dabigatrán?",
+      "r": "El <b>idarucizumab</b>."
+    },
+    {
+      "p": "¿Cuál es el antídoto de la hemorragia por HBPM?",
+      "r": "La <b>protamina</b>."
+    },
+    {
+      "p": "Tras una hemorragia, ¿cuánto tiempo se suspende el anticoagulante?",
+      "r": "<b>90 días</b>."
+    },
+    {
+      "p": "Al suspender un antagonista de la vitamina K, ¿se hace puente con HBPM?",
+      "r": "<b>No</b>: no se hace puente con HBPM ni se da vitamina K."
+    },
+    {
+      "p": "¿Por qué los AVK ya no son el estándar en la profilaxis primaria aguda de la ETV?",
+      "r": "Porque los han <b>desplazado las HBPM y los ACOD</b>, por su <b>mejor perfil de seguridad</b> y su <b>menor necesidad de monitorización</b>."
+    },
+    {
+      "p": "¿Cuál es hoy el papel principal de los antagonistas de la vitamina K?",
+      "r": "La <b>profilaxis secundaria extendida</b> —prevención de recurrencias tras un evento trombótico— en pacientes donde los ACOD están contraindicados, como el <b>síndrome antifosfolípido</b> o la <b>insuficiencia renal terminal</b>."
+    },
+    {
+      "p": "¿Cuánto tarda un AVK en modificar el INR y de qué depende?",
+      "r": "De <b>3 a 7 días</b>. Depende de la <b>tasa de depuración de los factores de coagulación dependientes de vitamina K (II, VII, IX y X)</b> ya presentes."
+    },
+    {
+      "p": "Al iniciar un AVK, ¿qué es obligatorio y cuándo se puede suspender el parenteral?",
+      "r": "Es obligatorio administrar simultáneamente un <b>anticoagulante parenteral (HBPM) durante un mínimo de 5 días</b>. Solo se suspende cuando el <b>INR alcance 2.0 durante dos días consecutivos</b>."
+    },
+    {
+      "p": "¿Qué activa la vía extrínseca de la coagulación y qué tiempo la mide?",
+      "r": "El <b>factor tisular (III)</b>. La mide el <b>tiempo de protrombina (TP)</b>."
+    },
+    {
+      "p": "¿Qué activa la vía intrínseca de la coagulación y qué tiempo la mide?",
+      "r": "El <b>colágeno, la membrana y las plaquetas</b>. La mide el <b>tiempo de tromboplastina parcial (TPT)</b>."
+    },
+    {
+      "p": "¿Cuál es la secuencia de la vía común de la coagulación?",
+      "r": "<b>Xa</b> (con Va) → <b>II protrombina</b> → <b>IIa trombina</b> → <b>I fibrinógeno</b> → <b>Ia fibrina</b> → XIII → XIIIa → agregación de monómeros de fibrina → <b>malla de fibrina</b>."
+    },
+    {
+      "p": "¿Qué componentes forman el complejo VII y el complejo VIII?",
+      "r": "El <b>complejo VII</b>: VIIa + IIIa + calcio. El <b>complejo VIII</b>: IXa + VIIIa + calcio. Ambos convergen activando el <b>factor X</b>."
+    },
+    {
+      "p": "¿Cómo funciona la fibrinólisis y qué producto se mide clínicamente?",
+      "r": "El <b>plasminógeno</b> se convierte en <b>plasmina</b> por acción del <b>tPA</b>, y la plasmina degrada la malla de fibrina generando <b>productos de degradación de la fibrina</b>, entre ellos el <b>dímero D</b>."
+    },
+    {
+      "p": "¿Qué anticoagulantes actúan sobre el factor Xa?",
+      "r": "La <b>HBPM</b> (que tiene aquí su mayor efectividad, p. ej. enoxaparina), la <b>heparina</b>, el <b>fondaparinux</b> y los <b>inhibidores directos del Xa</b> como el rivaroxabán."
+    },
+    {
+      "p": "¿Qué anticoagulantes actúan sobre el factor IIa (trombina)?",
+      "r": "La <b>heparina</b> (que tiene aquí su mayor efectividad), la <b>HBPM</b> y los <b>inhibidores directos de trombina</b>: <b>bivalirudina</b> y <b>dabigatrán</b>."
+    },
+    {
+      "p": "¿En qué se diferencian HBPM y heparina no fraccionada en cuanto a su diana?",
+      "r": "La <b>HBPM</b> tiene mayor efectividad sobre el <b>factor Xa</b>; la <b>heparina no fraccionada</b>, sobre el <b>factor IIa (trombina)</b>."
+    },
+    {
+      "p": "¿Cuáles son los fármacos trombolíticos?",
+      "r": "<b>Alteplasa</b>, <b>tenecteplasa</b> y <b>estreptoquinasa</b>."
+    },
+    {
+      "p": "¿Cuáles son los fármacos antifibrinolíticos?",
+      "r": "El <b>ácido tranexámico</b> y el <b>ácido aminocaproico</b>."
+    }
+  ],
+  "cloze": [
+    "La ETV es el {{c1::tercer}} diagnóstico cardiovascular en frecuencia; el {{c2::50%}} de los casos se produce en hospitalización, por enfermedad ({{c3::24%}}) o cirugía ({{c4::22%}}).",
+    "El fondaparinux se dosifica a {{c1::2.5 mg}} subcutáneos cada 24 horas, se baja a {{c2::1.5 mg}} con TFG de 30–50 y está {{c3::contraindicado}} con TFG menor de 30.",
+    "La escala de Padua marca alto riesgo con {{c1::4}} puntos o más, y la escala IMPROVE con {{c2::2}} puntos o más.",
+    "Al iniciar un antagonista de la vitamina K hay que solapar un anticoagulante parenteral un mínimo de {{c1::5 días}}, y no suspenderlo hasta que el INR llegue a {{c2::2.0}} durante {{c3::dos días consecutivos}}."
+  ]
+}
