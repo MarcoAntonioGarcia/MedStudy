@@ -54,6 +54,9 @@ PRESENTATION_EXTS = (".pptx", ".ppt", ".pdf", ".key")
 SUMMARY_EXTS = (".pdf",)
 DECK_EXTS = (".apkg",)
 
+# Días que un tema o material recién llegado se muestra como «nuevo».
+NEW_DAYS = 21
+
 # Cuántas tarjetas nuevas por día por defecto. Con ~745 tarjetas, 20/día
 # cubre todo el material en unas cinco semanas sin saturar.
 DEFAULT_NEW_LIMIT = 20
@@ -690,13 +693,23 @@ class DatabaseManager:
             self.conn.commit()
             return cur.lastrowid
 
-    def list_topics(self) -> list[dict]:
-        """Temas con el conteo de tarjetas y cuántas tocan hoy."""
-        today = datetime.date.today().isoformat()
+    def now_sql(self) -> str:
+        """La hora actual con el mismo formato que los DEFAULT datetime('now')."""
         with self._lock:
+            return self.conn.execute("SELECT datetime('now') AS n").fetchone()["n"]
+
+    def list_topics(self) -> list[dict]:
+        """Temas con el conteo de tarjetas, cuántas tocan hoy y si son nuevos."""
+        today = datetime.date.today().isoformat()
+        baseline = self.get_setting("baseline_at")
+        with self._lock:
+            limite = self.conn.execute(
+                "SELECT datetime('now', ?) AS d", (f"-{NEW_DAYS} days",)).fetchone()["d"]
             rows = self.conn.execute(
                 """
                 SELECT t.id, t.slug, t.title, t.area, t.sort_order, t.folder_id,
+                       t.created_at,
+                       (SELECT MAX(a.created_at) FROM assets a WHERE a.topic_id = t.id) AS material_at,
                        COUNT(c.id)                                        AS total,
                        SUM(c.state = 'new')                               AS nuevas,
                        SUM(c.state != 'new' AND c.due <= ? AND NOT c.suspended) AS vencidas
@@ -711,6 +724,12 @@ class DatabaseManager:
             topic["total"] = topic["total"] or 0
             topic["nuevas"] = topic["nuevas"] or 0
             topic["vencidas"] = topic["vencidas"] or 0
+            # 'nuevo': el tema llegó después de la biblioteca de partida;
+            # 'actualizado': el tema ya existía y le llegó material nuevo
+            # (otro resumen, un artículo). Ambos caducan a los NEW_DAYS días.
+            reciente = lambda ts: bool(baseline and ts and ts > baseline and ts >= limite)
+            topic["is_new"] = reciente(topic["created_at"])
+            topic["is_updated"] = (not topic["is_new"]) and reciente(topic["material_at"])
             topic["assets"] = self.topic_assets(topic["id"])
             topics.append(topic)
         return topics
@@ -1028,7 +1047,7 @@ def _classify(path: str, content_dir: str) -> tuple[str, str] | None:
 
     def es_subcarpeta_conocida(nombre: str) -> bool:
         n = strip_accents(nombre).lower()
-        return n.startswith("resumen") or n.startswith("anki")
+        return n.startswith("resumen") or n.startswith("anki") or n.startswith("articulo")
 
     # Dos disposiciones posibles y hay que distinguirlas por el NOMBRE del
     # primer directorio, no por cuántos haya: 'Neuro/Vertigo.pdf' tiene un
@@ -1048,6 +1067,9 @@ def _classify(path: str, content_dir: str) -> tuple[str, str] | None:
         return (seccion, "resumen") if ext in SUMMARY_EXTS else None
     if subdir.startswith("anki"):
         return None                      # ya cubierto por la extensión .apkg
+    if subdir.startswith("articulo"):
+        # artículos relacionados que Mariela comparte: PDF de lectura, no fichas
+        return (seccion, "articulo") if ext == ".pdf" else None
     if subdir:
         return None                      # subcarpeta desconocida: se ignora
     if ext == ".pdf" and not _pdf_apaisado(path):
@@ -1082,7 +1104,8 @@ def scan_content(content_dir: str = CONTENT_DIR) -> dict[str, dict[str, list[str
     """
     Recorre la carpeta de material y agrupa por SECCIÓN y tipo.
 
-    Devuelve {sección: {'presentacion': [...], 'resumen': [...], 'anki': [...]}}.
+    Devuelve {sección: {'presentacion': [...], 'resumen': [...], 'anki': [...],
+    'articulo': [...]}}.
     Cada sección se convertirá en una carpeta de la app.
     """
     found: dict[str, dict[str, list[str]]] = {}
@@ -1095,7 +1118,7 @@ def scan_content(content_dir: str = CONTENT_DIR) -> dict[str, dict[str, list[str
         if not clasificado:
             continue
         seccion, kind = clasificado
-        found.setdefault(seccion, {"presentacion": [], "resumen": [], "anki": []})
+        found.setdefault(seccion, {"presentacion": [], "resumen": [], "anki": [], "articulo": []})
         found[seccion][kind].append(path)
     return found
 
@@ -1153,8 +1176,8 @@ def ingest(db: DatabaseManager, content_dir: str = CONTENT_DIR) -> dict:
         # compararan contra todos, «Exploración Neurológica» de Neuro podría
         # robarle un archivo a un tema homónimo de otra sección.
         propios = [t for t in db.list_topics() if t["folder_id"] == folder_id]
-        for kind in ("presentacion", "resumen"):
-            for path in files[kind]:
+        for kind in ("presentacion", "resumen", "articulo"):
+            for path in files.get(kind, []):
                 topic, score = match_topic(os.path.basename(path), propios)
                 if topic:
                     db.add_asset(topic["id"], kind, path, score=score)
@@ -1164,6 +1187,11 @@ def ingest(db: DatabaseManager, content_dir: str = CONTENT_DIR) -> dict:
                     db.add_orphan(path, kind, guess["id"] if guess else None, gs)
                     report["huerfanos"] += 1
 
+    # Lo que encuentra el PRIMER escaneo es la biblioteca de partida, no una
+    # novedad. A partir de aquí, un tema o material que aparece después (un
+    # resumen nuevo que se despliega) se marca como nuevo durante NEW_DAYS.
+    if not db.get_setting("baseline_at"):
+        db.set_setting("baseline_at", db.now_sql())
     return report
 
 

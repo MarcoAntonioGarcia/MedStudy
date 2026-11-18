@@ -126,6 +126,11 @@ img{max-width:100%}
 .chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px}
 .chip{font-size:11px;font-weight:650;border-radius:6px;padding:2px 7px;
   background:var(--bg);color:var(--muted)}
+.nuevo{display:inline-block;margin-right:7px;padding:1px 7px;border-radius:6px;font-size:10.5px;font-weight:700;
+  letter-spacing:.02em;vertical-align:2px;background:var(--accent);color:#fff}
+.nuevo.act{background:var(--accent-soft);color:var(--accent)}
+.arts{display:flex;flex-wrap:wrap;gap:8px;margin:0 auto 14px;max-width:900px}
+.arts .lbl{font-size:12px;font-weight:650;color:var(--muted);width:100%}
 .chip.due{background:#fbe3e1;color:#a33c34} .chip.new{background:var(--accent-soft);color:var(--accent)}
 html[data-theme="oscuro"] .chip.due{background:#3d2320;color:#e08a80}
 .mats{display:flex;gap:5px;font-size:10.5px;color:var(--muted)}
@@ -405,7 +410,11 @@ function renderInicio(){
                     : {name: 'Todos los temas'};
   const temas = fv ? S.topics.filter(t => t.folder_id === fv.id) : S.topics;
   const fichas = temas.reduce((a,t) => a + t.total, 0);
-  const hoy    = temas.reduce((a,t) => a + t.vencidas + t.nuevas, 0);
+  // Lo que de verdad toca hoy: las vencidas más lo que queda del tope diario
+  // de nuevas. Sumar TODAS las nuevas daba «1692 para hoy» con un tope de 20.
+  const nuevasQuedan = Math.max(0, (S.stats.nuevas_limite || 20) - (S.stats.nuevas_hoy || 0));
+  const hoy    = temas.reduce((a,t) => a + t.vencidas, 0)
+               + Math.min(temas.reduce((a,t) => a + t.nuevas, 0), nuevasQuedan);
 
   $('#ttl').textContent = fv ? fv.name : 'Temas';
   $('#sub').textContent = `${temas.length} temas · ${fichas} fichas · ${hoy} para hoy`;
@@ -432,6 +441,9 @@ function renderInicio(){
     const bloques = S.folders.map(f => ({f, ts: S.topics.filter(t => t.folder_id === f.id)}))
                              .filter(b => b.ts.length);
     if (sinCarpeta.length) bloques.push({f:{name:'Sin carpeta'}, ts:sinCarpeta});
+    // Lo recién desplegado va primero: temas nuevos y temas con material nuevo
+    const recientes = S.topics.filter(t => t.is_new || t.is_updated);
+    if (recientes.length) bloques.unshift({f:{name:'Recién agregado'}, ts:recientes, reciente:true});
     $('#v-inicio').innerHTML = bloques.length ? bloques.map(({f,ts}) => `
       <div class="sec-h"><h2>${esc(f.name)}</h2><span class="line"></span>
         <span class="muted" style="font-size:12px">${ts.reduce((a,t)=>a+t.total,0)} fichas</span></div>
@@ -444,16 +456,18 @@ function renderInicio(){
 }
 
 function cardHtml(t){
-  const mats = [['presentacion','presentación'],['resumen','resumen'],['anki','fichas']];
+  const mats = [['resumen','resumen'],['anki','fichas'],['articulo','artículos']];
+  const tag = t.is_new ? '<span class="nuevo">Nuevo</span>'
+            : t.is_updated ? '<span class="nuevo act">Actualizado</span>' : '';
   return `<button class="tcard" data-open="${t.id}">
-    <h3>${esc(t.title)}</h3>
+    <h3>${tag}${esc(t.title)}</h3>
     <div class="chips">
       <span class="chip ${t.vencidas?'due':''}">${t.vencidas} pendientes</span>
       <span class="chip ${t.nuevas?'new':''}">${t.nuevas} nuevas</span>
       <span class="chip">${t.total} fichas</span>
     </div>
-    <div class="mats">${mats.map(([k,l]) =>
-      `<span class="mat ${t.assets[k]?'':'miss'}">${l}</span>`).join('')}</div>
+    <div class="mats">${mats.filter(([k]) => k !== 'articulo' || t.assets[k]).map(([k,l]) =>
+      `<span class="mat ${t.assets[k]?'':'miss'}">${k === 'articulo' ? t.assets[k].length + ' ' : ''}${l}</span>`).join('')}</div>
   </button>`;
 }
 
@@ -509,7 +523,10 @@ function renderPages(){
     return;
   }
   const n = t.pages || 1;
-  $('#v-tema').innerHTML = `<div class="pages">${
+  const arts = (t.assets.articulo || []);
+  const artsHtml = arts.length ? `<div class="arts"><span class="lbl">Artículos relacionados</span>${
+    arts.map(a => `<a class="btn" href="/api/assets/${a.id}/file" target="_blank" rel="noopener noreferrer">${esc(a.filename.replace(/\.pdf$/i,''))}</a>`).join('')}</div>` : '';
+  $('#v-tema').innerHTML = artsHtml + `<div class="pages">${
     Array.from({length:n}, (_,i) => `
       <div class="page ${S.placing?'placing':''}" data-page="${i+1}">
         <img src="/api/assets/${resumen.id}/page/${i+1}" alt="Página ${i+1}" loading="lazy">

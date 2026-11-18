@@ -29,7 +29,7 @@ python webapp.py
 
 Abre **http://localhost:8090**.
 
-La primera vez escanea `../PresentacionesResumen/` y arma los temas solo.
+La primera vez escanea `contenido/` y arma los temas solo, una carpeta por materia.
 
 ## Pruebas
 
@@ -130,7 +130,7 @@ Diseño y decisiones técnicas: **[ARCHITECTURE.md](ARCHITECTURE.md)**.
 
 ## Cambiar la carpeta de material
 
-Por defecto es la hermana `../PresentacionesResumen`. Se cambia desde
+Por defecto es `contenido/`, dentro del proyecto. Se cambia desde
 **Ajustes**, o al arrancar:
 
 ```bash
@@ -141,7 +141,15 @@ La estructura que espera:
 
 ```
 material/
-├── *.pptx, *.pdf          ← presentaciones (nivel superior)
-├── Resumenes PDF/*.pdf    ← resúmenes (subcarpeta que empiece con «resumen»)
-└── Anki/*.apkg            ← archivos de fichas
+└── <Materia>/             ← Neuro, Gastro, Generalidades de MI… (una carpeta de la app)
+    ├── Resumenes PDF/*.pdf  ← resúmenes (subcarpeta que empiece con «resumen»)
+    ├── Anki/*.apkg          ← archivos de fichas: definen los temas
+    └── Articulos/*.pdf      ← artículos relacionados (se enlazan al tema por su nombre)
+
+Las presentaciones NO van al repo: pesan demasiado. De ellas se sacan el
+resumen y las fichas, que sí van.
+
+Lo que se agrega después del primer escaneo (un tema nuevo, o un resumen o
+artículo nuevo para un tema que ya existía) aparece primero, en «Recién
+agregado», con la marca «Nuevo» o «Actualizado» durante 21 días.
 ```
