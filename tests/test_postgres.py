@@ -136,6 +136,8 @@ def ejercitar(db: core.DatabaseManager, raiz: str) -> None:
     t.assertTrue(db.folder_exists(fid))
     t.assertTrue(db.rename_folder(fid, "Extra 2"))
     t.assertTrue(db.rename_folder(fid, "Extra 3", "#123456"))
+    with t.assertRaises(ValueError):
+        db.rename_folder(fid, "Neuro")                      # el nombre es único
     t.assertTrue(any(f["temas"] == 1 for f in db.list_folders()))
     tid = db.ensure_topic("Vértigo")
     suelto = db.ensure_topic("Tema suelto")
@@ -143,6 +145,20 @@ def ejercitar(db: core.DatabaseManager, raiz: str) -> None:
     t.assertTrue(db.move_topic(suelto, None))
     t.assertTrue(db.move_topic(suelto, fid))
     t.assertTrue(db.delete_folder(fid))
+    # carpetas repetidas de antes del índice único: se unifican sin perder temas
+    with db._lock:
+        db.conn.execute("DROP INDEX idx_folders_name")
+        db.conn.execute("INSERT INTO folders (name) VALUES ('Neuro')")
+        db.conn.execute("UPDATE topics SET folder_id = (SELECT MAX(id) FROM folders) "
+                        "WHERE slug = 'tema-suelto'")
+        db.conn.commit()
+    db._unificar_carpetas()
+    with db._lock:
+        db.conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_folders_name ON folders (name)")
+        db.conn.commit()
+    neuro = [f for f in db.list_folders() if f["name"] == "Neuro"]
+    t.assertEqual([f["temas"] for f in neuro], [2])
+    t.assertTrue(db.move_topic(suelto, None))
     t.assertEqual(db.count_topics(), 2)
     t.assertEqual(len(db.topics_basic()), 2)
     t.assertTrue(db.now_sql())
@@ -466,12 +482,45 @@ class ConexionSimulada(unittest.TestCase):
         servidor = self.s
 
         class Probada(core.ConexionPostgres):
-            def _abrir(self):
+            def _conectar(self):
                 return servidor.conexion()
         self.c = Probada("postgresql://u@ep-x.us-east-2.aws.neon.tech/db")
 
+    def enviado(self):
+        """Lo enviado, sin el SET con que empieza cada conexión."""
+        return [(n, s) for n, s in self.s.enviado if not s.startswith("SET ")]
+
     def sql(self):
-        return [s for _, s in self.s.enviado]
+        return [s for _, s in self.enviado()]
+
+    def test_cada_conexion_lleva_su_tope_de_tiempo(self):
+        self.s.matar_en = "SELECT"
+        self.c.execute("SELECT 1 AS n")
+        sets = [(n, s) for n, s in self.s.enviado if s.startswith("SET ")]
+        self.assertEqual(sets, [(1, "SET statement_timeout = '20s'"),
+                                (2, "SET statement_timeout = '20s'")])
+
+    def test_keepalives_y_tiempos_de_conexion(self):
+        import psycopg
+        vistos = {}
+        original = psycopg.connect
+
+        def falso(url, **k):
+            vistos.update(k)
+            raise psycopg.OperationalError("sin red en las pruebas")
+        psycopg.connect = falso
+        try:
+            with self.assertRaises(psycopg.OperationalError):
+                core.ConexionPostgres("postgresql://u@h/db")
+        finally:
+            psycopg.connect = original
+        self.assertEqual({k: vistos[k] for k in ("keepalives", "keepalives_idle",
+                                                 "keepalives_interval", "keepalives_count",
+                                                 "tcp_user_timeout", "connect_timeout",
+                                                 "autocommit", "prepare_threshold")},
+                         {"keepalives": 1, "keepalives_idle": 30, "keepalives_interval": 10,
+                          "keepalives_count": 3, "tcp_user_timeout": 30000,
+                          "connect_timeout": 10, "autocommit": True, "prepare_threshold": None})
 
     def test_lectura_suelta_sin_transaccion(self):
         self.c.execute("SELECT * FROM users WHERE id = ?", (1,))
@@ -489,13 +538,13 @@ class ConexionSimulada(unittest.TestCase):
     def test_lectura_tras_neon_dormido_reconecta(self):
         self.s.matar_en = "SELECT"
         self.c.execute("SELECT 1 AS n")
-        self.assertEqual(self.s.enviado, [(2, "SELECT 1 AS n")])   # en una conexión nueva
+        self.assertEqual(self.enviado(), [(2, "SELECT 1 AS n")])   # en una conexión nueva
 
     def test_escritura_tras_neon_dormido_reconecta_en_el_begin(self):
         self.s.matar_en = "BEGIN"
         self.c.execute("UPDATE users SET role = 'admin' WHERE id = ?", (1,))
         self.c.commit()
-        self.assertEqual(self.s.enviado, [(2, "BEGIN"), (2, "UPDATE users SET role = 'admin' "
+        self.assertEqual(self.enviado(), [(2, "BEGIN"), (2, "UPDATE users SET role = 'admin' "
                                           "WHERE id = %s"), (2, "COMMIT")])
 
     def test_si_muere_a_mitad_de_transaccion_no_se_reintenta(self):
@@ -508,7 +557,7 @@ class ConexionSimulada(unittest.TestCase):
         self.assertNotIn("COMMIT", self.sql())
         self.assertEqual(sum(1 for s in self.sql() if s.startswith("UPDATE")), 0)
         self.c.execute("SELECT 1 AS n")                       # y la conexión nueva sirve
-        self.assertEqual(self.s.enviado[-1], (2, "SELECT 1 AS n"))
+        self.assertEqual(self.enviado()[-1], (2, "SELECT 1 AS n"))
 
     def test_error_de_consulta_deshace_y_sube(self):
         import psycopg
@@ -535,7 +584,7 @@ class ConexionSimulada(unittest.TestCase):
         servidor = self.s
 
         class Probada(core.ConexionPostgres):
-            def _abrir(self):
+            def _conectar(self):
                 return servidor.conexion()
         self.assertTrue(Probada("postgresql://u@ep-x-pooler.us-east-2.aws.neon.tech/db").con_pooler)
         with self.assertRaises(ValueError):

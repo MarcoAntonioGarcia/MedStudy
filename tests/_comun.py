@@ -31,6 +31,8 @@ os.environ["ESTUDIO_CONTENT_DIR"] = CONTENIDO
 os.environ.pop("DATABASE_URL", None)
 os.environ.pop("APP_PG_SCHEMA", None)
 os.environ.pop("ADMIN_EMAIL", None)
+os.environ.pop("MEDSTUDY_PRODUCCION", None)
+os.environ.pop("APP_TZ", None)          # la zona por defecto (America/Mexico_City)
 PG_URL = os.environ.get("TEST_PG_URL", "").strip()
 os.environ.pop("IP_DE_CABECERA", None)
 os.environ.pop("BREVO_API_KEY", None)

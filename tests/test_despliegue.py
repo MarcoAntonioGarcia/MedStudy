@@ -385,6 +385,168 @@ class AdminDesdeElEntorno(BaseAparte):
 
 
 # --------------------------------------------------------------------------- #
+class ZonaHoraria(BaseAparte):
+    """El contenedor corre en UTC; quien estudia, en México (UTC-6). A las 19:00
+    de México ya es el día siguiente en UTC, y el «hoy» tiene que seguir siendo
+    el de México: el tope de nuevas, las vencidas, la racha y reviews.day."""
+
+    def setUp(self):
+        super().setUp()
+        self._instante = core._instante
+
+    def tearDown(self):
+        core._instante = self._instante
+        super().tearDown()
+
+    def a_las(self, utc: str) -> None:
+        import datetime
+        t = datetime.datetime.fromisoformat(utc).replace(tzinfo=datetime.timezone.utc).timestamp()
+        core._instante = lambda: t
+
+    def test_el_dia_es_el_de_mexico_y_no_el_del_servidor(self):
+        import datetime
+        self.assertEqual(core.APP_TZ, "America/Mexico_City")
+        tid = self.db.ensure_topic("Vértigo")
+        self.db.upsert_cards(tid, [{"front": f"P{i}", "back": "R", "anki_guid": f"z{i}"}
+                                   for i in range(4)])
+        ids = [c["id"] for c in self.db.topic_cards(tid)]
+        uid = self.db.create_user("ana", CLAVE)
+        self.db.set_user_setting(uid, "new_limit", 2)
+
+        self.a_las("2026-03-10T23:30:00")              # 17:30 en México
+        self.db.grade(uid, ids[0], 3)
+        self.a_las("2026-03-11T01:00:00")              # 19:00 en México; en UTC ya es día 11
+        self.assertEqual(core.hoy(), datetime.date(2026, 3, 10))
+        r = self.db.grade(uid, ids[1], 3)
+        with self.db._lock:
+            dias = [x["day"] for x in self.db.conn.execute("SELECT DISTINCT day FROM reviews")]
+        self.assertEqual(dias, ["2026-03-10"])
+        self.assertEqual(self.db.new_today(uid), 2)                     # el tope ya se cumplió
+        self.assertEqual([c for c in self.db.build_queue(uid) if c["state"] == "new"], [])
+        self.assertEqual(self.db.stats(uid)["racha"], 1)
+        ficha = self.db.get_card(ids[1], uid)
+        self.assertEqual(ficha["due"], (datetime.date(2026, 3, 10)
+                                        + datetime.timedelta(days=r["interval"])).isoformat())
+        self.assertTrue(ficha["last_review"].startswith("2026-03-10T19:00"), ficha["last_review"])
+
+        self.a_las("2026-03-11T06:00:00")              # medianoche en México: ahora sí, otro día
+        self.assertEqual(core.hoy(), datetime.date(2026, 3, 11))
+        self.assertEqual(self.db.new_today(uid), 0)
+        self.assertEqual(len([c for c in self.db.build_queue(uid) if c["state"] == "new"]), 2)
+        self.assertEqual(self.db.stats(uid)["racha"], 1)               # ayer cuenta
+
+    def test_las_sesiones_caducan_igual(self):
+        self.a_las("2026-03-11T01:00:00")
+        self.assertEqual(core._ahora(), "2026-03-10 19:00:00")
+        self.assertEqual(core._ahora_utc(), "2026-03-11 01:00:00")
+
+
+class IngestasALaVez(BaseAparte):
+    """Dos ingestas a la vez (dos instancias durante un despliegue) no fallan
+    ni duplican; y un archivo que falla no tumba la ingesta entera."""
+
+    def test_ficha_que_otro_inserto_entre_medias(self):
+        tid = self.db.ensure_topic("Carrera")
+        self.db.upsert_cards(tid, [{"front": "A", "back": "1", "anki_guid": "g1"}])
+        original, llamadas = self.db._fichas_existentes, []
+
+        def ciega(guids):        # la primera lectura no la ve: «la insertó otro»
+            llamadas.append(guids)
+            return {} if len(llamadas) == 1 else original(guids)
+        self.db._fichas_existentes = ciega
+        r = self.db.upsert_cards(tid, [{"front": "A2", "back": "1", "anki_guid": "g1"},
+                                       {"front": "B", "back": "2", "anki_guid": "g2"}])
+        self.assertEqual(r, {"added": 1, "updated": 1})
+        self.assertEqual(sorted(c["front"] for c in self.db.topic_cards(tid)), ["A2", "B"])
+
+    def test_carpeta_y_tema_existentes_no_chocan(self):
+        a = self.db.ensure_folder("Neuro")
+        self.assertEqual(self.db.ensure_folder("Neuro"), a)
+        t = self.db.ensure_topic("Vértigo")
+        self.assertEqual(self.db.ensure_topic("Vértigo", folder_id=a), t)
+        self.assertEqual(self.db.get_topic(t)["folder_id"], a)
+        with self.assertRaises(Exception):          # el índice único existe de verdad
+            with self.db._lock:
+                self.db.conn.execute("INSERT INTO folders (name) VALUES ('Neuro')")
+        self.db.conn.rollback()
+
+    def test_un_archivo_que_falla_no_tumba_la_ingesta(self):
+        _material(self.raiz)
+        _mazo(os.path.join(self.raiz, "Neuro", "Anki", "Cefalea.apkg"), "Cefalea")
+        original = self.db.upsert_cards
+
+        def rota(tid, cards, *a, **k):
+            if any("Cefalea" in c["front"] for c in cards):
+                raise RuntimeError("choque de unicidad")
+            return original(tid, cards, *a, **k)
+        self.db.upsert_cards = rota
+        with self.assertLogs("estudio", level="WARNING"):
+            r = core.ingest(self.db)
+        self.assertEqual(r["temas"], 1)
+        self.assertTrue(any("Cefalea.apkg" in e and "choque" in e for e in r["errores"]), r)
+        titulos = {t["title"] for t in self.db.topics_basic()}
+        self.assertIn("Vértigo", titulos)
+        self.assertEqual(r["materiales"], 2)        # el mazo y el resumen de Vértigo
+
+    def test_transaccion_que_falla_no_deja_nada_a_medias(self):
+        with self.assertRaises(RuntimeError):
+            with self.db._transaccion():
+                self.db.conn.execute("INSERT INTO settings (key, value) VALUES ('a', '1')")
+                raise RuntimeError("en medio")
+        self.db.set_setting("b", "2")               # un commit posterior no la confirma
+        self.assertEqual(self.db.get_setting("a"), "")
+        self.assertEqual(self.db.get_setting("b"), "2")
+
+    def test_renombrar_a_un_nombre_ocupado(self):
+        usuario("jefa", "admin")
+        a = self.db.ensure_folder("Neuro")
+        b = self.db.ensure_folder("Gastro")
+        r = cliente("jefa").post(f"/api/folders/{b}", json={"name": "Neuro"})
+        self.assertEqual(r.status_code, 400)
+        self.assertIn("Ya hay una carpeta", r.json()["detail"])
+        self.assertEqual(cliente("jefa").post(f"/api/folders/{a}", json={"name": "Neuro"}).status_code,
+                         200)                                       # el mismo nombre, sí
+
+    def test_lo_de_abrir_la_base_aparece_en_el_log_del_arranque(self):
+        ruta_db = os.path.join(self.dir, "vieja.db")
+        db = core.DatabaseManager(ruta_db)
+        tid = db.ensure_topic("Vértigo")
+        with db._lock:
+            db.conn.execute("INSERT INTO assets (topic_id, kind, path, filename, ext) "
+                            "VALUES (?, 'resumen', ?, 'f', 'pdf')",
+                            (tid, os.path.join(self.raiz, "Neuro", "a.pdf")))
+            db.conn.commit()
+        db.conn.close()
+        self.db.conn.close()
+        self.db = webapp.db = core.DatabaseManager(ruta_db)
+        self.assertTrue(self.db.avisos)
+        with self.assertLogs("estudio.web", level="INFO") as log:
+            webapp.arrancar(configurar_logs=False)
+        self.assertTrue(any("rutas de materiales pasan a ser relativas" in l for l in log.output))
+        self.assertTrue(any("America/Mexico_City" in l for l in log.output))
+
+
+class CorreosYProduccion(unittest.TestCase):
+    def test_correos_solo_ascii(self):
+        for malo in ("ñandú@ejemplo.com", "ana@ejémplo.com", "İrem@ejemplo.com"):
+            self.assertFalse(core.email_valido(malo), malo)
+            with self.assertRaises(ValueError):
+                webapp.db.create_user("unicode" + str(len(malo)), CLAVE, email=malo)
+        self.assertTrue(core.email_valido("Ana.Perez+x@Ejemplo.com"))
+        webapp._intentos.clear()
+        r = TestClient(webapp.app).post("/api/auth/register", json={"email": "ñandú@ejemplo.com"})
+        self.assertEqual(r.status_code, 400)
+        webapp._intentos.clear()
+
+    def test_marca_fija_de_produccion(self):
+        self.assertTrue(core.es_produccion({"MEDSTUDY_PRODUCCION": "1"}))
+        self.assertFalse(core.es_produccion({"MEDSTUDY_PRODUCCION": "  "}))
+        problema = webapp.problema_de_produccion({"MEDSTUDY_PRODUCCION": "1"})
+        self.assertIn("DATABASE_URL", problema)
+        self.assertIn("MEDSTUDY_PRODUCCION", problema)
+
+
+# --------------------------------------------------------------------------- #
 def _leer(nombre):
     with open(os.path.join(RAIZ, nombre), encoding="utf-8") as fh:
         return fh.read()
@@ -393,8 +555,8 @@ def _leer(nombre):
 class ArchivosDeDespliegue(unittest.TestCase):
     def test_dockerfile(self):
         d = _leer("Dockerfile")
-        self.assertRegex(d, r"(?m)^FROM python:3\.11-slim$")
-        self.assertRegex(d, r"apt-get install -y --no-install-recommends poppler-utils")
+        self.assertRegex(d, r"(?m)^FROM python:3\.11\.\d+-slim-bookworm$")      # etiqueta fija
+        self.assertRegex(d, r"apt-get install -y --no-install-recommends poppler-utils tzdata")
         self.assertIn("rm -rf /var/lib/apt/lists/*", d)
         self.assertIn("pip install --no-cache-dir -r requirements-web.txt", d)
         self.assertRegex(d, r"(?m)^USER medstudy$")
@@ -447,13 +609,20 @@ class ArchivosDeDespliegue(unittest.TestCase):
             self.skipTest("falta PyYAML para leer render.yaml")
         servicio, = yaml.safe_load(_leer("render.yaml"))["services"]
         self.assertEqual({k: servicio[k] for k in ("type", "runtime", "plan", "region",
-                                                   "healthCheckPath", "autoDeploy", "branch")},
+                                                   "healthCheckPath", "autoDeployTrigger",
+                                                   "branch")},
                          {"type": "web", "runtime": "docker", "plan": "free", "region": "ohio",
-                          "healthCheckPath": "/entrar", "autoDeploy": True, "branch": "main"})
+                          "healthCheckPath": "/entrar", "autoDeployTrigger": "commit",
+                          "branch": "main"})
+        self.assertNotIn("autoDeploy", servicio)
         variables = {v["key"]: v for v in servicio["envVars"]}
-        self.assertEqual(set(variables), {"DATABASE_URL", "COOKIE_SEGURA", "IP_DE_CABECERA",
-                                          "SECRETO_APP", "BREVO_API_KEY", "CORREO_REMITENTE",
-                                          "APP_URL", "APP_NOMBRE", "ADMIN_EMAIL", "HOST"})
+        self.assertEqual(set(variables), {"MEDSTUDY_PRODUCCION", "DATABASE_URL", "COOKIE_SEGURA",
+                                          "IP_DE_CABECERA", "SECRETO_APP", "BREVO_API_KEY",
+                                          "CORREO_REMITENTE", "APP_URL", "APP_NOMBRE",
+                                          "ADMIN_EMAIL", "APP_TZ", "TZ"})
+        for clave in ("APP_TZ", "TZ"):
+            self.assertEqual(variables[clave]["value"], "America/Mexico_City")
+        self.assertEqual(variables["MEDSTUDY_PRODUCCION"]["value"], "1")
         secretos = {"DATABASE_URL", "BREVO_API_KEY", "CORREO_REMITENTE", "APP_URL", "ADMIN_EMAIL"}
         for clave in secretos:
             self.assertIs(variables[clave].get("sync"), False, clave)
@@ -461,13 +630,14 @@ class ArchivosDeDespliegue(unittest.TestCase):
         self.assertIs(variables["SECRETO_APP"].get("generateValue"), True)
         # Con lo que fija el blueprint (más lo que Render genera y lo que se
         # pega en el panel), la comprobación de arranque pasa; sin la base, no.
-        entorno = {"RENDER": "true", "SECRETO_APP": "generado-por-render",
+        # Sin RENDER (por si la plataforma dejara de ponerla): la marca fija basta.
+        entorno = {"SECRETO_APP": "generado-por-render",
                    "DATABASE_URL": "postgresql://u:p@ep-x.us-east-2.aws.neon.tech/neondb"}
         entorno.update({k: v["value"] for k, v in variables.items() if "value" in v})
+        self.assertTrue(core.es_produccion(entorno))           # la carga se apaga
         self.assertEqual(webapp.problema_de_produccion(entorno), "")
         entorno.pop("DATABASE_URL")
         self.assertIn("DATABASE_URL", webapp.problema_de_produccion(entorno))
-        self.assertTrue(core.es_produccion(entorno))           # RENDER: la carga se apaga
 
 
 if __name__ == "__main__":

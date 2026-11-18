@@ -69,9 +69,20 @@ las tablas con `id` (deducidas de SCHEMA.sql).
 Lo que no se traduce se escribió para valer en los dos: los booleanos dentro de
 `SUM()` van como `CASE WHEN … THEN 1 ELSE 0 END`, `NOT COALESCE(x, 0)` como
 `COALESCE(x, 0) = 0`, `WHERE 1` como `WHERE 1 = 1`, y los `GROUP BY` agrupan
-todas las columnas no agregadas (Postgres lo exige). Las fechas que se comparan
-con los `DEFAULT` de la base (`baseline_at`, el límite de 21 días de «Nuevo»)
-las pone Python en UTC, igual que el `datetime('now')` de SQLite.
+todas las columnas no agregadas (Postgres lo exige). `baseline_at` sale del
+reloj de la base (`SELECT datetime('now')`, traducido), el mismo que pone los
+`created_at` con los que se compara; el límite de 21 días de «Nuevo» lo pone
+Python en UTC.
+
+### El día de quien estudia, no el del servidor
+
+El contenedor corre en UTC: con su reloj, el día cambiaría a las 18:00 en
+México y un repaso de las 7 de la tarde contaría para mañana (tope de nuevas,
+vencidas, racha, `reviews.day`). Todo «hoy» y todo «ahora» salen de
+`core.hoy()` / `core._ahora()`, en una zona **explícita** (`APP_TZ`, por
+defecto `America/Mexico_City`, con `zoneinfo`), sin depender de la zona del
+sistema. La imagen instala `tzdata`; si la zona no existiera, la app no
+arranca. `render.yaml` pone además `TZ` para el reloj del sistema y los logs.
 
 El esquema sigue teniendo una sola fuente, `SCHEMA.sql`; `pg_schema.py` lo
 traduce (`AUTOINCREMENT` → `IDENTITY`, `REAL` → `DOUBLE PRECISION`, `COLLATE
@@ -90,7 +101,14 @@ transacción, o el `BEGIN`). Si muere a mitad de una transacción, el error sube
 lo escrito se perdió con la conexión y no se finge lo contrario. Un error de
 consulta (p. ej. unicidad) deshace la transacción para que la conexión siga
 sirviendo. Sin sentencias preparadas en el servidor (el pooler de Neon no
-siempre las conserva).
+siempre las conserva). Keepalives de TCP y `tcp_user_timeout` dan por muerta en
+segundos una conexión cortada sin aviso, y cada conexión empieza con
+`SET statement_timeout = '20s'`: ninguna consulta retiene la conexión (y el
+candado de todas las peticiones) más de eso.
+
+Las escrituras de varias sentencias van en `DatabaseManager._transaccion()`:
+se confirman al final y, si algo falla en medio (también un error de Python),
+se deshacen. Nada queda a medias para que un `commit()` posterior lo confirme.
 
 **Cómo se prueba sin Postgres.** `tests/test_postgres.py` recorre todos los
 métodos de la base contra SQLite, graba cada consulta con sus parámetros, la
@@ -127,15 +145,23 @@ y 159 las siguientes (`upsert_cards` busca las fichas existentes de una vez y
 no reescribe las que no cambiaron). Contra Neon cada consulta es un viaje de
 red, por eso el hilo. Mientras corre, `/api/bootstrap` dice `actualizando` y la
 interfaz avisa y vuelve a pedir la biblioteca cada 3 s, sin tocar lo que se esté
-repasando. Dos ingestas nunca corren a la vez: un candado del proceso (el
-re-escaneo del admin responde 409 si choca) y, con Postgres directo, uno
-consultivo entre instancias (durante un despliegue conviven dos). Lo publicado
-después de la primera ingesta lleva la marca «Nuevo» o «Actualizado».
+repasando. Dentro del proceso, un candado impide dos ingestas a la vez (el
+re-escaneo del admin responde 409 si choca). Entre instancias (durante un
+despliegue conviven dos) hay un candado consultivo, pero solo con la conexión
+directa de Neon, y la ingesta **no depende de él**: nada es «leer y luego
+insertar» a secas. Carpetas (nombre único), temas (slug), fichas (guid +
+hueco), materiales y huérfanos (ruta) se crean con `INSERT … ON CONFLICT`, así
+que dos ingestas a la vez ni fallan ni duplican; una ficha que la otra insertó
+entre medias se actualiza como existente. Y cada carpeta, mazo o archivo va por
+separado: si uno falla, queda en el informe y en el log y se sigue con el
+resto. Las carpetas repetidas de antes del índice único se unifican al
+arrancar. Lo publicado después de la primera ingesta lleva la marca «Nuevo» o
+«Actualizado».
 
 ### En producción no se carga nada desde la app
 
 Un archivo cargado viviría en un disco que se borra. En producción
-(`RENDER` o `APP_URL` con https) `/api/upload` responde 409 —«En producción el
+(`MEDSTUDY_PRODUCCION`, `RENDER` o `APP_URL` con https) `/api/upload` responde 409 —«En producción el
 material se agrega con git»— **sin leer el cuerpo**, y la interfaz no muestra
 el botón. En local funciona como siempre. La caché de páginas PNG sí se queda
 en el disco: es una caché y se rehace sola.
@@ -149,18 +175,23 @@ condicionado (`… AND NOT EXISTS (SELECT 1 FROM users WHERE role = 'admin')`).
 Es seguro porque el correo de una cuenta solo se fija verificándolo, y la
 variable solo la pone quien despliega. Nunca se acepta una contraseña del
 entorno en producción: `crear_admin.py` (para local) se niega a leer
-`ADMIN_PASSWORD` si detecta un despliegue.
+`ADMIN_PASSWORD` si detecta un despliegue. Los correos solo valen en ASCII:
+así `lower()` es el mismo en Python, SQLite y Postgres.
 
 ### Falla cerrado
 
 La comprobación de arranque de la etapa 1 (`COOKIE_SEGURA`, `IP_DE_CABECERA`,
 `SECRETO_APP`) exige ahora también un `DATABASE_URL` de Postgres, y corre
 **antes** de abrir la base: un despliegue mal configurado no llega a crear un
-`database.db` en un disco que se va a borrar.
+`database.db` en un disco que se va a borrar. Producción se reconoce por
+cualquiera de tres señales: `MEDSTUDY_PRODUCCION=1` (fija en `render.yaml`),
+`RENDER` o un `APP_URL` https; con la primera, la app nunca cae en silencio a
+SQLite aunque la plataforma dejara de poner la segunda.
 
 ### La imagen
 
-`python:3.11-slim` con `poppler-utils` (pdftoppm, pdfinfo) por apt, las
+`python:3.11.11-slim-bookworm` (etiqueta fija) con `poppler-utils`
+(pdftoppm, pdfinfo) y `tzdata` por apt, las
 dependencias de `requirements-web.txt` fijadas a las versiones probadas, un
 usuario sin privilegios y el código de root (la app no puede reescribirse; solo
 escribe en `assets/paginas`). `.dockerignore` deja fuera la base, `.git`, los

@@ -8,16 +8,20 @@
 # viaja en la imagen: publicar un resumen nuevo es hacer commit en contenido/ y
 # desplegar; al arrancar, la app lo incorpora sola (ingesta idempotente).
 # Lo que NO va: la base (vive en Neon), las cachés y las pruebas (.dockerignore).
-FROM python:3.11-slim
+# Etiqueta fija (versión de Python y de Debian): la imagen no cambia sola
+# entre despliegues. Para actualizar, se cambia aquí y se prueba.
+FROM python:3.11.11-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# poppler-utils: pdftoppm y pdfinfo. --no-install-recommends y borrar las listas
-# de apt dejan la imagen sin lo que no hace falta para correr.
+# poppler-utils: pdftoppm y pdfinfo. tzdata: las zonas horarias del sistema,
+# que usa zoneinfo para APP_TZ (sin ellas la app no arranca, a propósito).
+# --no-install-recommends y borrar las listas de apt dejan la imagen sin lo que
+# no hace falta para correr.
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends poppler-utils \
+    && apt-get install -y --no-install-recommends poppler-utils tzdata \
     && rm -rf /var/lib/apt/lists/*
 
 # Un usuario sin privilegios. El código queda de root (de solo lectura para la

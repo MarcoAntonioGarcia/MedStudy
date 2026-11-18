@@ -71,8 +71,11 @@ Los nombres están en `.env.example`. Ninguna es obligatoria en local.
 | `ADMIN_USERNAME`, `ADMIN_PASSWORD` | Solo para `crear_admin.py` en local sin terminal. En producción se niega a leer la contraseña. |
 | `APP_DB_PATH` | Otra base SQLite (la usan las pruebas). |
 | `TEST_PG_URL`, `APP_PG_SCHEMA` | Solo pruebas: correrlas contra un Postgres real (ver «Pruebas»). |
+| `APP_TZ` | Zona horaria de quien estudia (por defecto `America/Mexico_City`). Decide cuándo empieza el día: tope de nuevas, vencidas, racha. |
+| `MEDSTUDY_PRODUCCION` | `1` en producción (fija en `render.yaml`). |
 
-En producción (Render define `RENDER`, o `APP_URL` empieza por `https://`) la
+En producción (`MEDSTUDY_PRODUCCION`, la `RENDER` que pone Render, o `APP_URL`
+que empieza por `https://`) la
 app **no arranca** si falta `COOKIE_SEGURA=1`, `IP_DE_CABECERA`, `SECRETO_APP`
 o un `DATABASE_URL` de Postgres: es mejor no arrancar que arrancar mal (con
 SQLite en un disco que se borra, se perderían las cuentas y el progreso).
@@ -109,9 +112,12 @@ se borra en cada reinicio, así que nada que importe vive en él.
 
 **1. La base en Neon.** Crea un proyecto en [neon.tech](https://neon.tech) en la
 región **AWS us-east-2 (Ohio)**, la misma que la app (cada consulta viaja entre
-las dos). En *Connect* copia la cadena de conexión **directa** (con *Connection
-pooling* apagado; funciona también con el pooler, pero la directa es la
-recomendada): `postgresql://usuario:clave@ep-….us-east-2.aws.neon.tech/neondb?sslmode=require`.
+las dos). En *Connect* copia la cadena de conexión **directa**, con *Connection
+pooling* apagado (el host **no** lleva `-pooler`):
+`postgresql://usuario:clave@ep-….us-east-2.aws.neon.tech/neondb?sslmode=require`.
+Con la directa funciona el candado que evita que dos instancias escaneen el
+material a la vez durante un despliegue; con la del pooler la app sigue siendo
+correcta (el escaneo no falla ni duplica nada), solo sin ese candado.
 No la pegues en ningún archivo: va solo en el panel de Render.
 
 **2. El servicio en Render.** *New → Blueprint*, elige este repositorio y Render
@@ -125,7 +131,8 @@ solo desde `main`). Te pedirá las variables que no van en el archivo:
 | `BREVO_API_KEY`, `CORREO_REMITENTE` | Los de Brevo (pueden ser los de EnglishApp). Sin ellos no hay registro ni «olvidé mi contraseña». |
 | `ADMIN_EMAIL` | **Tu** correo: con él saldrá el primer administrador. |
 
-`COOKIE_SEGURA`, `IP_DE_CABECERA`, `APP_NOMBRE` y `HOST` ya vienen en el
+`MEDSTUDY_PRODUCCION`, `COOKIE_SEGURA`, `IP_DE_CABECERA`, `APP_NOMBRE`,
+`APP_TZ` y `TZ` (hora de México: el contenedor corre en UTC) ya vienen en el
 archivo, y `SECRETO_APP` lo genera Render.
 
 **3. El primer arranque.** Render construye la imagen (con poppler y con todo
@@ -136,9 +143,9 @@ siga en segundo plano.
 **4. Tu cuenta de administrador.** Render gratis no tiene terminal, así que
 no se usa `crear_admin.py`: abre `APP_URL/signup`, regístrate con el correo de
 `ADMIN_EMAIL`, abre el enlace que te llega y elige usuario y contraseña. Esa
-cuenta es la administradora. Solo funciona mientras no exista ningún admin:
-después la variable ya no hace nada (puedes borrarla). Ninguna contraseña va
-nunca en el entorno.
+cuenta es la administradora. Solo funciona mientras no exista ningún admin.
+En cuanto entres como admin, **borra `ADMIN_EMAIL` del panel de Render**: ya no
+hace nada y así no queda a la vista. Ninguna contraseña va nunca en el entorno.
 
 **5. Publicar material nuevo.** En producción no hay botón de cargar archivos
 (se borrarían en el siguiente reinicio). El material se publica con git:

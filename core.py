@@ -38,6 +38,7 @@ import unicodedata
 import urllib.parse
 import urllib.request
 import zipfile
+import zoneinfo
 from html.parser import HTMLParser
 import html
 
@@ -79,6 +80,15 @@ DECK_EXTS = (".apkg",)
 
 # Días que un tema o material recién llegado se muestra como «nuevo».
 NEW_DAYS = 21
+
+# La zona horaria de quien estudia, EXPLÍCITA. El «hoy» decide el tope de
+# fichas nuevas, qué vence, la racha y el día de cada repaso. El contenedor de
+# Render corre en UTC: con su reloj, el día cambiaría a las 18:00 en México y
+# un repaso de las 7 de la tarde contaría para mañana. No se confía en la zona
+# del sistema: se fija aquí (APP_TZ). Si la zona no existe, la app no arranca
+# (ZoneInfoNotFoundError): mejor eso que contar los días mal sin avisar.
+APP_TZ = (os.environ.get("APP_TZ") or "America/Mexico_City").strip()
+ZONA = zoneinfo.ZoneInfo(APP_TZ)
 
 # Cuántas tarjetas nuevas por día por defecto. Con ~745 tarjetas, 20/día
 # cubre todo el material en unas cinco semanas sin saturar.
@@ -315,7 +325,7 @@ def schedule(card: dict, rating: int, retention: float = DEFAULT_RETENTION,
     Trabaja con granularidad de DÍA: el repaso intradía de las tarjetas
     falladas lo resuelve la cola de estudio, no la fecha en la base.
     """
-    today = today or datetime.date.today()
+    today = today or hoy()
     state = card.get("state") or "new"
     stability = float(card.get("stability") or 0)
     difficulty = float(card.get("difficulty") or 0)
@@ -362,7 +372,7 @@ def schedule(card: dict, rating: int, retention: float = DEFAULT_RETENTION,
         "difficulty": round(difficulty, 4),
         "reps": reps,
         "lapses": lapses,
-        "last_review": datetime.datetime.now().isoformat(timespec="seconds"),
+        "last_review": _ahora_local().replace(tzinfo=None).isoformat(timespec="seconds"),
         "interval": interval,
         "elapsed_days": elapsed,
     }
@@ -752,24 +762,44 @@ def problema_con_el_nombre(nombre: str) -> str:
 
 
 def email_valido(email: str) -> bool:
+    """Solo ASCII: así lower() es el mismo en Python, SQLite y Postgres (con
+    letras no ASCII, cada uno pasa a minúsculas a su manera y dos correos
+    «iguales» podrían no coincidir, o dos distintos chocar)."""
     email = (email or "").strip()
-    return len(email) <= 254 and bool(_RE_EMAIL.match(email))
+    return len(email) <= 254 and email.isascii() and bool(_RE_EMAIL.match(email))
+
+
+# --------------------------------------------------------------------------- #
+# Reloj. Todo «ahora» y todo «hoy» de la app salen de aquí (las pruebas
+# congelan _instante para fijar la hora).
+# --------------------------------------------------------------------------- #
+def _instante() -> float:
+    return time.time()
+
+
+def _ahora_local(desplazamiento_s: float = 0) -> datetime.datetime:
+    """La hora en la zona de la app (ZONA), con zona."""
+    return datetime.datetime.fromtimestamp(_instante() + desplazamiento_s, ZONA)
+
+
+def hoy() -> datetime.date:
+    """El día de HOY para quien estudia, en la zona de la app, no la del servidor."""
+    return _ahora_local().date()
 
 
 def _ahora(desplazamiento_s: int = 0) -> str:
-    """Fecha y hora del servidor como texto 'AAAA-MM-DD HH:MM:SS'.
+    """Fecha y hora en la zona de la app, como texto 'AAAA-MM-DD HH:MM:SS'.
 
     La pone Python y no SQLite (datetime('now')): así el formato es el mismo
     en SQLite y en Postgres, y las comparaciones de texto siguen valiendo.
     """
-    return time.strftime("%Y-%m-%d %H:%M:%S",
-                         time.localtime(time.time() + desplazamiento_s))
+    return _ahora_local(desplazamiento_s).strftime("%Y-%m-%d %H:%M:%S")
 
 
 def _ahora_utc(desplazamiento_s: int = 0) -> str:
     """Como _ahora(), pero en UTC: es la zona de los DEFAULT datetime('now') del
     esquema (created_at de temas y materiales), con los que se compara."""
-    return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time() + desplazamiento_s))
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(_instante() + desplazamiento_s))
 
 
 def _hash_token(token: str) -> str:
@@ -780,8 +810,11 @@ def _hash_token(token: str) -> str:
 # Rutas que se pueden servir
 # --------------------------------------------------------------------------- #
 def es_produccion(entorno) -> bool:
-    """Desplegado de verdad: en Render (que define RENDER) o servido por HTTPS."""
-    return bool((entorno.get("RENDER") or "").strip()) or \
+    """Desplegado de verdad: MEDSTUDY_PRODUCCION (fija en render.yaml), RENDER
+    (lo define Render) o servido por HTTPS. Basta una de las tres: así un
+    cambio en la plataforma no deja la app creyéndose en local (y en SQLite)."""
+    return bool((entorno.get("MEDSTUDY_PRODUCCION") or "").strip()) or \
+        bool((entorno.get("RENDER") or "").strip()) or \
         (entorno.get("APP_URL") or "").strip().lower().startswith("https://")
 
 
@@ -1060,14 +1093,27 @@ class ConexionPostgres:
         self.row_factory = None          # el código lo asigna; aquí no significa nada
         self._con = self._abrir()
 
-    def _abrir(self):
+    def _conectar(self):
         import psycopg
         from psycopg.rows import dict_row
         extra = {"options": f"-c search_path={self._esquema}"} if self._esquema else {}
         # prepare_threshold=None: sin sentencias preparadas en el servidor, que
         # el pooler de Neon (PgBouncer) no siempre conserva entre consultas.
-        return psycopg.connect(self._url, row_factory=dict_row, connect_timeout=30,
-                               autocommit=True, prepare_threshold=None, **extra)
+        # keepalives y tcp_user_timeout: una conexión que Neon cortó sin avisar
+        # (red, suspensión) se da por muerta en segundos, no en los ~15 min por
+        # defecto del sistema, durante los cuales una consulta se quedaría
+        # colgada con el candado tomado.
+        return psycopg.connect(self._url, row_factory=dict_row, autocommit=True,
+                               prepare_threshold=None, connect_timeout=10,
+                               keepalives=1, keepalives_idle=30, keepalives_interval=10,
+                               keepalives_count=3, tcp_user_timeout=30000, **extra)
+
+    def _abrir(self):
+        con = self._conectar()
+        # Ninguna consulta puede retener la conexión (y el candado de todas las
+        # peticiones) más de 20 s. Un SET normal: vale también con el pooler.
+        con.execute("SET statement_timeout = '20s'")
+        return con
 
     def _reconectar(self) -> None:
         try:
@@ -1206,6 +1252,10 @@ class DatabaseManager:
         url = "" if db_path else (url_pg if url_pg is not None else url_de_postgres())
         self.es_postgres = bool(url)
         self._lock = threading.Lock()
+        # Lo que pasó al abrir la base (migraciones, columnas añadidas). La base
+        # se abre al importar webapp, antes de que haya logs configurados: el
+        # arranque (webapp.arrancar) los vuelve a anotar, ya con logs.
+        self.avisos: list[str] = []
         if self.es_postgres:
             # APP_PG_SCHEMA: solo las pruebas contra un Postgres real, para
             # trabajar en un esquema propio que se borra al terminar.
@@ -1235,9 +1285,33 @@ class DatabaseManager:
         # no arranca.
         self._migrate()
         with self._lock:
+            hay_carpetas = self.conn.execute(
+                "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'folders'"
+            ).fetchone() is not None
+        if hay_carpetas:
+            self._unificar_carpetas()        # antes del índice único de folders.name
+        with self._lock:
             self.conn.executescript(script)
             self.conn.commit()
         self._migrar_rutas()
+
+    @contextlib.contextmanager
+    def _transaccion(self):
+        """Varias escrituras que van juntas: con el candado tomado, se confirman
+        al final y, si algo falla en medio (también un error de Python), se
+        deshacen. Así nunca queda media operación pendiente que un commit()
+        posterior de otro método confirmaría sin querer."""
+        with self._lock:
+            try:
+                yield self.conn
+                self.conn.commit()
+            except BaseException:
+                self.conn.rollback()
+                raise
+
+    def _avisar(self, texto: str) -> None:
+        self.avisos.append(texto)
+        _log.info("%s", texto)
 
     # ----------------------------------------------------------- Postgres
     def _esquema_postgres(self) -> None:
@@ -1249,15 +1323,14 @@ class DatabaseManager:
         ya con el esquema de hoy.
         """
         import pg_schema
-        with self._lock:
+        with self._transaccion():
             for sentencia in pg_schema.sentencias_tablas():
                 self.conn.execute(sentencia)
-            self.conn.commit()
         self._alinear_columnas_postgres()
-        with self._lock:
+        self._unificar_carpetas()            # antes del índice único de folders.name
+        with self._transaccion():
             for sentencia in pg_schema.sentencias_indices():
                 self.conn.execute(sentencia)
-            self.conn.commit()
 
     def _alinear_columnas_postgres(self) -> None:
         """Añade las columnas que SCHEMA.sql declara y la tabla todavía no tiene.
@@ -1268,7 +1341,7 @@ class DatabaseManager:
         """
         import pg_schema
         anadidas = []
-        with self._lock:
+        with self._transaccion():
             for tabla, columnas in pg_schema.columnas_por_tabla():
                 existentes = {r["column_name"].lower() for r in self.conn.execute(
                     "SELECT column_name FROM information_schema.columns "
@@ -1281,9 +1354,8 @@ class DatabaseManager:
                     self.conn.execute(
                         f"ALTER TABLE {tabla} ADD COLUMN IF NOT EXISTS {nombre} {definicion}")
                     anadidas.append(f"{tabla}.{nombre}")
-            self.conn.commit()
         if anadidas:
-            _log.info("Postgres: columnas añadidas: %s", ", ".join(anadidas))
+            self._avisar("Postgres: columnas añadidas: " + ", ".join(anadidas))
 
     @contextlib.contextmanager
     def candado_global(self, nombre: str, espera: float = 15.0):
@@ -1331,7 +1403,7 @@ class DatabaseManager:
         duplicado se borra: borrarlo sin más se llevaría las notas en cascada.
         """
         cambiadas = 0
-        with self._lock:
+        with self._transaccion():
             for tabla in ("assets", "orphan_files"):
                 filas = [dict(r) for r in self.conn.execute(f"SELECT id, path FROM {tabla}")]
                 for fila in filas:
@@ -1340,8 +1412,10 @@ class DatabaseManager:
                     nueva = _ruta_vieja_a_guardada(fila["path"])
                     if not nueva:
                         continue
+                    # id != ?: una fila nunca se toma por su propio duplicado
                     otra = self.conn.execute(
-                        f"SELECT id FROM {tabla} WHERE path = ?", (nueva,)).fetchone()
+                        f"SELECT id FROM {tabla} WHERE path = ? AND id != ?",
+                        (nueva, fila["id"])).fetchone()
                     if otra:
                         if tabla == "assets":
                             self.conn.execute("UPDATE notes SET asset_id = ? WHERE asset_id = ?",
@@ -1351,9 +1425,25 @@ class DatabaseManager:
                         self.conn.execute(f"UPDATE {tabla} SET path = ? WHERE id = ?",
                                           (nueva, fila["id"]))
                     cambiadas += 1
-            self.conn.commit()
         if cambiadas:
-            _log.info("Migración: %d rutas de materiales pasan a ser relativas.", cambiadas)
+            self._avisar(f"Migración: {cambiadas} rutas de materiales pasan a ser relativas.")
+
+    def _unificar_carpetas(self) -> None:
+        """Carpetas con el mismo nombre (de antes del índice único, o de dos
+        ingestas a la vez) se juntan en la más antigua; sus temas pasan a ella.
+        Idempotente; sin duplicados no escribe nada."""
+        with self._transaccion():
+            repetidas = [dict(r) for r in self.conn.execute(
+                "SELECT name, MIN(id) AS queda FROM folders GROUP BY name HAVING COUNT(*) > 1")]
+            for r in repetidas:
+                self.conn.execute(
+                    "UPDATE topics SET folder_id = ? WHERE folder_id IN "
+                    "(SELECT id FROM folders WHERE name = ? AND id != ?)",
+                    (r["queda"], r["name"], r["queda"]))
+                self.conn.execute("DELETE FROM folders WHERE name = ? AND id != ?",
+                                  (r["name"], r["queda"]))
+        if repetidas:
+            self._avisar(f"Migración: {len(repetidas)} carpetas repetidas se unificaron.")
 
     def _migrate(self) -> None:
         """
@@ -1496,7 +1586,7 @@ class DatabaseManager:
         email = (email or "").strip().lower()
         if email and not email_valido(email):
             raise ValueError("Ese correo no parece válido.")
-        with self._lock:
+        with self._transaccion():
             if self.conn.execute("SELECT 1 FROM users WHERE lower(username) = lower(?)",
                                  (username,)).fetchone():
                 raise ValueError(f"El usuario «{username}» ya está ocupado.")
@@ -1508,7 +1598,6 @@ class DatabaseManager:
                 "created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 (username, email or None, hash_password(password), role, status,
                  (nombre or "").strip(), _ahora()))
-            self.conn.commit()
             return cur.lastrowid
 
     def set_password(self, user_id: int, password: str) -> None:
@@ -1517,23 +1606,21 @@ class DatabaseManager:
         problema = problema_con_la_clave(password)
         if problema:
             raise ValueError(problema)
-        with self._lock:
+        with self._transaccion():
             self.conn.execute("UPDATE users SET password_hash = ? WHERE id = ?",
                               (hash_password(password), user_id))
             self._revocar_sesiones_locked(user_id)
-            self.conn.commit()
 
     def set_user_status(self, user_id: int, status: str) -> bool:
         """'pending' | 'active' | 'blocked'. Cualquier estado que no sea activo
         cierra sus sesiones."""
         if status not in ("pending", "active", "blocked"):
             raise ValueError("Estado desconocido.")
-        with self._lock:
+        with self._transaccion():
             cur = self.conn.execute("UPDATE users SET status = ? WHERE id = ?",
                                     (status, user_id))
             if status != "active":
                 self._revocar_sesiones_locked(user_id)
-            self.conn.commit()
             return cur.rowcount > 0
 
     def list_users(self) -> list[dict]:
@@ -1578,11 +1665,10 @@ class DatabaseManager:
         email = (email or "").strip().lower()
         if not email or not email_valido(email):
             return None
-        with self._lock:
+        with self._transaccion():
             cur = self.conn.execute(
                 "UPDATE users SET role = 'admin' WHERE lower(email) = ? AND status = 'active' "
                 "AND NOT EXISTS (SELECT 1 FROM users WHERE role = 'admin')", (email,))
-            self.conn.commit()
             if cur.rowcount != 1:
                 return None
             fila = self.conn.execute(
@@ -1595,14 +1681,13 @@ class DatabaseManager:
         """Abre sesión y devuelve el token, que solo viajará en la cookie.
         En la tabla queda su SHA-256."""
         token = secrets.token_urlsafe(32)
-        with self._lock:
+        with self._transaccion():
             if UNA_SESION_POR_USUARIO:
                 self._revocar_sesiones_locked(user_id)
             self.conn.execute(
                 "INSERT INTO sessions (token_hash, user_id, created_at, expires_at) "
                 "VALUES (?, ?, ?, ?)",
                 (_hash_token(token), user_id, _ahora(), _ahora(int(dias) * 86400)))
-            self.conn.commit()
         return token
 
     def user_for_token(self, token: str) -> dict | None:
@@ -1630,11 +1715,10 @@ class DatabaseManager:
 
     def cerrar_sesiones(self, user_id: int) -> int:
         """Echa a esa persona de todos sus dispositivos. Devuelve cuántas cerró."""
-        with self._lock:
+        with self._transaccion():
             n = self.conn.execute("SELECT COUNT(*) AS n FROM sessions WHERE user_id = ?",
                                   (user_id,)).fetchone()["n"]
             self._revocar_sesiones_locked(user_id)
-            self.conn.commit()
             return n
 
     def purge_expired_sessions(self) -> int:
@@ -1737,16 +1821,21 @@ class DatabaseManager:
         return [dict(r) for r in rows]
 
     def ensure_folder(self, name: str, color: str = "#c9a86a") -> int:
-        """Crea la carpeta si no existe (por nombre). Devuelve su id."""
-        with self._lock:
+        """Crea la carpeta si no existe (por nombre). Devuelve su id.
+
+        Sin «leer y luego insertar» a secas: si otra ingesta (otra instancia,
+        durante un despliegue) la crea a la vez, ON CONFLICT DO NOTHING no
+        falla ni duplica, y la segunda lectura encuentra la que quedó."""
+        with self._transaccion():
             row = self.conn.execute(
                 "SELECT id FROM folders WHERE name = ?", (name,)).fetchone()
             if row:
                 return row["id"]
-            cur = self.conn.execute(
-                "INSERT INTO folders (name, color) VALUES (?, ?)", (name, color))
-            self.conn.commit()
-            return cur.lastrowid
+            self.conn.execute(
+                "INSERT INTO folders (name, color) VALUES (?, ?) ON CONFLICT (name) DO NOTHING",
+                (name, color))
+            return self.conn.execute(
+                "SELECT id FROM folders WHERE name = ?", (name,)).fetchone()["id"]
 
     def folder_exists(self, folder_id: int) -> bool:
         with self._lock:
@@ -1754,7 +1843,11 @@ class DatabaseManager:
                 "SELECT 1 FROM folders WHERE id = ?", (folder_id,)).fetchone() is not None
 
     def rename_folder(self, folder_id: int, name: str, color: str | None = None) -> bool:
-        with self._lock:
+        """ValueError si ya hay OTRA carpeta con ese nombre (es único)."""
+        with self._transaccion():
+            if self.conn.execute("SELECT 1 FROM folders WHERE name = ? AND id != ?",
+                                 (name, folder_id)).fetchone():
+                raise ValueError("Ya hay una carpeta con ese nombre.")
             if color:
                 cur = self.conn.execute(
                     "UPDATE folders SET name = ?, color = ? WHERE id = ?",
@@ -1762,7 +1855,6 @@ class DatabaseManager:
             else:
                 cur = self.conn.execute(
                     "UPDATE folders SET name = ? WHERE id = ?", (name, folder_id))
-            self.conn.commit()
             return cur.rowcount > 0
 
     def delete_folder(self, folder_id: int) -> bool:
@@ -1837,6 +1929,15 @@ class DatabaseManager:
                 "SELECT value FROM settings WHERE key = ?", (key,)).fetchone()
         return row["value"] if row else default
 
+    def set_setting_si_falta(self, key: str, value: str) -> None:
+        """Como set_setting, pero sin pisar un valor que ya esté (dos ingestas a
+        la vez fijarían baseline_at dos veces)."""
+        with self._lock:
+            self.conn.execute(
+                "INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT (key) DO NOTHING",
+                (key, str(value)))
+            self.conn.commit()
+
     def set_setting(self, key: str, value: str) -> None:
         with self._lock:
             self.conn.execute(
@@ -1887,25 +1988,27 @@ class DatabaseManager:
         a mano.
         """
         slug = slugify(title)
-        with self._lock:
+        with self._transaccion():
             row = self.conn.execute(
                 "SELECT id, folder_id FROM topics WHERE slug = ?", (slug,)).fetchone()
-            if row:
-                if folder_id and row["folder_id"] is None:
-                    self.conn.execute("UPDATE topics SET folder_id = ? WHERE id = ?",
-                                      (folder_id, row["id"]))
-                    self.conn.commit()
-                return row["id"]
-            cur = self.conn.execute(
-                "INSERT INTO topics (slug, title, sort_order, folder_id) VALUES (?, ?, ?, ?)",
-                (slug, title, sort_order, folder_id))
-            self.conn.commit()
-            return cur.lastrowid
+            if not row:
+                # Si otra ingesta lo crea a la vez, DO NOTHING: ni error ni duplicado.
+                self.conn.execute(
+                    "INSERT INTO topics (slug, title, sort_order, folder_id) VALUES (?, ?, ?, ?) "
+                    "ON CONFLICT (slug) DO NOTHING", (slug, title, sort_order, folder_id))
+                row = self.conn.execute(
+                    "SELECT id, folder_id FROM topics WHERE slug = ?", (slug,)).fetchone()
+            if folder_id and row["folder_id"] is None:
+                self.conn.execute("UPDATE topics SET folder_id = ? WHERE id = ?",
+                                  (folder_id, row["id"]))
+            return row["id"]
 
     def now_sql(self) -> str:
-        """La hora actual con el mismo formato y la misma zona (UTC) que los
-        DEFAULT datetime('now') del esquema. La pone Python: igual en las dos bases."""
-        return _ahora_utc()
+        """La hora del RELOJ DE LA BASE, con el formato y la zona (UTC) de los
+        DEFAULT datetime('now') del esquema: baseline_at se compara con los
+        created_at que pone la base, así que sale del mismo reloj."""
+        with self._lock:
+            return self.conn.execute("SELECT datetime('now') AS n").fetchone()["n"]
 
     def count_topics(self) -> int:
         with self._lock:
@@ -1922,7 +2025,7 @@ class DatabaseManager:
     def list_topics(self, user_id: int) -> list[dict]:
         """Temas con el conteo de fichas, cuántas le tocan hoy A ESA PERSONA y si
         son nuevos."""
-        today = datetime.date.today().isoformat()
+        today = hoy().isoformat()
         baseline = self.get_setting("baseline_at")
         limite = _ahora_utc(-NEW_DAYS * 86400)
         with self._lock:
@@ -2036,15 +2139,14 @@ class DatabaseManager:
         return [_con_ruta_real(r) for r in rows]
 
     def assign_orphan(self, orphan_id: int, topic_id: int) -> bool:
-        with self._lock:
+        with self._transaccion():
             row = self.conn.execute(
                 "SELECT * FROM orphan_files WHERE id = ?", (orphan_id,)).fetchone()
         if not row:
             return False
         self.add_asset(topic_id, row["kind"], row["path"], score=1.0, matched_by="manual")
-        with self._lock:
+        with self._transaccion():
             self.conn.execute("DELETE FROM orphan_files WHERE id = ?", (orphan_id,))
-            self.conn.commit()
         return True
 
     # ============================================================ tarjetas
@@ -2064,46 +2166,65 @@ class DatabaseManager:
         limpias = [dict(card, front=limpiar_html(card.get("front", "")),
                         back=limpiar_html(card.get("back", ""))) for card in cards]
         guids = sorted({c["anki_guid"] for c in limpias if c.get("anki_guid")})
-        with self._lock:
-            # Las que ya existen, de una vez (en trozos: hay un tope de marcas
-            # por consulta), en vez de una consulta por ficha. La ingesta corre
-            # en cada arranque y, contra Postgres, cada consulta es un viaje de red.
-            existentes: dict[tuple, dict] = {}
-            for i in range(0, len(guids), 500):
-                trozo = guids[i:i + 500]
-                for r in self.conn.execute(
-                        "SELECT id, anki_guid, cloze_index, front, back, tags FROM cards "
-                        f"WHERE anki_guid IN ({', '.join('?' * len(trozo))})", tuple(trozo)):
-                    existentes[(r["anki_guid"], r["cloze_index"])] = dict(r)
+        with self._transaccion():
+            existentes = self._fichas_existentes(guids)
+            carrera: list[tuple[tuple, tuple]] = []
             for card in limpias:
                 guid = card.get("anki_guid")
                 clave = (guid, card.get("cloze_index", 0))
                 fila = existentes.get(clave) if guid else None
                 texto = (card.get("front", ""), card.get("back", ""), card.get("tags", ""))
                 if fila:
-                    # Sin cambios no se escribe nada: re-escanear no cuesta escrituras.
-                    if texto != (fila["front"], fila["back"], fila["tags"]):
-                        self.conn.execute(
-                            "UPDATE cards SET front = ?, back = ?, tags = ? WHERE id = ?",
-                            (*texto, fila["id"]))
-                        fila.update(front=texto[0], back=texto[1], tags=texto[2])
+                    self._actualizar_ficha(fila, texto)
                     updated += 1
-                else:
-                    cur = self.conn.execute(
-                        """
-                        INSERT INTO cards (topic_id, kind, front, back, cloze_index,
-                                           tags, source, anki_guid)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                        """,
-                        (topic_id, card.get("kind", "basic"), card.get("front", ""),
-                         card.get("back", ""), card.get("cloze_index", 0),
-                         card.get("tags", ""), source, guid))
-                    if guid:      # el mismo guid dos veces en un archivo: la 2.ª actualiza
-                        existentes[clave] = {"id": cur.lastrowid, "front": texto[0],
-                                             "back": texto[1], "tags": texto[2]}
-                    added += 1
-            self.conn.commit()
+                    continue
+                # ON CONFLICT … DO NOTHING: si otra ingesta la insertó a la vez,
+                # ni error ni duplicado; se actualiza abajo como una existente.
+                cur = self.conn.execute(
+                    """
+                    INSERT INTO cards (topic_id, kind, front, back, cloze_index,
+                                       tags, source, anki_guid)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT (anki_guid, cloze_index) WHERE anki_guid IS NOT NULL DO NOTHING
+                    """,
+                    (topic_id, card.get("kind", "basic"), card.get("front", ""),
+                     card.get("back", ""), card.get("cloze_index", 0),
+                     card.get("tags", ""), source, guid))
+                if cur.rowcount == 0:
+                    carrera.append((clave, texto))
+                    continue
+                if guid:      # el mismo guid dos veces en un archivo: la 2.ª actualiza
+                    existentes[clave] = {"id": cur.lastrowid, "front": texto[0],
+                                         "back": texto[1], "tags": texto[2]}
+                added += 1
+            if carrera:
+                ya = self._fichas_existentes(sorted({clave[0] for clave, _ in carrera}))
+                for clave, texto in carrera:
+                    self._actualizar_ficha(ya[clave], texto)
+                    updated += 1
         return {"added": added, "updated": updated}
+
+    def _fichas_existentes(self, guids: list[str]) -> dict[tuple, dict]:
+        """{(guid, cloze_index): fila} de las fichas con esos guids, de una vez
+        (en trozos: hay un tope de marcas por consulta) y no una consulta por
+        ficha: la ingesta corre en cada arranque y, contra Postgres, cada
+        consulta es un viaje de red. Se llama con el candado ya tomado."""
+        existentes: dict[tuple, dict] = {}
+        for i in range(0, len(guids), 500):
+            trozo = guids[i:i + 500]
+            for r in self.conn.execute(
+                    "SELECT id, anki_guid, cloze_index, front, back, tags FROM cards "
+                    f"WHERE anki_guid IN ({', '.join('?' * len(trozo))})", tuple(trozo)):
+                existentes[(r["anki_guid"], r["cloze_index"])] = dict(r)
+        return existentes
+
+    def _actualizar_ficha(self, fila: dict, texto: tuple) -> None:
+        """Pone el texto nuevo; sin cambios no escribe nada (re-escanear no cuesta
+        escrituras). Se llama con el candado ya tomado."""
+        if texto != (fila["front"], fila["back"], fila["tags"]):
+            self.conn.execute("UPDATE cards SET front = ?, back = ?, tags = ? WHERE id = ?",
+                              (*texto, fila["id"]))
+            fila.update(front=texto[0], back=texto[1], tags=texto[2])
 
     def topic_cards(self, topic_id: int) -> list[dict]:
         """El CONTENIDO de las fichas de un tema (igual para todos), sin progreso."""
@@ -2123,7 +2244,7 @@ class DatabaseManager:
 
     def new_today(self, user_id: int) -> int:
         """Fichas nuevas que esa persona ya introdujo hoy (primer repaso)."""
-        today = datetime.date.today().isoformat()
+        today = hoy().isoformat()
         with self._lock:
             row = self.conn.execute(
                 "SELECT COUNT(*) AS n FROM reviews "
@@ -2132,7 +2253,7 @@ class DatabaseManager:
         return row["n"] if row else 0
 
     def reviews_today(self, user_id: int) -> int:
-        today = datetime.date.today().isoformat()
+        today = hoy().isoformat()
         with self._lock:
             row = self.conn.execute(
                 "SELECT COUNT(*) AS n FROM reviews "
@@ -2181,7 +2302,7 @@ class DatabaseManager:
                     (user_id, *params, limit)).fetchall()
             return [dict(r) for r in rows]
 
-        today = datetime.date.today().isoformat()
+        today = hoy().isoformat()
         new_left = max(self.get_int_user_setting(user_id, "new_limit", DEFAULT_NEW_LIMIT)
                        - self.new_today(user_id), 0)
         rev_left = max(self.get_int_user_setting(user_id, "review_limit", DEFAULT_REVIEW_LIMIT)
@@ -2214,7 +2335,7 @@ class DatabaseManager:
     def scope_counts(self, user_id: int, topic_id: int | None = None,
                      folder_id: int | None = None) -> dict:
         """Cuántas fichas hay y cuántas le tocan hoy a esa persona, para un tema o carpeta."""
-        today = datetime.date.today().isoformat()
+        today = hoy().isoformat()
         where, params = self._scope(topic_id, folder_id)
         with self._lock:
             # el orden de los parámetros sigue al de los '?' en el texto:
@@ -2239,9 +2360,9 @@ class DatabaseManager:
             return None
         rating = int(_clamp(int(rating), 1, 4))
         result = schedule(card, rating, self.retention(user_id))
-        hoy = datetime.date.today().isoformat()
+        dia = hoy().isoformat()
 
-        with self._lock:
+        with self._transaccion():
             self.conn.execute(
                 """INSERT INTO card_progress (user_id, card_id, state, due, stability,
                                               difficulty, reps, lapses, last_review)
@@ -2263,13 +2384,12 @@ class DatabaseManager:
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (user_id, card_id, rating, card.get("state") or "new",
                  result["elapsed_days"], result["interval"], result["stability"],
-                 result["difficulty"], _ahora(), hoy))
-            self.conn.commit()
+                 result["difficulty"], _ahora(), dia))
         return result
 
     # ============================================================ métricas
     def stats(self, user_id: int) -> dict:
-        today = datetime.date.today().isoformat()
+        today = hoy().isoformat()
         with self._lock:
             totals = self.conn.execute(
                 f"""SELECT COUNT(*) AS total,
@@ -2291,7 +2411,7 @@ class DatabaseManager:
         # desde hoy (o desde ayer, si hoy todavía no se estudia).
         days = [r["day"] for r in streak_rows]
         streak = 0
-        cursor = datetime.date.today()
+        cursor = hoy()
         if days and days[0] != cursor.isoformat():
             cursor -= datetime.timedelta(days=1)
         day_set = set(days)
@@ -2424,6 +2544,12 @@ def ingest(db: DatabaseManager, content_dir: str | None = None) -> dict:
     report = {"temas": 0, "tarjetas_nuevas": 0, "tarjetas_actualizadas": 0,
               "materiales": 0, "huerfanos": 0, "errores": []}
 
+    def fallo(que: str, exc: Exception) -> None:
+        """Un archivo que falla no tumba la ingesta entera: queda en el informe
+        (lo ve el admin) y en el log con su traza, y se sigue con el resto."""
+        report["errores"].append(f"{que}: {type(exc).__name__}: {exc}")
+        _log.warning("Ingesta: falló %s", que, exc_info=True)
+
     secciones = scan_content(content_dir)
     if not secciones:
         report["errores"].append(f"No se encontró material en {content_dir}")
@@ -2438,7 +2564,11 @@ def ingest(db: DatabaseManager, content_dir: str | None = None) -> dict:
         # crear las suyas y mover los temas; esta solo evita que arranquen
         # sueltos.
         nombre = seccion or "Sin sección"
-        folder_id = db.ensure_folder(nombre, colores[n % len(colores)])
+        try:
+            folder_id = db.ensure_folder(nombre, colores[n % len(colores)])
+        except Exception as exc:
+            fallo(nombre, exc)
+            continue
         report.setdefault("carpetas", []).append(nombre)
 
         # --- 1. Archivos de fichas: definen los temas ---
@@ -2448,10 +2578,14 @@ def ingest(db: DatabaseManager, content_dir: str | None = None) -> dict:
             except (AnkiFormatError, sqlite3.Error, zipfile.BadZipFile) as exc:
                 report["errores"].append(str(exc))
                 continue
-            topic_id = db.ensure_topic(deck["topic"], sort_order=order,
-                                       folder_id=folder_id)
-            db.add_asset(topic_id, "anki", apkg, score=1.0, matched_by="deck")
-            counts = db.upsert_cards(topic_id, deck["cards"])
+            try:
+                topic_id = db.ensure_topic(deck["topic"], sort_order=order,
+                                           folder_id=folder_id)
+                db.add_asset(topic_id, "anki", apkg, score=1.0, matched_by="deck")
+                counts = db.upsert_cards(topic_id, deck["cards"])
+            except Exception as exc:
+                fallo(os.path.basename(apkg), exc)
+                continue
             report["temas"] += 1
             report["materiales"] += 1
             report["tarjetas_nuevas"] += counts["added"]
@@ -2465,19 +2599,23 @@ def ingest(db: DatabaseManager, content_dir: str | None = None) -> dict:
         for kind in ("presentacion", "resumen", "articulo"):
             for path in files.get(kind, []):
                 topic, score = match_topic(os.path.basename(path), propios)
-                if topic:
-                    db.add_asset(topic["id"], kind, path, score=score)
-                    report["materiales"] += 1
-                else:
-                    guess, gs = match_topic(os.path.basename(path), propios, threshold=0.0)
-                    db.add_orphan(path, kind, guess["id"] if guess else None, gs)
-                    report["huerfanos"] += 1
+                try:
+                    if topic:
+                        db.add_asset(topic["id"], kind, path, score=score)
+                        report["materiales"] += 1
+                    else:
+                        guess, gs = match_topic(os.path.basename(path), propios, threshold=0.0)
+                        db.add_orphan(path, kind, guess["id"] if guess else None, gs)
+                        report["huerfanos"] += 1
+                except Exception as exc:
+                    fallo(os.path.basename(path), exc)
 
     # Lo que encuentra el PRIMER escaneo es la biblioteca de partida, no una
     # novedad. A partir de aquí, un tema o material que aparece después (un
     # resumen nuevo que se despliega) se marca como nuevo durante NEW_DAYS.
+    # La hora es la de la base (como created_at) y no se pisa si ya está.
     if not db.get_setting("baseline_at"):
-        db.set_setting("baseline_at", db.now_sql())
+        db.set_setting_si_falta("baseline_at", db.now_sql())
     return report
 
 

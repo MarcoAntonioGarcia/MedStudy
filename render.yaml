@@ -25,13 +25,21 @@ services:
     # Se despliega solo desde main, que es la rama que corre. El trabajo en
     # curso vive en ramas aparte y llega aquí al fusionarse.
     branch: main
-    autoDeploy: true
+    # Cada commit en main se despliega solo.
+    autoDeployTrigger: commit
     # /entrar no toca la base: responde en cuanto el servidor escucha, aunque
     # la ingesta del material siga en segundo plano.
     healthCheckPath: /entrar
     envVars:
-      # La cadena de conexión de Neon. Se pega en el panel de Render, NUNCA
-      # aquí: este archivo sí va a GitHub.
+      # Marca fija de producción. Con ella (o con RENDER, o con un APP_URL
+      # https) la app exige la configuración de producción, Postgres incluido:
+      # nunca cae en silencio a una base SQLite que se borraría.
+      - key: MEDSTUDY_PRODUCCION
+        value: "1"
+      # La cadena de conexión de Neon, la DIRECTA (sin '-pooler' en el host:
+      # el candado entre instancias solo es fiable así; con el pooler la app
+      # funciona igual, sin él). Se pega en el panel de Render, NUNCA aquí:
+      # este archivo sí va a GitHub.
       - key: DATABASE_URL
         sync: false
       # Obliga a que la cookie de sesión viaje solo por HTTPS. Sin esto, viaja
@@ -63,7 +71,14 @@ services:
       # la cuenta que se registre con EXACTAMENTE este correo (verificado por
       # el enlace del alta) será admin, solo mientras no exista ninguno.
       # Nunca se pone una contraseña en el entorno.
+      # En cuanto exista el primer admin, bórrala del panel: ya no hace nada.
       - key: ADMIN_EMAIL
         sync: false
-      - key: HOST
-        value: "0.0.0.0"
+      # El «hoy» de quien estudia (tope de fichas nuevas, vencidas, racha). El
+      # contenedor corre en UTC: sin esto, el día cambiaría a las 18:00. La app
+      # usa APP_TZ (y esa zona por defecto); TZ deja también el reloj del
+      # sistema y los logs en hora de México.
+      - key: APP_TZ
+        value: "America/Mexico_City"
+      - key: TZ
+        value: "America/Mexico_City"

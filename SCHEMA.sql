@@ -70,6 +70,10 @@ CREATE TABLE IF NOT EXISTS folders (
     sort_order INTEGER NOT NULL DEFAULT 0,
     created_at TEXT    NOT NULL DEFAULT (datetime('now'))
 );
+-- Nombre único: la ingesta crea una carpeta por materia con INSERT … ON
+-- CONFLICT (name) DO NOTHING, y dos ingestas a la vez (dos instancias durante
+-- un despliegue) no pueden duplicarla.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_folders_name ON folders (name);
 
 -- --------------------------------------------------------------------------
 -- Temas

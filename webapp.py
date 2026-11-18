@@ -79,7 +79,8 @@ def problema_de_produccion(entorno) -> str:
         faltan.append("DATABASE_URL (Postgres)")
     if not faltan:
         return ""
-    return ("MedStudy no arranca: parece un despliegue (RENDER o APP_URL con https://) "
+    return ("MedStudy no arranca: parece un despliegue (MEDSTUDY_PRODUCCION, RENDER o "
+            "APP_URL con https://) "
             "pero falta configurar: " + ", ".join(faltan) + ".")
 
 
@@ -1062,7 +1063,11 @@ def create_folder(payload: dict = Body(...), uid: int = Depends(current_admin)) 
 @app.post("/api/folders/{folder_id}")
 def update_folder(folder_id: int, payload: dict = Body(...),
                   uid: int = Depends(current_admin)) -> dict:
-    if not db.rename_folder(folder_id, _nombre_carpeta(payload), _color_carpeta(payload)):
+    try:
+        cambiada = db.rename_folder(folder_id, _nombre_carpeta(payload), _color_carpeta(payload))
+    except ValueError as e:                     # ya hay otra con ese nombre
+        raise HTTPException(400, str(e)) from None
+    if not cambiada:
         raise HTTPException(404, "Carpeta no encontrada.")
     return {"folders": db.list_folders()}
 
@@ -1481,6 +1486,11 @@ def arrancar(configurar_logs: bool = True) -> None:
     """Lo que se hace al arrancar el servidor (ver _ciclo_de_vida)."""
     if configurar_logs and not logging.getLogger().handlers:
         logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    # Lo que pasó al abrir la base (al importar, antes de que hubiera logs).
+    for aviso in db.avisos:
+        _log.info("Base: %s", aviso)
+    db.avisos.clear()
+    _log.info("Zona horaria de la app: %s (hoy es %s).", core.APP_TZ, core.hoy().isoformat())
     admin_email = os.environ.get("ADMIN_EMAIL", "").strip()
     if admin_email:
         uid = db.promover_admin_inicial(admin_email)
