@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrar · MedStudy</title>
+<link rel="stylesheet" href="/static/cuentas.css">
+</head>
+<body class="cuenta">
+<main>
+  <div class="marca"><span class="logo">M</span><span>MedStudy</span></div>
+  <h1>Entrar</h1>
+  <p class="lede">Tus fichas, tus resúmenes y tus notas, en un solo sitio.</p>
+
+  <div class="hoja">
+    <form id="formEntrar">
+      <div class="campo">
+        <label for="login">Usuario o correo</label>
+        <input id="login" name="login" autocomplete="username" required maxlength="200"
+               autocapitalize="none" spellcheck="false">
+      </div>
+      <div class="campo">
+        <label for="clave">Contraseña</label>
+        <input id="clave" type="password" autocomplete="current-password" required maxlength="256">
+      </div>
+      <button class="principal" type="submit">Entrar</button>
+    </form>
+    <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+  </div>
+
+  <p class="pie">
+    <a href="/forgot-password">¿Olvidaste tu contraseña?</a><br>
+    ¿Eres nueva o nuevo? <a href="/signup">Crea una cuenta</a>
+  </p>
+</main>
+<script src="/static/login.js"></script>
+</body>
+</html>

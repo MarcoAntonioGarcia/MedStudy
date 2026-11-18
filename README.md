@@ -1,11 +1,11 @@
-# Neuro — App de Estudio
+# MedStudy — App de Estudio
 
-App web **local** para estudiar neurología: los materiales de cada tema en un
+App web para estudiar medicina interna: los materiales de cada tema en un
 solo sitio, repaso espaciado sobre las fichas, y post-it pegados sobre los
-resúmenes.
+resúmenes. **No usa IA.**
 
-Corre en tu máquina y se abre en el navegador. Tu material, tu base de datos,
-tu equipo. **No usa IA y no sube nada a ninguna parte.**
+Tiene **cuentas**: el material (temas, fichas, resúmenes) es de todos, y el
+progreso, las notas y los ajustes de estudio son de cada persona y privados.
 
 ---
 
@@ -24,18 +24,56 @@ navegador y no se les pueden pegar post-it.
 ## Ejecutar
 
 ```bash
+python crear_admin.py      # solo la primera vez: crea tu cuenta de administrador
 python webapp.py
 ```
 
-Abre **http://localhost:8090**.
+Abre **http://localhost:8090** y entra con esa cuenta. `crear_admin.py` pide la
+contraseña sin mostrarla (o la lee de `ADMIN_PASSWORD`); nunca la guardes en un
+archivo del repositorio.
 
 La primera vez escanea `contenido/` y arma los temas solo, una carpeta por materia.
+
+## Cuentas
+
+- **Registro público con correo verificado** (`/signup`): se pide solo el correo;
+  el usuario y la contraseña se eligen al abrir el enlace que llega. Hace falta
+  `APP_URL` y un modo de correo: en local, `CORREO_MODO=consola` escribe el
+  enlace en la terminal. Sin correo, el registro se apaga y las cuentas se
+  crean desde **/admin**.
+- **Entrar** con usuario o correo (`/entrar`), **¿olvidaste tu contraseña?**
+  (`/forgot-password`) y cambio de contraseña en Ajustes.
+- **Admin** (`/admin`): crear cuentas, bloquear y activar, cerrar sesiones,
+  poner una contraseña temporal. Solo el admin re-escanea, carga archivos y
+  organiza carpetas; los demás estudian.
+
+## Variables de entorno
+
+Los nombres están en `.env.example`. Ninguna es obligatoria en local.
+
+| Variable | Para qué |
+|---|---|
+| `PORT`, `HOST` | Puerto (8090) y dirección (127.0.0.1). |
+| `ESTUDIO_CONTENT_DIR` | Carpeta de material (por defecto `contenido/`). |
+| `APP_URL`, `APP_NOMBRE` | Dirección pública para los enlaces de los correos; nombre de la app. |
+| `CORREO_MODO` | `consola` en local, `memoria` en las pruebas. Los dos se niegan con `COOKIE_SEGURA=1`. |
+| `BREVO_API_KEY`, `CORREO_REMITENTE` | Envío real de correos (Brevo). |
+| `COOKIE_SEGURA` | `1` al servir por HTTPS: cookie `Secure` y HSTS. |
+| `SECRETO_APP` | Firma de la cookie de «dispositivo conocido». |
+| `IP_DE_CABECERA` | Cabecera con la IP real detrás de un proxy (p. ej. `true-client-ip`). |
+| `MAX_CORREOS_DIA`, `MAX_ALTAS_DIA` | Topes diarios de correos. |
+| `DOCS` | `1` para servir `/docs`. |
+| `ADMIN_USERNAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Solo para `crear_admin.py` sin terminal. |
+| `APP_DB_PATH` | Otra base SQLite (la usan las pruebas). |
 
 ## Pruebas
 
 ```bash
-python tests/test_core.py
+python -m unittest discover -s tests
 ```
+
+Corren contra una base y unas carpetas temporales: nunca tocan `database.db`
+ni `contenido/`, y los correos quedan en memoria.
 
 ---
 
@@ -65,8 +103,7 @@ Carpeta          →  Tema          →  Fichas + resumen + presentación + nota
 | **Post-it** | «📌 Pegar post-it» y clic donde quieras. Se arrastran y se editan. |
 | **Notas generales** | En el panel derecho, para lo que no va en un punto concreto. |
 | **Panel derecho** | Al repasar un tema, el resumen queda a la vista para consultarlo. |
-| **Cargar archivos** | PDF y archivos de fichas `.apkg`, desde la barra lateral. |
-| **Presentaciones** | Se abren con Keynote/PowerPoint. No se copian: pesan hasta 91 MB. |
+| **Cargar archivos** | PDF y archivos de fichas `.apkg` (hasta 25 MB), desde la barra lateral. Solo admin. |
 | **Modo oscuro** | Tres estados: automático, claro y oscuro (abajo a la izquierda). |
 | **Sin emparejar** | Lo que la ingesta no pudo asignar se ve en la UI para hacerlo a mano. |
 
@@ -78,7 +115,7 @@ Carpeta          →  Tema          →  Fichas + resumen + presentación + nota
 
 ## Ritmo diario
 
-En **Ajustes**:
+En **Ajustes** (cada persona el suyo):
 
 - **Fichas nuevas al día** (20 por defecto). Es el freno importante: con 745
   fichas, 20/día cubre todo en unas cinco semanas. Subirlo mucho hace que el
@@ -109,20 +146,20 @@ lo dice y te pide reexportarlo marcando *«Soporte para versiones anteriores»*.
 
 ```
 AppEstudio/
-├── core.py             # lógica: ingesta, repaso, fichas, notas, persistencia
-├── webapp.py           # servidor local — ejecuta esto
+├── core.py             # lógica: ingesta, repaso, cuentas, persistencia
+├── webapp.py           # servidor — ejecuta esto
+├── correo.py           # correos de alta y de restablecer (Brevo)
+├── crear_admin.py      # crea la cuenta de administrador
 ├── SCHEMA.sql          # esquema de la base
-├── static/index.html   # interfaz
-├── tests/test_core.py  # pruebas
-├── database.db         # (se genera) temas, fichas, notas y progreso
+├── static/             # interfaz: index.html + app.js, entrar, cuenta, admin
+├── tests/              # pruebas (unittest)
+├── database.db         # (se genera) temas, fichas, cuentas, progreso y notas
 ├── biblioteca/         # (se genera) los PDF que cargas desde la app
 ├── assets/paginas/     # (se genera) caché de páginas renderizadas
-└── exports/            # (se genera) archivos de fichas exportados
 ```
 
-`database.db` es todo tu progreso y todas tus notas. Es el único archivo que
-vale la pena respaldar; el material sigue viviendo en
-`../PresentacionesResumen/`.
+`database.db` guarda las cuentas, el progreso y las notas de todos. Es el único
+archivo que vale la pena respaldar; el material vive en `contenido/`.
 
 Diseño y decisiones técnicas: **[ARCHITECTURE.md](ARCHITECTURE.md)**.
 
@@ -130,8 +167,8 @@ Diseño y decisiones técnicas: **[ARCHITECTURE.md](ARCHITECTURE.md)**.
 
 ## Cambiar la carpeta de material
 
-Por defecto es `contenido/`, dentro del proyecto. Se cambia desde
-**Ajustes**, o al arrancar:
+Por defecto es `contenido/`, dentro del proyecto. Solo se cambia al arrancar
+(no desde la app: la API no puede elegir qué carpeta se lee):
 
 ```bash
 ESTUDIO_CONTENT_DIR="/ruta/a/otro/material" python webapp.py

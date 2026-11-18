@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- sin Referer: el enlace del correo lleva el token en el fragmento -->
+<meta name="referrer" content="no-referrer">
+<title>Cuenta · MedStudy</title>
+<link rel="stylesheet" href="/static/cuentas.css">
+</head>
+<body class="cuenta">
+<main>
+  <div class="marca"><span class="logo">M</span><span>MedStudy</span></div>
+  <h1 id="titulo">Crea tu cuenta</h1>
+  <p class="lede" id="subtitulo"></p>
+
+  <div class="hoja">
+    <!-- 1. Registro: solo el correo. La contraseña se elige al confirmarlo. -->
+    <form id="fSignup" hidden>
+      <div class="campo">
+        <label for="sEmail">Correo</label>
+        <input id="sEmail" type="email" autocomplete="email" required maxlength="254"
+               autocapitalize="none" spellcheck="false">
+        <div class="ayuda">Te mandamos un enlace para confirmarlo. Después eliges tu usuario y tu contraseña.</div>
+      </div>
+      <button class="principal" type="submit">Mándame el enlace</button>
+    </form>
+
+    <!-- 2. Desde el enlace del correo: usuario, nombre y contraseña. -->
+    <form id="fCreate" hidden>
+      <div class="campo">
+        <label>Correo</label>
+        <div id="cEmail" class="valor"></div>
+      </div>
+      <div class="campo">
+        <label for="cUser">Usuario</label>
+        <input id="cUser" autocomplete="username" required minlength="3" maxlength="32"
+               autocapitalize="none" spellcheck="false" pattern="[A-Za-z0-9._\-]+">
+        <div class="ayuda">Letras sin acentos, números, punto, guion y guion bajo. Con él entrarás.</div>
+      </div>
+      <div class="campo">
+        <label for="cName">Tu nombre <span class="ayuda">(opcional)</span></label>
+        <input id="cName" autocomplete="name" maxlength="60">
+      </div>
+      <div class="campo">
+        <label for="cPass">Contraseña</label>
+        <input id="cPass" type="password" autocomplete="new-password" required minlength="10" maxlength="256">
+        <div class="ayuda">Al menos 10 caracteres.</div>
+      </div>
+      <button class="principal" type="submit">Crear mi cuenta</button>
+    </form>
+
+    <!-- 3. Olvidé mi contraseña: solo el correo. -->
+    <form id="fForgot" hidden>
+      <div class="campo">
+        <label for="oEmail">Correo</label>
+        <input id="oEmail" type="email" autocomplete="email" required maxlength="254"
+               autocapitalize="none" spellcheck="false">
+        <div class="ayuda">Si tiene una cuenta, te mandamos un enlace para poner una contraseña nueva.</div>
+      </div>
+      <button class="principal" type="submit">Mándame el enlace</button>
+    </form>
+
+    <!-- 4. Desde el enlace del correo: contraseña nueva. -->
+    <form id="fReset" hidden>
+      <div class="campo">
+        <label>Cuenta</label>
+        <div id="rEmail" class="valor"></div>
+        <div class="ayuda" id="rUser"></div>
+      </div>
+      <!-- para que el gestor de contraseñas guarde la nueva con su usuario -->
+      <input id="rUserField" type="text" autocomplete="username" hidden readonly>
+      <div class="campo">
+        <label for="rPass">Contraseña nueva</label>
+        <input id="rPass" type="password" autocomplete="new-password" required minlength="10" maxlength="256">
+        <div class="ayuda">Al menos 10 caracteres. Se cerrarán tus otras sesiones.</div>
+      </div>
+      <button class="principal" type="submit">Guardar la contraseña</button>
+    </form>
+
+    <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+  </div>
+
+  <p class="pie"><a href="/entrar">Volver a entrar</a></p>
+</main>
+<script src="/static/cuenta.js"></script>
+</body>
+</html>

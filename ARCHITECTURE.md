@@ -1,8 +1,53 @@
-# Arquitectura — App de Estudio (Neurología)
+# Arquitectura — MedStudy (App de Estudio)
 
-App web **estrictamente local**. Un proceso Python, una base SQLite
-(`database.db`), una página servida en `localhost`. Sin nube, sin cuentas,
-sin servicios externos.
+Un proceso Python (FastAPI), una base SQLite (`database.db`) y unas pocas
+páginas sin frameworks ni CDN. Con **cuentas** (etapa 1): el material es
+compartido y el progreso es de cada persona. El único servicio externo es el
+envío de correos de alta y de restablecer (Brevo), y es opcional.
+
+## Cuentas y progreso por persona (etapa 1)
+
+Portado de EnglishApp, que ya corre en producción:
+
+- **Contraseñas** con scrypt de la librería estándar (`core.hash_password`).
+- **Sesiones** opacas: token aleatorio en una cookie `HttpOnly`, `SameSite=Lax`
+  (y `Secure` con `COOKIE_SEGURA=1`); en la base, solo su SHA-256. Una sesión
+  por persona: entrar cierra las demás. Bloquear o cambiar la contraseña las
+  cierra todas.
+- **Enlaces por correo** (`email_tokens`): SHA-256, un solo uso, caducan. El
+  registro pide solo el correo; usuario y contraseña se eligen al abrir el
+  enlace (contra el pre-secuestro de cuentas). Respuestas iguales exista o no
+  la cuenta; topes por IP, por correo y globales.
+- **Topes de intentos** en memoria: por IP (`IP_DE_CABECERA` detrás de un
+  proxy), por cuenta y por «dispositivo conocido» (cookie firmada).
+- **Permisos**: todo `/api/*` salvo `/api/auth/*` exige sesión (401). Lo que
+  cambia el material compartido —re-escanear, cargar, carpetas, mover temas,
+  huérfanos, `/admin`— exige ser admin (403).
+- **Defensa en profundidad**: tope de cuerpo de 1 MB (25 MB para la carga del
+  admin), CSP sin scripts en línea (el JavaScript vive en `static/*.js`, así el
+  HTML de las fichas de Anki no puede ejecutar nada), `frame-ancestors 'none'`,
+  `nosniff`, HSTS con `COOKIE_SEGURA=1`, `/docs` apagado salvo `DOCS=1`. Los
+  archivos de los materiales solo se sirven si su ruta real está dentro de la
+  carpeta de material o de `biblioteca/`. La carpeta de material solo se fija
+  con `ESTUDIO_CONTENT_DIR`; la API no puede elegir otra.
+
+Qué es de quién:
+
+| Tabla | De quién |
+|---|---|
+| `folders`, `topics`, `assets`, `cards`, `orphan_files` | De todos (el contenido) |
+| `card_progress (user_id, card_id)` | De cada persona: estado FSRS. Sin fila = ficha nueva |
+| `reviews` (con `user_id`) | De cada persona: bitácora de repasos |
+| `notes` (con `user_id`) | Privadas: otra persona recibe 404 |
+| `user_settings (user_id, key)` | De cada persona: `new_limit`, `review_limit`, `retention`, `theme` |
+| `settings` | De la app: `baseline_at` |
+| `users`, `sessions`, `email_tokens` | Cuentas |
+
+`_migrate()` pone al día una base vieja en cada arranque, de forma idempotente:
+quita las columnas FSRS de `cards` (el progreso global no tenía dueño y se
+descarta), añade `user_id` a `reviews` y `notes`, y borra de `settings` los
+ajustes que ya son personales y `content_dir`. Las fechas nuevas las pone
+Python como texto, igual en SQLite que en un futuro Postgres.
 
 ## Principio rector
 
@@ -154,15 +199,17 @@ tamaño de la ventana o el dpi del render.
 |---|---|---|
 | Resúmenes PDF | Sí, a `biblioteca/` | ~170 KB. La app queda autocontenida. |
 | Archivos de fichas | Se importan a la base | El contenido pasa a SQLite; el archivo ya no hace falta. |
-| Presentaciones | **No** | Hasta 91 MB. Se abren con Keynote/PowerPoint donde ya viven. |
+| Presentaciones | **No** | Hasta 91 MB. De ellas se sacan el resumen y las fichas. |
 
 ## Piezas
 
 | Archivo | Responsabilidad |
 |---|---|
 | `core.py` | Toda la lógica. No importa FastAPI ni ninguna UI. |
-| `webapp.py` | Capa fina de HTTP: rutas y validación de entrada, nada más. |
-| `static/index.html` | La interfaz completa. Sin frameworks, sin CDN. |
+| `webapp.py` | HTTP: rutas, sesiones, permisos, topes y validación de entrada. |
+| `correo.py` | Envío de correos (Brevo); `memoria` en pruebas, `consola` en local. |
+| `crear_admin.py` | Crea la cuenta de administrador sin escribir la contraseña en ningún sitio. |
+| `static/` | `index.html` + `app.js` (la app), `login`, `cuenta`, `admin`, `ui.js` (diálogos). |
 | `SCHEMA.sql` | Esquema SQLite, idempotente. |
 
 Dentro de `core.py`:
@@ -170,7 +217,8 @@ Dentro de `core.py`:
 - `slugify` / `tokenize` / `match_score` / `match_topic` — emparejamiento
 - `schedule` / `retrievability` / `interval_for` — FSRS
 - `AnkiImporter` / `AnkiExporter` — intercambio con Anki
-- `DatabaseManager` — única dueña de la conexión SQLite
+- `hash_password` / `verify_password` / `ruta_permitida` — cuentas y archivos
+- `DatabaseManager` — única dueña de la conexión SQLite (cuentas, progreso, notas)
 - `ingest` — escanea y arma los temas (idempotente)
 
 El acceso a datos está aislado en `DatabaseManager`: migrar a Postgres
@@ -182,12 +230,14 @@ significaría cambiar esa clase, no el resto de la app.
 
 ```
 AppEstudio/
-├── core.py                 # lógica: ingesta, FSRS, Anki, persistencia
-├── webapp.py               # servidor local (FastAPI) — entrypoint
+├── core.py                 # lógica: ingesta, FSRS, Anki, cuentas, persistencia
+├── webapp.py               # servidor (FastAPI) — entrypoint
+├── correo.py               # correos de alta y restablecer
+├── crear_admin.py          # primera cuenta de administrador
 ├── SCHEMA.sql              # esquema de la base
-├── static/index.html       # interfaz
-├── database.db             # (generado) temas, tarjetas, progreso
-├── exports/                # (generado) .apkg exportados
+├── static/                 # páginas, scripts y estilos
+├── tests/                  # unittest: núcleo, registro, seguridad, aislamiento
+├── database.db             # (generado) contenido, cuentas, progreso y notas
 ├── ARCHITECTURE.md         # este documento
 └── README.md
 ```

@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Neuro — App de Estudio</title>
+<title>MedStudy</title>
+<link rel="stylesheet" href="/static/cuentas.css">
 <style>
 /* ---------------------------------------------------------------- paleta ---
    Cálida, de papel: crema, oro y verde. El modo oscuro no es el mismo tono
@@ -55,6 +56,7 @@ button:hover{border-color:var(--accent)}
 .app{display:grid;grid-template-columns:270px minmax(0,1fr) 340px;
   height:100dvh;max-height:100dvh;overflow:hidden}
 .app.no-rail{grid-template-columns:270px minmax(0,1fr)}
+.app.no-rail .rail{display:none}
 /* Los hijos de un grid traen min-width:auto: un contenido ancho (una imagen de
    página, una pregunta larga sin espacios) empujaría y comprimiría al vecino.
    min-width:0 obliga a que desborde DENTRO de su columna. */
@@ -103,6 +105,10 @@ button:hover{border-color:var(--accent)}
 .side-foot .seg button.on{background:var(--gold);color:#241d0e}
 .streak{display:flex;align-items:center;gap:8px;padding:9px 16px;font-size:13.5px}
 .streak b{color:var(--side-ink)}
+.side-foot .salir{border:0;background:transparent;color:var(--side-muted);padding:2px 0;font-size:13px}
+.side-foot .salir:hover{color:var(--gold)}
+a.navbtn{text-decoration:none}
+[hidden]{display:none !important}
 
 /* ---------------------------------------------------------------- centro */
 .center{display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
@@ -212,7 +218,7 @@ html[data-theme="oscuro"] .notecard .meta{color:#c4b183}
 .panel p{margin:0 0 15px;color:var(--muted);font-size:13.3px}
 .field{display:flex;align-items:center;gap:12px;margin-bottom:11px}
 .field label{width:190px;font-size:14px}
-input[type=number],input[type=text],select{padding:7px 10px;border:1px solid var(--line);
+input[type=number],input[type=text],input[type=password],select{padding:7px 10px;border:1px solid var(--line);
   border-radius:8px;background:var(--bg);width:140px}
 input[type=text]{width:100%;max-width:400px}
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);
@@ -227,8 +233,8 @@ input[type=text]{width:100%;max-width:400px}
 
   <aside class="sidebar">
     <div class="brand">
-      <div class="logo">N</div>
-      <div class="name">Neuro<small>Estudio de Mariela</small></div>
+      <div class="logo">M</div>
+      <div class="name">MedStudy<small id="quien">Medicina interna</small></div>
     </div>
 
     <nav class="nav">
@@ -236,16 +242,17 @@ input[type=text]{width:100%;max-width:400px}
       <button class="navbtn" data-sec="repaso">🎴 <span>Repaso</span>
         <span class="count-pill" id="dueBadge" style="display:none">0</span></button>
       <button class="navbtn" data-sec="ajustes">⚙️ <span>Ajustes</span></button>
+      <a class="navbtn solo-admin" href="/admin" hidden>👥 <span>Usuarios</span></a>
     </nav>
 
-    <div class="side-h">Carpetas <button id="addFolder" title="Nueva carpeta">＋</button></div>
+    <div class="side-h">Carpetas <button id="addFolder" class="solo-admin" hidden title="Nueva carpeta">＋</button></div>
     <div class="side-scroll" id="tree"></div>
 
-    <div style="padding:0 12px 10px">
+    <div class="solo-admin" hidden style="padding:0 12px 10px">
       <input type="file" id="fileInput" accept=".pdf,.apkg" style="display:none">
       <button class="btn gold" style="width:100%" id="uploadBtn">＋ Cargar archivo</button>
       <div class="muted" style="font-size:11px;margin-top:7px;color:var(--side-muted)">
-        PDF y archivos de fichas. Las presentaciones se consultan desde su carpeta.
+        PDF y archivos de fichas (hasta 25 MB).
       </div>
     </div>
 
@@ -255,7 +262,7 @@ input[type=text]{width:100%;max-width:400px}
     </div>
 
     <div class="side-foot">
-      <span>Sesión local</span>
+      <button class="salir" id="salir" title="Cerrar sesión">Salir</button>
       <div class="seg" id="themeSeg">
         <button data-theme="auto" title="Automático">◐</button>
         <button data-theme="claro" title="Claro">☀</button>
@@ -296,558 +303,7 @@ input[type=text]{width:100%;max-width:400px}
 
 <div class="toast" id="toast"></div>
 
-<script>
-const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
-const esc = s => (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-
-async function api(url, opts){
-  const r = await fetch(url, opts);
-  if(!r.ok) throw new Error((await r.json().catch(()=>({}))).detail || r.statusText);
-  return r.json();
-}
-const post = (u,b) => api(u,{method:'POST',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify(b||{})});
-const del  = u => api(u,{method:'DELETE'});
-let tt; function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on');
-  clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('on'),2600); }
-
-const S = {folders:[], topics:[], stats:{}, settings:{}, pdf_ok:true,
-           sec:'inicio', topic:null, railTab:'postit', placing:false,
-           queue:[], card:null, revealed:false};
-
-/* ------------------------------------------------------------------ tema */
-async function boot(){
-  const d = await api('/api/bootstrap');
-  Object.assign(S, d);
-  applyTheme(S.settings.theme || 'auto');
-  paintTree(); paintStats(); go(S.sec);
-}
-
-function applyTheme(t){
-  document.documentElement.setAttribute('data-theme', t);
-  $$('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.theme === t));
-}
-$$('#themeSeg button').forEach(b => b.onclick = async () => {
-  applyTheme(b.dataset.theme);
-  S.settings = await post('/api/settings', {theme: b.dataset.theme});
-});
-
-function paintStats(){
-  const s = S.stats, due = (s.vencidas||0) + (s.aprendiendo||0);
-  const badge = $('#dueBadge');
-  badge.textContent = due; badge.style.display = due ? '' : 'none';
-  $('#streakNum').textContent = s.racha || 0;
-  $('#flame').style.filter = s.racha ? 'none' : 'grayscale(1)';
-  $('#flame').style.opacity = s.racha ? 1 : .5;
-}
-
-/* --------------------------------------------------------------- sidebar */
-function paintTree(){
-  const sinCarpeta = S.topics.filter(t => !t.folder_id);
-  const bloques = S.folders.map(f => ({f, ts: S.topics.filter(t => t.folder_id === f.id)}));
-  if (sinCarpeta.length) bloques.push({f:{id:0,name:'Sin carpeta',color:'#8a8378'}, ts:sinCarpeta});
-
-  $('#tree').innerHTML = bloques.map(({f,ts}) => `
-    <div class="folder">
-      <div class="folder-row" data-folder="${f.id}">
-        <span class="dot" style="background:${esc(f.color)}"></span>
-        <span>${esc(f.name)}</span>
-        ${f.id ? `<span class="gear" data-edit="${f.id}">⋯</span>` : ''}
-        <span class="n">${ts.length}</span>
-      </div>
-      ${ts.map(t => `
-        <div class="topic-row ${S.topic===t.id?'on':''}" data-topic="${t.id}">
-          <span>${esc(t.title)}</span>
-          ${t.vencidas ? `<span class="due">${t.vencidas}</span>` : ''}
-        </div>`).join('')}
-    </div>`).join('');
-
-  $$('[data-topic]').forEach(el => el.onclick = () => openTopic(+el.dataset.topic));
-  $$('[data-folder]').forEach(el => el.onclick = e => {
-    if (e.target.dataset.edit) return;
-    S.folderView = +el.dataset.folder || null;
-    go('inicio');
-  });
-  $$('[data-edit]').forEach(el => el.onclick = async e => {
-    e.stopPropagation();
-    const f = S.folders.find(x => x.id === +el.dataset.edit);
-    const name = prompt('Nombre de la carpeta (vacío para borrarla):', f.name);
-    if (name === null) return;
-    if (!name.trim()){
-      const r = await del('/api/folders/' + f.id);
-      S.folders = r.folders; S.topics = r.topics; paintTree(); toast('Carpeta borrada');
-    } else {
-      const r = await post('/api/folders/' + f.id, {name: name.trim()});
-      S.folders = r.folders; paintTree();
-    }
-  });
-}
-
-$('#addFolder').onclick = async () => {
-  const name = prompt('Nombre de la carpeta nueva:');
-  if (!name || !name.trim()) return;
-  const r = await post('/api/folders', {name: name.trim()});
-  S.folders = r.folders; paintTree(); toast('Carpeta creada');
-};
-
-$$('.navbtn').forEach(b => b.onclick = () => go(b.dataset.sec));
-
-/* ---------------------------------------------------------------- rutas */
-function go(sec, opts){
-  S.sec = sec;
-  $$('.navbtn').forEach(b => b.classList.toggle('active', b.dataset.sec === sec));
-  $$('.view').forEach(v => v.classList.toggle('on', v.id === 'v-' + sec));
-  if (sec === 'inicio')  renderInicio();
-  if (sec === 'repaso')  startStudy(opts || {});
-  if (sec === 'ajustes') renderAjustes();
-}
-
-/* --------------------------------------------------------------- inicio */
-function renderInicio(){
-  S.topic = null;
-  const fv = S.folderView ? S.folders.find(f => f.id === S.folderView) : null;
-  const ambito = fv ? {folder_id: fv.id, name: fv.name}
-                    : {name: 'Todos los temas'};
-  const temas = fv ? S.topics.filter(t => t.folder_id === fv.id) : S.topics;
-  const fichas = temas.reduce((a,t) => a + t.total, 0);
-  // Lo que de verdad toca hoy: las vencidas más lo que queda del tope diario
-  // de nuevas. Sumar TODAS las nuevas daba «1692 para hoy» con un tope de 20.
-  const nuevasQuedan = Math.max(0, (S.stats.nuevas_limite || 20) - (S.stats.nuevas_hoy || 0));
-  const hoy    = temas.reduce((a,t) => a + t.vencidas, 0)
-               + Math.min(temas.reduce((a,t) => a + t.nuevas, 0), nuevasQuedan);
-
-  $('#ttl').textContent = fv ? fv.name : 'Temas';
-  $('#sub').textContent = `${temas.length} temas · ${fichas} fichas · ${hoy} para hoy`;
-  $('#topActions').innerHTML = `
-    <button class="btn solid" id="goStudy">Repasar${fv ? ' la carpeta' : ' todo'} (${hoy})</button>
-    <button class="btn" id="goFree" title="No altera la programación">🔁 Repaso libre</button>
-    ${fv ? `<button class="btn ghost" id="allTopics">Ver todo</button>`
-         : `<button class="btn ghost" id="rescan">Re-escanear</button>`}`;
-  $('#goStudy').onclick = () => go('repaso', ambito);
-  $('#goFree').onclick  = () => go('repaso', {...ambito, mode:'libre'});
-  if (fv) $('#allTopics').onclick = () => { S.folderView = null; go('inicio'); };
-  else $('#rescan').onclick = async () => {
-    toast('Escaneando…');
-    const r = await post('/api/ingest');
-    await boot(); toast(`${r.temas} temas · ${r.tarjetas_nuevas} fichas nuevas`);
-  };
-
-  if (fv){
-    $('#v-inicio').innerHTML = temas.length
-      ? `<div class="grid">${temas.map(cardHtml).join('')}</div>`
-      : `<div class="empty">Esta carpeta todavía no tiene temas.</div>`;
-  } else {
-    const sinCarpeta = S.topics.filter(t => !t.folder_id);
-    const bloques = S.folders.map(f => ({f, ts: S.topics.filter(t => t.folder_id === f.id)}))
-                             .filter(b => b.ts.length);
-    if (sinCarpeta.length) bloques.push({f:{name:'Sin carpeta'}, ts:sinCarpeta});
-    // Lo recién desplegado va primero: temas nuevos y temas con material nuevo
-    const recientes = S.topics.filter(t => t.is_new || t.is_updated);
-    if (recientes.length) bloques.unshift({f:{name:'Recién agregado'}, ts:recientes, reciente:true});
-    $('#v-inicio').innerHTML = bloques.length ? bloques.map(({f,ts}) => `
-      <div class="sec-h"><h2>${esc(f.name)}</h2><span class="line"></span>
-        <span class="muted" style="font-size:12px">${ts.reduce((a,t)=>a+t.total,0)} fichas</span></div>
-      <div class="grid">${ts.map(cardHtml).join('')}</div>`).join('')
-      : `<div class="empty">No hay temas todavía. Carga un archivo de fichas
-         o pulsa «Re-escanear».</div>`;
-  }
-  $$('[data-open]').forEach(el => el.onclick = () => openTopic(+el.dataset.open));
-  setRail(null);
-}
-
-function cardHtml(t){
-  const mats = [['resumen','resumen'],['anki','fichas'],['articulo','artículos']];
-  const tag = t.is_new ? '<span class="nuevo">Nuevo</span>'
-            : t.is_updated ? '<span class="nuevo act">Actualizado</span>' : '';
-  return `<button class="tcard" data-open="${t.id}">
-    <h3>${tag}${esc(t.title)}</h3>
-    <div class="chips">
-      <span class="chip ${t.vencidas?'due':''}">${t.vencidas} pendientes</span>
-      <span class="chip ${t.nuevas?'new':''}">${t.nuevas} nuevas</span>
-      <span class="chip">${t.total} fichas</span>
-    </div>
-    <div class="mats">${mats.filter(([k]) => k !== 'articulo' || t.assets[k]).map(([k,l]) =>
-      `<span class="mat ${t.assets[k]?'':'miss'}">${k === 'articulo' ? t.assets[k].length + ' ' : ''}${l}</span>`).join('')}</div>
-  </button>`;
-}
-
-/* ----------------------------------------------------------------- tema */
-async function openTopic(id){
-  const t = await api('/api/topics/' + id);
-  S.topic = id; S.topicData = t; S.placing = false;
-  paintTree();
-  $$('.navbtn').forEach(b => b.classList.remove('active'));
-  $$('.view').forEach(v => v.classList.toggle('on', v.id === 'v-tema'));
-  S.sec = 'tema';
-
-  const resumen = (t.assets.resumen || [])[0];
-  const pres    = (t.assets.presentacion || [])[0];
-  $('#ttl').textContent = t.title;
-  $('#sub').textContent = `${t.cards.length} fichas · ${t.pages || 0} págs. de resumen`;
-  $('#topActions').innerHTML =
-    `<button class="btn solid" id="tStudy">Repasar</button>
-     <button class="btn" id="tFree" title="No altera la programación">🔁 Libre</button>
-     ${resumen && S.pdf_ok ? `<button class="btn" id="tPin">📌 Pegar post-it</button>` : ''}
-     ${pres ? `<button class="btn ghost" id="tPres">Abrir presentación</button>` : ''}`;
-  $('#tStudy').onclick = () => go('repaso', {topic_id:id, name:t.title});
-  $('#tFree').onclick  = () => go('repaso', {topic_id:id, name:t.title, mode:'libre'});
-  if (pres) $('#tPres').onclick = async () => {
-    try { await post(`/api/assets/${pres.id}/open`); toast('Abriendo…'); }
-    catch(e){ toast(e.message); }
-  };
-  if (resumen && S.pdf_ok) $('#tPin').onclick = () => {
-    S.placing = !S.placing;
-    $('#tPin').classList.toggle('btn', true);
-    $('#tPin').textContent = S.placing ? '✕ Cancelar' : '📌 Pegar post-it';
-    $$('.page').forEach(p => p.classList.toggle('placing', S.placing));
-    if (S.placing) toast('Haz clic donde quieras pegar la nota');
-  };
-
-  renderPages();
-  setRail('tema');
-}
-
-function renderPages(){
-  const t = S.topicData, resumen = (t.assets.resumen || [])[0];
-  if (!resumen){
-    $('#v-tema').innerHTML = `<div class="empty">Este tema no tiene resumen en PDF.<br>
-      Cárgalo con «＋ Cargar archivo».</div>`;
-    return;
-  }
-  if (!S.pdf_ok){
-    $('#v-tema').innerHTML = `<div class="pages">
-      <div class="empty" style="margin-bottom:14px">Para pegar post-it sobre el resumen
-        falta poppler: <code>brew install poppler</code>. Mientras, el PDF se ve así:</div>
-      <iframe src="/api/assets/${resumen.id}/file" style="width:100%;height:78vh;
-        border:1px solid var(--line);border-radius:10px"></iframe></div>`;
-    return;
-  }
-  const n = t.pages || 1;
-  const arts = (t.assets.articulo || []);
-  const artsHtml = arts.length ? `<div class="arts"><span class="lbl">Artículos relacionados</span>${
-    arts.map(a => `<a class="btn" href="/api/assets/${a.id}/file" target="_blank" rel="noopener noreferrer">${esc(a.filename.replace(/\.pdf$/i,''))}</a>`).join('')}</div>` : '';
-  $('#v-tema').innerHTML = artsHtml + `<div class="pages">${
-    Array.from({length:n}, (_,i) => `
-      <div class="page ${S.placing?'placing':''}" data-page="${i+1}">
-        <img src="/api/assets/${resumen.id}/page/${i+1}" alt="Página ${i+1}" loading="lazy">
-      </div>`).join('')}</div>`;
-  $$('.page').forEach(p => {
-    p.onclick = e => onPageClick(e, p, resumen.id);
-    paintStickies(p, resumen.id);
-  });
-}
-
-function paintStickies(pageEl, assetId){
-  const page = +pageEl.dataset.page;
-  pageEl.querySelectorAll('.sticky').forEach(el => el.remove());
-  S.topicData.notes.filter(nt => nt.kind === 'sticky' && nt.page === page)
-    .forEach(nt => pageEl.appendChild(stickyEl(nt, pageEl)));
-}
-
-function stickyEl(nt, pageEl){
-  const el = document.createElement('div');
-  el.className = 'sticky';
-  el.style.left = (nt.x * 100) + '%';
-  el.style.top  = (nt.y * 100) + '%';
-  el.innerHTML = `<button class="x" title="Borrar">×</button>
-    <textarea placeholder="Escribe aquí…">${esc(nt.text)}</textarea>`;
-  el.onclick = e => e.stopPropagation();      // no dispara la colocación de otra nota
-
-  const ta = el.querySelector('textarea');
-  let save;
-  ta.oninput = () => { clearTimeout(save);
-    save = setTimeout(() => post('/api/notes/' + nt.id, {text: ta.value})
-      .then(() => { nt.text = ta.value; }), 600); };
-
-  el.querySelector('.x').onclick = async e => {
-    e.stopPropagation();
-    await del('/api/notes/' + nt.id);
-    S.topicData.notes = S.topicData.notes.filter(x => x.id !== nt.id);
-    el.remove(); renderRail(); toast('Nota borrada');
-  };
-
-  // Arrastrar: la posición se guarda en porcentaje, así que la nota se queda
-  // en su sitio aunque cambie el tamaño de la ventana o la escala del PDF.
-  el.onpointerdown = e => {
-    if (e.target.tagName === 'TEXTAREA' || e.target.classList.contains('x')) return;
-    e.preventDefault();
-    const rect = pageEl.getBoundingClientRect();
-    const move = ev => {
-      nt.x = Math.min(Math.max((ev.clientX - rect.left) / rect.width, 0), 1);
-      nt.y = Math.min(Math.max((ev.clientY - rect.top) / rect.height, 0), 1);
-      el.style.left = (nt.x*100) + '%'; el.style.top = (nt.y*100) + '%';
-    };
-    const up = () => {
-      document.removeEventListener('pointermove', move);
-      document.removeEventListener('pointerup', up);
-      post('/api/notes/' + nt.id, {x: nt.x, y: nt.y});
-    };
-    document.addEventListener('pointermove', move);
-    document.addEventListener('pointerup', up);
-  };
-  return el;
-}
-
-async function onPageClick(e, pageEl, assetId){
-  if (!S.placing) return;
-  const rect = pageEl.getBoundingClientRect();
-  const x = (e.clientX - rect.left) / rect.width;
-  const y = (e.clientY - rect.top)  / rect.height;
-  const r = await post(`/api/topics/${S.topic}/notes`,
-    {kind:'sticky', asset_id:assetId, page:+pageEl.dataset.page, x, y, text:''});
-  S.topicData.notes = r.notes;
-  S.placing = false;
-  $('#tPin').textContent = '📌 Pegar post-it';
-  $$('.page').forEach(p => p.classList.remove('placing'));
-  paintStickies(pageEl, assetId); renderRail();
-  pageEl.querySelector('.sticky:last-child textarea')?.focus();
-}
-
-/* ----------------------------------------------------------------- rail */
-function setRail(mode){
-  S.railMode = mode;
-  $('#app').classList.toggle('no-rail', !mode);
-  if (!mode) return;
-  S.railTab = mode === 'tema' ? 'postit' : 'resumen';
-  renderRail();
-}
-
-function renderRail(){
-  if (S.railMode === 'tema'){
-    const tabs = [['postit','📌 Post-its'],['general','📝 Notas'],['fichas','🎴 Fichas']];
-    $('#railtabs').innerHTML = tabs.map(([k,l]) =>
-      `<button class="${S.railTab===k?'on':''}" data-tab="${k}">${l}</button>`).join('');
-    $$('#railtabs button').forEach(b => b.onclick = () => { S.railTab=b.dataset.tab; renderRail(); });
-    $('#railbody').className = 'railbody';
-    $('#railbody').innerHTML = railTemaBody();
-    wireRailNotes();
-  } else if (S.railMode === 'repaso'){
-    $('#railtabs').innerHTML = `<button class="on">📄 Resumen del tema</button>`;
-    $('#railbody').className = 'railbody railpdf';
-    $('#railbody').innerHTML = railResumen();
-  }
-}
-
-function railTemaBody(){
-  const t = S.topicData;
-  if (S.railTab === 'fichas'){
-    return `<div class="fichas">${t.cards.map(c =>
-      `<div class="f"><div class="q">${c.front}</div><div class="a">${c.back}</div></div>`
-    ).join('') || '<div class="empty">Sin fichas todavía.</div>'}</div>`;
-  }
-  const kind = S.railTab === 'postit' ? 'sticky' : 'general';
-  const notes = t.notes.filter(n => n.kind === kind);
-  const add = kind === 'general'
-    ? `<button class="btn" style="width:100%;margin-bottom:11px" id="addGeneral">＋ Nota nueva</button>`
-    : `<div class="muted" style="font-size:12px;margin-bottom:11px">
-         Pulsa «📌 Pegar post-it» y haz clic sobre el resumen.</div>`;
-  return add + (notes.map(n => `
-    <div class="notecard" data-note="${n.id}">
-      <button class="x">×</button>
-      ${kind==='sticky' ? `<div class="meta">Página ${n.page}</div>` : ''}
-      <textarea placeholder="Escribe aquí…">${esc(n.text)}</textarea>
-    </div>`).join('') || `<div class="empty">Sin notas todavía.</div>`);
-}
-
-function wireRailNotes(){
-  const ga = $('#addGeneral');
-  if (ga) ga.onclick = async () => {
-    const r = await post(`/api/topics/${S.topic}/notes`, {kind:'general', text:''});
-    S.topicData.notes = r.notes; renderRail();
-    $('#railbody textarea')?.focus();
-  };
-  $$('#railbody [data-note]').forEach(el => {
-    const id = +el.dataset.note, ta = el.querySelector('textarea');
-    let save;
-    ta.oninput = () => { clearTimeout(save);
-      save = setTimeout(() => post('/api/notes/' + id, {text: ta.value}).then(() => {
-        const n = S.topicData.notes.find(x => x.id === id); if (n) n.text = ta.value;
-        if (S.railTab === 'postit') $$('.page').forEach(p =>
-          paintStickies(p, (S.topicData.assets.resumen||[])[0]?.id));
-      }), 600); };
-    el.querySelector('.x').onclick = async () => {
-      await del('/api/notes/' + id);
-      S.topicData.notes = S.topicData.notes.filter(x => x.id !== id);
-      renderRail();
-      $$('.page').forEach(p => paintStickies(p, (S.topicData.assets.resumen||[])[0]?.id));
-    };
-  });
-}
-
-function railResumen(){
-  const t = S.topics.find(x => x.id === S.studyTopic);
-  const res = t && t.assets.resumen ? t.assets.resumen[0] : null;
-  if (!res) return `<div class="empty" style="margin:14px">Este repaso mezcla varios temas,
-    o el tema no tiene resumen.</div>`;
-  if (!S.pdf_ok) return `<iframe src="/api/assets/${res.id}/file"
-    style="width:100%;height:100%;border:0"></iframe>`;
-  const n = S.studyPages || 1;
-  return Array.from({length:n}, (_,i) =>
-    `<img src="/api/assets/${res.id}/page/${i+1}" loading="lazy" alt="Página ${i+1}">`).join('');
-}
-
-/* --------------------------------------------------------------- repaso */
-async function startStudy(opts){
-  S.studyOpts  = opts;
-  S.studyTopic = opts.topic_id || null;
-  S.mode = opts.mode || 'normal';
-
-  const qs = new URLSearchParams();
-  if (opts.topic_id)  qs.set('topic_id', opts.topic_id);
-  if (opts.folder_id) qs.set('folder_id', opts.folder_id);
-  if (S.mode !== 'normal') qs.set('mode', S.mode);
-  const d = await api('/api/queue' + (qs.toString() ? '?' + qs : ''));
-  S.queue = d.cards; S.stats = d.stats; S.scope = d.scope; paintStats();
-
-  const name = opts.name || 'Todos los temas';
-  const libre = S.mode === 'libre';
-  $('#ttl').textContent = libre ? 'Repaso libre' : 'Repaso';
-  $('#sub').textContent = libre
-    ? `${name} · no altera la programación`
-    : `${name} · ${d.scope.total} fichas en total`;
-  $('#topActions').innerHTML = libre
-    ? `<button class="btn ghost" id="toNormal">Volver al repaso normal</button>`
-    : `<button class="btn" id="toFree" title="No altera la programación">🔁 Repaso libre</button>`;
-  const swap = m => go('repaso', {...S.studyOpts, mode:m});
-  if (libre) $('#toNormal').onclick = () => swap('normal');
-  else       $('#toFree').onclick   = () => swap('libre');
-  $('#sTopic').textContent = libre ? name + ' · libre' : name;
-
-  if (opts.topic_id){
-    const t = await api('/api/topics/' + opts.topic_id);
-    S.studyPages = t.pages;
-    setRail('repaso');
-  } else setRail(null);
-
-  nextCard();
-}
-
-function nextCard(){
-  S.card = S.queue.shift() || null; S.revealed = false;
-  $('#sLeft').textContent = S.card ? `${S.queue.length + 1} en la cola` : '';
-  renderCard();
-}
-
-function renderCard(){
-  if (!S.card){
-    const n = (S.scope && S.scope.total) || 0;
-    $('#qcard').innerHTML = S.mode === 'libre'
-      ? `<div class="front">Fin de la vuelta.<br>
-          <span style="font-size:14.5px;color:var(--muted)">Nada de esto cambió
-          tus fechas de repaso.</span></div>`
-      : `<div class="front">Por hoy has terminado.<br>
-          <span style="font-size:14.5px;color:var(--muted)">Puedes volver a pasar
-          las fichas cuantas veces quieras: el repaso libre no adelanta ninguna
-          fecha ni gasta el cupo de mañana.</span></div>`;
-    $('#sControls').innerHTML = `<div class="grades" style="grid-template-columns:1fr 1fr">
-      <button class="g3" id="again">🔁 Repasar de nuevo${n ? ` (${n})` : ''}</button>
-      <button id="toTopics">Volver a los temas</button></div>`;
-    $('#again').onclick = () => go('repaso', {...S.studyOpts, mode:'libre'});
-    $('#toTopics').onclick = () => go('inicio');
-    return;
-  }
-  $('#qcard').innerHTML = S.revealed
-    ? `<div class="front">${S.card.front}</div><hr><div>${S.card.back}</div>`
-    : `<div class="front">${S.card.front}</div>`;
-  if (S.revealed){
-    const iv = S.card.intervals || {};
-    const fmt = d => d===0 ? 'hoy' : d<30 ? d+' d' : d<365 ? Math.round(d/30)+' mes'
-                    : (d/365).toFixed(1)+' a';
-    // En repaso libre no se muestran intervalos: no se programa nada.
-    const b = (g,l,d) => `<button class="g${g}" data-g="${g}"><span>${l}</span>
-      ${S.mode === 'libre' ? '' : `<span class="iv">${fmt(d)}</span>`}</button>`;
-    $('#sControls').innerHTML = `<div class="grades">${b(1,'Otra vez',iv.again)}
-      ${b(2,'Difícil',iv.hard)}${b(3,'Bien',iv.good)}${b(4,'Fácil',iv.easy)}</div>`;
-    $$('.grades button').forEach(x => x.onclick = () => grade(+x.dataset.g));
-  } else {
-    $('#sControls').innerHTML =
-      `<button class="btn solid" style="width:100%;margin-top:15px;padding:13px"
-        id="rev">Mostrar respuesta</button>`;
-    $('#rev').onclick = () => { S.revealed = true; renderCard(); };
-  }
-}
-
-async function grade(rating){
-  if (!S.card) return;
-  const card = S.card;
-  const r = await post(`/api/cards/${card.id}/grade`, {rating, mode: S.mode});
-  S.stats = r.stats; paintStats();
-  // 'Otra vez' vuelve al final de la cola: se repasa otra vez en esta sesión.
-  if (rating === 1) S.queue.push(Object.assign({}, card, r.result || {}));
-  nextCard();
-}
-
-document.addEventListener('keydown', e => {
-  if (S.sec !== 'repaso' || ['INPUT','TEXTAREA'].includes(e.target.tagName)) return;
-  if ((e.key === ' ' || e.key === 'Enter') && !S.revealed && S.card){
-    e.preventDefault(); S.revealed = true; renderCard();
-  } else if (S.revealed && ['1','2','3','4'].includes(e.key)) grade(+e.key);
-});
-
-/* -------------------------------------------------------------- cargar */
-$('#uploadBtn').onclick = () => $('#fileInput').click();
-$('#fileInput').onchange = async e => {
-  const file = e.target.files[0]; if (!file) return;
-  e.target.value = '';
-  const esPdf = file.name.toLowerCase().endsWith('.pdf');
-  let url = '/api/upload';
-  if (esPdf){
-    const destino = S.topic || prompt('¿A qué tema pertenece este PDF?\n\n' +
-      S.topics.map(t => `${t.id} — ${t.title}`).join('\n') + '\n\nEscribe el número:');
-    if (!destino) return;
-    url += '?topic_id=' + parseInt(destino, 10);
-  }
-  const fd = new FormData(); fd.append('file', file);
-  toast('Cargando…');
-  try {
-    const r = await api(url, {method:'POST', body: fd});
-    await boot();
-    toast(r.fichas_nuevas !== undefined
-      ? `${r.titulo}: ${r.fichas_nuevas} fichas nuevas, ${r.fichas_actualizadas} actualizadas`
-      : `${r.archivo} cargado`);
-  } catch(err){ toast(err.message); }
-};
-
-/* -------------------------------------------------------------- ajustes */
-function renderAjustes(){
-  S.topic = null; paintTree(); setRail(null);
-  const s = S.settings;
-  $('#ttl').textContent = 'Ajustes';
-  $('#sub').textContent = 'Ritmo de estudio y material';
-  $('#topActions').innerHTML = '';
-  $('#v-ajustes').innerHTML = `
-    <div class="panel">
-      <h3>Ritmo diario</h3>
-      <p>El límite de fichas nuevas es el freno importante: si entran más de las que
-         se pueden repasar, el atraso crece solo.</p>
-      <div class="field"><label>Fichas nuevas al día</label>
-        <input type="number" id="s-new" min="0" max="200" value="${s.new_limit}"></div>
-      <div class="field"><label>Repasos máximos al día</label>
-        <input type="number" id="s-rev" min="0" max="2000" value="${s.review_limit}"></div>
-      <div class="field"><label>Retención objetivo</label>
-        <input type="number" id="s-ret" min="0.70" max="0.97" step="0.01" value="${s.retention}"></div>
-      <button class="btn solid" id="saveS">Guardar</button>
-    </div>
-    <div class="panel">
-      <h3>Material</h3>
-      <p>Carpeta que se escanea para armar los temas. Las presentaciones se
-         consultan desde ahí; no se copian.</p>
-      <div class="field"><input type="text" id="s-dir" value="${esc(s.content_dir)}"></div>
-      <button class="btn" id="reS">Re-escanear</button>
-    </div>`;
-  $('#saveS').onclick = async () => {
-    S.settings = await post('/api/settings', {new_limit:+$('#s-new').value,
-      review_limit:+$('#s-rev').value, retention:+$('#s-ret').value});
-    toast('Guardado');
-  };
-  $('#reS').onclick = async () => {
-    try { const r = await post('/api/ingest', {content_dir: $('#s-dir').value});
-          await boot(); go('ajustes'); toast(`${r.temas} temas · ${r.materiales} materiales`); }
-    catch(e){ toast(e.message); }
-  };
-}
-
-boot();
-</script>
+<script src="/static/ui.js"></script>
+<script src="/static/app.js"></script>
 </body>
 </html>

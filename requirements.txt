@@ -1,6 +1,8 @@
 # Servidor web local
 fastapi
 uvicorn[standard]
+# Formularios multipart (carga de archivos). También en EnglishApp.
+python-multipart
 
 # Export a Anki (.apkg). El IMPORT no necesita nada: un .apkg es un zip con
 # una base SQLite dentro, y ambos vienen en la librería estándar.

@@ -1,4 +1,4 @@
--- SCHEMA.sql — App de Estudio (Neurología)
+-- SCHEMA.sql — MedStudy (App de Estudio)
 --
 -- La unidad atómica del diseño es el TEMA. Ver ARCHITECTURE.md.
 -- Un tema agrupa sus materiales (presentación, resumen, mazo) y sus tarjetas.
@@ -7,6 +7,54 @@
 -- Idempotente: se aplica en cada arranque con CREATE TABLE IF NOT EXISTS.
 
 PRAGMA foreign_keys = ON;
+
+-- --------------------------------------------------------------------------
+-- Cuentas (portado de EnglishApp). El contenido —carpetas, temas, materiales y
+-- fichas— es de todos; el progreso, las notas y los ajustes de estudio son de
+-- cada persona.
+-- La contraseña nunca se guarda en claro: solo su hash scrypt.
+-- --------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS users (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    username      TEXT    NOT NULL COLLATE NOCASE,
+    email         TEXT    COLLATE NOCASE,
+    password_hash TEXT    NOT NULL DEFAULT '',
+    role          TEXT    NOT NULL DEFAULT 'user',     -- 'admin' | 'user'
+    status        TEXT    NOT NULL DEFAULT 'active',   -- 'pending' | 'active' | 'blocked'
+    nombre        TEXT    NOT NULL DEFAULT '',         -- nombre visible, no el de entrar
+    created_at    TEXT    NOT NULL DEFAULT (datetime('now', 'localtime')),
+    UNIQUE (username),
+    UNIQUE (email),
+    CHECK (role   IN ('admin', 'user')),
+    CHECK (status IN ('pending', 'active', 'blocked'))
+);
+
+-- Una sesión abierta = una fila. Se guarda el SHA-256 del token, no el token:
+-- el original solo existe en la cookie del navegador. Tenerlas en la base (y
+-- no en una cookie firmada) permite revocarlas al bloquear o cambiar la clave.
+-- Las fechas las pone Python ('AAAA-MM-DD HH:MM:SS', hora del servidor).
+CREATE TABLE IF NOT EXISTS sessions (
+    token_hash TEXT    PRIMARY KEY,
+    user_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    created_at TEXT    NOT NULL,
+    expires_at TEXT    NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions (user_id);
+
+-- Enlaces de un solo uso que se mandan por correo: crear la cuenta ('signup')
+-- y restablecer la contraseña ('reset'). Se guarda el SHA-256 del token.
+-- Sirve también de registro de envíos: los topes por hora y por día se
+-- cuentan aquí.
+CREATE TABLE IF NOT EXISTS email_tokens (
+    token_hash TEXT PRIMARY KEY,
+    email      TEXT NOT NULL,
+    purpose    TEXT NOT NULL,               -- 'signup' | 'reset'
+    created_at TEXT NOT NULL,
+    expires_at TEXT NOT NULL,
+    used_at    TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_email_tokens_email   ON email_tokens (email);
+CREATE INDEX IF NOT EXISTS idx_email_tokens_created ON email_tokens (created_at);
 
 -- --------------------------------------------------------------------------
 -- Carpetas — las crea Mariela, agrupan temas. Una carpeta por materia,
@@ -84,9 +132,20 @@ CREATE TABLE IF NOT EXISTS cards (
     tags        TEXT    NOT NULL DEFAULT '',
     source      TEXT    NOT NULL DEFAULT 'anki',    -- 'anki' | 'manual' | 'ia'
     anki_guid   TEXT,
-    suspended   INTEGER NOT NULL DEFAULT 0,
+    created_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_cards_por_tema ON cards (topic_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_cards_guid
+    ON cards (anki_guid, cloze_index) WHERE anki_guid IS NOT NULL;
 
-    -- Estado FSRS (ver core.py: FSRS_W y schedule()).
+-- --------------------------------------------------------------------------
+-- Progreso FSRS de CADA persona en cada ficha (ver core.py: FSRS_W y
+-- schedule()). Sin fila, la ficha es nueva para esa persona: no hace falta
+-- crear 1 900 filas al dar de alta a alguien.
+-- --------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS card_progress (
+    user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    card_id     INTEGER NOT NULL REFERENCES cards(id) ON DELETE CASCADE,
     state       TEXT    NOT NULL DEFAULT 'new',     -- new | learning | review | relearning
     due         TEXT,                               -- fecha ISO 'YYYY-MM-DD'
     stability   REAL    NOT NULL DEFAULT 0,
@@ -94,17 +153,15 @@ CREATE TABLE IF NOT EXISTS cards (
     reps        INTEGER NOT NULL DEFAULT 0,
     lapses      INTEGER NOT NULL DEFAULT 0,
     last_review TEXT,
-
-    created_at  TEXT    NOT NULL DEFAULT (datetime('now'))
+    suspended   INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id, card_id)
 );
-CREATE INDEX IF NOT EXISTS idx_cards_due   ON cards (due, suspended);
-CREATE INDEX IF NOT EXISTS idx_cards_topic ON cards (topic_id, state);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_cards_guid
-    ON cards (anki_guid, cloze_index) WHERE anki_guid IS NOT NULL;
+CREATE INDEX IF NOT EXISTS idx_progress_due ON card_progress (user_id, state, due);
 
 -- --------------------------------------------------------------------------
 -- Bitácora de repasos. Es la fuente de verdad histórica: permite re-optimizar
--- los pesos de FSRS más adelante sin haber perdido nada.
+-- los pesos de FSRS más adelante sin haber perdido nada. Una fila por repaso
+-- de una persona (user_id).
 -- --------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS reviews (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -116,10 +173,13 @@ CREATE TABLE IF NOT EXISTS reviews (
     stability      REAL    NOT NULL DEFAULT 0,
     difficulty     REAL    NOT NULL DEFAULT 0,
     reviewed_at    TEXT    NOT NULL DEFAULT (datetime('now')),
-    day            TEXT    NOT NULL DEFAULT (date('now'))
+    day            TEXT    NOT NULL DEFAULT (date('now')),
+    -- Va al final porque en una base vieja se añade con ALTER TABLE.
+    user_id        INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS idx_reviews_day  ON reviews (day);
 CREATE INDEX IF NOT EXISTS idx_reviews_card ON reviews (card_id, reviewed_at);
+CREATE INDEX IF NOT EXISTS idx_reviews_user ON reviews (user_id, day);
 
 -- --------------------------------------------------------------------------
 -- Notas
@@ -143,15 +203,28 @@ CREATE TABLE IF NOT EXISTS notes (
     color      TEXT    NOT NULL DEFAULT 'amarillo',
     text       TEXT    NOT NULL DEFAULT '',
     created_at TEXT    NOT NULL DEFAULT (datetime('now')),
-    updated_at TEXT    NOT NULL DEFAULT (datetime('now'))
+    updated_at TEXT    NOT NULL DEFAULT (datetime('now')),
+    -- Dueña de la nota: las notas son privadas. Al final porque en una base
+    -- vieja se añade con ALTER TABLE; la app nunca escribe una nota sin dueño.
+    user_id    INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX IF NOT EXISTS idx_notes_topic ON notes (topic_id, kind);
 CREATE INDEX IF NOT EXISTS idx_notes_page  ON notes (asset_id, page);
+CREATE INDEX IF NOT EXISTS idx_notes_user  ON notes (user_id, topic_id);
 
 -- --------------------------------------------------------------------------
--- Ajustes clave/valor (límites diarios, retención objetivo, rutas…)
+-- Ajustes de la app entera (baseline_at). La carpeta de material NO es un
+-- ajuste: solo se fija con la variable de entorno ESTUDIO_CONTENT_DIR.
 -- --------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS settings (
     key   TEXT PRIMARY KEY,
     value TEXT NOT NULL DEFAULT ''
+);
+
+-- Ajustes de estudio de cada persona: new_limit, review_limit, retention, theme.
+CREATE TABLE IF NOT EXISTS user_settings (
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    key     TEXT    NOT NULL,
+    value   TEXT    NOT NULL DEFAULT '',
+    PRIMARY KEY (user_id, key)
 );

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Usuarios · MedStudy</title>
+<link rel="stylesheet" href="/static/cuentas.css">
+</head>
+<body class="panel-admin">
+<main class="caja">
+  <header>
+    <h1>Personas en MedStudy</h1>
+    <a href="/">← Volver a la app</a>
+  </header>
+
+  <div class="aviso" id="aviso" role="status"></div>
+
+  <div class="crear">
+    <h2>Crear una cuenta</h2>
+    <p>Nace activa: si la creas tú, ya decidiste que esa persona entra. La contraseña
+       es temporal; pásasela y pídele que la cambie en Ajustes.</p>
+    <div class="campos">
+      <div><label for="nuevoNombre">Nombre</label>
+        <input id="nuevoNombre" maxlength="60" placeholder="Ana Pérez"></div>
+      <div><label for="nuevoUsuario">Usuario (para entrar)</label>
+        <input id="nuevoUsuario" maxlength="32" placeholder="ana.perez" autocapitalize="none" spellcheck="false"></div>
+      <div><label for="nuevaClave">Contraseña temporal</label>
+        <input id="nuevaClave" maxlength="256" placeholder="al menos 10 caracteres"></div>
+      <div><label for="nuevoCorreo">Correo (opcional)</label>
+        <input id="nuevoCorreo" maxlength="254" placeholder="para restablecer" autocapitalize="none"></div>
+    </div>
+    <div class="pie2">
+      <button class="ok" id="btnCrear" type="button">Crear cuenta</button>
+      <button id="btnSugerir" type="button">Sugerir contraseña</button>
+      <span class="sub" id="crearMsg"></span>
+    </div>
+    <div class="ficha" id="ficha"></div>
+  </div>
+
+  <div class="tarjeta">
+    <div class="scroll"><table class="tabla">
+      <thead><tr>
+        <th>Persona</th><th>Estado</th><th>Sesión</th><th>Alta</th>
+        <th style="text-align:right">Acciones</th>
+      </tr></thead>
+      <tbody id="filas"></tbody>
+    </table></div>
+  </div>
+</main>
+<script src="/static/ui.js"></script>
+<script src="/static/admin.js"></script>
+</body>
+</html>
