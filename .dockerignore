@@ -1,0 +1,28 @@
+# Lo que NO entra en la imagen. El Dockerfile ya copia solo lo que nombra;
+# esto es la segunda barrera (y aligera el contexto que se manda al construir).
+# Ojo: sin '**/' un patrón solo vale en la raíz del proyecto.
+
+# datos de cada instalación: la base de producción vive en Neon
+database.db
+**/*.db
+**/*.db-journal
+assets/paginas/
+biblioteca/
+exports/
+
+# secretos y basura local
+**/.env
+**/.env.*
+config.local.json
+**/*.log
+**/.DS_Store
+**/__pycache__/
+**/*.pyc
+.venv/
+
+# historia, pruebas y herramientas de preparar material (incluye
+# herramientas/extraido/): no corren en el servidor
+.git/
+.gitignore
+tests/
+herramientas/

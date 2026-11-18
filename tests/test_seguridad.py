@@ -292,7 +292,9 @@ class Produccion(Base):
     """M1: en un despliegue la app falla cerrado si falta configuración."""
 
     COMPLETO = {"COOKIE_SEGURA": "1", "IP_DE_CABECERA": "true-client-ip",
-                "SECRETO_APP": "s" * 32}
+                "SECRETO_APP": "s" * 32,
+                # nunca se conecta: _importar cambia la base por una de mentira
+                "DATABASE_URL": "postgresql://nadie@127.0.0.1:1/ninguna"}
 
     def test_en_local_no_exige_nada(self):
         self.assertEqual(webapp.problema_de_produccion({}), "")
@@ -310,18 +312,42 @@ class Produccion(Base):
             self.assertIn("COOKIE_SEGURA", webapp.problema_de_produccion(
                 {**base, **self.COMPLETO, "COOKIE_SEGURA": "0"}))
 
+    def test_en_produccion_no_vale_sqlite(self):
+        base = {"RENDER": "true", **self.COMPLETO}
+        for url in ("", "sqlite:///database.db", "  ", "mysql://x@y/z"):
+            self.assertIn("DATABASE_URL", webapp.problema_de_produccion({**base, "DATABASE_URL": url}))
+        self.assertEqual(webapp.problema_de_produccion(
+            {**base, "DATABASE_URL": "postgres://u@h/d"}), "")
+
     def _importar(self, extra):
         entorno = {k: v for k, v in os.environ.items()
-                   if k not in ("RENDER", "COOKIE_SEGURA", "IP_DE_CABECERA", "SECRETO_APP")}
+                   if k not in ("RENDER", "COOKIE_SEGURA", "IP_DE_CABECERA", "SECRETO_APP",
+                                "DATABASE_URL")}
         entorno.update({"APP_DB_PATH": os.path.join(TMP, "produccion.db"), **extra})
-        return subprocess.run([sys.executable, "-c", "import webapp"], cwd=RAIZ, env=entorno,
+        # La base se cambia por una de mentira: así se prueba la comprobación de
+        # arranque sin conectarse a ningún Postgres. La comprobación va ANTES de
+        # abrir la base, así que si falla, ni siquiera se llega a crearla.
+        codigo = ("import core\n"
+                  "class Falsa:\n"
+                  "    def __init__(self, *a, **k): print('BASE ABIERTA')\n"
+                  "core.DatabaseManager = Falsa\n"
+                  "import webapp\n")
+        return subprocess.run([sys.executable, "-c", codigo], cwd=RAIZ, env=entorno,
                               capture_output=True, text=True, timeout=60)
 
     def test_no_arranca_sin_configurar(self):
         r = self._importar({"RENDER": "true"})
         self.assertNotEqual(r.returncode, 0)
         self.assertIn("MedStudy no arranca", r.stderr)
-        self.assertEqual(self._importar({"RENDER": "true", **self.COMPLETO}).returncode, 0)
+        self.assertNotIn("BASE ABIERTA", r.stdout)          # falla antes de tocar la base
+        sin_pg = {**self.COMPLETO}
+        sin_pg.pop("DATABASE_URL")
+        r = self._importar({"RENDER": "true", **sin_pg})
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("DATABASE_URL", r.stderr)
+        r = self._importar({"RENDER": "true", **self.COMPLETO})
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("BASE ABIERTA", r.stdout)
 
     def test_sin_la_cabecera_de_ip_da_400(self):
         webapp.IP_DE_CABECERA = "true-client-ip"
@@ -447,7 +473,7 @@ class Archivos(Base):
         webapp.db.add_asset(self.tid, kind, ruta)
         with webapp.db._lock:
             return webapp.db.conn.execute("SELECT id FROM assets WHERE path = ?",
-                                          (ruta,)).fetchone()["id"]
+                                          (core.ruta_guardada(ruta),)).fetchone()["id"]
 
     def test_pdf_se_sirve_con_sesion(self):
         self.assertEqual(cliente().get(f"/api/assets/{self.aid}/file").status_code, 401)

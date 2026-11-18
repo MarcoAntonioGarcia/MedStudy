@@ -23,6 +23,7 @@ import hashlib
 import hmac
 import html as html_mod
 import ipaddress
+import json
 import logging
 import math
 import os
@@ -32,6 +33,7 @@ import tempfile
 import threading
 import time
 from collections import OrderedDict
+from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import Body, Depends, FastAPI, File, HTTPException, Request, Response, UploadFile
@@ -46,15 +48,67 @@ import correo
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
+_log = logging.getLogger("estudio.web")
+
+
+def _es_produccion(entorno) -> bool:
+    """Desplegado de verdad: en Render (que define RENDER) o servido por HTTPS."""
+    return core.es_produccion(entorno)
+
+
+def problema_de_produccion(entorno) -> str:
+    """Qué falta para poder arrancar en producción, o cadena vacía si nada.
+
+    Falla CERRADO: sin cookie segura, sin la cabecera de la IP real (detrás de
+    un proxy todos compartirían la IP del proxy y un desconocido dejaría fuera
+    a todo el mundo), sin secreto propio (las cookies de dispositivo se
+    invalidarían en cada reinicio) o sin Postgres (el disco del plan gratuito
+    se borra en cada reinicio: una base SQLite perdería las cuentas y el
+    progreso de todos), es mejor no arrancar que arrancar mal.
+    """
+    if not _es_produccion(entorno):
+        return ""
+    faltan = []
+    if entorno.get("COOKIE_SEGURA", "") != "1":
+        faltan.append("COOKIE_SEGURA=1")
+    if not entorno.get("IP_DE_CABECERA", "").strip():
+        faltan.append("IP_DE_CABECERA")
+    if not entorno.get("SECRETO_APP", "").strip():
+        faltan.append("SECRETO_APP")
+    if not re.match(r"postgres(ql)?://", entorno.get("DATABASE_URL", "").strip(), re.I):
+        faltan.append("DATABASE_URL (Postgres)")
+    if not faltan:
+        return ""
+    return ("MedStudy no arranca: parece un despliegue (RENDER o APP_URL con https://) "
+            "pero falta configurar: " + ", ".join(faltan) + ".")
+
+
+# Se comprueba ANTES de abrir la base: en un despliegue mal configurado no se
+# toca nada, ni siquiera se crea un database.db en un disco que se va a borrar.
+EN_PRODUCCION = _es_produccion(os.environ)
+_problema = problema_de_produccion(os.environ)
+if _problema:
+    raise RuntimeError(_problema)
+
+
+@asynccontextmanager
+async def _ciclo_de_vida(_app):
+    """Al arrancar (también con `uvicorn webapp:app`, que es como corre en
+    Render): avisos, el primer admin y la ingesta del material, que va en
+    segundo plano para que la comprobación de salud responda enseguida."""
+    await run_in_threadpool(arrancar)
+    yield
+
+
 # La documentación automática (/docs, /openapi.json) lista todos los endpoints,
 # los del admin incluidos. Solo se sirve si se pide: DOCS=1.
 _DOCS = os.environ.get("DOCS", "") == "1"
 app = FastAPI(title="MedStudy",
               docs_url="/docs" if _DOCS else None,
               redoc_url=None,
-              openapi_url="/openapi.json" if _DOCS else None)
+              openapi_url="/openapi.json" if _DOCS else None,
+              lifespan=_ciclo_de_vida)
 db = core.DatabaseManager()
-_log = logging.getLogger("estudio.web")
 
 
 # --------------------------------------------------------------------------- #
@@ -92,41 +146,6 @@ _candado_intentos = threading.Lock()
 # local va vacía y se usa la del socket). Solo una cabecera que el proxy
 # SOBRESCRIBE: X-Forwarded-For la puede inventar cualquiera.
 IP_DE_CABECERA = os.environ.get("IP_DE_CABECERA", "").strip().lower()
-
-
-def _es_produccion(entorno) -> bool:
-    """Desplegado de verdad: en Render (que define RENDER) o servido por HTTPS."""
-    return bool(entorno.get("RENDER", "").strip()) or \
-        entorno.get("APP_URL", "").strip().lower().startswith("https://")
-
-
-def problema_de_produccion(entorno) -> str:
-    """Qué falta para poder arrancar en producción, o cadena vacía si nada.
-
-    Falla CERRADO: sin cookie segura, sin la cabecera de la IP real (detrás de
-    un proxy todos compartirían la IP del proxy y un desconocido dejaría fuera
-    a todo el mundo) o sin secreto propio (las cookies de dispositivo se
-    invalidarían en cada reinicio), es mejor no arrancar que arrancar mal.
-    """
-    if not _es_produccion(entorno):
-        return ""
-    faltan = []
-    if entorno.get("COOKIE_SEGURA", "") != "1":
-        faltan.append("COOKIE_SEGURA=1")
-    if not entorno.get("IP_DE_CABECERA", "").strip():
-        faltan.append("IP_DE_CABECERA")
-    if not entorno.get("SECRETO_APP", "").strip():
-        faltan.append("SECRETO_APP")
-    if not faltan:
-        return ""
-    return ("MedStudy no arranca: parece un despliegue (RENDER o APP_URL con https://) "
-            "pero falta configurar: " + ", ".join(faltan) + ".")
-
-
-EN_PRODUCCION = _es_produccion(os.environ)
-_problema = problema_de_produccion(os.environ)
-if _problema:
-    raise RuntimeError(_problema)
 
 
 def _agrupar_ip(valor: str) -> str | None:
@@ -236,6 +255,14 @@ LIMITES_POR_RUTA = {
     "/api/upload": (25 * 1024 * 1024, "admin"),     # resúmenes PDF y archivos de fichas
 }
 
+# En producción el disco es efímero (plan gratuito de Render): un archivo
+# cargado desde la app desaparecería en el siguiente reinicio y su fila en la
+# base quedaría apuntando a la nada. Allí el material se agrega con git: va en
+# la imagen y la ingesta del arranque lo incorpora. En local, la carga funciona.
+SUBIDAS_APAGADAS = EN_PRODUCCION
+MENSAJE_SUBIDAS_APAGADAS = ("En producción el material se agrega con git: ponlo en "
+                            "contenido/ del repositorio y aparece en el siguiente despliegue.")
+
 
 def _limite_de(scope) -> int:
     tope, quien = LIMITES_POR_RUTA.get(scope.get("path", ""), (LIMITE_CUERPO, "user"))
@@ -322,15 +349,27 @@ class SeguridadMiddleware:
                 mensaje = {**mensaje, "headers": cabeceras + extra}
             await send(mensaje)
 
-        async def rechazar():
+        async def rechazar(estado: int = 413,
+                           detalle: str = "El archivo o el texto es demasiado grande."):
             nonlocal empezada
             empezada = True
-            cuerpo = '{"detail":"El archivo o el texto es demasiado grande."}'.encode()
-            await send({"type": "http.response.start", "status": 413,
+            cuerpo = json.dumps({"detail": detalle}).encode()
+            await send({"type": "http.response.start", "status": estado,
                         "headers": [(b"content-type", b"application/json"),
                                     (b"content-length", str(len(cuerpo)).encode()),
                                     *seguridad()]})
             await send({"type": "http.response.body", "body": cuerpo})
+
+        # Con la carga apagada (producción) se contesta sin leer el cuerpo: si
+        # no, FastAPI leería el archivo entero antes de llegar a la ruta.
+        # Mismo orden de respuestas que la ruta: sin sesión 401, sin ser admin 403.
+        if SUBIDAS_APAGADAS and ruta == "/api/upload":
+            quien = (scope.get("state") or {}).get("usuario") or {}
+            if not quien:
+                return await rechazar(401, "Inicia sesión para continuar.")
+            if quien.get("role") != "admin":
+                return await rechazar(403, "Solo un administrador puede hacer esto.")
+            return await rechazar(409, MENSAJE_SUBIDAS_APAGADAS)
 
         for nombre, valor in scope.get("headers", []):
             if nombre == b"content-length":
@@ -712,8 +751,19 @@ def completar_alta(peticion: Request, respuesta: Response, payload: dict = Body(
     # puerta a reusarlo
     db.gastar_token_correo(token, "signup")
     db.anular_tokens_correo(email, "signup")
+    _promover_si_es_admin_email(email)
     _entrar(respuesta, uid)
     return {"ok": True}
+
+
+def _promover_si_es_admin_email(email: str) -> None:
+    """El primer admin en producción, sin terminal: si la cuenta recién
+    verificada tiene el correo de ADMIN_EMAIL y aún no hay admin, lo es."""
+    objetivo = os.environ.get("ADMIN_EMAIL", "").strip().lower()
+    if objetivo and (email or "").strip().lower() == objetivo:
+        uid = db.promover_admin_inicial(objetivo)
+        if uid:
+            _log.warning("ADMIN_EMAIL: la cuenta %d pasa a ser la administradora.", uid)
 
 
 @app.post("/api/auth/password/forgot")
@@ -972,6 +1022,10 @@ def bootstrap(peticion: Request, uid: int = Depends(current_user)) -> dict:
         "stats": db.stats(uid),
         "settings": _settings_payload(uid),
         "pdf_ok": core.PdfRenderer.available(),
+        # la carga de archivos solo existe en local (ver SUBIDAS_APAGADAS)
+        "subidas": not SUBIDAS_APAGADAS,
+        # la ingesta del arranque todavía corre: la biblioteca puede estar a medias
+        "actualizando": _ingesta["en_curso"],
     }
 
 
@@ -1060,11 +1114,62 @@ def get_topic(topic_id: int, uid: int = Depends(current_user)) -> dict:
     return topic
 
 
+# --------------------------------------------------------------------------- #
+# Ingesta del material
+#
+# Corre sola en cada arranque (el material va dentro de la imagen: lo que se
+# publica con git aparece al desplegar) y cuando el admin re-escanea. Nunca
+# dos a la vez: este candado es del proceso y, con Postgres, core toma además
+# uno consultivo entre instancias (durante un despliegue conviven dos).
+# --------------------------------------------------------------------------- #
+_candado_ingesta = threading.Lock()
+_ingesta = {"en_curso": False}
+
+
+def _ingerir(origen: str) -> dict | None:
+    """Corre la ingesta. None si ya había otra en curso en este proceso."""
+    if not _candado_ingesta.acquire(blocking=False):
+        return None
+    _ingesta["en_curso"] = True
+    try:
+        with db.candado_global("ingesta", espera=30) as obtenido:
+            if not obtenido:
+                # Es idempotente: se sigue igual. Lo peor es un choque de
+                # unicidad en una de las dos, que queda en el log.
+                _log.warning("Ingesta (%s): otra instancia tiene el candado; se sigue igual.",
+                             origen)
+            inicio = time.perf_counter()
+            reporte = core.ingest(db)
+        reporte["segundos"] = round(time.perf_counter() - inicio, 2)
+        _log.info("Ingesta (%s) en %.2f s: %d temas · %d fichas nuevas · %d materiales · "
+                  "%d sin emparejar", origen, reporte["segundos"], reporte["temas"],
+                  reporte["tarjetas_nuevas"], reporte["materiales"], reporte["huerfanos"])
+        for err in reporte["errores"]:
+            _log.warning("Ingesta: %s", err)
+        return reporte
+    finally:
+        _ingesta["en_curso"] = False
+        _candado_ingesta.release()
+
+
+def _ingesta_de_arranque() -> None:
+    try:
+        _ingerir("arranque")
+    except Exception as exc:
+        # La app sigue con el material que ya tenía en la base; el error queda
+        # en el log con su traza, no se traga.
+        _log.exception("La ingesta del arranque falló: %s", exc)
+
+
 @app.post("/api/ingest")
 def run_ingest(uid: int = Depends(current_admin)) -> dict:
     """Re-escanea la carpeta de material. Siempre la misma: core.CONTENT_DIR
     (variable ESTUDIO_CONTENT_DIR). La petición no puede elegir otra."""
-    return core.ingest(db)
+    reporte = _ingerir("admin")
+    if reporte is None:
+        raise HTTPException(409, "Ya se está actualizando el material. "
+                                 "Espera unos segundos y vuelve a intentarlo.")
+    return reporte
 
 
 @app.get("/api/orphans")
@@ -1096,6 +1201,8 @@ async def upload(topic_id: int | None = None, file: UploadFile = File(...),
     importan a la base. Las presentaciones NO se aceptan por aquí: pesan
     demasiado; de ellas se sacan el resumen y las fichas.
     """
+    if SUBIDAS_APAGADAS:               # el middleware ya lo corta; por si acaso
+        raise HTTPException(409, MENSAJE_SUBIDAS_APAGADAS)
     data = await file.read()
     if len(data) > LIMITES_POR_RUTA["/api/upload"][0]:
         raise HTTPException(413, "El archivo supera los 25 MB.")
@@ -1370,31 +1477,43 @@ def set_settings(payload: dict = Body(...), uid: int = Depends(current_user)) ->
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
-def main() -> None:
-    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
-    if not db.count_topics():
-        print("Primera vez: escaneando el material…", flush=True)
-        report = core.ingest(db)
-        print(f"  {report['temas']} temas · {report['tarjetas_nuevas']} fichas "
-              f"· {report['materiales']} materiales · {report['huerfanos']} sin emparejar",
-              flush=True)
-        for err in report["errores"]:
-            print(f"  [aviso] {err}", flush=True)
-    if not db.count_admins():
-        print("  [aviso] Todavía no hay ningún administrador. Crea uno con:\n"
-              "          python crear_admin.py", flush=True)
+def arrancar(configurar_logs: bool = True) -> None:
+    """Lo que se hace al arrancar el servidor (ver _ciclo_de_vida)."""
+    if configurar_logs and not logging.getLogger().handlers:
+        logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+    admin_email = os.environ.get("ADMIN_EMAIL", "").strip()
+    if admin_email:
+        uid = db.promover_admin_inicial(admin_email)
+        if uid:
+            _log.warning("ADMIN_EMAIL: la cuenta %d pasa a ser la administradora.", uid)
+    if not db.hay_admin():
+        if admin_email:
+            _log.warning("Todavía no hay administrador: lo será la cuenta que se registre "
+                         "con el correo de ADMIN_EMAIL.")
+        else:
+            _log.warning("Todavía no hay ningún administrador. En local: python crear_admin.py. "
+                         "Desplegado: define ADMIN_EMAIL y regístrate con ese correo.")
     if not _registro_disponible():
-        print("  [aviso] El registro por correo está apagado (falta APP_URL o el envío"
-              " de correos).\n          Las cuentas se crean desde /admin.", flush=True)
+        _log.warning("El registro por correo está apagado (falta APP_URL o el envío de "
+                     "correos). Las cuentas se crean desde /admin.")
     if not core.PdfRenderer.available():
-        print("  [aviso] Falta poppler: los resúmenes no se podrán anotar.\n"
-              "          Instálalo con: brew install poppler", flush=True)
+        _log.warning("Falta poppler: los resúmenes no se podrán anotar "
+                     "(brew install poppler, o poppler-utils en Linux).")
+    # Medido: ~0,2 s con SQLite y el material actual (38 temas, 1940 fichas);
+    # contra Postgres cada consulta es un viaje de red y la primera vez son
+    # miles. En segundo plano, para que /entrar (la comprobación de salud de
+    # Render) responda en cuanto el servidor escucha.
+    _lanzar(_ingesta_de_arranque)
+
+
+def main() -> None:
     # En local se escucha solo en el propio equipo (127.0.0.1), que es lo
     # seguro. HOST solo se cambia a propósito, al desplegar detrás de un proxy.
     puerto = int(os.environ.get("PORT", "8090"))
     host = os.environ.get("HOST") or "127.0.0.1"
     print(f"\n  {APP_NOMBRE} →  http://localhost:{puerto}\n", flush=True)
     # proxy_headers=False: la IP la decide _ip(), nunca X-Forwarded-For.
+    # La ingesta y los avisos los hace el arranque (arrancar), también aquí.
     uvicorn.run(app, host=host, port=puerto, log_level="warning", proxy_headers=False)
 
 

@@ -1,0 +1,69 @@
+# Configuración del despliegue en Render (Blueprint). Copiado de EnglishApp,
+# que ya corre así; lo que cambia está comentado.
+#
+# La base de datos NO está aquí: vive en Neon (Postgres). El disco de un
+# servicio gratuito de Render se borra en cada reinicio, así que una base en
+# archivo perdería las cuentas y el progreso de todos cada vez que la app se
+# duerme. Por eso la app se niega a arrancar en producción sin DATABASE_URL.
+#
+# El material (contenido/) va DENTRO de la imagen: para publicar un resumen,
+# un mazo o un artículo nuevo se hace commit y push a main, Render vuelve a
+# construir, y al arrancar la app lo incorpora con la marca «Nuevo».
+services:
+  - type: web
+    name: medstudy
+    # Docker y no Python: hace falta poppler (pdftoppm) para anotar los
+    # resúmenes, y en el runtime de Python de Render no se puede instalar.
+    # El comando de arranque es el CMD del Dockerfile.
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    # MISMA región que la base en Neon (us-east-2, Ohio). Cada consulta viaja
+    # entre Render y Neon: con la app en otra región serían decenas de ms de
+    # ida y vuelta POR CONSULTA.
+    region: ohio
+    # Se despliega solo desde main, que es la rama que corre. El trabajo en
+    # curso vive en ramas aparte y llega aquí al fusionarse.
+    branch: main
+    autoDeploy: true
+    # /entrar no toca la base: responde en cuanto el servidor escucha, aunque
+    # la ingesta del material siga en segundo plano.
+    healthCheckPath: /entrar
+    envVars:
+      # La cadena de conexión de Neon. Se pega en el panel de Render, NUNCA
+      # aquí: este archivo sí va a GitHub.
+      - key: DATABASE_URL
+        sync: false
+      # Obliga a que la cookie de sesión viaje solo por HTTPS. Sin esto, viaja
+      # en claro y cualquiera en la misma red puede copiarla y entrar como tú.
+      - key: COOKIE_SEGURA
+        value: "1"
+      # De qué cabecera sale la IP real del cliente para los topes de intentos.
+      # Render va detrás de Cloudflare, que pone True-Client-IP. NO usar
+      # X-Forwarded-For: el proxy de Render la deja pasar y se puede inventar.
+      - key: IP_DE_CABECERA
+        value: "true-client-ip"
+      # Firma la cookie de «dispositivo conocido». Render la genera al azar la
+      # primera vez y la guarda; no se escribe aquí ni hay que copiarla.
+      - key: SECRETO_APP
+        generateValue: true
+      # Registro con correo verificado (Brevo, plan gratuito). La clave y el
+      # remitente se pegan en el panel de Render, NUNCA aquí.
+      - key: BREVO_API_KEY
+        sync: false
+      - key: CORREO_REMITENTE
+        sync: false
+      # La dirección pública de la app, para los enlaces de los correos
+      # (p. ej. https://medstudy.onrender.com). Sin ella, el registro se apaga.
+      - key: APP_URL
+        sync: false
+      - key: APP_NOMBRE
+        value: "MedStudy"
+      # El primer administrador, sin terminal (el plan gratuito no tiene shell):
+      # la cuenta que se registre con EXACTAMENTE este correo (verificado por
+      # el enlace del alta) será admin, solo mientras no exista ninguno.
+      # Nunca se pone una contraseña en el entorno.
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: HOST
+        value: "0.0.0.0"

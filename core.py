@@ -19,6 +19,7 @@ La unidad atómica del diseño es el TEMA. Ver ARCHITECTURE.md / SCHEMA.sql.
 
 from __future__ import annotations
 
+import contextlib
 import datetime
 import glob
 import hashlib
@@ -34,6 +35,7 @@ import subprocess
 import threading
 import time
 import unicodedata
+import urllib.parse
 import urllib.request
 import zipfile
 from html.parser import HTMLParser
@@ -67,7 +69,9 @@ _RENDERS = threading.BoundedSemaphore(2)
 # o una petición pudiera elegir qué carpeta se escanea, cualquiera con acceso
 # a la API podría hacer que el servidor leyera y sirviera otra parte del disco.
 DEFAULT_CONTENT_DIR = os.path.join(BASE_DIR, "contenido")
-CONTENT_DIR = os.environ.get("ESTUDIO_CONTENT_DIR", DEFAULT_CONTENT_DIR)
+# abspath: las rutas de los materiales se guardan RELATIVAS a esta carpeta
+# (ver ruta_guardada), y para calcularlas hace falta una raíz absoluta.
+CONTENT_DIR = os.path.abspath(os.environ.get("ESTUDIO_CONTENT_DIR") or DEFAULT_CONTENT_DIR)
 
 PRESENTATION_EXTS = (".pptx", ".ppt", ".pdf", ".key")
 SUMMARY_EXTS = (".pdf",)
@@ -762,6 +766,12 @@ def _ahora(desplazamiento_s: int = 0) -> str:
                          time.localtime(time.time() + desplazamiento_s))
 
 
+def _ahora_utc(desplazamiento_s: int = 0) -> str:
+    """Como _ahora(), pero en UTC: es la zona de los DEFAULT datetime('now') del
+    esquema (created_at de temas y materiales), con los que se compara."""
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.time() + desplazamiento_s))
+
+
 def _hash_token(token: str) -> str:
     return hashlib.sha256(token.encode("utf-8")).hexdigest()
 
@@ -769,6 +779,86 @@ def _hash_token(token: str) -> str:
 # --------------------------------------------------------------------------- #
 # Rutas que se pueden servir
 # --------------------------------------------------------------------------- #
+def es_produccion(entorno) -> bool:
+    """Desplegado de verdad: en Render (que define RENDER) o servido por HTTPS."""
+    return bool((entorno.get("RENDER") or "").strip()) or \
+        (entorno.get("APP_URL") or "").strip().lower().startswith("https://")
+
+
+# Cómo se guarda en la base la ruta de un material. RELATIVA, nunca absoluta:
+# la misma base (Postgres en producción) la leen contenedores distintos en
+# cada despliegue, y la carpeta del proyecto no está en el mismo sitio en el
+# Mac (/Users/…/AppEstudio) que en la imagen (/app). Con rutas absolutas, el
+# primer despliegue dejaría todos los materiales apuntando a la nada.
+#   'Neuro/Resumenes PDF/Vertigo - Resumen.pdf'  relativa a CONTENT_DIR
+#   'biblioteca:Vertigo.pdf'                     relativa a LIBRARY_DIR (cargas)
+# Lo que no vive en ninguna de las dos se guarda tal cual: no se puede servir
+# (ruta_permitida lo rechaza), pero tampoco se pierde el dato.
+PREFIJO_BIBLIOTECA = "biblioteca:"
+
+
+def _dentro_de(ruta: str, base: str) -> str | None:
+    """La parte de `ruta` relativa a `base` (con '/'), o None si no está dentro."""
+    for r, b in ((os.path.abspath(ruta), os.path.abspath(base)),
+                 (os.path.realpath(ruta), os.path.realpath(base))):
+        try:
+            if r != b and os.path.commonpath([r, b]) == b:
+                return os.path.relpath(r, b).replace(os.sep, "/")
+        except ValueError:
+            continue
+    return None
+
+
+def ruta_guardada(path: str) -> str:
+    """La forma en que se guarda una ruta en la base (ver arriba). Idempotente:
+    una ruta que ya está en forma guardada se devuelve igual."""
+    if not path or not os.path.isabs(path):
+        return path or ""
+    rel = _dentro_de(path, CONTENT_DIR)
+    if rel is not None:
+        return rel
+    rel = _dentro_de(path, LIBRARY_DIR)
+    if rel is not None:
+        return PREFIJO_BIBLIOTECA + rel
+    return path
+
+
+def ruta_real(guardada: str) -> str:
+    """La ruta en el disco de ESTE servidor para una ruta guardada."""
+    if not guardada:
+        return ""
+    if guardada.startswith(PREFIJO_BIBLIOTECA):
+        resto = guardada[len(PREFIJO_BIBLIOTECA):]
+        return os.path.join(LIBRARY_DIR, *resto.split("/"))
+    if os.path.isabs(guardada):
+        return guardada
+    return os.path.join(CONTENT_DIR, *guardada.split("/"))
+
+
+def _ruta_vieja_a_guardada(path: str) -> str | None:
+    """Para la migración: una ruta absoluta de antes, en forma guardada.
+
+    Si está dentro de la carpeta de material o de la biblioteca, directo. Si
+    no, puede ser de otra máquina u otra copia del proyecto
+    ('/Users/x/AppEstudio/contenido/Neuro/a.pdf' leída en '/app'): se busca el
+    nombre de la carpeta ('/contenido/') y se acepta solo si el archivo existe
+    aquí con esa misma ruta relativa. Si no, None: la fila se deja como está.
+    """
+    nueva = ruta_guardada(path)
+    if nueva != path:
+        return nueva
+    for base, prefijo in ((CONTENT_DIR, ""), (LIBRARY_DIR, PREFIJO_BIBLIOTECA)):
+        marca = os.sep + os.path.basename(os.path.normpath(base)) + os.sep
+        i = path.rfind(marca)
+        if i < 0:
+            continue
+        resto = path[i + len(marca):]
+        if resto and ".." not in resto.split(os.sep) and \
+                os.path.isfile(os.path.join(base, resto)):
+            return prefijo + resto.replace(os.sep, "/")
+    return None
+
+
 def ruta_permitida(path: str) -> bool:
     """¿Vive este archivo DENTRO de la carpeta de material o de la biblioteca?
 
@@ -791,8 +881,291 @@ def ruta_permitida(path: str) -> bool:
 
 
 # --------------------------------------------------------------------------- #
+# Dialecto SQL: el mismo código contra SQLite y contra PostgreSQL
+#
+# Portado de EnglishApp, que corre así en Render + Neon. En local (y en las
+# pruebas) la base es un archivo SQLite; en producción, Postgres, porque el
+# disco del plan gratuito de Render se borra en cada reinicio.
+#
+# Las consultas se escriben UNA vez, en dialecto SQLite, y se traducen aquí al
+# vuelo cuando la base es Postgres. Con SQLite van tal cual: el camino local no
+# cambia ni corre riesgo. tests/test_postgres.py pasa por la traducción TODAS
+# las consultas que la app ejecuta.
+#
+# Lo que no se traduce porque ya está escrito para valer en los dos: los
+# booleanos dentro de SUM() (van como CASE WHEN … THEN 1 ELSE 0 END), NOT sobre
+# un entero (va como «= 0») y los GROUP BY (agrupan todas las columnas que no
+# son agregadas, como exige Postgres).
+# --------------------------------------------------------------------------- #
+# Fechas. Las columnas son TEXT en las dos bases y se comparan como cadenas,
+# así que Postgres tiene que devolver TEXTO con el formato de SQLite
+# ('AAAA-MM-DD HH:MM:SS', sin microsegundos). datetime('now') de SQLite es UTC:
+# aquí también, explícito, para no depender de la zona de la sesión.
+_HORA_UTC_PG = "to_char(timezone('UTC', now()), 'YYYY-MM-DD HH24:MI:SS')"
+_FECHAS_PG = (
+    (re.compile(r"datetime\(\s*'now'\s*,\s*'localtime'\s*\)", re.I),
+     "to_char(LOCALTIMESTAMP, 'YYYY-MM-DD HH24:MI:SS')"),
+    (re.compile(r"datetime\(\s*'now'\s*\)", re.I), _HORA_UTC_PG),
+    (re.compile(r"date\(\s*'now'\s*,\s*'localtime'\s*\)", re.I), "CURRENT_DATE::text"),
+    (re.compile(r"date\(\s*'now'\s*\)", re.I), "to_char(timezone('UTC', now()), 'YYYY-MM-DD')"),
+    (re.compile(r"\bIFNULL\(", re.I), "COALESCE("),
+)
+
+
+def a_postgres(sql: str) -> str:
+    """Traduce una consulta escrita en dialecto SQLite a PostgreSQL."""
+    for patron, nuevo in _FECHAS_PG:
+        sql = patron.sub(nuevo, sql)
+    # OR IGNORE no se traduce quitando las palabras: en Postgres el duplicado
+    # FALLARÍA en vez de ignorarse. Hace falta la cláusula.
+    if re.search(r"INSERT\s+OR\s+IGNORE\s+INTO", sql, re.I):
+        sql = re.sub(r"INSERT\s+OR\s+IGNORE\s+INTO", "INSERT INTO", sql, flags=re.I)
+        sql = sql.rstrip().rstrip(";") + " ON CONFLICT DO NOTHING"
+    # OR REPLACE no tiene traducción genérica: Postgres necesita saber sobre qué
+    # columnas choca. Mejor enterarse aquí que en producción.
+    if re.search(r"INSERT\s+OR\s+REPLACE", sql, re.I):
+        raise NotImplementedError(
+            "INSERT OR REPLACE no tiene traducción a Postgres: escribe el "
+            "ON CONFLICT a mano.\n" + sql[:160])
+    # psycopg usa '%' para sus marcas: un '%' de verdad (LIKE 'a%') va doble.
+    sql = sql.replace("%", "%%")
+    return sql.replace("?", "%s")
+
+
+# Restos de dialecto SQLite que Postgres no acepta (o acepta con otro sentido).
+# Lo usan las pruebas sobre cada consulta YA traducida.
+_SOSPECHAS_PG = (
+    (re.compile(r"\?"), "marca '?' sin traducir"),
+    (re.compile(r"\b(date|datetime|strftime|julianday)\s*\(", re.I), "función de fecha de SQLite"),
+    (re.compile(r"\bPRAGMA\b", re.I), "PRAGMA"),
+    (re.compile(r"\bsqlite_master\b", re.I), "sqlite_master"),
+    (re.compile(r"\bINSERT\s+OR\b", re.I), "INSERT OR …"),
+    (re.compile(r"\bAUTOINCREMENT\b", re.I), "AUTOINCREMENT"),
+    (re.compile(r"\bCOLLATE\s+NOCASE\b", re.I), "COLLATE NOCASE"),
+    (re.compile(r"\b(IFNULL|GLOB|group_concat|IIF|instr)\s*\(", re.I), "función solo de SQLite"),
+    (re.compile(r"\bNOT\s+COALESCE\s*\(", re.I), "NOT sobre un entero"),
+    (re.compile(r"\bWHERE\s+1\b(?!\s*=)", re.I), "WHERE 1 (entero como booleano)"),
+    (re.compile(r"\bLIMIT\s+-1\b", re.I), "LIMIT -1"),
+)
+_RE_BOOLEANO = re.compile(r"=|<|>|\b(IN|IS|AND|OR|NOT|LIKE|BETWEEN)\b", re.I)
+
+
+def _sum_con_booleano(sql: str) -> bool:
+    """¿Hay un SUM(condición)? En SQLite suma 1 por cada verdadero; Postgres no
+    suma booleanos. Se mira el argumento entero (con sus paréntesis anidados)
+    al nivel de fuera: SUM(COALESCE(x, 'n') = 'n') cuenta, SUM(CASE …) no."""
+    for m in re.finditer(r"\bSUM\s*\(", sql, re.I):
+        nivel, i = 1, m.end()
+        while i < len(sql) and nivel:
+            nivel += {"(": 1, ")": -1}.get(sql[i], 0)
+            i += 1
+        argumento = sql[m.end():i - 1]
+        while re.search(r"\([^()]*\)", argumento):
+            argumento = re.sub(r"\([^()]*\)", "", argumento)
+        if not re.match(r"\s*CASE\b", argumento, re.I) and _RE_BOOLEANO.search(argumento):
+            return True
+    return False
+
+
+def problemas_postgres(sql_pg: str) -> list[str]:
+    """Qué restos de SQLite quedan en una consulta ya traducida (vacío = ninguno)."""
+    problemas = [aviso for patron, aviso in _SOSPECHAS_PG if patron.search(sql_pg)]
+    if _sum_con_booleano(sql_pg):
+        problemas.append("booleano dentro de SUM()")
+    return problemas
+
+
+def url_de_postgres() -> str:
+    """La cadena de conexión de Postgres, o cadena vacía si toca SQLite.
+
+    Solo la variable de entorno, nunca un archivo .env: si la app leyera .env,
+    en local se conectaría a la base de producción sin que nadie lo pidiera.
+    """
+    return (os.environ.get("DATABASE_URL") or "").strip()
+
+
+def _tablas_con_id() -> frozenset:
+    """Tablas con columna 'id', deducidas de SCHEMA.sql.
+
+    Postgres no tiene lastrowid: el id nuevo se pide con RETURNING id. Pero
+    añadirlo a ciegas falla en las tablas sin 'id' (card_progress, settings…).
+    """
+    try:
+        with open(SCHEMA_PATH, "r", encoding="utf-8") as fh:
+            texto = fh.read()
+    except OSError:
+        return frozenset()
+    return frozenset(
+        m.group(1) for m in re.finditer(
+            r"CREATE TABLE IF NOT EXISTS (\w+)\s*\((.*?)\n\);", texto, re.S)
+        if re.search(r"^\s*id\s", m.group(2), re.M))
+
+
+class _CursorPG:
+    """Lo que el código espera de un cursor de sqlite3."""
+
+    def __init__(self, cur, lastrowid=None):
+        self._cur = cur
+        self.lastrowid = lastrowid
+
+    @property
+    def rowcount(self):
+        return self._cur.rowcount
+
+    def fetchone(self):
+        return self._cur.fetchone()
+
+    def fetchall(self):
+        return self._cur.fetchall()
+
+    def __iter__(self):
+        return iter(self._cur)
+
+
+_RE_ESCRITURA = re.compile(r"^\s*(INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|TRUNCATE)\b", re.I)
+_RE_ESQUEMA_PG = re.compile(r"^[a-z_][a-z0-9_]{0,62}$")
+
+
+class ConexionPostgres:
+    """Habla con Postgres por la misma puerta que el código usa con SQLite:
+    execute / commit / rollback, filas accesibles por nombre y lastrowid.
+
+    Transacciones: la conexión va en autocommit y la transacción se abre sola
+    con la PRIMERA escritura (BEGIN) y se cierra con commit(). Así una lectura
+    suelta no deja la conexión «idle in transaction» y las escrituras de un
+    mismo método (p. ej. cambiar la contraseña y cerrar las sesiones) siguen
+    yendo juntas, como en SQLite.
+
+    Reconexión: el plan gratuito de Neon SUSPENDE la base tras unos minutos sin
+    uso y mata las conexiones abiertas. Con una sola conexión para todo el
+    proceso, eso dejaba la app rota hasta reiniciarla (lo vivió EnglishApp).
+    Si la conexión está muerta se abre otra y se reintenta UNA vez, pero solo
+    cuando es seguro: una lectura fuera de transacción, o el BEGIN de una
+    escritura (aún no se ha mandado nada). Si muere a mitad de una transacción,
+    lo escrito en ella se perdió con la conexión: el error sube, para que nada
+    se pierda en silencio.
+    """
+
+    def __init__(self, url: str, esquema: str = "") -> None:
+        if esquema and not _RE_ESQUEMA_PG.match(esquema):
+            raise ValueError("Nombre de esquema de Postgres no válido.")
+        self._url = url
+        self._esquema = esquema
+        # El pooler de Neon (PgBouncer, host con '-pooler') reparte las
+        # consultas entre conexiones del servidor: lo que vive en la sesión,
+        # como un candado consultivo, no es fiable allí (ver candado_global).
+        self.con_pooler = "-pooler" in (urllib.parse.urlsplit(url).hostname or "")
+        self._con_id = _tablas_con_id()
+        self._en_tx = False
+        self.row_factory = None          # el código lo asigna; aquí no significa nada
+        self._con = self._abrir()
+
+    def _abrir(self):
+        import psycopg
+        from psycopg.rows import dict_row
+        extra = {"options": f"-c search_path={self._esquema}"} if self._esquema else {}
+        # prepare_threshold=None: sin sentencias preparadas en el servidor, que
+        # el pooler de Neon (PgBouncer) no siempre conserva entre consultas.
+        return psycopg.connect(self._url, row_factory=dict_row, connect_timeout=30,
+                               autocommit=True, prepare_threshold=None, **extra)
+
+    def _reconectar(self) -> None:
+        try:
+            self._con.close()
+        except Exception as exc:                       # ya estaba rota: da igual
+            _log.debug("Cerrar la conexión vieja falló: %s", type(exc).__name__)
+        self._en_tx = False
+        self._con = self._abrir()
+        _log.warning("Postgres: la conexión se había cerrado (¿Neon suspendido?); "
+                     "se abrió otra.")
+
+    def _empezar(self) -> None:
+        """BEGIN de la transacción. Si la conexión estaba muerta, todavía no se
+        ha mandado nada: se reconecta y se reintenta sin riesgo."""
+        import psycopg
+        try:
+            self._con.execute("BEGIN")
+        except (psycopg.OperationalError, psycopg.InterfaceError):
+            self._reconectar()
+            self._con.execute("BEGIN")
+        self._en_tx = True
+
+    def _lanzar(self, pg: str, params):
+        m = re.match(r"\s*INSERT\s+INTO\s+(\w+)", pg, re.I)
+        if m and m.group(1) in self._con_id and "RETURNING" not in pg.upper():
+            cur = self._con.execute(pg.rstrip().rstrip(";") + " RETURNING id", params)
+            fila = cur.fetchone() if cur.rowcount else None
+            return _CursorPG(cur, fila["id"] if fila else None)
+        return _CursorPG(self._con.execute(pg, params))
+
+    def execute(self, sql: str, params=()):
+        import psycopg
+        pg = a_postgres(sql)
+        params = tuple(params)
+        if _RE_ESCRITURA.match(pg) and not self._en_tx:
+            self._empezar()
+        try:
+            return self._lanzar(pg, params)
+        except (psycopg.OperationalError, psycopg.InterfaceError):
+            en_tx = self._en_tx
+            if not (self._con.closed or self._con.broken):
+                # error de la consulta (p. ej. tiempo agotado), no de la conexión
+                self.rollback()
+                raise
+            self._reconectar()
+            if en_tx:
+                raise
+            return self._lanzar(pg, params)
+        except psycopg.Error:
+            # unicidad, sintaxis…: Postgres deja la transacción abortada y la
+            # conexión no sirve hasta el rollback. Se deshace y el error sube.
+            self.rollback()
+            raise
+
+    def executescript(self, script: str):
+        raise NotImplementedError(
+            "executescript no se usa con Postgres: el esquema lo aplica "
+            "pg_schema, sentencia por sentencia.")
+
+    def commit(self) -> None:
+        if not self._en_tx:
+            return
+        import psycopg
+        try:
+            self._con.execute("COMMIT")
+        except (psycopg.OperationalError, psycopg.InterfaceError):
+            # no se sabe si llegó: el error sube, nunca se da por guardado
+            self._reconectar()
+            raise
+        finally:
+            self._en_tx = False
+
+    def rollback(self) -> None:
+        if not self._en_tx:
+            return
+        import psycopg
+        try:
+            self._con.execute("ROLLBACK")
+        except (psycopg.OperationalError, psycopg.InterfaceError):
+            self._reconectar()                 # la transacción murió con la conexión
+        finally:
+            self._en_tx = False
+
+    def close(self) -> None:
+        self._con.close()
+
+
+# --------------------------------------------------------------------------- #
 # DatabaseManager
 # --------------------------------------------------------------------------- #
+def _con_ruta_real(fila) -> dict:
+    """Una fila de assets u orphan_files con `path` ya resuelto en ESTE disco.
+    En la base es relativa (ruta_guardada); hacia fuera de core, absoluta."""
+    d = dict(fila)
+    d["path"] = ruta_real(d.get("path") or "")
+    return d
+
+
 # Columnas de una ficha tal y como la ve UNA persona: el contenido es de todos
 # (cards) y el estado FSRS es suyo (card_progress). Sin fila de progreso, la
 # ficha es nueva para esa persona.
@@ -818,22 +1191,42 @@ _COLUMNAS_FSRS_VIEJAS = ("state", "due", "stability", "difficulty", "reps",
 
 
 class DatabaseManager:
-    """Persistencia SQLite, segura entre hilos (uvicorn corre los endpoints
-    sync en un threadpool). Conexión compartida + Lock, igual que EnglishApp."""
+    """Persistencia en SQLite (local) o Postgres (producción), segura entre
+    hilos (uvicorn corre los endpoints sync en un threadpool). Una conexión
+    compartida + Lock, igual que EnglishApp."""
 
     CAMPOS_PRIVADOS = ("password_hash",)
 
-    def __init__(self, db_path: str | None = None) -> None:
-        db_path = db_path or os.environ.get("APP_DB_PATH") or DEFAULT_DB_PATH
-        self.conn = sqlite3.connect(db_path, check_same_thread=False)
-        self.conn.row_factory = sqlite3.Row
-        self.conn.execute("PRAGMA foreign_keys = ON;")
+    def __init__(self, db_path: str | None = None, url_pg: str | None = None) -> None:
+        """SQLite o Postgres:
+          * con `db_path` explícito, siempre ese archivo SQLite;
+          * si no, Postgres si hay `url_pg` o DATABASE_URL;
+          * si no, SQLite en APP_DB_PATH (las pruebas) o database.db.
+        """
+        url = "" if db_path else (url_pg if url_pg is not None else url_de_postgres())
+        self.es_postgres = bool(url)
         self._lock = threading.Lock()
+        if self.es_postgres:
+            # APP_PG_SCHEMA: solo las pruebas contra un Postgres real, para
+            # trabajar en un esquema propio que se borra al terminar.
+            self.conn = ConexionPostgres(url, os.environ.get("APP_PG_SCHEMA", "").strip())
+        else:
+            db_path = db_path or os.environ.get("APP_DB_PATH") or DEFAULT_DB_PATH
+            self.conn = sqlite3.connect(db_path, check_same_thread=False)
+            self.conn.row_factory = sqlite3.Row
+            self.conn.execute("PRAGMA foreign_keys = ON;")
         self._apply_schema()
 
     def _apply_schema(self) -> None:
         if not os.path.exists(SCHEMA_PATH):
             raise FileNotFoundError(f"No se encontró el esquema: {SCHEMA_PATH}")
+        if self.es_postgres:
+            # Durante un despliegue pueden arrancar dos instancias a la vez
+            # contra la misma base: el esquema lo aplica una y luego la otra.
+            with self.candado_global("esquema"):
+                self._esquema_postgres()
+                self._migrar_rutas()
+            return
         with open(SCHEMA_PATH, "r", encoding="utf-8") as fh:
             script = fh.read()
         # La migración va ANTES del script: el esquema crea índices sobre
@@ -844,6 +1237,123 @@ class DatabaseManager:
         with self._lock:
             self.conn.executescript(script)
             self.conn.commit()
+        self._migrar_rutas()
+
+    # ----------------------------------------------------------- Postgres
+    def _esquema_postgres(self) -> None:
+        """Tablas, columnas que falten e índices, en ese orden (un índice puede
+        ir sobre una columna que esta misma vez se añade). Todo idempotente.
+
+        Las migraciones de SQLite (_migrate) no corren aquí: existen para
+        poner al día bases de antes de las cuentas, y la base de Postgres nace
+        ya con el esquema de hoy.
+        """
+        import pg_schema
+        with self._lock:
+            for sentencia in pg_schema.sentencias_tablas():
+                self.conn.execute(sentencia)
+            self.conn.commit()
+        self._alinear_columnas_postgres()
+        with self._lock:
+            for sentencia in pg_schema.sentencias_indices():
+                self.conn.execute(sentencia)
+            self.conn.commit()
+
+    def _alinear_columnas_postgres(self) -> None:
+        """Añade las columnas que SCHEMA.sql declara y la tabla todavía no tiene.
+
+        CREATE TABLE IF NOT EXISTS no toca una tabla que ya existe: sin esto,
+        una columna nueva en SCHEMA.sql nunca llegaría a la base de producción.
+        Postgres acepta ADD COLUMN IF NOT EXISTS: idempotente.
+        """
+        import pg_schema
+        anadidas = []
+        with self._lock:
+            for tabla, columnas in pg_schema.columnas_por_tabla():
+                existentes = {r["column_name"].lower() for r in self.conn.execute(
+                    "SELECT column_name FROM information_schema.columns "
+                    "WHERE table_schema = current_schema() AND table_name = ?", (tabla,))}
+                if not existentes:
+                    continue                      # la tabla acaba de nacer completa
+                for nombre, definicion in columnas:
+                    if nombre.lower() in existentes:
+                        continue
+                    self.conn.execute(
+                        f"ALTER TABLE {tabla} ADD COLUMN IF NOT EXISTS {nombre} {definicion}")
+                    anadidas.append(f"{tabla}.{nombre}")
+            self.conn.commit()
+        if anadidas:
+            _log.info("Postgres: columnas añadidas: %s", ", ".join(anadidas))
+
+    @contextlib.contextmanager
+    def candado_global(self, nombre: str, espera: float = 15.0):
+        """Exclusión entre PROCESOS: durante un despliegue conviven la
+        instancia vieja y la nueva contra la misma base.
+
+        En Postgres, un candado consultivo (pg_try_advisory_lock); se espera
+        hasta `espera` segundos sin retener el candado de hilos, para no
+        bloquear las peticiones de esta instancia. Devuelve si se obtuvo; si
+        no, quien llama sigue igual (lo que protege —esquema e ingesta— es
+        idempotente: el candado solo evita que dos lo hagan a la vez).
+
+        SQLite tiene un solo proceso: siempre True. Con el pooler de Neon
+        tampoco se usa: el candado es de la SESIÓN y PgBouncer puede mandar el
+        «soltar» a otra conexión del servidor, dejándolo tomado para siempre.
+        """
+        if not self.es_postgres or self.conn.con_pooler:
+            yield True
+            return
+        clave = int.from_bytes(hashlib.sha256(f"medstudy:{nombre}".encode()).digest()[:8],
+                               "big", signed=True)
+        limite = time.monotonic() + espera
+        obtenido = False
+        while True:
+            with self._lock:
+                obtenido = bool(self.conn.execute(
+                    "SELECT pg_try_advisory_lock(?) AS ok", (clave,)).fetchone()["ok"])
+            if obtenido or time.monotonic() >= limite:
+                break
+            time.sleep(0.5)
+        try:
+            yield obtenido
+        finally:
+            if obtenido:
+                with self._lock:
+                    self.conn.execute("SELECT pg_advisory_unlock(?) AS ok", (clave,))
+
+    # ------------------------------------------------- rutas relativas
+    def _migrar_rutas(self) -> None:
+        """Pasa a forma relativa (ruta_guardada) las rutas absolutas de antes.
+
+        Idempotente: solo toca filas con una ruta absoluta que se pueda
+        reubicar. Si la forma relativa ya existe (porque una ingesta la volvió
+        a crear), las notas pegadas al material viejo pasan al nuevo y el
+        duplicado se borra: borrarlo sin más se llevaría las notas en cascada.
+        """
+        cambiadas = 0
+        with self._lock:
+            for tabla in ("assets", "orphan_files"):
+                filas = [dict(r) for r in self.conn.execute(f"SELECT id, path FROM {tabla}")]
+                for fila in filas:
+                    if not os.path.isabs(fila["path"] or ""):
+                        continue
+                    nueva = _ruta_vieja_a_guardada(fila["path"])
+                    if not nueva:
+                        continue
+                    otra = self.conn.execute(
+                        f"SELECT id FROM {tabla} WHERE path = ?", (nueva,)).fetchone()
+                    if otra:
+                        if tabla == "assets":
+                            self.conn.execute("UPDATE notes SET asset_id = ? WHERE asset_id = ?",
+                                              (otra["id"], fila["id"]))
+                        self.conn.execute(f"DELETE FROM {tabla} WHERE id = ?", (fila["id"],))
+                    else:
+                        self.conn.execute(f"UPDATE {tabla} SET path = ? WHERE id = ?",
+                                          (nueva, fila["id"]))
+                    cambiadas += 1
+            self.conn.commit()
+        if cambiadas:
+            _log.info("Migración: %d rutas de materiales pasan a ser relativas.", cambiadas)
 
     def _migrate(self) -> None:
         """
@@ -1047,6 +1557,39 @@ class DatabaseManager:
                 "SELECT COUNT(*) AS n FROM users WHERE role = 'admin' AND status = 'active'"
             ).fetchone()["n"]
 
+    def hay_admin(self) -> bool:
+        """¿Existe ALGUNA cuenta de administrador, activa o no?"""
+        with self._lock:
+            return self.conn.execute(
+                "SELECT 1 FROM users WHERE role = 'admin' LIMIT 1").fetchone() is not None
+
+    def promover_admin_inicial(self, email: str) -> int | None:
+        """El primer administrador, sin terminal (Render gratis no tiene shell).
+
+        Si TODAVÍA no hay ningún admin, la cuenta activa con exactamente ese
+        correo (sin distinguir mayúsculas) pasa a serlo. Devuelve su id, o None
+        si no se cambió nada. Un solo UPDATE condicionado: aunque dos procesos
+        lo intenten a la vez, solo puede haber un primer admin.
+
+        Es seguro porque el correo de una cuenta solo se fija verificándolo
+        (el enlace de alta llega a ese buzón), y la variable ADMIN_EMAIL solo la
+        pone quien despliega. Nunca se acepta una contraseña desde el entorno.
+        """
+        email = (email or "").strip().lower()
+        if not email or not email_valido(email):
+            return None
+        with self._lock:
+            cur = self.conn.execute(
+                "UPDATE users SET role = 'admin' WHERE lower(email) = ? AND status = 'active' "
+                "AND NOT EXISTS (SELECT 1 FROM users WHERE role = 'admin')", (email,))
+            self.conn.commit()
+            if cur.rowcount != 1:
+                return None
+            fila = self.conn.execute(
+                "SELECT id FROM users WHERE lower(email) = ? AND role = 'admin'",
+                (email,)).fetchone()
+        return fila["id"] if fila else None
+
     # ----------------------------------------------------------- sesiones
     def create_session(self, user_id: int, dias: int = 30) -> str:
         """Abre sesión y devuelve el token, que solo viajará en la cookie.
@@ -1184,10 +1727,13 @@ class DatabaseManager:
     # =========================================================== carpetas
     def list_folders(self) -> list[dict]:
         with self._lock:
+            # Postgres exige agrupar toda columna que no sea agregada.
             rows = self.conn.execute(
-                """SELECT f.*, COUNT(t.id) AS temas
+                """SELECT f.id, f.name, f.color, f.sort_order, f.created_at,
+                          COUNT(t.id) AS temas
                      FROM folders f LEFT JOIN topics t ON t.folder_id = f.id
-                    GROUP BY f.id ORDER BY f.sort_order, f.name""").fetchall()
+                    GROUP BY f.id, f.name, f.color, f.sort_order, f.created_at
+                    ORDER BY f.sort_order, f.name""").fetchall()
         return [dict(r) for r in rows]
 
     def ensure_folder(self, name: str, color: str = "#c9a86a") -> int:
@@ -1357,9 +1903,9 @@ class DatabaseManager:
             return cur.lastrowid
 
     def now_sql(self) -> str:
-        """La hora actual con el mismo formato que los DEFAULT datetime('now')."""
-        with self._lock:
-            return self.conn.execute("SELECT datetime('now') AS n").fetchone()["n"]
+        """La hora actual con el mismo formato y la misma zona (UTC) que los
+        DEFAULT datetime('now') del esquema. La pone Python: igual en las dos bases."""
+        return _ahora_utc()
 
     def count_topics(self) -> int:
         with self._lock:
@@ -1378,9 +1924,8 @@ class DatabaseManager:
         son nuevos."""
         today = datetime.date.today().isoformat()
         baseline = self.get_setting("baseline_at")
+        limite = _ahora_utc(-NEW_DAYS * 86400)
         with self._lock:
-            limite = self.conn.execute(
-                "SELECT datetime('now', ?) AS d", (f"-{NEW_DAYS} days",)).fetchone()["d"]
             # c.id IS NOT NULL: un tema sin fichas trae una fila con c.id NULL,
             # y COALESCE(p.state, 'new') la contaría como una ficha nueva.
             rows = self.conn.execute(
@@ -1389,13 +1934,15 @@ class DatabaseManager:
                        t.created_at,
                        (SELECT MAX(a.created_at) FROM assets a WHERE a.topic_id = t.id) AS material_at,
                        COUNT(c.id) AS total,
-                       SUM(c.id IS NOT NULL AND COALESCE(p.state, 'new') = 'new') AS nuevas,
-                       SUM(COALESCE(p.state, 'new') != 'new' AND p.due <= ?
-                           AND NOT COALESCE(p.suspended, 0)) AS vencidas
+                       SUM(CASE WHEN c.id IS NOT NULL AND COALESCE(p.state, 'new') = 'new'
+                                THEN 1 ELSE 0 END) AS nuevas,
+                       SUM(CASE WHEN COALESCE(p.state, 'new') != 'new' AND p.due <= ?
+                                 AND COALESCE(p.suspended, 0) = 0
+                                THEN 1 ELSE 0 END) AS vencidas
                   FROM topics t
                   LEFT JOIN cards c ON c.topic_id = t.id
                   LEFT JOIN card_progress p ON p.card_id = c.id AND p.user_id = ?
-                 GROUP BY t.id
+                 GROUP BY t.id, t.slug, t.title, t.area, t.sort_order, t.folder_id, t.created_at
                  ORDER BY t.sort_order, t.title
                 """, (today, user_id)).fetchall()
         topics = []
@@ -1432,12 +1979,15 @@ class DatabaseManager:
                 "FROM assets WHERE topic_id = ? ORDER BY kind", (topic_id,)).fetchall()
         assets: dict[str, list[dict]] = {}
         for row in rows:
-            assets.setdefault(row["kind"], []).append(dict(row))
+            assets.setdefault(row["kind"], []).append(_con_ruta_real(row))
         return assets
 
     def add_asset(self, topic_id: int, kind: str, path: str, score: float = 1.0,
                   matched_by: str = "auto") -> None:
-        stat = os.stat(path) if os.path.exists(path) else None
+        """`path` puede ser absoluta o ya guardada; en la base queda relativa."""
+        guardada = ruta_guardada(path)
+        real = ruta_real(guardada)
+        stat = os.stat(real) if os.path.exists(real) else None
         with self._lock:
             self.conn.execute(
                 """
@@ -1447,8 +1997,8 @@ class DatabaseManager:
                     topic_id = excluded.topic_id, kind = excluded.kind,
                     score = excluded.score, matched_by = excluded.matched_by
                 """,
-                (topic_id, kind, path, os.path.basename(path),
-                 os.path.splitext(path)[1].lstrip(".").lower(),
+                (topic_id, kind, guardada, os.path.basename(real),
+                 os.path.splitext(real)[1].lstrip(".").lower(),
                  stat.st_size if stat else 0, score, matched_by))
             self.conn.commit()
 
@@ -1456,10 +2006,12 @@ class DatabaseManager:
         with self._lock:
             row = self.conn.execute(
                 "SELECT * FROM assets WHERE id = ?", (asset_id,)).fetchone()
-        return dict(row) if row else None
+        return _con_ruta_real(row) if row else None
 
     def add_orphan(self, path: str, kind: str, guess_id: int | None, score: float) -> None:
-        stat = os.stat(path) if os.path.exists(path) else None
+        guardada = ruta_guardada(path)
+        real = ruta_real(guardada)
+        stat = os.stat(real) if os.path.exists(real) else None
         with self._lock:
             self.conn.execute(
                 """
@@ -1470,8 +2022,8 @@ class DatabaseManager:
                     best_guess_topic_id = excluded.best_guess_topic_id,
                     best_score = excluded.best_score
                 """,
-                (path, os.path.basename(path), kind,
-                 os.path.splitext(path)[1].lstrip(".").lower(),
+                (guardada, os.path.basename(real), kind,
+                 os.path.splitext(real)[1].lstrip(".").lower(),
                  stat.st_size if stat else 0, guess_id, score))
             self.conn.commit()
 
@@ -1481,7 +2033,7 @@ class DatabaseManager:
                 "SELECT o.*, t.title AS guess_title FROM orphan_files o "
                 "LEFT JOIN topics t ON t.id = o.best_guess_topic_id "
                 "ORDER BY o.filename").fetchall()
-        return [dict(r) for r in rows]
+        return [_con_ruta_real(r) for r in rows]
 
     def assign_orphan(self, orphan_id: int, topic_id: int) -> bool:
         with self._lock:
@@ -1509,24 +2061,35 @@ class DatabaseManager:
         vuelve a limpiar también las fichas que ya estaban en la base.
         """
         added = updated = 0
+        limpias = [dict(card, front=limpiar_html(card.get("front", "")),
+                        back=limpiar_html(card.get("back", ""))) for card in cards]
+        guids = sorted({c["anki_guid"] for c in limpias if c.get("anki_guid")})
         with self._lock:
-            for card in cards:
-                card = dict(card, front=limpiar_html(card.get("front", "")),
-                            back=limpiar_html(card.get("back", "")))
+            # Las que ya existen, de una vez (en trozos: hay un tope de marcas
+            # por consulta), en vez de una consulta por ficha. La ingesta corre
+            # en cada arranque y, contra Postgres, cada consulta es un viaje de red.
+            existentes: dict[tuple, dict] = {}
+            for i in range(0, len(guids), 500):
+                trozo = guids[i:i + 500]
+                for r in self.conn.execute(
+                        "SELECT id, anki_guid, cloze_index, front, back, tags FROM cards "
+                        f"WHERE anki_guid IN ({', '.join('?' * len(trozo))})", tuple(trozo)):
+                    existentes[(r["anki_guid"], r["cloze_index"])] = dict(r)
+            for card in limpias:
                 guid = card.get("anki_guid")
-                existing = None
-                if guid:
-                    existing = self.conn.execute(
-                        "SELECT id FROM cards WHERE anki_guid = ? AND cloze_index = ?",
-                        (guid, card.get("cloze_index", 0))).fetchone()
-                if existing:
-                    self.conn.execute(
-                        "UPDATE cards SET front = ?, back = ?, tags = ? WHERE id = ?",
-                        (card.get("front", ""), card.get("back", ""),
-                         card.get("tags", ""), existing["id"]))
+                clave = (guid, card.get("cloze_index", 0))
+                fila = existentes.get(clave) if guid else None
+                texto = (card.get("front", ""), card.get("back", ""), card.get("tags", ""))
+                if fila:
+                    # Sin cambios no se escribe nada: re-escanear no cuesta escrituras.
+                    if texto != (fila["front"], fila["back"], fila["tags"]):
+                        self.conn.execute(
+                            "UPDATE cards SET front = ?, back = ?, tags = ? WHERE id = ?",
+                            (*texto, fila["id"]))
+                        fila.update(front=texto[0], back=texto[1], tags=texto[2])
                     updated += 1
                 else:
-                    self.conn.execute(
+                    cur = self.conn.execute(
                         """
                         INSERT INTO cards (topic_id, kind, front, back, cloze_index,
                                            tags, source, anki_guid)
@@ -1535,6 +2098,9 @@ class DatabaseManager:
                         (topic_id, card.get("kind", "basic"), card.get("front", ""),
                          card.get("back", ""), card.get("cloze_index", 0),
                          card.get("tags", ""), source, guid))
+                    if guid:      # el mismo guid dos veces en un archivo: la 2.ª actualiza
+                        existentes[clave] = {"id": cur.lastrowid, "front": texto[0],
+                                             "back": texto[1], "tags": texto[2]}
                     added += 1
             self.conn.commit()
         return {"added": added, "updated": updated}
@@ -1655,10 +2221,12 @@ class DatabaseManager:
             # primero el del SELECT (hoy), luego el del JOIN (user_id)
             row = self.conn.execute(
                 f"""SELECT COUNT(*) AS total,
-                           SUM(COALESCE(p.state, 'new') = 'new') AS nuevas,
-                           SUM(COALESCE(p.state, 'new') != 'new' AND p.due <= ?
-                               AND NOT COALESCE(p.suspended, 0)) AS vencidas
-                      FROM {_CARD_JOIN} WHERE 1 {where}""",
+                           SUM(CASE WHEN COALESCE(p.state, 'new') = 'new'
+                                    THEN 1 ELSE 0 END) AS nuevas,
+                           SUM(CASE WHEN COALESCE(p.state, 'new') != 'new' AND p.due <= ?
+                                     AND COALESCE(p.suspended, 0) = 0
+                                    THEN 1 ELSE 0 END) AS vencidas
+                      FROM {_CARD_JOIN} WHERE 1 = 1 {where}""",
                 (today, user_id, *params)).fetchone()
         return {"total": row["total"] or 0, "nuevas": row["nuevas"] or 0,
                 "vencidas": row["vencidas"] or 0}
@@ -1705,11 +2273,14 @@ class DatabaseManager:
         with self._lock:
             totals = self.conn.execute(
                 f"""SELECT COUNT(*) AS total,
-                          SUM(COALESCE(p.state, 'new') = 'new')    AS nuevas,
-                          SUM(p.state = 'review')                  AS maduras,
-                          SUM(p.state IN ('learning','relearning')) AS aprendiendo,
-                          SUM(COALESCE(p.state, 'new') != 'new' AND p.due <= ?
-                              AND NOT COALESCE(p.suspended, 0)) AS vencidas
+                          SUM(CASE WHEN COALESCE(p.state, 'new') = 'new'
+                                   THEN 1 ELSE 0 END)                         AS nuevas,
+                          SUM(CASE WHEN p.state = 'review' THEN 1 ELSE 0 END) AS maduras,
+                          SUM(CASE WHEN p.state IN ('learning', 'relearning')
+                                   THEN 1 ELSE 0 END)                         AS aprendiendo,
+                          SUM(CASE WHEN COALESCE(p.state, 'new') != 'new' AND p.due <= ?
+                                    AND COALESCE(p.suspended, 0) = 0
+                                   THEN 1 ELSE 0 END)                         AS vencidas
                      FROM {_CARD_JOIN}""", (today, user_id)).fetchone()
             topics = self.conn.execute("SELECT COUNT(*) AS n FROM topics").fetchone()
             streak_rows = self.conn.execute(

@@ -32,7 +32,9 @@ Abre **http://localhost:8090** y entra con esa cuenta. `crear_admin.py` pide la
 contraseña sin mostrarla (o la lee de `ADMIN_PASSWORD`); nunca la guardes en un
 archivo del repositorio.
 
-La primera vez escanea `contenido/` y arma los temas solo, una carpeta por materia.
+Cada vez que arranca escanea `contenido/` (en segundo plano, ~0,2 s) y arma los
+temas solo, una carpeta por materia. Es idempotente: no duplica nada ni toca el
+progreso de nadie.
 
 ## Cuentas
 
@@ -45,7 +47,8 @@ La primera vez escanea `contenido/` y arma los temas solo, una carpeta por mater
   (`/forgot-password`) y cambio de contraseña en Ajustes.
 - **Admin** (`/admin`): crear cuentas, bloquear y activar, cerrar sesiones,
   poner una contraseña temporal. Solo el admin re-escanea, carga archivos y
-  organiza carpetas; los demás estudian.
+  organiza carpetas; los demás estudian. La carga de archivos existe solo en
+  local: en producción el material se agrega con git (ver «Desplegar»).
 
 ## Variables de entorno
 
@@ -54,6 +57,7 @@ Los nombres están en `.env.example`. Ninguna es obligatoria en local.
 | Variable | Para qué |
 |---|---|
 | `PORT`, `HOST` | Puerto (8090) y dirección (127.0.0.1). |
+| `DATABASE_URL` | Postgres (Neon). Sin ella, SQLite (`database.db`). **Obligatoria en producción.** Nunca en un archivo del repo ni en `.env`: la app no lee `.env`. |
 | `ESTUDIO_CONTENT_DIR` | Carpeta de material (por defecto `contenido/`). |
 | `APP_URL`, `APP_NOMBRE` | Dirección pública para los enlaces de los correos; nombre de la app. |
 | `CORREO_MODO` | `consola` en local, `memoria` en las pruebas. Los dos se niegan con `COOKIE_SEGURA=1`. |
@@ -63,8 +67,15 @@ Los nombres están en `.env.example`. Ninguna es obligatoria en local.
 | `IP_DE_CABECERA` | Cabecera con la IP real detrás de un proxy (p. ej. `true-client-ip`). |
 | `MAX_CORREOS_DIA`, `MAX_ALTAS_DIA` | Topes diarios de correos. |
 | `DOCS` | `1` para servir `/docs`. |
-| `ADMIN_USERNAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` | Solo para `crear_admin.py` sin terminal. |
+| `ADMIN_EMAIL` | El primer admin sin terminal: la cuenta que se registre con ese correo, mientras no haya ningún admin. |
+| `ADMIN_USERNAME`, `ADMIN_PASSWORD` | Solo para `crear_admin.py` en local sin terminal. En producción se niega a leer la contraseña. |
 | `APP_DB_PATH` | Otra base SQLite (la usan las pruebas). |
+| `TEST_PG_URL`, `APP_PG_SCHEMA` | Solo pruebas: correrlas contra un Postgres real (ver «Pruebas»). |
+
+En producción (Render define `RENDER`, o `APP_URL` empieza por `https://`) la
+app **no arranca** si falta `COOKIE_SEGURA=1`, `IP_DE_CABECERA`, `SECRETO_APP`
+o un `DATABASE_URL` de Postgres: es mejor no arrancar que arrancar mal (con
+SQLite en un disco que se borra, se perderían las cuentas y el progreso).
 
 ## Pruebas
 
@@ -73,7 +84,88 @@ python -m unittest discover -s tests
 ```
 
 Corren contra una base y unas carpetas temporales: nunca tocan `database.db`
-ni `contenido/`, y los correos quedan en memoria.
+ni `contenido/`, y los correos quedan en memoria. `DATABASE_URL` se ignora
+siempre: las pruebas jamás tocan la base de producción.
+
+`tests/test_postgres.py` comprueba la traducción a Postgres **sin** Postgres:
+recorre todos los métodos de la base, graba cada consulta y la traduce, y
+falla si alguna llamada a la base de `core.py` quedó sin ejercitar. Para correr
+además toda la batería contra un Postgres de verdad (por ejemplo, una rama de
+pruebas en Neon; nunca la de producción):
+
+```bash
+TEST_PG_URL="postgresql://…" python -m unittest discover -s tests
+```
+
+Trabajan en un esquema `medstudy_prueba_…` propio que se borra al terminar.
+
+---
+
+## Desplegar (Render gratis + Neon)
+
+Igual que EnglishApp: la app en **Render** (plan gratuito, con Docker para
+tener poppler) y la base en **Neon** (Postgres gratuito). El disco de Render
+se borra en cada reinicio, así que nada que importe vive en él.
+
+**1. La base en Neon.** Crea un proyecto en [neon.tech](https://neon.tech) en la
+región **AWS us-east-2 (Ohio)**, la misma que la app (cada consulta viaja entre
+las dos). En *Connect* copia la cadena de conexión **directa** (con *Connection
+pooling* apagado; funciona también con el pooler, pero la directa es la
+recomendada): `postgresql://usuario:clave@ep-….us-east-2.aws.neon.tech/neondb?sslmode=require`.
+No la pegues en ningún archivo: va solo en el panel de Render.
+
+**2. El servicio en Render.** *New → Blueprint*, elige este repositorio y Render
+lee `render.yaml` (un servicio web, Docker, plan gratuito, Ohio, se despliega
+solo desde `main`). Te pedirá las variables que no van en el archivo:
+
+| Variable | Qué poner |
+|---|---|
+| `DATABASE_URL` | La cadena de Neon del paso 1. |
+| `APP_URL` | La dirección pública, p. ej. `https://medstudy.onrender.com` (la ves al crear el servicio; si la cambias, vuelve a desplegar). |
+| `BREVO_API_KEY`, `CORREO_REMITENTE` | Los de Brevo (pueden ser los de EnglishApp). Sin ellos no hay registro ni «olvidé mi contraseña». |
+| `ADMIN_EMAIL` | **Tu** correo: con él saldrá el primer administrador. |
+
+`COOKIE_SEGURA`, `IP_DE_CABECERA`, `APP_NOMBRE` y `HOST` ya vienen en el
+archivo, y `SECRETO_APP` lo genera Render.
+
+**3. El primer arranque.** Render construye la imagen (con poppler y con todo
+`contenido/` dentro), la app crea las tablas en Neon y escanea el material.
+La comprobación de salud es `/entrar`, que responde enseguida aunque el escaneo
+siga en segundo plano.
+
+**4. Tu cuenta de administrador.** Render gratis no tiene terminal, así que
+no se usa `crear_admin.py`: abre `APP_URL/signup`, regístrate con el correo de
+`ADMIN_EMAIL`, abre el enlace que te llega y elige usuario y contraseña. Esa
+cuenta es la administradora. Solo funciona mientras no exista ningún admin:
+después la variable ya no hace nada (puedes borrarla). Ninguna contraseña va
+nunca en el entorno.
+
+**5. Publicar material nuevo.** En producción no hay botón de cargar archivos
+(se borrarían en el siguiente reinicio). El material se publica con git:
+
+```bash
+# deja los archivos en su materia, con la estructura de siempre:
+#   contenido/<Materia>/Resumenes PDF/…pdf · Anki/…apkg · Articulos/…pdf
+git add "contenido/Neuro/Resumenes PDF/Mareo - Resumen.pdf"
+git commit -m "Material: resumen de Mareo"
+git push            # a main (o fusiona tu rama en main)
+```
+
+Render vuelve a construir y desplegar solo. Al arrancar, la app incorpora lo
+nuevo y lo muestra arriba, en «Recién agregado», con la marca **Nuevo** (tema
+nuevo) o **Actualizado** (material nuevo de un tema que ya existía) durante 21
+días. El progreso de nadie se toca.
+
+**Bueno saber:**
+
+- El plan gratuito **se duerme** tras 15 minutos sin visitas: la primera visita
+  tarda en despertarlo, y durante unos segundos la barra lateral puede decir
+  «Actualizando el material…» mientras corre el escaneo.
+- Neon también suspende la base sin uso; la app reconecta sola.
+- La caché de páginas renderizadas vive en el disco de Render y se pierde al
+  reiniciar: se rehace sola la primera vez que se abre cada página.
+- La base local (`database.db`) **no** se copia a producción: allí las cuentas
+  y el progreso empiezan de cero.
 
 ---
 
@@ -103,7 +195,7 @@ Carpeta          →  Tema          →  Fichas + resumen + presentación + nota
 | **Post-it** | «📌 Pegar post-it» y clic donde quieras. Se arrastran y se editan. |
 | **Notas generales** | En el panel derecho, para lo que no va en un punto concreto. |
 | **Panel derecho** | Al repasar un tema, el resumen queda a la vista para consultarlo. |
-| **Cargar archivos** | PDF y archivos de fichas `.apkg` (hasta 25 MB), desde la barra lateral. Solo admin. |
+| **Cargar archivos** | PDF y archivos de fichas `.apkg` (hasta 25 MB), desde la barra lateral. Solo admin y solo en local: en producción, con git. |
 | **Modo oscuro** | Tres estados: automático, claro y oscuro (abajo a la izquierda). |
 | **Sin emparejar** | Lo que la ingesta no pudo asignar se ve en la UI para hacerlo a mano. |
 
@@ -149,17 +241,23 @@ AppEstudio/
 ├── core.py             # lógica: ingesta, repaso, cuentas, persistencia
 ├── webapp.py           # servidor — ejecuta esto
 ├── correo.py           # correos de alta y de restablecer (Brevo)
-├── crear_admin.py      # crea la cuenta de administrador
-├── SCHEMA.sql          # esquema de la base
+├── crear_admin.py      # crea la cuenta de administrador (en local)
+├── SCHEMA.sql          # esquema de la base (la única fuente, también para Postgres)
+├── pg_schema.py        # traduce SCHEMA.sql a Postgres
+├── contenido/          # el material: va en el repo y en la imagen
 ├── static/             # interfaz: index.html + app.js, entrar, cuenta, admin
 ├── tests/              # pruebas (unittest)
-├── database.db         # (se genera) temas, fichas, cuentas, progreso y notas
-├── biblioteca/         # (se genera) los PDF que cargas desde la app
+├── Dockerfile          # la imagen de producción (con poppler)
+├── render.yaml         # el despliegue en Render (Blueprint)
+├── requirements-web.txt# dependencias de producción, fijadas
+├── database.db         # (se genera, solo en local) temas, fichas, cuentas, progreso y notas
+├── biblioteca/         # (se genera, solo en local) los PDF que cargas desde la app
 ├── assets/paginas/     # (se genera) caché de páginas renderizadas
 ```
 
-`database.db` guarda las cuentas, el progreso y las notas de todos. Es el único
-archivo que vale la pena respaldar; el material vive en `contenido/`.
+En local, `database.db` guarda las cuentas, el progreso y las notas de todos:
+es el único archivo que vale la pena respaldar. En producción eso vive en Neon.
+El material vive en `contenido/`.
 
 Diseño y decisiones técnicas: **[ARCHITECTURE.md](ARCHITECTURE.md)**.
 

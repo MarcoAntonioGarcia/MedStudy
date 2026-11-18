@@ -37,9 +37,33 @@ async function boot(){
   // Lo que cambia el material compartido solo se le muestra al admin. El
   // servidor lo exige igual (403): esto es solo para no ofrecer botones inútiles.
   $$('.solo-admin').forEach(el => { el.hidden = !S.admin; });
+  // En producción el material se agrega con git: la carga no existe allí.
+  $('#uploadBox').hidden = !(S.admin && S.subidas);
   $('#quien').textContent = S.user.nombre || S.user.username || '';
   applyTheme(S.settings.theme || 'auto');
   paintTree(); paintStats(); go(S.sec);
+  vigilarIngesta();
+}
+
+/* Justo después de un despliegue (o de que el servidor despierte) la ingesta
+   del material corre unos segundos en segundo plano y la biblioteca puede
+   llegar vacía o a medias. Se avisa y se vuelve a pedir, sin tocar lo que se
+   esté estudiando: solo la barra lateral y, si está a la vista, el inicio. */
+let vigilando = null;
+function vigilarIngesta(){
+  if (!S.actualizando || vigilando) return;
+  toast('Actualizando el material…');
+  vigilando = setTimeout(async () => {
+    vigilando = null;
+    try {
+      const d = await api('/api/bootstrap');
+      Object.assign(S, {folders: d.folders, topics: d.topics, orphans: d.orphans,
+                        stats: d.stats, actualizando: d.actualizando});
+      paintTree(); paintStats();
+      if (S.sec === 'inicio') renderInicio();
+    } catch(e){ toast(e.message); return; }
+    vigilarIngesta();
+  }, 3000);
 }
 
 $('#salir').onclick = async () => {
@@ -234,7 +258,9 @@ function renderPages(){
   const t = S.topicData, resumen = (t.assets.resumen || [])[0];
   if (!resumen){
     $('#v-tema').innerHTML = `<div class="empty">Este tema no tiene resumen en PDF.${S.admin
-      ? '<br>Cárgalo con «＋ Cargar archivo».' : ''}</div>`;
+      ? (S.subidas ? '<br>Cárgalo con «＋ Cargar archivo».'
+                   : '<br>Agrégalo con git en contenido/ y aparece en el siguiente despliegue.')
+      : ''}</div>`;
     return;
   }
   if (!S.pdf_ok){

@@ -1,0 +1,20 @@
+# Dependencias de PRODUCCIÓN (la imagen de Docker que corre en Render).
+#
+# Fijadas a las versiones con las que pasan las pruebas: así la imagen que se
+# despliega es la que se probó, y una versión nueva de una librería no entra
+# en producción sin que nadie la haya visto. Para subir una, se cambia aquí,
+# se corren las pruebas y se despliega.
+#
+#   * psycopg[binary]: el conector de Postgres (Neon). Solo se usa si hay
+#     DATABASE_URL; en local la app usa SQLite y no lo necesita.
+#   * genanki: exportar un tema a .apkg. Importar no necesita nada (zip + SQLite).
+#   * poppler (pdftoppm/pdfinfo, para anotar los resúmenes) NO es de pip: lo
+#     instala el Dockerfile con apt.
+
+fastapi==0.141.1
+# la trae fastapi; fijada también, porque cambia lo que hacen los middlewares
+starlette==1.3.1
+uvicorn[standard]==0.52.0
+python-multipart==0.0.32
+genanki==0.13.1
+psycopg[binary]==3.3.6

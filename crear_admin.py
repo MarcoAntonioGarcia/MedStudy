@@ -8,9 +8,11 @@ ningún log. Por eso no se acepta como argumento.
     python crear_admin.py                         # pregunta usuario, correo y contraseña
     python crear_admin.py marco --email m@x.com   # solo pregunta la contraseña
 
-Sin terminal (por ejemplo, al desplegar), se leen las variables de entorno
-ADMIN_USERNAME, ADMIN_EMAIL (opcional) y ADMIN_PASSWORD. Nunca escribas la
-contraseña en un archivo del repositorio.
+Sin terminal (solo en local), se leen las variables de entorno ADMIN_USERNAME,
+ADMIN_EMAIL (opcional) y ADMIN_PASSWORD. Nunca escribas la contraseña en un
+archivo del repositorio. En producción (RENDER o APP_URL con https://) se
+niega a leer ADMIN_PASSWORD: allí el primer admin es la cuenta que se registra
+con el correo de ADMIN_EMAIL (ver README, «Desplegar»).
 
 Si el usuario ya existe, no se toca: para cambiarle la contraseña usa el
 panel /admin o el enlace de «¿Olvidaste tu contraseña?».
@@ -40,6 +42,13 @@ def main() -> int:
     ap.add_argument("--email", default="", help="correo (opcional; sirve para restablecer)")
     ap.add_argument("--nombre", default="", help="nombre visible (opcional)")
     args = ap.parse_args()
+
+    # Antes de tocar nada (ni siquiera la base): desplegado, una contraseña en
+    # el entorno queda en el panel y a la vista de quien vea la configuración.
+    if os.environ.get("ADMIN_PASSWORD") and core.es_produccion(os.environ):
+        print("En producción no se acepta ADMIN_PASSWORD. Usa ADMIN_EMAIL y regístrate "
+              "con ese correo.", file=sys.stderr)
+        return 1
 
     username = _preguntar("Usuario: ", args.username or os.environ.get("ADMIN_USERNAME", ""))
     email = _preguntar("Correo (opcional): ", args.email or os.environ.get("ADMIN_EMAIL", ""))

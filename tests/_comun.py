@@ -6,12 +6,16 @@ database.db, contenido/, biblioteca/ ni la caché de páginas, y para que los
 correos queden en una bandeja en memoria en vez de mandarse.
 """
 import atexit
+import logging
 import os
 import shutil
 import sys
 import tempfile
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Los avisos de la app no ensucian la salida de las pruebas; assertLogs los
+# sigue viendo (pone su propio manejador).
+logging.getLogger("estudio").addHandler(logging.NullHandler())
 TMP = tempfile.mkdtemp(prefix="medstudy-pruebas-")
 atexit.register(shutil.rmtree, TMP, True)
 
@@ -21,7 +25,13 @@ os.makedirs(CONTENIDO)
 
 os.environ["APP_DB_PATH"] = os.path.join(TMP, "pruebas.db")
 os.environ["ESTUDIO_CONTENT_DIR"] = CONTENIDO
-os.environ.pop("DATABASE_URL", None)          # jamás una base de red en las pruebas
+# Jamás la base de producción: DATABASE_URL se quita siempre. Solo con
+# TEST_PG_URL, puesta a propósito, las pruebas corren contra un Postgres real,
+# en un esquema propio que se borra al terminar (ver _postgres_de_pruebas).
+os.environ.pop("DATABASE_URL", None)
+os.environ.pop("APP_PG_SCHEMA", None)
+os.environ.pop("ADMIN_EMAIL", None)
+PG_URL = os.environ.get("TEST_PG_URL", "").strip()
 os.environ.pop("IP_DE_CABECERA", None)
 os.environ.pop("BREVO_API_KEY", None)
 os.environ.pop("COOKIE_SEGURA", None)
@@ -34,6 +44,27 @@ os.environ["CORREO_MODO"] = "memoria"
 os.environ["APP_URL"] = "http://app.ejemplo.test"
 if RAIZ not in sys.path:
     sys.path.insert(0, RAIZ)
+
+
+def esquema_pg_temporal() -> str:
+    """Crea un esquema vacío en TEST_PG_URL y lo borra al salir. Devuelve su nombre."""
+    import secrets
+
+    import psycopg
+    nombre = "medstudy_prueba_" + secrets.token_hex(4)
+    with psycopg.connect(PG_URL, autocommit=True, connect_timeout=15) as con:
+        con.execute(f"CREATE SCHEMA {nombre}")
+
+    def borrar():
+        with psycopg.connect(PG_URL, autocommit=True, connect_timeout=15) as con:
+            con.execute(f"DROP SCHEMA IF EXISTS {nombre} CASCADE")
+    atexit.register(borrar)
+    return nombre
+
+
+if PG_URL:
+    os.environ["DATABASE_URL"] = PG_URL
+    os.environ["APP_PG_SCHEMA"] = esquema_pg_temporal()
 
 import core  # noqa: E402
 
@@ -48,8 +79,13 @@ from fastapi.testclient import TestClient  # noqa: E402,F401
 import correo  # noqa: E402,F401
 import webapp  # noqa: E402,F401
 
-assert os.path.realpath(webapp.db.conn.execute("PRAGMA database_list").fetchone()["file"]) \
-    == os.path.realpath(os.environ["APP_DB_PATH"]), "las pruebas no usan la base temporal"
+if PG_URL:
+    assert webapp.db.es_postgres and webapp.db.conn._esquema == os.environ["APP_PG_SCHEMA"], \
+        "las pruebas no usan el esquema temporal"
+else:
+    assert not webapp.db.es_postgres
+    assert os.path.realpath(webapp.db.conn.execute("PRAGMA database_list").fetchone()["file"]) \
+        == os.path.realpath(os.environ["APP_DB_PATH"]), "las pruebas no usan la base temporal"
 
 CLAVE = "clave-de-prueba-123"
 
