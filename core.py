@@ -1111,7 +1111,10 @@ class ConexionPostgres:
     def _abrir(self):
         con = self._conectar()
         # Ninguna consulta puede retener la conexión (y el candado de todas las
-        # peticiones) más de 20 s. Un SET normal: vale también con el pooler.
+        # peticiones) más de 20 s. Es un SET de sesión: con el pooler de Neon
+        # (PgBouncer en modo transacción) NO se conserva; por eso se pide la URL
+        # directa. Con el pooler habría que fijarlo en el rol:
+        # ALTER ROLE <rol> SET statement_timeout = '20s'.
         con.execute("SET statement_timeout = '20s'")
         return con
 

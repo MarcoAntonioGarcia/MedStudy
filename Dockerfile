@@ -10,7 +10,7 @@
 # Lo que NO va: la base (vive en Neon), las cachés y las pruebas (.dockerignore).
 # Etiqueta fija (versión de Python y de Debian): la imagen no cambia sola
 # entre despliegues. Para actualizar, se cambia aquí y se prueba.
-FROM python:3.11.11-slim-bookworm
+FROM python:3.11.18-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
