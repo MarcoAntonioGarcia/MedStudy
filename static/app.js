@@ -280,7 +280,12 @@ function stickyEl(nt, pageEl){
   let save;
   ta.oninput = () => { clearTimeout(save);
     save = setTimeout(() => post('/api/notes/' + nt.id, {text: ta.value})
-      .then(() => { nt.text = ta.value; }), 600); };
+      .then(() => {
+        nt.text = ta.value;
+        // la pestaña «Post-its» del panel derecho muestra el mismo texto
+        if (S.railMode === 'tema' && S.railTab === 'postit') renderRail();
+      })
+      .catch(e => toast(e.message)), 600); };
 
   el.querySelector('.x').onclick = async e => {
     e.stopPropagation();

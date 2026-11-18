@@ -38,6 +38,7 @@ from fastapi import Body, Depends, FastAPI, File, HTTPException, Request, Respon
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.background import BackgroundTask
+from starlette.concurrency import run_in_threadpool
 
 import core
 import correo
@@ -93,6 +94,41 @@ _candado_intentos = threading.Lock()
 IP_DE_CABECERA = os.environ.get("IP_DE_CABECERA", "").strip().lower()
 
 
+def _es_produccion(entorno) -> bool:
+    """Desplegado de verdad: en Render (que define RENDER) o servido por HTTPS."""
+    return bool(entorno.get("RENDER", "").strip()) or \
+        entorno.get("APP_URL", "").strip().lower().startswith("https://")
+
+
+def problema_de_produccion(entorno) -> str:
+    """Qué falta para poder arrancar en producción, o cadena vacía si nada.
+
+    Falla CERRADO: sin cookie segura, sin la cabecera de la IP real (detrás de
+    un proxy todos compartirían la IP del proxy y un desconocido dejaría fuera
+    a todo el mundo) o sin secreto propio (las cookies de dispositivo se
+    invalidarían en cada reinicio), es mejor no arrancar que arrancar mal.
+    """
+    if not _es_produccion(entorno):
+        return ""
+    faltan = []
+    if entorno.get("COOKIE_SEGURA", "") != "1":
+        faltan.append("COOKIE_SEGURA=1")
+    if not entorno.get("IP_DE_CABECERA", "").strip():
+        faltan.append("IP_DE_CABECERA")
+    if not entorno.get("SECRETO_APP", "").strip():
+        faltan.append("SECRETO_APP")
+    if not faltan:
+        return ""
+    return ("MedStudy no arranca: parece un despliegue (RENDER o APP_URL con https://) "
+            "pero falta configurar: " + ", ".join(faltan) + ".")
+
+
+EN_PRODUCCION = _es_produccion(os.environ)
+_problema = problema_de_produccion(os.environ)
+if _problema:
+    raise RuntimeError(_problema)
+
+
 def _agrupar_ip(valor: str) -> str | None:
     """La IP como clave del tope. Una IPv6 se agrupa por su /64: cada conexión
     doméstica recibe millones de direcciones y, si no, cada una contaría aparte."""
@@ -112,6 +148,10 @@ def _ip(peticion: Request) -> str:
         agrupada = _agrupar_ip(peticion.headers.get(IP_DE_CABECERA) or "")
         if agrupada:
             return agrupada
+        # En producción, una petición sin la cabecera (o con basura) no pasó por
+        # el proxy como debía: caer a la IP del socket juntaría a todos en una.
+        if EN_PRODUCCION:
+            raise HTTPException(400, "Petición sin el origen esperado.")
     socket = peticion.client.host if peticion.client else ""
     return _agrupar_ip(socket) or socket or "?"
 
@@ -329,7 +369,14 @@ class SesionMiddleware:
 
     async def __call__(self, scope, receive, send):
         if scope["type"] == "http":
-            usuario = db.user_for_token(Request(scope).cookies.get(COOKIE, ""))
+            usuario = None
+            # Los estilos y scripts no necesitan saber quién llama: no se toca
+            # la base por ellos. Para lo demás, la consulta (síncrona, con su
+            # candado) va a un hilo y no bloquea el bucle de eventos.
+            if not scope.get("path", "").startswith("/static/"):
+                token = Request(scope).cookies.get(COOKIE, "")
+                if token:
+                    usuario = await run_in_threadpool(db.user_for_token, token)
             scope.setdefault("state", {})["usuario"] = usuario
         await self.app(scope, receive, send)
 
@@ -462,8 +509,14 @@ APP_NOMBRE = os.environ.get("APP_NOMBRE", "MedStudy").strip() or "MedStudy"
 APP_URL = os.environ.get("APP_URL", "").strip().rstrip("/")
 MINUTOS_ENLACE_ALTA = 60
 MINUTOS_ENLACE_CLAVE = 30
+# Topes por (correo, IP): 3 a la hora y 5 al día. Por IP y no solo por correo
+# para que quien pida enlaces para TU correo desde su IP no te deje sin poder
+# restablecer desde la tuya. Desde un aparato donde ya entraste bien (cookie de
+# dispositivo de esa cuenta) este tope no aplica.
 MAX_CORREOS_HORA_POR_CORREO = 3
 MAX_CORREOS_DIA_POR_CORREO = 5
+# Respaldo: nadie recibe más de 15 al día, vengan de las IPs que vengan.
+MAX_CORREOS_DIA_POR_CORREO_TOTAL = 15
 # Por debajo de los ~300 diarios del plan gratuito de Brevo. Las altas tienen su
 # propio cupo, más bajo: un bot que pide altas de correos inventados no puede
 # gastar los envíos que necesitan las cuentas que ya existen para restablecer.
@@ -491,21 +544,30 @@ def _plantilla(titulo: str, parrafo: str, boton: str, enlace: str, pie: str) -> 
     return texto, html
 
 
+def _grupo_ip(ip: str) -> str:
+    """La IP (ya agrupada) resumida: para contar topes sin guardarla."""
+    return hashlib.sha256(("ip:" + ip).encode("utf-8")).hexdigest()[:32]
+
+
 def _mandar_enlace(email: str, proposito: str, ya_tiene_cuenta: bool = False,
-                   usuario: str = "") -> None:
+                   usuario: str = "", ip: str = "", dispositivo_ok: bool = False) -> None:
     """Crea el token y manda el correo. 503 si hoy ya no se puede enviar más o
-    si Brevo falla; nada (en silencio) si ese correo ya recibió 3 en la hora,
-    porque la respuesta a quien lo pide es la misma en todos los casos."""
+    si Brevo falla; nada (en silencio) si se pasó un tope por correo, porque la
+    respuesta a quien lo pide es la misma en todos los casos."""
     if (db.contar_correos(86400) >= MAX_CORREOS_DIA
             or (proposito == "signup"
                 and db.contar_correos(86400, proposito="signup") >= MAX_ALTAS_DIA)):
         raise HTTPException(503, "Hoy ya no podemos mandar más correos. Inténtalo mañana.")
-    if (db.contar_correos(3600, email) >= MAX_CORREOS_HORA_POR_CORREO
-            or db.contar_correos(86400, email) >= MAX_CORREOS_DIA_POR_CORREO):
+    grupo = _grupo_ip(ip)
+    if db.contar_correos(86400, email) >= MAX_CORREOS_DIA_POR_CORREO_TOTAL:
+        return
+    if not dispositivo_ok and (
+            db.contar_correos(3600, email, ip_grupo=grupo) >= MAX_CORREOS_HORA_POR_CORREO
+            or db.contar_correos(86400, email, ip_grupo=grupo) >= MAX_CORREOS_DIA_POR_CORREO):
         return
     nota_usuario = f"Tu usuario es {usuario}." if usuario else ""
     if proposito == "signup":
-        token = db.crear_token_correo(email, "signup", MINUTOS_ENLACE_ALTA)
+        token = db.crear_token_correo(email, "signup", MINUTOS_ENLACE_ALTA, grupo)
         enlace = f"{APP_URL}/create-account#t={token}"
         asunto = f"Confirma tu correo para {APP_NOMBRE}"
         texto, html = _plantilla(
@@ -515,7 +577,7 @@ def _mandar_enlace(email: str, proposito: str, ya_tiene_cuenta: bool = False,
             "Crear mi cuenta", enlace,
             "Si no lo pediste, ignora este correo: no se creará nada.")
     else:
-        token = db.crear_token_correo(email, "reset", MINUTOS_ENLACE_CLAVE)
+        token = db.crear_token_correo(email, "reset", MINUTOS_ENLACE_CLAVE, grupo)
         enlace = f"{APP_URL}/reset-password#t={token}"
         if ya_tiene_cuenta:
             asunto = f"Ya tienes una cuenta en {APP_NOMBRE}"
@@ -551,9 +613,32 @@ def _email_de(payload: dict) -> str:
 
 def _entrar(respuesta: Response, uid: int) -> None:
     _poner_cookie(respuesta, db.create_session(uid, DIAS_DE_SESION))
+    # Viaja a todo /api/auth/: el login la usa para sus topes y el registro y
+    # el «olvidé mi contraseña» para no frenar a la dueña de la cuenta.
     respuesta.set_cookie(COOKIE_DISPOSITIVO, _cookie_dispositivo(uid),
                          max_age=DIAS_DISPOSITIVO * 86400, httponly=True,
-                         samesite="lax", secure=COOKIE_SEGURA, path="/api/auth/login")
+                         samesite="lax", secure=COOKIE_SEGURA, path="/api/auth")
+
+
+def _lanzar(funcion, *args) -> None:
+    """Corre `funcion` en segundo plano. Las pruebas la sustituyen por una
+    llamada directa para no tener que esperar al hilo."""
+    threading.Thread(target=funcion, args=args, daemon=True).start()
+
+
+def _mandar_en_segundo_plano(email: str, proposito: str, ya_tiene_cuenta: bool,
+                             usuario: str, ip: str, dispositivo_ok: bool) -> None:
+    try:
+        _mandar_enlace(email, proposito, ya_tiene_cuenta=ya_tiene_cuenta, usuario=usuario,
+                       ip=ip, dispositivo_ok=dispositivo_ok)
+    except HTTPException as exc:
+        _log.error("No se mandó un enlace por correo: %s", exc.detail)
+
+
+def _cupo_global_lleno() -> bool:
+    """El único tope que se contesta en la respuesta: es igual para todos, así
+    que no dice nada de ninguna cuenta."""
+    return db.contar_correos(86400) >= MAX_CORREOS_DIA
 
 
 @app.post("/api/auth/register")
@@ -561,19 +646,28 @@ def registrarse(peticion: Request, payload: dict = Body(...)) -> dict:
     """Paso 1: solo el correo. La respuesta es la misma tenga cuenta o no."""
     if not _registro_disponible():
         raise HTTPException(503, "El registro no está disponible ahora.")
-    if _reservar_intento("alta", _ip(peticion)) is None:
+    ip = _ip(peticion)
+    if _reservar_intento("alta", ip) is None:
         raise HTTPException(429, "Demasiadas peticiones. Inténtalo más tarde.")
     email = _email_de(payload)
     db.purgar_tokens_correo()
+    if _cupo_global_lleno():
+        raise HTTPException(503, "Hoy ya no podemos mandar más correos. Inténtalo mañana.")
     existente = db.find_user_by_email(email)
+    # El envío va en segundo plano y la respuesta es siempre la misma: si se
+    # esperara a Brevo solo en unos casos, el tiempo de respuesta diría qué
+    # correos tienen cuenta (y cuáles están bloqueados o pendientes).
     if existente is None:
-        _mandar_enlace(email, "signup")
+        _lanzar(_mandar_en_segundo_plano, email, "signup", False, "", ip, False)
     elif existente.get("status") == "active":
-        # mismo coste que un alta nueva (un correo), así el tiempo de respuesta
-        # tampoco delata qué correos tienen cuenta
-        _mandar_enlace(email, "reset", ya_tiene_cuenta=True,
-                       usuario=existente.get("username") or "")
+        _lanzar(_mandar_en_segundo_plano, email, "reset", True,
+                existente.get("username") or "", ip, _dispositivo_de(peticion, existente))
     return {"ok": True, "message": RESPUESTA_GENERICA}
+
+
+def _dispositivo_de(peticion: Request, fila: dict) -> bool:
+    """¿Llega esta petición desde un aparato donde esa cuenta ya entró bien?"""
+    return _dispositivo_conocido(peticion.cookies.get(COOKIE_DISPOSITIVO, ""), fila["id"])
 
 
 @app.post("/api/auth/link")
@@ -622,13 +716,6 @@ def completar_alta(peticion: Request, respuesta: Response, payload: dict = Body(
     return {"ok": True}
 
 
-def _mandar_en_segundo_plano(email: str, usuario: str) -> None:
-    try:
-        _mandar_enlace(email, "reset", usuario=usuario)
-    except HTTPException as exc:
-        _log.error("No se mandó el enlace de restablecer: %s", exc.detail)
-
-
 @app.post("/api/auth/password/forgot")
 def olvide_mi_clave(peticion: Request, payload: dict = Body(...)) -> dict:
     """Manda el enlace de restablecer si hay una cuenta activa con ese correo.
@@ -639,14 +726,17 @@ def olvide_mi_clave(peticion: Request, payload: dict = Body(...)) -> dict:
     """
     if not _registro_disponible():
         raise HTTPException(503, "Restablecer la contraseña no está disponible ahora.")
-    if _reservar_intento("olvido", _ip(peticion)) is None:
+    ip = _ip(peticion)
+    if _reservar_intento("olvido", ip) is None:
         raise HTTPException(429, "Demasiadas peticiones. Inténtalo más tarde.")
     email = _email_de(payload)
     db.purgar_tokens_correo()
+    if _cupo_global_lleno():
+        raise HTTPException(503, "Hoy ya no podemos mandar más correos. Inténtalo mañana.")
     fila = db.find_user_by_email(email)
     if fila and fila.get("status") == "active":
-        threading.Thread(target=_mandar_en_segundo_plano,
-                         args=(email, fila.get("username") or ""), daemon=True).start()
+        _lanzar(_mandar_en_segundo_plano, email, "reset", False,
+                fila.get("username") or "", ip, _dispositivo_de(peticion, fila))
     return {"ok": True, "message": RESPUESTA_GENERICA}
 
 
@@ -749,6 +839,9 @@ def cambiar_mi_clave(respuesta: Response, payload: dict = Body(...),
         db.set_password(uid, nueva)            # cierra TODAS sus sesiones
     except ValueError as e:
         raise HTTPException(400, str(e)) from None
+    # un enlace de restablecer pendiente ya no tiene sentido (y si lo pidió
+    # otra persona, no debe poder usarse después del cambio)
+    db.anular_tokens_correo(fila.get("email") or "", "reset")
     _olvidar_intentos("login_cuenta", f"id:{uid}")
     _poner_cookie(respuesta, db.create_session(uid, DIAS_DE_SESION))
     return {"ok": True, "mensaje": "Contraseña cambiada. Se cerraron tus otras sesiones."}
@@ -1069,7 +1162,7 @@ def asset_file(asset_id: int, uid: int = Depends(current_user)) -> FileResponse:
         asset["path"], media_type=_INLINE_TYPES.get(asset["ext"], "application/octet-stream"),
         filename=asset["filename"],
         content_disposition_type="inline" if inline else "attachment",
-        headers={"Cache-Control": "private, max-age=3600"})
+        headers={"Cache-Control": "private, no-store"})
 
 
 @app.get("/api/assets/{asset_id}/page/{page}")
@@ -1080,13 +1173,17 @@ def asset_page(asset_id: int, page: int, uid: int = Depends(current_user)) -> Fi
     asset = _asset_servible(asset_id)
     if asset["ext"] != "pdf":
         raise HTTPException(400, "Solo se pueden renderizar páginas de un PDF.")
+    # Solo las páginas que existen: pedir la 2000 de un PDF de 3 no debe
+    # lanzar un pdftoppm para nada.
+    if page > core.PdfRenderer.page_count(asset["path"]):
+        raise HTTPException(404, "Esa página no existe.")
     png = core.PdfRenderer.render(asset["path"], page)
     if not png:
         raise HTTPException(503, "No se pudo renderizar la página.")
-    # Inmutable: la clave de caché incluye la fecha del PDF, así que si el
-    # archivo cambia la URL apunta a otro PNG. 'private': va detrás de sesión.
+    # El material va detrás de sesión: que no quede en ninguna caché, ni en
+    # la del navegador de un equipo compartido. El servidor sí guarda el PNG.
     return FileResponse(png, media_type="image/png",
-                        headers={"Cache-Control": "private, max-age=31536000, immutable"})
+                        headers={"Cache-Control": "private, no-store"})
 
 
 # --------------------------------------------------------------------------- #

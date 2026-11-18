@@ -34,7 +34,10 @@ import subprocess
 import threading
 import time
 import unicodedata
+import urllib.request
 import zipfile
+from html.parser import HTMLParser
+import html
 
 _log = logging.getLogger("estudio")
 
@@ -56,6 +59,8 @@ LIBRARY_DIR = os.path.join(BASE_DIR, "biblioteca")
 # se borran solas si el PDF cambia de fecha.
 PAGE_CACHE_DIR = os.path.join(BASE_DIR, "assets", "paginas")
 PAGE_DPI = 130
+# Cuántos pdftoppm pueden correr a la vez (ver PdfRenderer.render).
+_RENDERS = threading.BoundedSemaphore(2)
 
 # Carpeta con el material (resúmenes, mazos y artículos). Por defecto, contenido/.
 # Solo se cambia con la variable de entorno, nunca desde la app: si un ajuste
@@ -403,6 +408,111 @@ def render_cloze(text: str, index: int) -> tuple[str, str]:
     return _CLOZE_RE.sub(front_sub, text), _CLOZE_RE.sub(back_sub, text)
 
 
+# --------------------------------------------------------------------------- #
+# HTML de las fichas: se limpia al importar
+#
+# Las fichas vienen de archivos de Anki (de cualquiera que comparta un mazo) y
+# la app las pinta como HTML: sin limpiar, un mazo con <img onerror=…> o un
+# enlace javascript: sería código ejecutándose en la sesión de quien estudia.
+# La política de contenido ya lo frena; esto es la segunda barrera, en el
+# servidor. Lista BLANCA: lo que no está aquí no pasa.
+# --------------------------------------------------------------------------- #
+_ETIQUETAS_PERMITIDAS = {
+    "b", "strong", "i", "em", "u", "sub", "sup", "br", "p", "div", "span",
+    "ul", "ol", "li", "table", "thead", "tbody", "tr", "td", "th", "img",
+}
+_ETIQUETAS_VACIAS = {"br", "img"}
+# Su CONTENIDO también se tira, no solo la etiqueta.
+_ETIQUETAS_CON_CONTENIDO_PROHIBIDO = {"script", "style", "iframe", "object", "embed",
+                                      "template", "noscript", "svg", "math", "title"}
+_RE_DATA_IMAGEN = re.compile(r"^data:image/(png|jpe?g|gif|webp);base64,[A-Za-z0-9+/=\s]*$", re.I)
+_RE_NUMERO = re.compile(r"^\d{1,3}$")
+
+
+def _src_seguro(src: str) -> bool:
+    """data:image/… o una ruta relativa del mismo sitio. Nada de http:,
+    javascript:, '//otro.sitio' ni barras invertidas."""
+    src = (src or "").strip()
+    if not src or len(src) > 200_000:
+        return False
+    if _RE_DATA_IMAGEN.match(src):
+        return True
+    if "\\" in src or src.startswith("//") or any(ord(c) < 32 for c in src):
+        return False
+    # sin esquema: nada de 'algo:' antes de la primera barra, ? o #
+    return ":" not in re.split(r"[/?#]", src, maxsplit=1)[0]
+
+
+class _LimpiadorHTML(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.salida: list[str] = []
+        self.abiertas: list[str] = []
+        self.saltando = 0               # dentro de <script>, <style>…
+
+    def handle_starttag(self, tag, attrs):
+        if tag in _ETIQUETAS_CON_CONTENIDO_PROHIBIDO:
+            self.saltando += 1
+            return
+        if self.saltando or tag not in _ETIQUETAS_PERMITIDAS:
+            return                      # <a>, <font>…: fuera la etiqueta, queda el texto
+        limpios = []
+        for nombre, valor in attrs:
+            valor = valor or ""
+            if tag == "img" and nombre == "src" and _src_seguro(valor):
+                limpios.append((nombre, valor.strip()))
+            elif tag == "img" and nombre == "alt":
+                limpios.append((nombre, valor[:300]))
+            elif tag in ("td", "th") and nombre in ("colspan", "rowspan") and _RE_NUMERO.match(valor):
+                limpios.append((nombre, valor))
+        if tag == "img" and not any(n == "src" for n, _ in limpios):
+            return                      # una imagen sin origen seguro no se pinta
+        attrs_html = "".join(f' {n}="{html.escape(v, quote=True)}"' for n, v in limpios)
+        self.salida.append(f"<{tag}{attrs_html}>")
+        if tag not in _ETIQUETAS_VACIAS:
+            self.abiertas.append(tag)
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in _ETIQUETAS_VACIAS and self.abiertas and self.abiertas[-1] == tag:
+            self.handle_endtag(tag)
+
+    def handle_endtag(self, tag):
+        if tag in _ETIQUETAS_CON_CONTENIDO_PROHIBIDO:
+            self.saltando = max(self.saltando - 1, 0)
+            return
+        if self.saltando or tag not in self.abiertas:
+            return
+        # cierra también lo que quedó abierto dentro: el HTML sale bien anidado
+        while self.abiertas:
+            abierta = self.abiertas.pop()
+            self.salida.append(f"</{abierta}>")
+            if abierta == tag:
+                break
+
+    def handle_data(self, data):
+        if not self.saltando:
+            self.salida.append(html.escape(data, quote=False))
+
+    def resultado(self) -> str:
+        self.close()
+        return "".join(self.salida) + "".join(f"</{t}>" for t in reversed(self.abiertas))
+
+
+def limpiar_html(texto: str) -> str:
+    """HTML de una ficha con solo etiquetas y atributos seguros (ver arriba)."""
+    if not texto:
+        return ""
+    limpiador = _LimpiadorHTML()
+    limpiador.feed(texto)
+    return limpiador.resultado()
+
+
+# Tiempo máximo para leer la base de un .apkg. Una consulta trampa (vistas o
+# disparadores diseñados para tardar) no debe dejar un hilo del servidor colgado.
+SEGUNDOS_LECTURA_ANKI = 20
+
+
 class AnkiImporter:
     """Lee un .apkg y devuelve sus notas ya convertidas a tarjetas."""
 
@@ -439,10 +549,27 @@ class AnkiImporter:
 
         with tempfile.TemporaryDirectory() as workdir:
             col_path = cls._open_collection(apkg_path, workdir)
-            conn = sqlite3.connect(col_path)
+            # Solo lectura e inmutable: la base viene de fuera y no debe poder
+            # escribir nada (ni un diario junto al archivo) ni cambiar al leerla.
+            uri = "file:" + urllib.request.pathname2url(col_path) + "?mode=ro&immutable=1"
+            conn = sqlite3.connect(uri, uri=True)
             conn.row_factory = sqlite3.Row
+            limite = time.monotonic() + SEGUNDOS_LECTURA_ANKI
+            # devolver algo verdadero aborta la consulta en curso
+            conn.set_progress_handler(lambda: time.monotonic() > limite, 10_000)
             try:
+                # 'col' y 'notes' tienen que ser TABLAS de verdad: una vista con
+                # el mismo nombre podría esconder una consulta cualquiera.
+                tablas = {r["name"] for r in conn.execute(
+                    "SELECT name FROM sqlite_master WHERE type = 'table' "
+                    "AND name IN ('col', 'notes')")}
+                if tablas != {"col", "notes"}:
+                    raise AnkiFormatError(
+                        f"{os.path.basename(apkg_path)} no contiene una colección Anki reconocible.")
                 row = conn.execute("SELECT models, decks FROM col").fetchone()
+                if row is None:
+                    raise AnkiFormatError(
+                        f"{os.path.basename(apkg_path)} no contiene una colección Anki reconocible.")
                 models = json.loads(row["models"])
                 decks = json.loads(row["decks"])
 
@@ -474,6 +601,11 @@ class AnkiImporter:
                             "cloze_index": 0, "tags": tags, "anki_guid": note["guid"],
                         })
                 return {"deck": deck_name, "topic": topic, "cards": cards}
+            except sqlite3.OperationalError as exc:
+                if time.monotonic() > limite:
+                    raise AnkiFormatError(
+                        f"{os.path.basename(apkg_path)} tardó demasiado en leerse.") from exc
+                raise
             finally:
                 conn.close()
 
@@ -758,6 +890,33 @@ class DatabaseManager:
                         f"ALTER TABLE {tabla} ADD COLUMN user_id INTEGER "
                         "REFERENCES users(id) ON DELETE CASCADE")
 
+            if "email_tokens" in tables and "ip_grupo" not in columnas("email_tokens"):
+                self.conn.execute(
+                    "ALTER TABLE email_tokens ADD COLUMN ip_grupo TEXT NOT NULL DEFAULT ''")
+
+            # Notas y repasos de antes de las cuentas (user_id NULL): son de
+            # quien usaba la app entonces, que es quien la administra. Se le
+            # asignan al primer admin en cuanto exista; hasta entonces se
+            # quedan sin dueño (invisibles) y solo se anota cuántos hay.
+            if "users" in tables:
+                admin = self.conn.execute(
+                    "SELECT id FROM users WHERE role = 'admin' ORDER BY id LIMIT 1").fetchone()
+                for tabla in ("notes", "reviews"):
+                    if tabla not in tables:
+                        continue
+                    if admin:
+                        cur = self.conn.execute(
+                            f"UPDATE {tabla} SET user_id = ? WHERE user_id IS NULL", (admin["id"],))
+                        if cur.rowcount:
+                            _log.info("Migración: %d filas de %s sin dueño pasan al primer admin.",
+                                      cur.rowcount, tabla)
+                    else:
+                        n = self.conn.execute(
+                            f"SELECT COUNT(*) AS n FROM {tabla} WHERE user_id IS NULL").fetchone()["n"]
+                        if n:
+                            _log.warning("Migración: %d filas de %s sin dueño; se asignarán al "
+                                         "primer admin cuando exista.", n, tabla)
+
             if "settings" in tables:
                 # content_dir ya no es un ajuste (solo la variable de entorno), y
                 # los personales viven ahora en user_settings.
@@ -942,25 +1101,30 @@ class DatabaseManager:
             return cur.rowcount
 
     # ------------------------------- enlaces por correo (alta y restablecer)
-    def crear_token_correo(self, email: str, proposito: str, minutos: int) -> str:
+    def crear_token_correo(self, email: str, proposito: str, minutos: int,
+                           ip_grupo: str = "") -> str:
         """Token de un solo uso. Devuelve el token en claro (va SOLO en el
-        correo); en la base queda su SHA-256."""
+        correo); en la base queda su SHA-256.
+
+        `ip_grupo` es un resumen (hash) de la IP —o de su /64— que lo pidió:
+        sirve para contar los topes por (correo, IP) sin guardar la IP."""
         if proposito not in ("signup", "reset"):
             raise ValueError("propósito desconocido")
         token = secrets.token_urlsafe(32)
         with self._lock:
             self.conn.execute(
-                "INSERT INTO email_tokens (token_hash, email, purpose, created_at, expires_at) "
-                "VALUES (?, ?, ?, ?, ?)",
+                "INSERT INTO email_tokens (token_hash, email, purpose, created_at, "
+                "expires_at, ip_grupo) VALUES (?, ?, ?, ?, ?, ?)",
                 (_hash_token(token), email.strip().lower(), proposito,
-                 _ahora(), _ahora(minutos * 60)))
+                 _ahora(), _ahora(minutos * 60), ip_grupo or ""))
             self.conn.commit()
         return token
 
     def contar_correos(self, segundos: int, email: str | None = None,
-                       proposito: str | None = None) -> int:
-        """Cuántos enlaces se mandaron en los últimos `segundos` (a ese correo
-        y/o de ese tipo, o en total). Es el contador de los topes."""
+                       proposito: str | None = None, ip_grupo: str | None = None) -> int:
+        """Cuántos enlaces se mandaron en los últimos `segundos` (a ese correo,
+        de ese tipo y/o pedidos desde esa IP, o en total). Es el contador de
+        los topes."""
         sql = "SELECT COUNT(*) AS n FROM email_tokens WHERE created_at > ?"
         args: list = [_ahora(-segundos)]
         if email is not None:
@@ -969,6 +1133,9 @@ class DatabaseManager:
         if proposito is not None:
             sql += " AND purpose = ?"
             args.append(proposito)
+        if ip_grupo is not None:
+            sql += " AND ip_grupo = ?"
+            args.append(ip_grupo)
         with self._lock:
             return int(self.conn.execute(sql, tuple(args)).fetchone()["n"])
 
@@ -998,6 +1165,8 @@ class DatabaseManager:
 
     def anular_tokens_correo(self, email: str, proposito: str) -> None:
         """Deja sin valor los enlaces pendientes de ese correo."""
+        if not email:
+            return
         with self._lock:
             self.conn.execute(
                 "UPDATE email_tokens SET used_at = ? WHERE email = ? AND purpose = ? "
@@ -1334,10 +1503,16 @@ class DatabaseManager:
         Reimportar un .apkg actualizado NO reinicia el progreso de nadie: se
         emparejan por (anki_guid, cloze_index) y solo se actualiza el texto;
         el progreso vive en card_progress, atado al id de la ficha.
+
+        El HTML se limpia AQUÍ (limpiar_html), por donde pasa toda ficha que
+        entra: la ingesta, la carga desde la app y la reimportación, que así
+        vuelve a limpiar también las fichas que ya estaban en la base.
         """
         added = updated = 0
         with self._lock:
             for card in cards:
+                card = dict(card, front=limpiar_html(card.get("front", "")),
+                            back=limpiar_html(card.get("back", "")))
                 guid = card.get("anki_guid")
                 existing = None
                 if guid:
@@ -1794,13 +1969,23 @@ class PdfRenderer:
 
         # pdftoppm añade el sufijo '-N' al prefijo que se le pasa.
         prefix = out_png[:-4] + "-tmp"
+        # Pocos renders a la vez: cada pdftoppm es un proceso que come CPU y
+        # memoria, y una ráfaga de páginas no debe tumbar el servidor.
+        if not _RENDERS.acquire(timeout=30):
+            _log.warning("Render de página descartado: demasiados a la vez.")
+            return None
         try:
+            if os.path.exists(out_png):      # otro hilo la hizo mientras esperábamos
+                return out_png
             subprocess.run(
                 ["pdftoppm", "-png", "-r", str(PAGE_DPI),
                  "-f", str(page), "-l", str(page), pdf_path, prefix],
                 capture_output=True, timeout=60, check=True)
-        except (OSError, subprocess.SubprocessError):
+        except (OSError, subprocess.SubprocessError) as exc:
+            _log.warning("pdftoppm falló: %s", type(exc).__name__)
             return None
+        finally:
+            _RENDERS.release()
 
         for candidate in glob.glob(prefix + "*.png"):
             os.replace(candidate, out_png)

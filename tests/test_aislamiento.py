@@ -208,6 +208,21 @@ class Migracion(unittest.TestCase):
         self.assertEqual(db.build_queue(uid)[0]["front"], "P")
         self.assertEqual(db.grade(uid, 1, 3)["state"], "review")
         db.conn.close()
+
+        # Sin admin, la nota vieja sigue sin dueño (y solo se anota cuántas hay).
+        with self.assertLogs("estudio", level="WARNING") as log:
+            db = core.DatabaseManager(ruta)
+        self.assertTrue(any("sin dueño" in linea for linea in log.output))
+        self.assertNotIn("migrada", " ".join(log.output))
+        admin = db.create_user("jefa", "clave-larga-123", role="admin")
+        db.conn.close()
+        # En cuanto hay admin, lo de antes de las cuentas pasa a ser suyo.
+        db = core.DatabaseManager(ruta)
+        self.assertEqual([n["text"] for n in db.list_notes(admin, 1)], ["nota sin dueño"])
+        self.assertEqual(db.list_notes(uid, 1), [])
+        self.assertEqual(db.conn.execute(
+            "SELECT COUNT(*) AS n FROM notes WHERE user_id IS NULL").fetchone()["n"], 0)
+        db.conn.close()
         shutil.rmtree(dir_, True)
 
     def test_la_base_real_no_se_toca(self):

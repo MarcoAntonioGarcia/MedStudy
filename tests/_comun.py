@@ -26,8 +26,12 @@ os.environ.pop("IP_DE_CABECERA", None)
 os.environ.pop("BREVO_API_KEY", None)
 os.environ.pop("COOKIE_SEGURA", None)
 os.environ.pop("DOCS", None)
+os.environ.pop("RENDER", None)
+os.environ.pop("SECRETO_APP", None)
 os.environ["CORREO_MODO"] = "memoria"
-os.environ["APP_URL"] = "https://app.ejemplo.test"
+# http y no https: con https la app se cree desplegada y exige la
+# configuración de producción (ver webapp.problema_de_produccion).
+os.environ["APP_URL"] = "http://app.ejemplo.test"
 if RAIZ not in sys.path:
     sys.path.insert(0, RAIZ)
 
@@ -96,3 +100,11 @@ def tema_con_fichas(titulo: str = "Vértigo", n: int = 5) -> tuple[int, list[int
 
 def reiniciar_topes() -> None:
     webapp._intentos.clear()
+
+
+def correo_sincrono():
+    """Hace que los correos se manden en el mismo hilo (para no esperar).
+    Devuelve la función original, para restaurarla."""
+    original = webapp._lanzar
+    webapp._lanzar = lambda funcion, *args: funcion(*args)
+    return original

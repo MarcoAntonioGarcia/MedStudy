@@ -11,7 +11,9 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
+import threading
 import time
 import unittest
 
@@ -219,7 +221,7 @@ class Login(Base):
         for i in range(webapp.TOPES["login_cuenta"][0]):
             self._falla(c, "beto", f"10.3.{i}.1")
         c.cookies.set(webapp.COOKIE_DISPOSITIVO, f"{uid}.{int(time.time())}.{'0' * 64}",
-                      path="/api/auth/login")
+                      path="/api/auth")
         r = c.post("/api/auth/login", json={"login": "beto", "password": CLAVE},
                    headers={"true-client-ip": "10.3.250.1"})
         self.assertEqual(r.status_code, 429)
@@ -231,6 +233,13 @@ class Login(Base):
             self._falla(c, f"v6-{i}", f"2001:db8:1:2::{i + 1:x}")
         self.assertEqual(self._falla(c, "v6-x", "2001:db8:1:2:ffff::9"), 429)
         self.assertEqual(self._falla(c, "v6-y", "2001:db8:1:3::1"), 401)   # otra /64
+
+    def test_en_local_una_cabecera_basura_cae_a_la_ip_del_socket(self):
+        webapp.IP_DE_CABECERA = "true-client-ip"
+        self.assertFalse(webapp.EN_PRODUCCION)
+        self.assertEqual(self._falla(cliente(), "x", "no-es-una-ip"), 401)
+        r = cliente().post("/api/auth/login", json={"login": "x", "password": "y" * 12})
+        self.assertEqual(r.status_code, 401)
 
     def test_contrasena_demasiado_larga(self):
         with self.assertRaises(ValueError):
@@ -277,6 +286,57 @@ class Login(Base):
         self.assertNotIn(CLAVE, fila["password_hash"])
         for u in cliente("admin.prueba").get("/api/admin/users").json():
             self.assertNotIn("password_hash", u)
+
+
+class Produccion(Base):
+    """M1: en un despliegue la app falla cerrado si falta configuración."""
+
+    COMPLETO = {"COOKIE_SEGURA": "1", "IP_DE_CABECERA": "true-client-ip",
+                "SECRETO_APP": "s" * 32}
+
+    def test_en_local_no_exige_nada(self):
+        self.assertEqual(webapp.problema_de_produccion({}), "")
+        self.assertEqual(webapp.problema_de_produccion({"APP_URL": "http://localhost:8090"}), "")
+
+    def test_desplegado_exige_las_tres(self):
+        for base in ({"RENDER": "true"}, {"APP_URL": "https://medstudy.ejemplo"},
+                     {"APP_URL": "HTTPS://medstudy.ejemplo"}):
+            self.assertIn("COOKIE_SEGURA=1", webapp.problema_de_produccion(base))
+            self.assertEqual(webapp.problema_de_produccion({**base, **self.COMPLETO}), "")
+            for falta in self.COMPLETO:
+                entorno = {**base, **self.COMPLETO}
+                entorno.pop(falta)
+                self.assertIn(falta, webapp.problema_de_produccion(entorno), (base, falta))
+            self.assertIn("COOKIE_SEGURA", webapp.problema_de_produccion(
+                {**base, **self.COMPLETO, "COOKIE_SEGURA": "0"}))
+
+    def _importar(self, extra):
+        entorno = {k: v for k, v in os.environ.items()
+                   if k not in ("RENDER", "COOKIE_SEGURA", "IP_DE_CABECERA", "SECRETO_APP")}
+        entorno.update({"APP_DB_PATH": os.path.join(TMP, "produccion.db"), **extra})
+        return subprocess.run([sys.executable, "-c", "import webapp"], cwd=RAIZ, env=entorno,
+                              capture_output=True, text=True, timeout=60)
+
+    def test_no_arranca_sin_configurar(self):
+        r = self._importar({"RENDER": "true"})
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("MedStudy no arranca", r.stderr)
+        self.assertEqual(self._importar({"RENDER": "true", **self.COMPLETO}).returncode, 0)
+
+    def test_sin_la_cabecera_de_ip_da_400(self):
+        webapp.IP_DE_CABECERA = "true-client-ip"
+        webapp.EN_PRODUCCION = True
+        try:
+            c = cliente()
+            cuerpo = {"login": "ana", "password": CLAVE}
+            self.assertEqual(c.post("/api/auth/login", json=cuerpo).status_code, 400)
+            self.assertEqual(c.post("/api/auth/login", json=cuerpo,
+                                    headers={"true-client-ip": "basura"}).status_code, 400)
+            self.assertEqual(c.post("/api/auth/password/forgot", json={"email": "a@b.co"}).status_code, 400)
+            self.assertEqual(c.post("/api/auth/login", json=cuerpo,
+                                    headers={"true-client-ip": "192.0.2.1"}).status_code, 200)
+        finally:
+            webapp.EN_PRODUCCION = False
 
 
 class Permisos(Base):
@@ -396,6 +456,7 @@ class Archivos(Base):
         self.assertEqual(r.headers["content-type"], "application/pdf")
         self.assertTrue(r.headers["content-disposition"].startswith("inline"))
         self.assertTrue(r.content.startswith(b"%PDF-"))
+        self.assertEqual(r.headers["cache-control"], "private, no-store")
         # se puede enmarcar en la propia app (visor sin poppler), en ninguna otra
         self.assertEqual(r.headers["x-frame-options"], "SAMEORIGIN")
         self.assertEqual(r.headers["content-security-policy"], "frame-ancestors 'self'")
@@ -407,7 +468,38 @@ class Archivos(Base):
         r = cliente("ana").get(f"/api/assets/{self.aid}/page/1")
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.headers["content-type"], "image/png")
-        self.assertIn("private", r.headers["cache-control"])
+        self.assertEqual(r.headers["cache-control"], "private, no-store")
+
+    def test_pagina_que_no_existe(self):
+        # el PDF de prueba tiene 1 página
+        self.assertEqual(cliente("ana").get(f"/api/assets/{self.aid}/page/2").status_code, 404)
+
+    def test_renders_limitados_a_la_vez(self):
+        if not core.PdfRenderer.available():
+            self.skipTest("poppler no está instalado")
+        pdf = webapp.db.get_asset(self.aid)["path"]
+        activos, maximo, candado = [0], [0], threading.Lock()
+        original = core.subprocess.run
+
+        def lento(*a, **k):
+            with candado:
+                activos[0] += 1
+                maximo[0] = max(maximo[0], activos[0])
+            time.sleep(0.2)
+            with candado:
+                activos[0] -= 1
+            return None                       # no deja PNG: render devuelve None
+        core.subprocess.run = lento
+        try:
+            hilos = [threading.Thread(target=core.PdfRenderer.render, args=(pdf, 100 + i))
+                     for i in range(6)]
+            for h in hilos:
+                h.start()
+            for h in hilos:
+                h.join()
+        finally:
+            core.subprocess.run = original
+        self.assertEqual(maximo[0], 2)
 
     def test_fuera_de_las_carpetas_no_se_sirve(self):
         fuera = os.path.join(TMP, "secreto.pdf")
@@ -445,6 +537,26 @@ class Archivos(Base):
         self.assertEqual(r.status_code, 200, r.text)
         self.assertTrue(r.content.startswith(b"PK"))
         self.assertIn("attachment", r.headers["content-disposition"])
+
+
+class Sesion(Base):
+    def test_static_no_consulta_la_sesion(self):
+        """L6: los estilos y scripts no tocan la base; el resto sí."""
+        c = cliente("ana")
+        original = webapp.db.user_for_token
+        llamadas = []
+
+        def contando(token):
+            llamadas.append(1)
+            return original(token)
+        webapp.db.user_for_token = contando
+        try:
+            self.assertEqual(c.get("/static/app.js").status_code, 200)
+            self.assertEqual(llamadas, [])
+            self.assertEqual(c.get("/api/stats").status_code, 200)
+            self.assertEqual(len(llamadas), 1)
+        finally:
+            webapp.db.user_for_token = original
 
 
 class Navegador(unittest.TestCase):

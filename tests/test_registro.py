@@ -8,7 +8,7 @@ import re
 import time
 import unittest
 
-from _comun import TestClient, correo, webapp
+from _comun import TestClient, correo, correo_sincrono, webapp
 
 CLAVE = "clave-nueva-12345"
 
@@ -27,9 +27,17 @@ class Base(unittest.TestCase):
             webapp.db.conn.execute("DELETE FROM email_tokens")
             webapp.db.conn.commit()
         self.c = TestClient(webapp.app)
+        self._lanzar = correo_sincrono()
+        self._ip_cab = webapp.IP_DE_CABECERA
 
-    def alta(self, email, c=None):
-        return (c or self.c).post("/api/auth/register", json={"email": email})
+    def tearDown(self):
+        webapp._lanzar = self._lanzar
+        webapp.IP_DE_CABECERA = self._ip_cab
+        webapp._intentos.clear()
+
+    def alta(self, email, c=None, ip=None):
+        cab = {"true-client-ip": ip} if ip else {}
+        return (c or self.c).post("/api/auth/register", json={"email": email}, headers=cab)
 
     def ultimo(self):
         return correo.BANDEJA_PRUEBAS[-1]
@@ -167,7 +175,9 @@ class Alta(Base):
         webapp.MAX_ALTAS_DIA = 1
         try:
             self.assertEqual(self.alta("a1@ejemplo.com").status_code, 200)
-            self.assertEqual(self.alta("a2@ejemplo.com").status_code, 503)      # cupo de altas lleno
+            # cupo de altas lleno: misma respuesta (no delata nada), sin correo
+            self.assertEqual(self.alta("a2@ejemplo.com").status_code, 200)
+            self.assertEqual([m["to"] for m in correo.BANDEJA_PRUEBAS], ["a1@ejemplo.com"])
             self.assertEqual(self.alta("cupo@ejemplo.com").status_code, 200)    # restablecer sigue
             self.assertIn("/reset-password#t=", self.ultimo()["text"])
             self.assertIn("Tu usuario es cupo.", self.ultimo()["text"])
@@ -220,14 +230,41 @@ class Alta(Base):
         finally:
             webapp.APP_URL = viejo
 
-    def test_fallo_de_brevo_da_503(self):
+    def test_fallo_de_brevo_misma_respuesta_y_queda_en_el_log(self):
+        """El envío va en segundo plano: un fallo de Brevo no cambia la
+        respuesta (no delataría nada), pero sí queda registrado."""
         original = correo.enviar
 
         def roto(*a, **k):
             raise correo.CorreoNoDisponible("caído")
         correo.enviar = roto
         try:
-            self.assertEqual(self.alta("caido@ejemplo.com").status_code, 503)
+            with self.assertLogs("estudio.web", level="ERROR") as log:
+                r = self.alta("caido@ejemplo.com")
+            self.assertEqual(r.status_code, 200)
+            self.assertNotIn("caido@ejemplo.com", " ".join(log.output))
+        finally:
+            correo.enviar = original
+
+    def test_el_alta_va_en_segundo_plano(self):
+        """El tiempo de respuesta no depende de si se manda correo o no."""
+        webapp._lanzar = self._lanzar             # el hilo de verdad
+        original = correo.enviar
+
+        def lento(*a, **k):
+            time.sleep(1.0)
+            return original(*a, **k)
+        correo.enviar = lento
+        try:
+            inicio = time.monotonic()
+            r = self.alta("lenta@ejemplo.com")
+            self.assertEqual(r.status_code, 200)
+            self.assertLess(time.monotonic() - inicio, 0.6)
+            for _ in range(60):
+                if correo.BANDEJA_PRUEBAS:
+                    break
+                time.sleep(0.05)
+            self.assertEqual(self.ultimo()["to"], "lenta@ejemplo.com")
         finally:
             correo.enviar = original
 
@@ -253,8 +290,10 @@ class Restablecer(Base):
             webapp.db.set_password(fila["id"], "clave-vieja-123")
             webapp.db.set_user_status(fila["id"], "active")
 
-    def _pedir(self):
-        r = self.c.post("/api/auth/password/forgot", json={"email": "olvidona@ejemplo.com"})
+    def _pedir(self, c=None, ip=None):
+        cab = {"true-client-ip": ip} if ip else {}
+        r = (c or self.c).post("/api/auth/password/forgot",
+                               json={"email": "olvidona@ejemplo.com"}, headers=cab)
         self.assertEqual(r.status_code, 200)
         for _ in range(60):                    # el envío va en segundo plano
             if correo.BANDEJA_PRUEBAS:
@@ -321,6 +360,54 @@ class Restablecer(Base):
             self.assertEqual(correo.BANDEJA_PRUEBAS, [])
         finally:
             webapp.db.set_user_status(uid, "active")
+
+    def test_un_atacante_no_deja_sin_correo_a_la_victima(self):
+        """Quien pide enlaces para tu correo desde su IP agota SU cupo
+        (correo, IP), no el tuyo: desde tu IP te sigue llegando."""
+        webapp.IP_DE_CABECERA = "true-client-ip"
+        atacante = TestClient(webapp.app)
+        for _ in range(webapp.MAX_CORREOS_HORA_POR_CORREO + 1):
+            atacante.post("/api/auth/password/forgot", json={"email": "olvidona@ejemplo.com"},
+                          headers={"true-client-ip": "203.0.113.66"})
+        self.assertEqual(len(correo.BANDEJA_PRUEBAS), webapp.MAX_CORREOS_HORA_POR_CORREO)
+        self._pedir(ip="198.51.100.20")
+        self.assertEqual(len(correo.BANDEJA_PRUEBAS), webapp.MAX_CORREOS_HORA_POR_CORREO + 1)
+
+    def test_tope_diario_total_por_correo(self):
+        """Respaldo: aunque cada petición venga de una IP distinta, nadie
+        recibe más de MAX_CORREOS_DIA_POR_CORREO_TOTAL al día."""
+        webapp.IP_DE_CABECERA = "true-client-ip"
+        total = webapp.MAX_CORREOS_DIA_POR_CORREO_TOTAL
+        for i in range(total + 3):
+            self.c.post("/api/auth/password/forgot", json={"email": "olvidona@ejemplo.com"},
+                        headers={"true-client-ip": f"10.77.{i}.1"})
+        self.assertEqual(len(correo.BANDEJA_PRUEBAS), total)
+
+    def test_el_dispositivo_conocido_salta_el_tope_por_ip(self):
+        webapp.IP_DE_CABECERA = "true-client-ip"
+        ip = "192.0.2.77"
+        duena = TestClient(webapp.app)
+        self.assertEqual(duena.post("/api/auth/login",
+                                    json={"login": "olvidona", "password": "clave-vieja-123"},
+                                    headers={"true-client-ip": ip}).status_code, 200)
+        atacante = TestClient(webapp.app)
+        for _ in range(webapp.MAX_CORREOS_HORA_POR_CORREO + 1):
+            atacante.post("/api/auth/password/forgot", json={"email": "olvidona@ejemplo.com"},
+                          headers={"true-client-ip": ip})
+        enviados = len(correo.BANDEJA_PRUEBAS)
+        self.assertEqual(enviados, webapp.MAX_CORREOS_HORA_POR_CORREO)
+        self._pedir(c=duena, ip=ip)                 # misma IP, pero con su cookie
+        self.assertEqual(len(correo.BANDEJA_PRUEBAS), enviados + 1)
+
+    def test_cambiar_la_contrasena_anula_los_enlaces_pendientes(self):
+        token = self._pedir()
+        c = TestClient(webapp.app)
+        c.post("/api/auth/login", json={"login": "olvidona", "password": "clave-vieja-123"})
+        r = c.post("/api/auth/password", json={"current": "clave-vieja-123", "new": CLAVE})
+        self.assertEqual(r.status_code, 200)
+        self.assertIsNone(webapp.db.ver_token_correo(token, "reset"))
+        self.assertEqual(TestClient(webapp.app).post(
+            "/api/auth/password/reset", json={"token": token, "password": "otra-clave-999"}).status_code, 400)
 
     def test_el_token_no_se_guarda_en_claro(self):
         token = self._pedir()

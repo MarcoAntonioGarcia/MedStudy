@@ -51,7 +51,10 @@ CREATE TABLE IF NOT EXISTS email_tokens (
     purpose    TEXT NOT NULL,               -- 'signup' | 'reset'
     created_at TEXT NOT NULL,
     expires_at TEXT NOT NULL,
-    used_at    TEXT
+    used_at    TEXT,
+    -- Hash de la IP (o de su /64) que lo pidió: los topes por correo se
+    -- cuentan por (correo, IP) sin guardar la IP en claro.
+    ip_grupo   TEXT NOT NULL DEFAULT ''
 );
 CREATE INDEX IF NOT EXISTS idx_email_tokens_email   ON email_tokens (email);
 CREATE INDEX IF NOT EXISTS idx_email_tokens_created ON email_tokens (created_at);
