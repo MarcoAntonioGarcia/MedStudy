@@ -62,6 +62,9 @@ body.cuenta{margin:0;min-height:100dvh;color:var(--ink);
 .aviso.ok{display:block;background:var(--accent-soft);color:var(--accent)}
 .pie{margin-top:16px;text-align:center;font-size:14px;color:var(--muted);line-height:1.9}
 .pie a,.aviso a{color:var(--accent)}
+/* los enlaces del pie son objetivos táctiles de 44 px (sin cambiar cómo se leen) */
+.pie a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
+.pie{line-height:1.5}
 
 /* ---------------------------------------------------------------- panel */
 body.panel-admin{margin:0;background:var(--bg);color:var(--ink);padding:24px 16px;
@@ -85,7 +88,7 @@ body.panel-admin{margin:0;background:var(--bg);color:var(--ink);padding:24px 16p
 .chip.blocked,.chip.pending{background:var(--danger-soft);color:var(--danger)}
 .chip.admin{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
 .acciones{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.panel-admin button{font:inherit;font-size:13px;font-weight:600;padding:6px 11px;border-radius:8px;min-height:40px;
+.panel-admin button{font:inherit;font-size:13px;font-weight:600;padding:6px 11px;border-radius:8px;min-height:44px;
   cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink)}
 .panel-admin button.ok{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .panel-admin button.mal{color:var(--danger);border-color:var(--danger);background:transparent}
@@ -105,3 +108,20 @@ body.panel-admin{margin:0;background:var(--bg);color:var(--ink);padding:24px 16p
 .panel-admin code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:var(--bg);
   border:1px solid var(--line);border-radius:5px;padding:1px 6px}
 .panel-admin .aviso{margin:0 0 16px}
+
+/* En el teléfono cada persona es una tarjeta apilada, con sus botones a la
+   vista (la tabla de 680 px escondía «Cerrar sesiones» y «Poner contraseña»). */
+@media (max-width:640px){
+  .tabla{min-width:0}
+  .tabla thead{display:none}
+  .tabla,.tabla tbody,.tabla tr,.tabla td{display:block;width:100%}
+  .tabla tr{padding:12px 14px;border-bottom:1px solid var(--line)}
+  .tabla tr:last-child{border-bottom:0}
+  .tabla td{padding:4px 0;border:0}
+  .tabla td:nth-child(2)::before{content:"Estado: ";color:var(--muted);font-size:12.5px}
+  .tabla td:nth-child(3)::before{content:"Sesión: ";color:var(--muted)}
+  .tabla td:nth-child(4)::before{content:"Alta: ";color:var(--muted)}
+  .tabla td:last-child{padding-top:10px}
+  .acciones{justify-content:flex-start}
+  .panel-admin button{flex:1 1 auto}
+}

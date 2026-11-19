@@ -586,27 +586,21 @@ class Sesion(Base):
 
 
 class Navegador(unittest.TestCase):
-    """esc() del front, ejecutado con node si está instalado."""
+    """La interfaz no arma HTML con datos: todo texto va con textContent."""
 
-    def test_esc_escapa_comillas_simples(self):
-        node = shutil.which("node")
-        if not node:
-            self.skipTest("node no está instalado")
+    def test_solo_el_html_saneado_de_las_fichas_entra_como_html(self):
+        """El único innerHTML de app.js es el de las fichas (front/back), que
+        core.limpiar_html sanea al importar. Un nombre de tema, una nota o un
+        archivo nunca deben llegar al DOM como HTML."""
         with open(os.path.join(RAIZ, "static", "app.js"), encoding="utf-8") as fh:
             js = fh.read()
-        ini = js.index("const esc = ")
-        fin = js.index(";\n", ini) + 2
-        prueba = js[ini:fin] + """
-console.log(JSON.stringify({
-  a: esc(`"><img src=x onerror=alert(1)> ' &`), n: esc(null), c: esc(0)}));"""
-        r = subprocess.run([node, "-e", prueba], capture_output=True, text=True, timeout=30)
-        self.assertEqual(r.returncode, 0, r.stderr)
-        out = json.loads(r.stdout)
-        for peligro in ('"', "'", "<", ">"):
-            self.assertNotIn(peligro, out["a"])
-        self.assertIn("&#39;", out["a"])
-        self.assertEqual(out["n"], "")
-        self.assertEqual(out["c"], "0")
+        asignaciones = re.findall(r"\.innerHTML\s*=\s*([^;]+);", js)
+        self.assertTrue(asignaciones)
+        for valor in asignaciones:
+            self.assertRegex(valor.strip(), r"^(S\.card|c)\.(front|back)$", valor)
+        self.assertNotIn("insertAdjacentHTML", js)
+        self.assertNotIn("outerHTML", js)
+        self.assertNotIn("document.write", js)
 
 
 if __name__ == "__main__":

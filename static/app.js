@@ -7,11 +7,9 @@
 // expediente y el librero; el pizarrón en la pared izquierda, donde se repasan
 // las fichas). "Repasar hoy" abre la sala de repaso sin recorrer nada.
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
-// Todo lo que viene de la base y se mete como HTML pasa por aquí. Escapa
-// también la comilla simple: un valor dentro de un atributo con '…' no debe
-// poder cerrarlo.
-const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g,
-  c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// Nada se arma como cadena de HTML: todo texto que viene de la base se pinta con
+// textContent. La única excepción es el HTML de las fichas (front/back), que el
+// servidor sanea al importar (core.limpiar_html).
 
 async function api(url, opts){
   const r = await fetch(url, Object.assign({credentials:'same-origin'}, opts));
@@ -34,8 +32,8 @@ const avisar = e => toast((e && e.message) || 'Algo salió mal. Intenta de nuevo
 
 const S = {user:{}, folders:[], topics:[], stats:{}, settings:{}, pdf_ok:true,
            FL:[], level:'hospital', floor:null, ctx:null, wall:'desk', busy:false,
-           panel:null, topicData:null, topicP:null, railTab:'postit', placing:false,
-           study:null, queue:[], card:null, revealed:false, mode:'normal',
+           floorId:null, panel:null, topicData:null, topicP:null, railTab:'postit', placing:false,
+           study:null, studySeq:0, queue:[], card:null, revealed:false, mode:'normal',
            grading:false, dirty:false};
 
 /* ------------------------------------------------------------- utilidades */
@@ -84,8 +82,14 @@ function paraHoy(temas){
 }
 function estado(t){ return t.vencidas ? 'hoy' : t.nuevas ? 'pend' : 'aldia'; }
 function estadoTexto(t){
-  return t.vencidas ? `${t.vencidas} pendientes` : t.nuevas ? `${t.nuevas} sin empezar` : 'al día';
+  return t.vencidas ? `${t.vencidas} por repasar` : t.nuevas ? `${t.nuevas} nuevas` : 'al día';
 }
+// Conteos sin tope, con nombre claro: lo que vence y lo que falta por empezar.
+// El tope diario de nuevas solo aplica a la cola de hoy («Repasar hoy · N»).
+function conteos(temas){
+  return {rep: temas.reduce((a,t) => a + t.vencidas, 0), nue: temas.reduce((a,t) => a + t.nuevas, 0)};
+}
+function conteosTexto(temas){ const c=conteos(temas); return `${c.rep} por repasar · ${c.nue} nuevas`; }
 // Un piso por carpeta; los temas sin carpeta van a un piso aparte.
 function floors(){
   const fl = S.folders.map(f => ({id:f.id, name:f.name, temas:S.topics.filter(t => t.folder_id === f.id)}));
@@ -103,22 +107,24 @@ const topicById = id => S.topics.find(t => t.id === id) || null;
 function ctxTopic(){ return S.ctx && S.ctx.kind === 'tema' ? topicById(S.ctx.id) : null; }
 
 /* --------------------------------------------- cámara 2D (anima el viewBox) */
-function cam(svg){ return {svg, vb:null, anim:0}; }
+function cam(svg){ return {svg, vb:null, anim:0, done:null}; }
 function fitBox(c, b){ const r=c.svg.getBoundingClientRect(); const a=(r.width||1)/(r.height||1);
   let [x,y,w,h]=b;
   if (w/h < a){ const nw=h*a; x-=(nw-w)/2; w=nw; } else { const nh=w/a; y-=(nh-h)/2; h=nh; }
   return [x,y,w,h]; }
 function camera(c, box, ms){
   const to=fitBox(c,box), from=c.vb||to; cancelAnimationFrame(c.anim);
+  // una animación cortada por otra también termina: quien la esperaba sigue
+  if (c.done){ const d=c.done; c.done=null; d(); }
   const set = v => { c.vb=v; c.svg.setAttribute('viewBox', v.map(n => n.toFixed(2)).join(' ')); };
   if (!ms || reduce()){ set(to); c.svg.style.filter=''; return Promise.resolve(); }
-  return new Promise(res => { const t0=performance.now();
+  return new Promise(res => { const t0=performance.now(); c.done=res;
     const ease = t => t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
     const step = now => { const t=Math.min(1,(now-t0)/ms), e=ease(t);
       set(from.map((v,i) => v+(to[i]-v)*e));
       // desenfoque de movimiento: máximo a mitad del viaje
       const b=2.8*Math.sin(Math.PI*t); c.svg.style.filter = b>.2 ? `blur(${b.toFixed(2)}px)` : '';
-      if (t<1) c.anim=requestAnimationFrame(step); else { c.svg.style.filter=''; res(); } };
+      if (t<1) c.anim=requestAnimationFrame(step); else { c.svg.style.filter=''; c.done=null; res(); } };
     c.anim=requestAnimationFrame(step); });
 }
 
@@ -171,14 +177,19 @@ function buildHospital(){
   FL.forEach((f,i) => {
     const y=G.ROOF+(nF-1-i)*G.FH; G.floors[i]={y};
     const g=E('g',{'data-ix':i},svg);
-    hot(g,`Piso ${f.num}, ${f.name}: ${f.temas.length} consultorios, ${f.hoy} fichas para hoy`,() => goFloor(i));
+    const ct=conteos(f.temas);
+    hot(g,`Piso ${f.num}, ${f.name}: ${f.temas.length} consultorios, ${ct.rep} fichas por repasar y ${ct.nue} nuevas`,() => goFloor(i));
     const n=f.temas.length, per=Math.max(1,Math.ceil(n/2)); let wx,wy,ww,wh;
-    const sub=(sy,sx) => { const s=T(g,sx,sy,'','p-sub'); s.append(`${n} consultorios · `);
-      const c=E('tspan',{class:'c'},s); c.textContent=`${f.hoy} hoy`; };
-    if (P){ T(g,G.PAD+26,y+48,'P'+f.num,'p-num'); T(g,G.PAD+82,y+52,cut(f.name,20),'p-name'); sub(y+88,G.PAD+26);
+    // conteos sin tope: lo que vence (cian) y lo que falta por empezar (ámbar)
+    const cuenta=(s) => { const c=E('tspan',{class:'c'},s); c.textContent=`${ct.rep} por repasar`;
+      s.append(' · '); const a=E('tspan',{class:'a'},s); a.textContent=`${ct.nue} nuevas`; };
+    const sub=(sy,sx,dos) => {
+      if (!dos){ const s=T(g,sx,sy,`${n} consultorios · `,'p-sub'); cuenta(s); return; }
+      T(g,sx,sy,`${n} consultorios`,'p-sub'); cuenta(T(g,sx,sy+24,'','p-sub p-sub2')); };
+    if (P){ T(g,G.PAD+26,y+48,'P'+f.num,'p-num'); T(g,G.PAD+82,y+52,cut(f.name,20),'p-name'); sub(y+88,G.PAD+26,false);
       wx=G.PAD+26; wy=y+110; ww=G.BW-52; wh=G.FH-132; }
     else { T(g,G.PAD+30,y+50,'PISO '+f.num,'p-num'); const nl=wrap(f.name,13).slice(0,2); TL(g,G.PAD+30,y+96,nl,'p-name',42);
-      sub(y+(nl.length>1?168:140),G.PAD+30); wx=G.PAD+330; wy=y+30; ww=G.BW-360; wh=G.FH-60; }
+      sub(y+(nl.length>1?160:132),G.PAD+30,true); wx=G.PAD+330; wy=y+30; ww=G.BW-360; wh=G.FH-60; }
     if (!n) T(g,wx+ww/2,wy+wh/2+6,'sin consultorios todavía','p-empty','middle');
     // una ventana por consultorio, en dos filas como los dos lados del pasillo
     const cols=Math.max(per,4), gap=P?8:10, cw=(ww-gap*(cols-1))/cols, ch=(wh-gap)/2, off=(cols-per)*(cw+gap)/2;
@@ -276,7 +287,7 @@ function buildPlan(i){
     const R=G.rooms[j], g=E('g',{'data-ix':j,'data-topic':t.id},svg), st=estado(t);
     const tag = t.is_new ? ', nuevo' : t.is_updated ? ', actualizado' : '';
     hot(g,`Consultorio ${t.num}, ${t.title}: ${estadoTexto(t)}${tag}`,() => goRoom(j));
-    E('rect',{x:R.x,y:R.y,width:R.w,height:R.h,class:'rm'+(st==='hoy'?' lit':'')},g);
+    E('rect',{x:R.x,y:R.y,width:R.w,height:R.h,class:'rm'+(st==='hoy'?' lit':st==='pend'?' lit-n':'')},g);
     const dW=P?Math.min(30,R.h/3):44; let d,arc;
     if (R.door==='b'){ const dx=R.x+R.w-24-dW; d=`M${R.x} ${R.y+R.h}H${dx}M${dx+dW} ${R.y+R.h}H${R.x+R.w}`; arc=`M${dx} ${R.y+R.h}A${dW} ${dW} 0 0 1 ${dx+dW} ${R.y+R.h-dW}`; }
     else if (R.door==='t'){ const dx=R.x+R.w-24-dW; d=`M${R.x} ${R.y}H${dx}M${dx+dW} ${R.y}H${R.x+R.w}`; arc=`M${dx} ${R.y}A${dW} ${dW} 0 0 0 ${dx+dW} ${R.y+dW}`; }
@@ -284,17 +295,18 @@ function buildPlan(i){
     else { const dy=R.y+R.h-10-dW; d=`M${R.x} ${R.y}V${dy}M${R.x} ${dy+dW}V${R.y+R.h}`; arc=`M${R.x} ${dy}A${dW} ${dW} 0 0 0 ${R.x-dW} ${dy+dW}`; }
     E('rect',{x:R.x,y:R.y,width:R.w,height:R.h,class:'rm-wall',style:'stroke-opacity:.35'},g);
     E('path',{d,class:'rm-wall'},g); E('path',{d:arc,class:'rm-door'},g);
-    if (st==='hoy') E('circle',{cx:R.x+R.w-18,cy:R.y+(compact?18:27),r:5,class:'rm-lamp'},g);
+    if (st!=='aldia') E('circle',{cx:R.x+R.w-18,cy:R.y+(compact?18:27),r:5,class:'rm-lamp'+(st==='pend'?' n':'')},g);
     if (compact){
       if (t.is_new || t.is_updated) E('rect',{x:R.x+3,y:R.y+6,width:5,height:R.h-12,rx:2,class:'rm-bar'},g);
-      const ln=wrap(t.title,17); const lines=ln.length>2?[ln[0],cut(ln[1],16)]:ln;
+      // 14 caracteres: la lámpara de estado ocupa la esquina derecha
+      const ln=wrap(t.title,14); const lines=ln.length>2?[ln[0],cut(ln[1],14)]:ln;
       TL(g,R.x+16,R.y+(lines.length>1?R.h/2-4:R.h/2+6),lines,'rm-name',19);
     } else {
       const tx=R.x+16, ty=R.y+32; T(g,tx,ty,t.num,'rm-num');
       const ln=wrap(t.title,15); const lines=ln.length>3?[ln[0],ln[1],cut(ln[2],14)]:ln;
       TL(g,tx,ty+28,lines,'rm-name',21);
       const sy=ty+28+lines.length*21+6;
-      T(g,tx,sy,estadoTexto(t),st==='hoy'?'rm-st hoy':'rm-st');
+      T(g,tx,sy,estadoTexto(t),'rm-st '+st);
       if (t.is_new || t.is_updated){ const lbl=t.is_new?'NUEVO':'ACTUAL.';
         E('rect',{x:tx,y:sy+12,width:76,height:20,rx:4,class:'rm-new'+(t.is_new?'':' act')},g);
         T(g,tx+38,sy+26,lbl,'rm-new-t','middle'); }
@@ -302,7 +314,7 @@ function buildPlan(i){
     E('rect',{x:R.x+5,y:R.y+5,width:R.w-10,height:R.h-10,rx:4,class:'hl'},g);
   });
   if (!P){ const ti=H('div','title',host);
-    H('div','k',ti,`Piso ${f.num} · ${n} consultorios · ${f.hoy} fichas hoy`); H('h1','',ti,f.name+'.'); }
+    H('div','k',ti,`Piso ${f.num} · ${n} consultorios · ${conteosTexto(f.temas)}`); H('h1','',ti,f.name+'.'); }
   PG=G; PC=cam(svg);
 }
 function planFull(){ if (PG.P) return [0,0,PG.W,PG.H]; const w=Math.max(PG.W,1150); return [(PG.W-w)/2,-150,w,PG.H+210]; }
@@ -330,7 +342,8 @@ function buildRoom(){
   const left=face(sc,'wall w-left',2*P,Hh,`translateX(${-W/2}px) translateZ(${P}px) rotateY(90deg)`);
   const right=face(sc,'wall w-right',2*P,Hh,`translateX(${W/2}px) translateZ(${P}px) rotateY(-90deg)`);
   face(sc,'w-beam',W*.6,Hh,`translateZ(${P*.35}px)`);
-  back.setAttribute('aria-label','Escritorio'); left.setAttribute('aria-label','Pizarrón');
+  back.setAttribute('role','group'); back.setAttribute('aria-label','Escritorio');
+  left.setAttribute('role','group'); left.setAttribute('aria-label','Pizarrón');
   right.inert=true; right.setAttribute('aria-hidden','true');
   const t=ctxTopic();
   if (t) deskWall(back, t, Pt); else salaWall(back, Pt);
@@ -520,22 +533,34 @@ function reveal(){
   say('Respuesta: ' + textoDe(S.card.back));
 }
 // Pide la cola del consultorio (o de la sala) y la pinta en el pizarrón.
+// Cada petición lleva un número: si mientras tanto salió otra (o se salió del
+// cuarto), la respuesta vieja se descarta y no pisa la cola ni el modo.
 async function startStudy(cambio){
+  if (!S.ctx) return;
   const t=ctxTopic();
   const base = t ? {topic_id:t.id, name:t.title} : S.ctx.opts;
   const opts = Object.assign({}, base, cambio || {});
+  const antes = {mode:S.mode, study:S.study, queue:S.queue, card:S.card, revealed:S.revealed};
+  const seq = ++S.studySeq;
   S.mode = opts.mode || 'normal';
   S.study = {loading:true, name:opts.name, opts}; S.card=null; S.revealed=false;
   renderChalk(false);
+  if (S.level==='consultorio' && !S.panel) ui();
   const qs=new URLSearchParams();
   if (opts.topic_id)  qs.set('topic_id', opts.topic_id);
   if (opts.folder_id) qs.set('folder_id', opts.folder_id);
   if (S.mode !== 'normal') qs.set('mode', S.mode);
   try {
     const d=await api('/api/queue' + (qs.toString() ? '?' + qs : ''));
+    if (seq !== S.studySeq) return;
     S.queue=d.cards; S.stats=d.stats; S.scope=d.scope; paintStats();
-    S.study.loading=false; nextCard(true); ui();
-  } catch(e){ S.study=null; renderChalk(false); throw e; }
+    S.study.loading=false; nextCard(true); if (S.level==='consultorio' && !S.panel) ui();
+  } catch(e){
+    if (seq !== S.studySeq) return;
+    Object.assign(S, antes);               // vuelve el modo y la cola que había
+    renderChalk(false); if (S.level==='consultorio' && !S.panel) ui();
+    throw e;
+  }
 }
 function nextCard(anim){
   S.card=S.queue.shift() || null; S.revealed=false;
@@ -557,7 +582,11 @@ async function grade(rating){
   } catch(e){
     $$('#chalk .row button').forEach(b => { b.disabled=false; });
     avisar(e);
-  } finally { S.grading=false; }
+  } finally {
+    S.grading=false;
+    // si ya se salió del cuarto mientras se guardaba, el hospital se pone al día
+    if (S.dirty && S.level!=='consultorio' && !S.busy) refreshData().catch(avisar);
+  }
 }
 
 /* ----------------------------------------- barra: migas, pista y botones */
@@ -575,23 +604,27 @@ function ui(){
   if (S.panel==='ajustes') items.push(['Ajustes', null]);
   items.forEach(([lab,fn],k) => {
     if (k){ const sp=H('span','sep',c,'›'); sp.setAttribute('aria-hidden','true'); }
-    const b=H('button','',c,lab); b.type='button';
-    if (k===items.length-1) b.setAttribute('aria-current','location');
-    else if (fn) b.onclick=() => Promise.resolve().then(fn).catch(avisar);
-    else b.onclick=() => {};
+    const actual = k===items.length-1;
+    if (actual || !fn){
+      const sp=H('span','crumb'+(actual?' cur':''),c,lab);
+      if (actual) sp.setAttribute('aria-current','location');
+    } else {
+      const b=H('button','',c,lab); b.type='button';
+      b.onclick=() => Promise.resolve().then(fn).catch(avisar);
+    }
   });
   $('#back').classList.toggle('on', S.level!=='hospital' || !!S.panel);
 
   const h=$('#hint'); h.textContent='';
   const line=(b,rest) => { H('b','',h,b); h.append(rest); };
-  const go=$('#go'), go2=$('#go2'); go.textContent=''; go2.textContent=''; go2.hidden=true;
+  const go=$('#go'), go2=$('#go2'); go.textContent=''; go2.textContent=''; go2.hidden=true; go2.disabled=false;
   const n = s => H('span','n',null,String(s));
   if (S.level==='hospital'){
     if (!S.topics.length){ line('Hospital vacío',' · todavía no hay temas.'); }
     else {
       line('Elige un piso',' · cada piso es una rotación y cada ventana un consultorio');
       const lg=H('div','legend',h); lg.setAttribute('aria-hidden','true');
-      for (const [cls,txt] of [['hoy','repaso pendiente'],['pend','por empezar'],['','al día'],['nuevo','nuevo']]){
+      for (const [cls,txt] of [['hoy','por repasar'],['pend','nuevas por empezar'],['','al día'],['nuevo','tema nuevo']]){
         const s=H('span','',lg); H('i',cls,s); s.append(txt); }
     }
     go.append('Repasar hoy · ', n(paraHoy(S.topics)));
@@ -607,7 +640,7 @@ function ui(){
   } else {
     line('Pizarrón',' · Espacio muestra la respuesta, 1 a 4 califica');
     go.append('↺ Girar al escritorio');
-    if (S.study && !S.study.loading){ go2.hidden=false;
+    if (S.study){ go2.hidden=false; go2.disabled=!!S.study.loading;
       go2.append(S.mode==='libre' ? 'Volver al repaso normal' : '🔁 Repaso libre'); }
   }
 }
@@ -684,7 +717,7 @@ function sinResumen(t){
 async function goFloor(i, fast){
   if (S.busy || S.level!=='hospital') return; S.busy=true; closeCard();
   try {
-    S.floor=i; S.ctx=null;
+    S.floor=i; S.floorId=S.FL[i].id; S.ctx=null;
     await camera(HC, floorBox(i), fast?650:1050);
     buildPlan(i); camera(PC, planFull(), 0);
     S.level='planta'; show('planta', true); ui();
@@ -692,16 +725,19 @@ async function goFloor(i, fast){
   } finally { S.busy=false; }
   if (!fast){ const r=PC.svg.querySelector('.hot'); if (r) r.focus({preventScroll:true}); }
 }
+// Si falla, se avisa una sola vez y se olvida la promesa: abrir el escritorio
+// lo vuelve a intentar.
 function loadTopic(id){
   S.topicData=null;
-  S.topicP = api('/api/topics/' + id).then(t => {
+  const p = api('/api/topics/' + id).then(t => {
     if (S.ctx && S.ctx.kind==='tema' && S.ctx.id===id) S.topicData=t;
     return t;
   });
-  S.topicP.catch(avisar);
-  return S.topicP;
+  S.topicP = p;
+  p.catch(e => { if (S.topicP === p) S.topicP=null; avisar(e); });
+  return p;
 }
-function resetStudy(){ S.study=null; S.queue=[]; S.card=null; S.revealed=false; S.mode='normal'; }
+function resetStudy(){ S.studySeq++; S.study=null; S.queue=[]; S.card=null; S.revealed=false; S.mode='normal'; }
 async function goRoom(j, fast){
   if (S.busy || S.level!=='planta') return; S.busy=true; closeCard();
   try {
@@ -761,6 +797,8 @@ async function jump(i, j){
 async function leaveRoom(){
   if (S.busy || S.level!=='consultorio') return;
   if (S.panel) await closePanel(true);
+  // una calificación en camino se espera (máx. 5 s): así S.dirty ya es cierto
+  for (let k=0; S.grading && k<100; k++) await wait(50);
   S.busy=true; closeCard();
   const sala = S.ctx && S.ctx.kind==='sala', j=roomIndex();
   try {
@@ -786,7 +824,7 @@ async function toHospital(){
   try {
     S.level='hospital'; show('hospital'); ui();
     await camera(HC, hospitalBox(), 1000);
-    S.floor=null; ui();
+    S.floor=null; S.floorId=null; ui();
   } finally { S.busy=false; }
   const g=HC.svg.querySelector(`.hot[data-ix="${i}"]`); if (g) g.focus({preventScroll:true});
 }
@@ -808,8 +846,13 @@ document.addEventListener('keydown', e => {
   }
   if (enCampo || S.panel || !$('#card').hidden) return;
   if (S.level==='consultorio' && S.wall==='board' && !S.busy && S.card){
-    const enBoton = e.target instanceof HTMLButtonElement;
-    if (!S.revealed && (e.key===' ' || (e.key==='Enter' && !enBoton))){ e.preventDefault(); reveal(); }
+    // Espacio y Enter solo si el foco está en la página o en el pizarrón: nunca
+    // le roban la tecla a un enlace, a un botón de la barra o al menú.
+    const act=document.activeElement, chalk=$('#chalk');
+    const fuera = act && act!==document.body && !(chalk && chalk.contains(act));
+    const ajeno = act && act.closest && act.closest('a,[role=button],#menu');
+    const enBoton = act instanceof HTMLButtonElement;
+    if (!S.revealed && !fuera && !ajeno && (e.key===' ' || (e.key==='Enter' && !enBoton))){ e.preventDefault(); reveal(); }
     else if (S.revealed && /^[1-4]$/.test(e.key)){ e.preventDefault(); grade(+e.key); }
   }
 });
@@ -819,7 +862,10 @@ async function openLector(tab){
   if (S.level!=='consultorio' || !ctxTopic()) return;
   closeCard();
   const t=ctxTopic();
-  if (!S.topicData){ toast('Abriendo el escritorio…'); await (S.topicP || loadTopic(t.id)); }
+  if (!S.topicData){
+    toast('Abriendo el escritorio…');
+    try { await (S.topicP || loadTopic(t.id)); } catch(e){ return; }   // loadTopic ya avisó
+  }
   if (!S.topicData || S.topicData.id !== t.id) return;
   if (S.wall==='board'){ S.wall='desk'; await roomCam('desk', reduce()?0:600, 'board'); }
   await roomCam('read', reduce()?0:450);
@@ -829,7 +875,7 @@ async function openLector(tab){
   $('#lSub').textContent=`${d.cards.length} fichas · ${resumen ? (d.pages || 0) + ' págs. de resumen' : 'sin resumen'}`;
   $('#lPin').hidden = !(resumen && S.pdf_ok); $('#lPin').textContent='📌 Pegar post-it'; $('#lPin').classList.remove('on');
   $('#lStudy').hidden = !d.cards.length;
-  $('#lectorBody').classList.toggle('rail-on', tab && tab !== 'postit');
+  $('#lectorBody').classList.toggle('rail-on', !!(tab && tab !== 'postit'));
   $('#lRail').setAttribute('aria-expanded', String($('#lectorBody').classList.contains('rail-on')));
   $('#lector').hidden=false;
   $('#views').inert=true; $('#hud').inert=true;
@@ -845,10 +891,13 @@ async function closePanel(rapido){
   if (era==='lector'){
     await roomCam('desk', rapido||reduce() ? 0 : 450);
     const e=R3 && R3.back.querySelector('.hot'); if (e && !rapido) e.focus({preventScroll:true});
-  } else if (era==='ajustes' && S.dataChanged){
-    S.dataChanged=false;
-    if (S.level==='consultorio') S.dirty=true;              // se rehace al salir del cuarto
-    else await refreshData();
+  } else if (era==='ajustes'){
+    if (!rapido) $('#menuBtn').focus({preventScroll:true});
+    if (S.dataChanged){
+      S.dataChanged=false;
+      if (S.level==='consultorio') S.dirty=true;            // se rehace al salir del cuarto
+      else await refreshData();
+    }
   }
 }
 $('#lClose').onclick = () => closePanel().catch(avisar);
@@ -905,16 +954,27 @@ function paintStickies(pageEl){
 }
 function repaintAllStickies(){ $$('#lPages .page').forEach(paintStickies); }
 // Guarda el texto de una nota un poco después de dejar de escribir.
+// El texto local es la verdad mientras se escribe: se copia a la nota en cada
+// tecla, así repintar (otra página, el riel) nunca muestra un texto viejo.
 function guardarTexto(nt, ta, despues){
   let save;
-  ta.oninput = () => { clearTimeout(save);
+  ta.oninput = () => { nt.text=ta.value; clearTimeout(save);
     save=setTimeout(() => post('/api/notes/' + nt.id, {text: ta.value})
-      .then(() => { nt.text=ta.value; if (despues) despues(); })
+      .then(() => { if (despues) despues(); })
       .catch(avisar), 600); };
 }
+// El servidor devuelve la lista completa al crear una nota: se conservan los
+// objetos que ya teníamos (con lo escrito y lo arrastrado) y se agregan los nuevos.
+function mezclarNotas(lista){
+  const prev=new Map(S.topicData.notes.map(n => [n.id, n]));
+  S.topicData.notes = lista.map(n => prev.get(n.id) || n);
+  return lista.filter(n => !prev.has(n.id)).map(n => n.id);
+}
 function stickyEl(nt, pageEl){
-  const el=document.createElement('div'); el.className='sticky';
-  el.style.left=(nt.x*100)+'%'; el.style.top=(nt.y*100)+'%';
+  const el=document.createElement('div'); el.className='sticky'; el.dataset.note=nt.id;
+  // en una página angosta (el teléfono) la nota no se sale por la derecha y su × sigue a la vista
+  const coloca=() => { el.style.left=`min(${nt.x*100}%, calc(100% - 172px))`; el.style.top=(nt.y*100)+'%'; };
+  coloca();
   const x=H('button','x',el,'×'); x.type='button'; x.setAttribute('aria-label','Borrar la nota');
   const ta=H('textarea','',el); ta.placeholder='Escribe aquí…'; ta.value=nt.text || '';
   ta.setAttribute('aria-label',`Post-it de la página ${nt.page}`);
@@ -935,15 +995,17 @@ function stickyEl(nt, pageEl){
     const move=ev => {
       nt.x=Math.min(Math.max((ev.clientX-rect.left)/rect.width,0),1);
       nt.y=Math.min(Math.max((ev.clientY-rect.top)/rect.height,0),1);
-      el.style.left=(nt.x*100)+'%'; el.style.top=(nt.y*100)+'%';
+      coloca();
     };
     const up=() => {
       document.removeEventListener('pointermove', move);
       document.removeEventListener('pointerup', up);
+      document.removeEventListener('pointercancel', up);
       post('/api/notes/' + nt.id, {x:nt.x, y:nt.y}).catch(avisar);
     };
     document.addEventListener('pointermove', move);
     document.addEventListener('pointerup', up);
+    document.addEventListener('pointercancel', up);
   };
   return el;
 }
@@ -953,10 +1015,11 @@ async function onPageClick(e, pageEl, assetId){
   const x=(e.clientX-rect.left)/rect.width, y=(e.clientY-rect.top)/rect.height;
   const r=await post(`/api/topics/${S.topicData.id}/notes`,
     {kind:'sticky', asset_id:assetId, page:+pageEl.dataset.page, x, y, text:''});
-  S.topicData.notes=r.notes;
+  const nuevos=mezclarNotas(r.notes);
   setPlacing(false);
-  paintStickies(pageEl); renderRail();
-  const ult=pageEl.querySelector('.sticky:last-child textarea'); if (ult) ult.focus();
+  repaintAllStickies(); renderRail();
+  const ult=nuevos.length && $(`#lPages .sticky[data-note="${nuevos[nuevos.length-1]}"] textarea`);
+  if (ult) ult.focus();
 }
 
 function renderRail(){
@@ -982,7 +1045,9 @@ function renderRail(){
     add.onclick=async () => {
       try {
         const r=await post(`/api/topics/${t.id}/notes`, {kind:'general', text:''});
-        t.notes=r.notes; renderRail(); const ta=$('#railbody textarea'); if (ta) ta.focus();
+        const nuevos=mezclarNotas(r.notes); renderRail(); repaintAllStickies();
+        const ta=nuevos.length && $(`#railbody [data-note="${nuevos[nuevos.length-1]}"] textarea`);
+        if (ta) ta.focus();
       } catch(e){ avisar(e); }
     };
   } else {
@@ -992,7 +1057,7 @@ function renderRail(){
   const notes=t.notes.filter(n => n.kind===kind);
   if (!notes.length){ H('div','empty',body,'Sin notas todavía.'); return; }
   notes.forEach(n => {
-    const c=H('div','notecard',body);
+    const c=H('div','notecard',body); c.dataset.note=n.id;
     const x=H('button','x',c,'×'); x.type='button'; x.setAttribute('aria-label','Borrar la nota');
     if (kind==='sticky') H('div','meta',c,`Página ${n.page}`);
     const ta=H('textarea','',c); ta.placeholder='Escribe aquí…'; ta.value=n.text || '';
@@ -1039,10 +1104,12 @@ async function openAjustes(){
   const iPw=field(p2,'s-pw','Contraseña nueva',{type:'password',autocomplete:'new-password',minlength:10,maxlength:256});
   const bP=H('button','btn',p2,'Cambiar contraseña'); bP.type='button';
   bP.onclick=async () => {
+    bP.disabled=true;
     try {
       const r=await post('/api/auth/password', {current:iCur.value, new:iPw.value});
       iCur.value=''; iPw.value=''; toast(r.mensaje);
     } catch(e){ avisar(e); }
+    finally { bP.disabled=false; }
   };
 
   if (S.admin){
@@ -1116,7 +1183,21 @@ function paintStats(){
 }
 function render(){
   S.FL=floors();
-  if (S.floor!=null && !S.FL[S.floor] && S.level!=='consultorio'){ S.level='hospital'; S.floor=null; }
+  // El piso se sigue por su id: borrar o crear una carpeta cambia los índices.
+  if (S.floorId!=null){ const k=S.FL.findIndex(f => f.id===S.floorId); S.floor = k>=0 ? k : null; }
+  if (S.level==='consultorio' && S.ctx && S.ctx.kind==='tema'){
+    const t=ctxTopic(), k=t ? S.FL.findIndex(f => f.temas.some(x => x.id===t.id)) : -1;
+    if (k>=0){ S.floor=k; S.floorId=S.FL[k].id; }
+    else {                                    // el tema ya no existe
+      if (S.panel) { S.panel=null; $('#lector').hidden=true; $('#ajustes').hidden=true;
+        $('#views').inert=false; $('#hud').inert=false; }
+      S.ctx=null; resetStudy(); S.topicData=null; S.wall='desk';
+      S.level='hospital'; S.floor=null; S.floorId=null;
+      toast('Ese tema ya no está en el hospital.');
+    }
+  }
+  if (S.level==='consultorio' && S.ctx && S.ctx.kind==='sala' && S.ctx.from==='planta' && S.floor==null) S.ctx.from='hospital';
+  if (S.level==='planta' && S.floor==null){ S.level='hospital'; S.floorId=null; }
   buildHospital();
   if (S.level==='hospital' || S.floor==null){
     camera(HC, hospitalBox(), 0);
@@ -1205,8 +1286,14 @@ $('#fileInput').onchange = async e => {
   } catch(err){ avisar(err); }
 };
 
+// Al cambiar el tamaño se rehace la escena; si hay una animación en curso, se
+// espera a que termine.
 let rz=0;
-addEventListener('resize', () => { clearTimeout(rz); rz=setTimeout(() => { if (!S.busy) render(); }, 150); });
+function renderLuego(){
+  clearTimeout(rz);
+  rz=setTimeout(() => { if (S.busy){ renderLuego(); return; } try { render(); } catch(e){ avisar(e); } }, 150);
+}
+addEventListener('resize', renderLuego);
 
 boot().catch(e => {
   const host=$('#vHospital'); host.textContent='';
