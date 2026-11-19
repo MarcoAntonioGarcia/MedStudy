@@ -6,7 +6,6 @@ nunca tocan database.db ni contenido/. Desde la raíz del repo:
 
     python3 -m unittest discover -s tests -v
 """
-import json
 import os
 import re
 import shutil

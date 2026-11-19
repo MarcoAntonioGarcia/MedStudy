@@ -524,7 +524,7 @@ function renderChalk(anim){
       H('small','key',r,'espacio'); r.onclick=reveal;
     }
   };
-  if (anim && !reduce()) setTimeout(() => { pinta(); focusBoard(); }, 200); else pinta();
+  if (anim && !reduce()) setTimeout(() => { pinta(); focusBoard(); }, 200); else { pinta(); focusBoard(); }
 }
 function focusBoard(){ const btn=$('#chalk .row button'); if (btn && S.wall==='board' && !S.panel) btn.focus({preventScroll:true}); }
 function reveal(){
@@ -569,13 +569,16 @@ function nextCard(anim){
   else say('Repaso terminado');
 }
 async function grade(rating){
-  if (!S.card || !S.revealed || S.grading) return;
+  if (!S.card || !S.revealed || S.grading || !S.study || S.study.loading) return;
+  const seq=S.studySeq;
   S.grading=true; $$('#chalk .row button').forEach(b => { b.disabled=true; });
   const card=S.card;
   try {
     const r=await post(`/api/cards/${card.id}/grade`, {rating, mode:S.mode});
     S.stats=r.stats; paintStats();
     if (S.mode !== 'libre') S.dirty=true;
+    // si entretanto empezó otra cola (cambio de modo, salir), esta ya no manda
+    if (seq !== S.studySeq) return;
     // 'Otra vez' vuelve al final de la cola: se repasa otra vez en esta sesión.
     if (rating === 1) S.queue.push(Object.assign({}, card, r.result || {}));
     nextCard(true);
@@ -799,6 +802,8 @@ async function leaveRoom(){
   if (S.panel) await closePanel(true);
   // una calificación en camino se espera (máx. 5 s): así S.dirty ya es cierto
   for (let k=0; S.grading && k<100; k++) await wait(50);
+  // durante la espera pudo correr otra salida (doble Escape, la miga «Hospital»)
+  if (S.busy || S.level!=='consultorio') return;
   S.busy=true; closeCard();
   const sala = S.ctx && S.ctx.kind==='sala', j=roomIndex();
   try {
@@ -845,7 +850,7 @@ document.addEventListener('keydown', e => {
     goBack().catch(avisar); return;
   }
   if (enCampo || S.panel || !$('#card').hidden) return;
-  if (S.level==='consultorio' && S.wall==='board' && !S.busy && S.card){
+  if (S.level==='consultorio' && S.wall==='board' && !S.busy && S.card && S.study && !S.study.loading){
     // Espacio y Enter solo si el foco está en la página o en el pizarrón: nunca
     // le roban la tecla a un enlace, a un botón de la barra o al menú.
     const act=document.activeElement, chalk=$('#chalk');
@@ -957,9 +962,8 @@ function repaintAllStickies(){ $$('#lPages .page').forEach(paintStickies); }
 // El texto local es la verdad mientras se escribe: se copia a la nota en cada
 // tecla, así repintar (otra página, el riel) nunca muestra un texto viejo.
 function guardarTexto(nt, ta, despues){
-  let save;
-  ta.oninput = () => { nt.text=ta.value; clearTimeout(save);
-    save=setTimeout(() => post('/api/notes/' + nt.id, {text: ta.value})
+  ta.oninput = () => { nt.text=ta.value; clearTimeout(nt._guardar);
+    nt._guardar=setTimeout(() => post('/api/notes/' + nt.id, {text: ta.value})
       .then(() => { if (despues) despues(); })
       .catch(avisar), 600); };
 }
@@ -981,7 +985,7 @@ function stickyEl(nt, pageEl){
   el.onclick=e => e.stopPropagation();      // no dispara la colocación de otra nota
   // la pestaña «Post-its» del panel muestra el mismo texto
   guardarTexto(nt, ta, () => { if (S.railTab==='postit') renderRail(); });
-  x.onclick=async e => { e.stopPropagation();
+  x.onclick=async e => { e.stopPropagation(); clearTimeout(nt._guardar);
     try { await del('/api/notes/' + nt.id); }
     catch(err){ avisar(err); return; }
     S.topicData.notes=S.topicData.notes.filter(n => n.id !== nt.id);
@@ -1063,7 +1067,7 @@ function renderRail(){
     const ta=H('textarea','',c); ta.placeholder='Escribe aquí…'; ta.value=n.text || '';
     ta.setAttribute('aria-label', kind==='sticky' ? `Post-it de la página ${n.page}` : 'Nota del tema');
     guardarTexto(n, ta, () => { if (kind==='sticky') repaintAllStickies(); });
-    x.onclick=async () => {
+    x.onclick=async () => { clearTimeout(n._guardar);
       try { await del('/api/notes/' + n.id); } catch(e){ avisar(e); return; }
       t.notes=t.notes.filter(z => z.id !== n.id);
       renderRail(); repaintAllStickies();
