@@ -1,49 +1,51 @@
 /* cuentas.css — estilos de las pantallas de cuenta (entrar, registro,
    restablecer), del panel /admin y de los diálogos de ui.js.
-   Misma paleta crema/verde que index.html. El rediseño llega en la etapa 3. */
+   La misma noche del hospital que index.html (app.css): azul tinta, cian de
+   monitor y granate. Un solo modo, oscuro. */
 :root{
-  --bg:#efe9df; --card:#fffdf9; --line:#e7e0d2; --ink:#2a2723; --muted:#8a8378;
-  --accent:#2f6b5e; --accent-soft:#dfece8; --danger:#b4453b; --danger-soft:#fbe3e1;
-  --gold:#c9a86a;
-  --shadow:0 1px 3px rgba(40,33,20,.06),0 8px 24px rgba(40,33,20,.07);
+  color-scheme:dark;
+  --bg:#05080f; --card:#0f1729; --line:#22304f; --ink:#e9eef7; --muted:#9aa6bf;
+  --accent:#66d9ea; --accent-ink:#04121a; --accent-soft:rgba(102,217,234,.14);
+  --danger:#ea8a9c; --danger-soft:rgba(178,58,85,.2);
+  --gold:#66d9ea;
+  --shadow:0 1px 3px rgba(0,0,0,.4),0 18px 50px rgba(0,0,0,.45);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
-@media (prefers-color-scheme:dark){
-  :root{
-    --bg:#1a1714; --card:#232019; --line:#38312a; --ink:#ece5da; --muted:#9c9287;
-    --accent:#5fa896; --accent-soft:#23342f; --danger:#d4736a; --danger-soft:#3d2320;
-    --gold:#d9bb7d;
-    --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
-  }
-}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 /* ------------------------------------------------------------- diálogos */
 .dlg-back{position:fixed;inset:0;z-index:300;display:grid;place-items:center;
-  padding:16px;background:rgba(20,16,10,.45)}
+  padding:16px;background:rgba(2,4,9,.7);backdrop-filter:blur(3px)}
 .dlg{width:min(440px,100%);background:var(--card);color:var(--ink);border:1px solid var(--line);
   border-radius:14px;box-shadow:var(--shadow);padding:20px;
   font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
-.dlg h2{margin:0 0 8px;font-size:17px}
+.dlg h2{margin:0 0 8px;font:500 20px/1.25 var(--serif);letter-spacing:.02em}
 .dlg p{margin:0 0 14px;color:var(--muted);font-size:14.5px;white-space:pre-line}
 .dlg input,.dlg select{width:100%;font:inherit;font-size:16px;padding:10px 12px;border-radius:9px;
   border:1px solid var(--line);background:var(--bg);color:var(--ink);margin-bottom:14px}
 .dlg .acts{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
 .dlg-btn{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);
-  border-radius:9px;padding:8px 14px;cursor:pointer}
-.dlg-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
-.dlg-btn.danger{background:var(--danger);border-color:var(--danger);color:#fff;font-weight:600}
+  border-radius:9px;padding:8px 14px;cursor:pointer;min-height:44px}
+.dlg-btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.dlg-btn.danger{background:#b23a55;border-color:#b23a55;color:#fff;font-weight:600}
 
 /* ------------------------------------------------------ pantallas de cuenta */
-body.cuenta{margin:0;min-height:100dvh;background:var(--bg);color:var(--ink);
+body.cuenta{margin:0;min-height:100dvh;color:var(--ink);
+  background:radial-gradient(900px 520px at 50% 110%,rgba(102,217,234,.12),transparent 70%),
+    radial-gradient(600px 400px at 85% -10%,rgba(178,58,85,.14),transparent 70%),var(--bg);
   font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   display:grid;place-items:center;padding:24px 16px}
 .cuenta main{width:100%;max-width:420px}
 .marca{display:flex;align-items:center;gap:10px;margin-bottom:18px;font-weight:640}
-.marca .logo{width:34px;height:34px;border-radius:9px;background:var(--gold);color:#241d0e;
-  display:grid;place-items:center;font-weight:700}
-.cuenta h1{margin:0 0 6px;font-size:24px;letter-spacing:-.02em}
+.marca .logo{width:34px;height:34px;border-radius:9px;background:var(--card);color:var(--accent);
+  border:1px solid #33446b;display:grid;place-items:center;font-weight:700;
+  text-shadow:0 0 10px rgba(102,217,234,.7)}
+.cuenta h1{margin:0 0 8px;font:400 34px/1.05 var(--serif);letter-spacing:.06em;text-transform:uppercase;
+  text-shadow:0 0 30px rgba(102,217,234,.25)}
 .cuenta .lede{margin:0 0 18px;color:var(--muted)}
 .cuenta .lede:empty{display:none}
-.hoja{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;
+.hoja{background:rgba(15,23,41,.92);border:1px solid #33446b;border-radius:14px;padding:20px;
   box-shadow:var(--shadow)}
 .campo{margin-bottom:14px}
 .campo label{display:block;font-size:13.5px;font-weight:600;margin-bottom:5px}
@@ -52,8 +54,8 @@ body.cuenta{margin:0;min-height:100dvh;background:var(--bg);color:var(--ink);
 .campo input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .campo .ayuda{font-size:12.5px;color:var(--muted);margin-top:4px}
 .campo .valor{font-weight:600}
-.principal{width:100%;font:inherit;font-weight:600;padding:11px;border-radius:9px;cursor:pointer;
-  border:1px solid var(--accent);background:var(--accent);color:#fff}
+.principal{width:100%;font:inherit;font-weight:650;padding:11px;border-radius:10px;cursor:pointer;min-height:48px;
+  border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);box-shadow:0 0 26px rgba(102,217,234,.25)}
 .principal:disabled{opacity:.5;cursor:default}
 .aviso{margin-top:14px;font-size:14px;padding:10px 12px;border-radius:9px;display:none}
 .aviso.error{display:block;background:var(--danger-soft);color:var(--danger)}
@@ -67,8 +69,8 @@ body.panel-admin{margin:0;background:var(--bg);color:var(--ink);padding:24px 16p
 .caja{max-width:980px;margin:0 auto}
 .caja header{display:flex;align-items:center;justify-content:space-between;gap:14px;
   flex-wrap:wrap;margin-bottom:20px}
-.caja h1{margin:0;font-size:24px;letter-spacing:-.02em}
-.caja header a{color:var(--muted);text-decoration:none}
+.caja h1{margin:0;font:400 30px/1.1 var(--serif);letter-spacing:.05em;text-transform:uppercase}
+.caja header a{color:var(--muted);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
 .tarjeta{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;
   box-shadow:var(--shadow)}
 .scroll{overflow-x:auto}
@@ -83,9 +85,9 @@ body.panel-admin{margin:0;background:var(--bg);color:var(--ink);padding:24px 16p
 .chip.blocked,.chip.pending{background:var(--danger-soft);color:var(--danger)}
 .chip.admin{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
 .acciones{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.panel-admin button{font:inherit;font-size:13px;font-weight:600;padding:6px 11px;border-radius:8px;
+.panel-admin button{font:inherit;font-size:13px;font-weight:600;padding:6px 11px;border-radius:8px;min-height:40px;
   cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink)}
-.panel-admin button.ok{background:var(--accent);border-color:var(--accent);color:#fff}
+.panel-admin button.ok{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .panel-admin button.mal{color:var(--danger);border-color:var(--danger);background:transparent}
 .panel-admin button:disabled{opacity:.45;cursor:default}
 .crear{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;
